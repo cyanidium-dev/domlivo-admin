@@ -1,5 +1,10 @@
 import {defineType, defineField} from 'sanity'
 
+/**
+ * Property type (Apartment, House, Villa, etc.).
+ * Field-level i18n: title, shortDescription are localized.
+ * Frontend: resolve propertyType.title with getLocalizedValue(locale).
+ */
 export const propertyType = defineType({
   name: 'propertyType',
   title: 'Property Type',
@@ -9,17 +14,7 @@ export const propertyType = defineType({
     defineField({
       name: 'title',
       title: 'Title',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
-    }),
-
-    defineField({
-      name: 'slug',
-      type: 'slug',
-      options: {
-        source: 'title',
-        maxLength: 96,
-      },
+      type: 'localizedString',
       validation: (Rule) => Rule.required(),
     }),
 
@@ -32,7 +27,7 @@ export const propertyType = defineType({
     defineField({
       name: 'shortDescription',
       title: 'Short Description',
-      type: 'string',
+      type: 'localizedText',
     }),
 
     defineField({
@@ -52,12 +47,13 @@ export const propertyType = defineType({
 
   preview: {
     select: {
-      title: 'title',
+      titleEn: 'title.en',
+      titleSq: 'title.sq',
       media: 'image',
     },
     prepare(selection) {
-      const {title, media} = selection
-      return {title, media}
+      const title = selection.titleEn || selection.titleSq || 'Untitled'
+      return {title, media: selection.media}
     },
   },
 })

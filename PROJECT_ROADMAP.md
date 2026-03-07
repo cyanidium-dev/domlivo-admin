@@ -2,6 +2,10 @@
 
 Possible future improvements for the Domlivo platform.
 
+**Current architecture (as of this doc):** Field-level i18n only. One document per city, district, home page, site settings, property, and blog post; localized fields (en, ru, uk, sq) hold text; media, URLs, numbers, and references are shared. No document-level translations or per-language singleton documents. See ARCHITECTURE.md and DATA_MODEL.md.
+
+---
+
 ## Content & Taxonomy
 
 ### Property amenities taxonomy
@@ -70,7 +74,7 @@ Possible future improvements for the Domlivo platform.
 ### AI property descriptions
 
 - Generate or enhance descriptions from basic inputs.
-- Support multiple languages.
+- Support multiple languages (fill localizedString/localizedText).
 - Keep human review before publishing.
 
 ### Smart recommendations
@@ -80,7 +84,7 @@ Possible future improvements for the Domlivo platform.
 
 ### Automated translations
 
-- Use AI to draft translations for new content.
+- Use AI to draft translations for new content (e.g. fill missing locales in localizedString).
 - Human review and editing before publish.
 
 ---
@@ -90,7 +94,7 @@ Possible future improvements for the Domlivo platform.
 ### Schema versioning
 
 - Version major schema changes.
-- Migration scripts for existing data.
+- Migration scripts for existing data when adding or changing fields.
 
 ### Performance
 
@@ -102,6 +106,10 @@ Possible future improvements for the Domlivo platform.
 
 - Draft preview in the frontend before publish.
 - Iframe or overlay from Studio to site.
+
+### Access control
+
+- Enforce hard security in backend/API layer for agent-only property editing and restricted access to site-wide content (homePage, siteSettings, cities, districts, blog). Studio structure is UX-only.
 
 ---
 

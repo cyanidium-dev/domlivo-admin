@@ -1,5 +1,4 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
-import {languageField} from '../objects'
 
 export const city = defineType({
   name: 'city',
@@ -18,23 +17,17 @@ export const city = defineType({
 
   fields: [
     // BASIC
-    languageField,
-
     defineField({
       name: 'title',
       title: 'City name',
-      type: 'string',
+      type: 'localizedString',
       group: 'basic',
       validation: (Rule) => Rule.required(),
     }),
 
     defineField({
       name: 'slug',
-      type: 'slug',
-      options: {
-        source: 'title',
-        maxLength: 96,
-      },
+      type: 'localizedSlug',
       group: 'basic',
       validation: (Rule) => Rule.required(),
     }),
@@ -68,7 +61,7 @@ export const city = defineType({
     defineField({
       name: 'heroTitle',
       title: 'Hero Title',
-      type: 'string',
+      type: 'localizedString',
       group: 'hero',
       description: 'Main headline on the city landing page hero section.',
     }),
@@ -76,7 +69,7 @@ export const city = defineType({
     defineField({
       name: 'heroSubtitle',
       title: 'Hero Subtitle',
-      type: 'text',
+      type: 'localizedText',
       group: 'hero',
       description: 'Supporting text in the city landing page hero.',
     }),
@@ -84,7 +77,7 @@ export const city = defineType({
     defineField({
       name: 'heroShortLine',
       title: 'Hero Short Line',
-      type: 'string',
+      type: 'localizedString',
       group: 'hero',
       description: 'Short tagline shown in the hero area.',
     }),
@@ -101,7 +94,7 @@ export const city = defineType({
     defineField({
       name: 'heroCta',
       title: 'Hero CTA',
-      type: 'ctaLink',
+      type: 'localizedCtaLink',
       group: 'hero',
     }),
 
@@ -109,7 +102,7 @@ export const city = defineType({
     defineField({
       name: 'shortDescription',
       title: 'Short Description',
-      type: 'text',
+      type: 'localizedText',
       group: 'content',
       description: 'Brief summary of the city; used in cards and listings.',
     }),
@@ -117,8 +110,7 @@ export const city = defineType({
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'array',
-      of: [{type: 'block'}],
+      type: 'localizedText',
       group: 'content',
       description: 'Main content for the city landing page.',
     }),
@@ -126,8 +118,7 @@ export const city = defineType({
     defineField({
       name: 'investmentText',
       title: 'Investment Text',
-      type: 'array',
-      of: [{type: 'block'}],
+      type: 'localizedText',
       group: 'content',
       description: 'Content for the investment section on the city page.',
     }),
@@ -135,7 +126,7 @@ export const city = defineType({
     defineField({
       name: 'featuredPropertiesTitle',
       title: 'Featured Properties Title',
-      type: 'string',
+      type: 'localizedString',
       group: 'content',
       description: 'Title shown above the featured properties slider on the city page.',
     }),
@@ -143,7 +134,7 @@ export const city = defineType({
     defineField({
       name: 'featuredPropertiesSubtitle',
       title: 'Featured Properties Subtitle',
-      type: 'text',
+      type: 'localizedText',
       group: 'content',
       description: 'Subtitle shown above the featured properties slider.',
     }),
@@ -151,7 +142,7 @@ export const city = defineType({
     defineField({
       name: 'allPropertiesCta',
       title: 'All Properties CTA',
-      type: 'ctaLink',
+      type: 'localizedCtaLink',
       group: 'content',
     }),
 
@@ -159,15 +150,14 @@ export const city = defineType({
     defineField({
       name: 'districtsTitle',
       title: 'Districts Title',
-      type: 'string',
+      type: 'localizedString',
       group: 'districts',
     }),
 
     defineField({
       name: 'districtsIntro',
       title: 'Districts Introduction',
-      type: 'array',
-      of: [{type: 'block'}],
+      type: 'localizedText',
       group: 'districts',
       description: 'Introductory text for the districts section.',
     }),
@@ -193,14 +183,14 @@ export const city = defineType({
     defineField({
       name: 'galleryTitle',
       title: 'Gallery Title',
-      type: 'string',
+      type: 'localizedString',
       group: 'media',
     }),
 
     defineField({
       name: 'gallerySubtitle',
       title: 'Gallery Subtitle',
-      type: 'text',
+      type: 'localizedText',
       group: 'media',
     }),
 
@@ -223,7 +213,7 @@ export const city = defineType({
     defineField({
       name: 'faqTitle',
       title: 'FAQ Title',
-      type: 'string',
+      type: 'localizedString',
       group: 'faq',
     }),
 
@@ -231,7 +221,7 @@ export const city = defineType({
       name: 'faqItems',
       title: 'FAQ Items',
       type: 'array',
-      of: [defineArrayMember({type: 'faqItem'})],
+      of: [defineArrayMember({type: 'localizedFaqItem'})],
       group: 'faq',
       validation: (Rule) => Rule.max(20),
     }),
@@ -240,8 +230,7 @@ export const city = defineType({
     defineField({
       name: 'seoText',
       title: 'SEO Text',
-      type: 'array',
-      of: [{type: 'block'}],
+      type: 'localizedText',
       group: 'seo',
       description: 'Additional content for SEO; can be displayed at bottom of page.',
     }),
@@ -249,28 +238,24 @@ export const city = defineType({
     defineField({
       name: 'seo',
       title: 'SEO',
-      type: 'seo',
+      type: 'localizedSeo',
       group: 'seo',
     }),
   ],
 
   preview: {
     select: {
-      title: 'title',
-      slug: 'slug.current',
-      language: 'language',
+      titleEn: 'title.en',
+      titleSq: 'title.sq',
+      slugEn: 'slug.en',
+      slugSq: 'slug.sq',
       media: 'heroImage',
     },
     prepare(selection) {
-      const {title, slug, language, media} = selection
-      const langPart = language ? `${language} • ` : ''
-      const slugPart = slug || 'no-slug'
-      const subtitle = `${langPart}${slugPart}`
-      return {
-        title,
-        subtitle,
-        media,
-      }
+      const {titleEn, titleSq, slugEn, slugSq, media} = selection
+      const title = titleEn || titleSq || 'Untitled'
+      const slug = slugEn || slugSq || 'no-slug'
+      return {title, subtitle: slug, media}
     },
   },
 })

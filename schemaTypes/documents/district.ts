@@ -1,5 +1,4 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
-import {languageField} from '../objects'
 
 export const district = defineType({
   name: 'district',
@@ -17,23 +16,17 @@ export const district = defineType({
 
   fields: [
     // BASIC
-    languageField,
-
     defineField({
       name: 'title',
       title: 'District name',
-      type: 'string',
+      type: 'localizedString',
       group: 'basic',
       validation: (Rule) => Rule.required(),
     }),
 
     defineField({
       name: 'slug',
-      type: 'slug',
-      options: {
-        source: 'title',
-        maxLength: 96,
-      },
+      type: 'localizedSlug',
       group: 'basic',
       validation: (Rule) => Rule.required(),
     }),
@@ -67,7 +60,7 @@ export const district = defineType({
     defineField({
       name: 'heroTitle',
       title: 'Hero Title',
-      type: 'string',
+      type: 'localizedString',
       group: 'hero',
       description: 'Main headline on the district landing page hero section.',
     }),
@@ -75,7 +68,7 @@ export const district = defineType({
     defineField({
       name: 'heroSubtitle',
       title: 'Hero Subtitle',
-      type: 'text',
+      type: 'localizedText',
       group: 'hero',
       description: 'Supporting text in the district landing page hero.',
     }),
@@ -83,7 +76,7 @@ export const district = defineType({
     defineField({
       name: 'heroShortLine',
       title: 'Hero Short Line',
-      type: 'string',
+      type: 'localizedString',
       group: 'hero',
       description: 'Short tagline shown in the hero area.',
     }),
@@ -100,7 +93,7 @@ export const district = defineType({
     defineField({
       name: 'heroCta',
       title: 'Hero CTA',
-      type: 'ctaLink',
+      type: 'localizedCtaLink',
       group: 'hero',
     }),
 
@@ -108,7 +101,7 @@ export const district = defineType({
     defineField({
       name: 'shortDescription',
       title: 'Short Description',
-      type: 'text',
+      type: 'localizedText',
       group: 'content',
       description: 'Brief summary of the district; used in cards and listings.',
     }),
@@ -116,8 +109,7 @@ export const district = defineType({
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'array',
-      of: [{type: 'block'}],
+      type: 'localizedText',
       group: 'content',
       description: 'Main content for the district landing page.',
     }),
@@ -125,7 +117,7 @@ export const district = defineType({
     defineField({
       name: 'metricsTitle',
       title: 'Metrics Title',
-      type: 'string',
+      type: 'localizedString',
       group: 'content',
       description: 'Title shown above the metrics section.',
     }),
@@ -143,7 +135,7 @@ export const district = defineType({
     defineField({
       name: 'allPropertiesCta',
       title: 'All Properties CTA',
-      type: 'ctaLink',
+      type: 'localizedCtaLink',
       group: 'content',
     }),
 
@@ -151,14 +143,14 @@ export const district = defineType({
     defineField({
       name: 'galleryTitle',
       title: 'Gallery Title',
-      type: 'string',
+      type: 'localizedString',
       group: 'media',
     }),
 
     defineField({
       name: 'gallerySubtitle',
       title: 'Gallery Subtitle',
-      type: 'text',
+      type: 'localizedText',
       group: 'media',
     }),
 
@@ -182,7 +174,7 @@ export const district = defineType({
     defineField({
       name: 'faqTitle',
       title: 'FAQ Title',
-      type: 'string',
+      type: 'localizedString',
       group: 'faq',
     }),
 
@@ -190,7 +182,7 @@ export const district = defineType({
       name: 'faqItems',
       title: 'FAQ Items',
       type: 'array',
-      of: [defineArrayMember({type: 'faqItem'})],
+      of: [defineArrayMember({type: 'localizedFaqItem'})],
       group: 'faq',
       validation: (Rule) => Rule.max(20),
     }),
@@ -199,8 +191,7 @@ export const district = defineType({
     defineField({
       name: 'seoText',
       title: 'SEO Text',
-      type: 'array',
-      of: [{type: 'block'}],
+      type: 'localizedText',
       group: 'seo',
       description: 'Additional content for SEO; can be displayed at bottom of page.',
     }),
@@ -208,28 +199,24 @@ export const district = defineType({
     defineField({
       name: 'seo',
       title: 'SEO',
-      type: 'seo',
+      type: 'localizedSeo',
       group: 'seo',
     }),
   ],
 
   preview: {
     select: {
-      title: 'title',
-      slug: 'slug.current',
-      language: 'language',
-      cityTitle: 'city.title',
+      titleEn: 'title.en',
+      titleSq: 'title.sq',
+      slugEn: 'slug.en',
+      cityRef: 'city',
       media: 'heroImage',
     },
     prepare(selection) {
-      const {title, slug, language, cityTitle, media} = selection
-      const parts = [language, cityTitle, slug].filter(Boolean)
-      const subtitle = parts.length > 0 ? parts.join(' • ') : undefined
-      return {
-        title,
-        subtitle,
-        media,
-      }
+      const {titleEn, titleSq, slugEn, cityRef, media} = selection
+      const title = titleEn || titleSq || 'Untitled'
+      const subtitle = slugEn || (cityRef as {_ref?: string})?._ref || undefined
+      return {title, subtitle, media}
     },
   },
 })

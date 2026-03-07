@@ -1,5 +1,4 @@
 import type {StructureResolver} from 'sanity/structure'
-import {languages} from '../lib/languages'
 
 export const structure: StructureResolver = (S, context) =>
   S.list()
@@ -9,57 +8,38 @@ export const structure: StructureResolver = (S, context) =>
         .title('Home Page')
         .id('homePage')
         .child(
-          S.list()
+          S.document()
+            .schemaType('homePage')
+            .documentId('homePage')
             .title('Home Page')
-            .items(
-              languages.map((lang) =>
-                S.listItem()
-                  .title(lang.title)
-                  .id(`homePage-${lang.id}`)
-                  .child(
-                    S.document()
-                      .schemaType('homePage')
-                      .documentId(`homePage-${lang.id}`)
-                      .title(`Home Page (${lang.title})`)
-                      .initialValueTemplate(`homePage-${lang.id}`)
-                  )
-              )
-            )
         ),
 
       S.listItem()
         .title('Site Settings')
         .id('siteSettings')
         .child(
-          S.list()
+          S.document()
+            .schemaType('siteSettings')
+            .documentId('siteSettings')
             .title('Site Settings')
-            .items(
-              languages.map((lang) =>
-                S.listItem()
-                  .title(lang.title)
-                  .id(`siteSettings-${lang.id}`)
-                  .child(
-                    S.document()
-                      .schemaType('siteSettings')
-                      .documentId(`siteSettings-${lang.id}`)
-                      .title(`Site Settings (${lang.title})`)
-                      .initialValueTemplate(`siteSettings-${lang.id}`)
-                  )
-              )
-            )
         ),
 
       S.divider(),
 
       S.listItem()
-        .title('Locations')
+        .title('Cities')
         .child(
-          S.list()
-            .title('Locations')
-            .items([
-              S.documentTypeListItem('city').title('Cities'),
-              S.documentTypeListItem('district').title('Districts'),
-            ])
+          S.documentTypeList('city')
+            .title('Cities')
+            .defaultOrdering([{field: 'order', direction: 'asc'}, {field: 'title.en', direction: 'asc'}])
+        ),
+
+      S.listItem()
+        .title('Districts')
+        .child(
+          S.documentTypeList('district')
+            .title('Districts')
+            .defaultOrdering([{field: 'order', direction: 'asc'}, {field: 'title.en', direction: 'asc'}])
         ),
 
       S.divider(),
@@ -101,5 +81,14 @@ export const structure: StructureResolver = (S, context) =>
 
       S.divider(),
 
-      S.documentTypeListItem('blogPost').title('Blog'),
+      S.listItem()
+        .title('Blog')
+        .child(
+          S.list()
+            .title('Blog')
+            .items([
+              S.documentTypeListItem('blogCategory').title('Categories'),
+              S.documentTypeListItem('blogPost').title('Posts'),
+            ])
+        ),
     ])

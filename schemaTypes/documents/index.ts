@@ -1,5 +1,6 @@
 import {city} from './city'
 import {district} from './district'
+import {blogCategory} from './blogCategory'
 import {blogPost} from './blogPost'
 import {agent} from './agent'
 import {property} from './property'
@@ -15,6 +16,7 @@ import {siteSettings} from './siteSettings'
 export const documents = [
   city,
   district,
+  blogCategory,
   blogPost,
   agent,
   property,

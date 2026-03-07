@@ -24,15 +24,19 @@ domlivo-admin/
 │   └── objects/              # Reusable object schemas
 │       ├── index.ts
 │       ├── seo.ts
+│       ├── localizedSeo.ts
 │       ├── ctaLink.ts
+│       ├── localizedCtaLink.ts
 │       ├── faqItem.ts
+│       ├── localizedFaqItem.ts
 │       ├── districtStat.ts
 │       ├── districtMetric.ts
 │       ├── localizedString.ts
 │       ├── localizedText.ts
+│       ├── localizedSlug.ts
 │       ├── socialLink.ts
 │       ├── footerLink.ts
-│       └── languageField.ts
+│       └── localizedFooterLink.ts
 ├── structure/
 │   └── index.ts              # Custom desk structure
 ├── sanity.config.ts
@@ -82,30 +86,32 @@ City and district schemas use field groups. To add a field:
 
 1. Open `schemaTypes/documents/city.ts` or `district.ts`.
 2. Add a `defineField` in the appropriate group.
-3. Use existing objects (e.g. `ctaLink`, `seo`) where applicable.
+3. For **text that varies by language**, use `localizedString` or `localizedText`. For **shared values** (e.g. one image, one URL, one number), use `image`, `string`, or `number`.
+4. Use existing objects (e.g. `localizedCtaLink`, `localizedSeo`) where applicable.
 
 ## Adding New Property Fields
 
 1. Open `schemaTypes/documents/property.ts`.
 2. Add the field to the right group (basic, pricing, location, details, media, seo, analytics).
 3. For translatable text, use `localizedString` or `localizedText`.
-4. For numeric/system data, use primitive types (number, string, etc.).
+4. For numeric/system data (price, area, coordinates), use primitive types — they are shared across languages.
 
-## Multilingual Fields
+## Multilingual Content (Field-Level Only)
 
-### Document-level (city, district, blogPost, homePage, siteSettings)
+The project uses **field-level i18n** only. There are no per-language document variants for city, district, homePage, siteSettings, blogPost, propertyType, or locationTag.
 
-- Add `languageField` from `../objects` as the first field.
-- Add the schema to `documentInternationalization` in `sanity.config.ts` if not already there.
-- The plugin manages the `language` field; editors create translations via the plugin UI.
+### Adding localized fields to a document
 
-### Field-level (property)
+- Use `localizedString` or `localizedText` for text that varies by language.
+- Use `localizedSlug` for slugs per language, `localizedCtaLink` for CTAs, `localizedSeo` for SEO meta per language, `localizedFaqItem` for FAQ items, `localizedFooterLink` for footer links.
+- **Shared across languages:** images, videos, URLs, numbers, references, booleans. Use `image`, `string`, `number`, `reference`, `boolean` etc. without localization.
+- Frontend resolves the value for the current locale (e.g. `title[locale]` with fallback).
 
-- Use `localizedString` or `localizedText` for translatable fields.
-- Structure: `{ en, ru, uk, sq }`.
-- Frontend resolves the value for the current locale.
+### Frontend compatibility
 
-## Adding New Languages
+For all field-level i18n types (city, district, homePage, siteSettings, property, blogPost, blogCategory, **propertyType**, **locationTag**), the frontend must resolve localized fields with a helper such as `getLocalizedValue(obj, locale)` (or equivalent). In particular: `propertyType.title`, `locationTag.title`, `locationTag.slug` (and their `shortDescription` / `description`) are objects `{ en, ru, uk, sq }` — do not render them as raw objects; pick the value for the current locale with fallback.
+
+### Adding new languages
 
 1. Edit `lib/languages.ts`:
 
@@ -119,15 +125,13 @@ export const languages: Language[] = [
 ]
 ```
 
-2. Update `localizedString` and `localizedText` in `schemaTypes/objects/` to include the new locale field.
-
-3. No changes needed in `sanity.config.ts` — languages are read from `lib/languages.ts`.
+2. Update `localizedString`, `localizedText`, `localizedSlug`, and any other localized objects in `schemaTypes/objects/` to include the new locale key (e.g. `de`).
 
 ## Ownership Model
 
-- **ownerUserId** — Set on create from `currentUser.id`. Used for dataset permissions and "My Properties" filter.
+- **ownerUserId** — Set on property create from `currentUser.id`. Used for dataset permissions and "My Properties" filter in Studio.
 - **agent** — Business relationship; required for display and filtering.
-- Structure: "My Properties" uses `ownerUserId == $userId`; "All Properties" shows everything.
+- Structure: "My Properties" uses `ownerUserId == $userId`; "All Properties" shows everything. Access control must also be enforced in the backend/API layer.
 
 ## Preview Logic
 
@@ -135,37 +139,35 @@ Preview is defined in each schema:
 
 ```ts
 preview: {
-  select: { title: 'title', subtitle: 'slug.current', media: 'heroImage' },
+  select: { titleEn: 'title.en', titleSq: 'title.sq', slugEn: 'slug.en', media: 'heroImage' },
   prepare(selection) {
-    return {
-      title: selection.title,
-      subtitle: selection.subtitle,
-      media: selection.media,
-    }
+    const title = selection.titleEn || selection.titleSq || 'Untitled'
+    const subtitle = selection.slugEn || selection.slugSq || 'no-slug'
+    return { title, subtitle, media: selection.media }
   },
 }
 ```
 
-For localized content (e.g. property title), select each locale and choose the first non-empty value in `prepare`.
+For localized content, select each locale and choose the first non-empty value in `prepare`.
 
 ## Desk Structure
 
-Defined in `structure/index.ts`. Sections:
+Defined in `structure/index.ts`:
 
-- Home Page (language list)
-- Site Settings (language list)
-- Locations (Cities, Districts)
-- Properties (My Properties, All Properties)
-- Property Types
-- Location Tags
-- Agents
-- Blog
+- **Home Page** — Singleton (documentId: homePage).
+- **Site Settings** — Singleton (documentId: siteSettings).
+- **Locations** — **Cities** list, **Districts** list (ordered by `order`, then title).
+- **Properties** — **My Properties** (filtered by `ownerUserId == $userId`), **All Properties**.
+- **Property Types** — Taxonomy list.
+- **Location Tags** — Taxonomy list.
+- **Agents** — List.
+- **Blog** — Blog posts (and categories if added).
 
 To add a new section, add a `S.listItem()` or `S.documentTypeListItem()` to the `items` array.
 
 ## Maintaining Schema Consistency
 
 - Use `defineType`, `defineField`, `defineArrayMember` from `sanity`.
-- Reuse objects (`seo`, `ctaLink`, etc.) instead of duplicating fields.
+- Reuse objects (`seo`, `localizedSeo`, `ctaLink`, `localizedCtaLink`, etc.) instead of duplicating fields.
 - Keep validation rules in schemas (required, min, max).
 - Document deprecated fields with `deprecated: { reason: '...' }` before removal.

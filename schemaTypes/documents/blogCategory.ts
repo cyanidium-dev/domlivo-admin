@@ -1,13 +1,8 @@
 import {defineType, defineField} from 'sanity'
 
-/**
- * Location tag (e.g. near beach, city center).
- * Field-level i18n: title, slug, description are localized.
- * Frontend: resolve locationTag.title, locationTag.slug with getLocalizedValue(locale).
- */
-export const locationTag = defineType({
-  name: 'locationTag',
-  title: 'Location Tag',
+export const blogCategory = defineType({
+  name: 'blogCategory',
+  title: 'Blog Category',
   type: 'document',
 
   fields: [
@@ -17,25 +12,22 @@ export const locationTag = defineType({
       type: 'localizedString',
       validation: (Rule) => Rule.required(),
     }),
-
     defineField({
       name: 'slug',
       title: 'Slug',
       type: 'localizedSlug',
       validation: (Rule) => Rule.required(),
     }),
-
     defineField({
       name: 'description',
       title: 'Description',
       type: 'localizedText',
     }),
-
     defineField({
-      name: 'active',
-      type: 'boolean',
-      title: 'Active',
-      initialValue: true,
+      name: 'order',
+      title: 'Order',
+      type: 'number',
+      description: 'Display order (lower numbers first).',
     }),
   ],
 
@@ -48,8 +40,8 @@ export const locationTag = defineType({
     },
     prepare(selection) {
       const title = selection.titleEn || selection.titleSq || 'Untitled'
-      const subtitle = selection.slugEn || selection.slugSq || 'no-slug'
-      return {title, subtitle}
+      const slug = selection.slugEn || selection.slugSq || 'no-slug'
+      return {title, subtitle: slug}
     },
   },
 })

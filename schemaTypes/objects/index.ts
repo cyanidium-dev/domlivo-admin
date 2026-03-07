@@ -7,6 +7,11 @@ import {districtStat} from './districtStat'
 import {districtMetric} from './districtMetric'
 import {localizedString} from './localizedString'
 import {localizedText} from './localizedText'
+import {localizedSlug} from './localizedSlug'
+import {localizedFaqItem} from './localizedFaqItem'
+import {localizedCtaLink} from './localizedCtaLink'
+import {localizedSeo} from './localizedSeo'
+import {localizedFooterLink} from './localizedFooterLink'
 
 /**
  * Object types (embeddable/reusable)
@@ -22,6 +27,11 @@ export const objects = [
   districtMetric,
   localizedString,
   localizedText,
+  localizedSlug,
+  localizedFaqItem,
+  localizedCtaLink,
+  localizedSeo,
+  localizedFooterLink,
 ]
 
 export {languageField} from './languageField'

@@ -23,51 +23,62 @@ This document describes the architecture of the Domlivo real estate platform: th
 
 ## CMS (Sanity Studio)
 
-### Document Types and Roles
+### Document Types and i18n
 
-| Document       | Role                     | Multilingual | Notes                                  |
-|----------------|--------------------------|--------------|----------------------------------------|
-| homePage       | Homepage content         | Yes          | One per language (homePage-en, etc.)   |
-| siteSettings   | Global settings          | Yes          | One per language (siteSettings-en)     |
-| city           | City landing pages       | Yes          | Document-level i18n                    |
-| district       | District pages           | Yes          | Document-level i18n, belongs to city   |
-| property       | Property listings        | No           | Localized fields (title, description)  |
-| propertyType   | Apartment, House, etc.   | No           | Shared taxonomy                        |
-| locationTag    | Tags for filtering       | No           | Near beach, central, etc.              |
-| agent          | Real estate agents       | No           | Linked to properties, has userId       |
-| blogPost       | Blog articles            | Yes          | Document-level i18n                    |
+| Document       | Role                     | Multilingual        | Notes                                  |
+|----------------|--------------------------|---------------------|----------------------------------------|
+| homePage       | Homepage content         | Field-level         | Singleton (documentId: homePage)       |
+| siteSettings   | Global settings          | Field-level         | Singleton (documentId: siteSettings)   |
+| city           | City landing pages       | Field-level         | One doc per city, localized fields      |
+| district       | District pages           | Field-level         | One doc per district, belongs to city  |
+| property       | Property listings        | Field-level         | Localized title, description, etc.     |
+| blogPost       | Blog articles            | Field-level         | One doc per post, localized fields      |
+| blogCategory   | Blog categories          | Field-level         | One doc per category (if used)         |
+| propertyType   | Apartment, House, etc.   | Field-level         | One doc per type, localized title      |
+| locationTag    | Tags for filtering       | Field-level         | One doc per tag, localized title/slug  |
+| agent          | Real estate agents       | No                  | Linked to properties, has userId      |
+
+**Document-level i18n is not used** for city, district, homePage, siteSettings, blogPost, propertyType, or locationTag. There are no per-language document variants (e.g. no `homePage-en`, `city-tirana-sq`). All multilingual content is stored in a single document per entity using localized field types.
 
 ### Content Flow
 
 1. Editors log into Sanity Studio.
 2. Content is stored as documents in the Content Lake.
-3. The frontend queries via GROQ using filters like `language == $locale` for multilingual docs.
-4. Properties use `localizedString`/`localizedText`; the frontend resolves the correct language at render time.
+3. The frontend queries via GROQ and resolves localized fields (e.g. `title.en`, `title.sq`) for the current locale.
+4. No `language == $locale` filter is needed for these types — one document holds all languages.
 
-### Multilingual Content Model
+### Field-Level i18n Model
 
-**Document-level (separate documents per language):**
+- **Localized fields** — Use `localizedString`, `localizedText`, `localizedSlug`, `localizedCtaLink`, `localizedSeo`, `localizedFaqItem`, `localizedFooterLink` where text varies by language. Structure: `{ en, ru, uk, sq }`.
+- **Shared across languages** — Images, videos, URLs, numbers, references, and booleans are stored once and reused for all locales.
+- **Frontend** — Uses a helper to pick the correct value for the current locale (e.g. `title[locale]` or fallback chain).
 
-- `homePage`, `siteSettings`, `city`, `district`, `blogPost`
-- Each has a hidden `language` field set by `@sanity/document-internationalization`
-- Query: `*[_type == "city" && language == $locale]`
+### Studio Structure
 
-**Field-level (single document, localized fields):**
+- **Home Page** — Single document (singleton).
+- **Site Settings** — Single document (singleton).
+- **Locations** — **Cities** list and **Districts** list. Districts are grouped under their city via the `city` reference; structure can group districts by city for UX.
+- **Properties** — Grouped by business views: **My Properties** (filtered by `ownerUserId`), **All Properties**.
+- **Property Types** — Taxonomy list.
+- **Location Tags** — Taxonomy list.
+- **Agents** — List of agents.
+- **Blog** — **Categories** (if present) and **Posts**; each is one document with localized fields.
 
-- `property` uses `localizedString` and `localizedText`
-- Structure: `{ en: "...", ru: "...", uk: "...", sq: "..." }`
-- Frontend uses a helper to pick the right value for the current locale
+### Access Model
+
+- **Realtors (agents)** — Can only work with their own properties (filtered by `ownerUserId == currentUser.id`). Site-wide content (homePage, siteSettings, cities, districts, blog) is restricted; only authorized roles should edit it.
+- **Studio hiding/filtering** — “My Properties” vs “All Properties” and visibility of singletons/locations/blog are UX-level restrictions in the desk structure.
+- **Hard security** — Must be enforced in the backend/API layer (dataset permissions, custom API) as well; Studio structure alone is not sufficient for access control.
 
 ### Document Ownership
 
-- Each property has `ownerUserId` (Sanity user ID) for security/permissions.
-- Agents see "My Properties" filtered by `ownerUserId == currentUser.id`.
-- The `agent` reference is for business logic; `ownerUserId` is for access control.
+- Each property has `ownerUserId` (Sanity user ID) for security and permissions.
+- Agents see “My Properties” filtered by `ownerUserId == currentUser.id`.
+- The `agent` reference is for business logic and display; `ownerUserId` is for access control.
 
 ### SEO Architecture
 
-- **SEO object** — Reusable block with metaTitle, metaDescription, ogTitle, ogDescription, ogImage, noIndex.
-- **Document-level** — Used by city, district, blogPost, property, homePage, siteSettings.
+- **SEO object** — Reusable block with metaTitle, metaDescription, ogTitle, ogDescription, ogImage, noIndex. Used by city, district, blogPost, property, homePage, siteSettings. Where needed, a **localized** SEO object (e.g. `localizedSeo`) is used so each language has its own meta.
 - **Default SEO** — `siteSettings` has `defaultSeo` for fallbacks.
 
 ## Frontend (Next.js)
@@ -75,26 +86,15 @@ This document describes the architecture of the Domlivo real estate platform: th
 The frontend is a separate repository. It:
 
 - Fetches content via `next-sanity` or the Sanity HTTP client
-- Uses GROQ queries filtered by locale
-- Resolves `localizedString`/`localizedText` with a helper
+- Resolves localized fields with a helper for the current locale (no document-level language filter for field-level types)
 - Generates URLs like `/en/sale/tirana` or `/ru/rent/durres/plazh`
+- Can build schema.org data from CMS fields for articles, places, etc.
 
-## Singleton Multilingual Pages
+## Singletons
 
-`homePage` and `siteSettings` are singletons per language:
-
-- Fixed document IDs: `homePage-en`, `homePage-sq`, `homePage-ru`, `homePage-uk`
-- Same pattern for `siteSettings-{locale}`
-- Structure exposes language-specific entries (Home Page → English, Albanian, etc.)
-
-## Localized Fields vs Multilingual Documents
-
-| Approach        | Use Case               | Example                        |
-|-----------------|------------------------|--------------------------------|
-| Multilingual doc| Full page per language | City page for Tirana (en/ru)   |
-| Localized field | Same entity, many langs| Property title in 4 languages  |
-
-Properties use localized fields because price, area, and location are shared; only text varies per language.
+- **homePage** — One document with fixed ID `homePage`. All languages live in the same document (localized fields).
+- **siteSettings** — One document with fixed ID `siteSettings`. Same pattern.
+- There are no per-language singleton IDs (no `homePage-en`, `siteSettings-sq`, etc.).
 
 ## Document Relationships
 

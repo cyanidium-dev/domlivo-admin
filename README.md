@@ -8,18 +8,19 @@ Domlivo is a headless CMS that powers property listings, city and district landi
 
 **Key capabilities:**
 
-- Multilingual content (English, Russian, Ukrainian, Albanian)
+- Multilingual content (English, Russian, Ukrainian, Albanian) via **field-level i18n**
 - Property listings with localized fields
-- City and district SEO landing pages
-- Agent-owned properties with filtered views
-- Global site settings and homepage content per language
+- City and district SEO landing pages (one document each, localized fields)
+- Agent-owned properties with filtered views in Studio
+- Global site settings and homepage as **singletons** (one document each, localized fields)
+- Blog: one post / one category = one document with localized fields
 
 ## Tech Stack
 
 - **Sanity Studio v5** — Content management
 - **TypeScript** — Type safety
-- **@sanity/document-internationalization** — Document-level translations
 - **GROQ** — Content querying (from frontend)
+- **Field-level localization** — `localizedString`, `localizedText`, and related objects for multilingual fields
 
 ## Architecture Overview
 
@@ -28,11 +29,11 @@ domlivo-admin/
 ├── lib/
 │   └── languages.ts          # Supported locales (single source of truth)
 ├── schemaTypes/
-│   ├── documents/            # Document schemas (city, property, etc.)
-│   ├── objects/              # Reusable objects (seo, ctaLink, etc.)
+│   ├── documents/            # Document schemas (city, property, homePage, etc.)
+│   ├── objects/              # Reusable objects (seo, ctaLink, localizedString, etc.)
 │   └── index.ts              # Schema registry
 ├── structure/
-│   └── index.ts              # Custom desk structure
+│   └── index.ts              # Custom desk structure (Locations, Properties, Blog, etc.)
 ├── sanity.config.ts
 ├── sanity.cli.ts
 └── package.json
@@ -40,27 +41,29 @@ domlivo-admin/
 
 ## Multilingual Strategy
 
-The project uses two approaches:
+The project uses **field-level i18n** only:
 
-1. **Document-level i18n** — Separate documents per language (`homePage`, `siteSettings`, `city`, `district`, `blogPost`). Managed via `@sanity/document-internationalization`.
+- **One document per entity** — One city, one district, one home page, one site settings document, one property, one blog post, one property type, one location tag.
+- **Localized fields** — Text fields use `localizedString`, `localizedText`, or other localized objects (`{ en, ru, uk, sq }`). Images, URLs, numbers, references, and flags are **shared** across languages.
+- **Supported locales:** `en`, `ru`, `uk`, `sq` (configurable in `lib/languages.ts`).
+- **Frontend:** Resolve `propertyType.title`, `locationTag.title`, `locationTag.slug` (and other localized fields) with `getLocalizedValue(obj, locale)` or equivalent.
 
-2. **Field-level localization** — Single document with localized fields (`property` uses `localizedString`, `localizedText` for `title`, `description`, etc.).
-
-**Supported locales:** `en`, `ru`, `uk`, `sq` (configurable in `lib/languages.ts`).
+Document-level translations (separate documents per language) are **not** used for city, district, homePage, siteSettings, blogPost, propertyType, or locationTag.
 
 ## Data Model Overview
 
-| Type         | Multilingual | Purpose                          |
-|--------------|--------------|----------------------------------|
-| homePage     | Yes          | Homepage content per language    |
-| siteSettings | Yes          | Global site settings per language|
-| city         | Yes          | City landing pages               |
-| district     | Yes          | District landing pages           |
-| blogPost     | Yes          | Blog articles                    |
-| property     | No (localized fields) | Property listings        |
-| propertyType | No           | Apartment, House, Land, etc.     |
-| locationTag  | No           | Tags (near beach, central, etc.) |
-| agent        | No           | Real estate agents               |
+| Type           | Multilingual        | Purpose                          |
+|----------------|---------------------|----------------------------------|
+| homePage       | Field-level         | Homepage content (singleton)     |
+| siteSettings   | Field-level         | Global site settings (singleton) |
+| city           | Field-level         | City landing pages               |
+| district       | Field-level         | District landing pages           |
+| property       | Field-level         | Property listings                |
+| blogPost       | Field-level         | Blog articles                    |
+| blogCategory   | Field-level         | Blog categories (if used)        |
+| propertyType   | Field-level         | Apartment, House, Land, etc.     |
+| locationTag    | Field-level         | Tags (near beach, central, etc.) |
+| agent          | No                  | Real estate agents               |
 
 ## Development Setup
 
@@ -97,6 +100,36 @@ npm start
 ```
 
 Studio runs at `http://localhost:3333` by default.
+
+## Seed Script
+
+To populate the dataset with demo content (properties, cities, agents, blog posts, etc.):
+
+1. Create an API token at [sanity.io/manage](https://sanity.io/manage) → your project → **API** → **Tokens**
+2. Grant **Editor** or **Admin** permission
+3. Run:
+
+```bash
+SANITY_API_TOKEN=your_token npm run seed
+```
+
+On Windows (PowerShell):
+
+```powershell
+$env:SANITY_API_TOKEN="your_token"; npm run seed
+```
+
+The script creates: property types, location tags, cities (one doc per city with localized fields), districts (one doc per district), agents, homePage (singleton), siteSettings (singleton), properties, and blog posts.
+
+## Content Reset (optional)
+
+To clear content that was created with an older document-level i18n setup and reseed with the current field-level model:
+
+```bash
+npm run reset:content:dry   # Preview what would be deleted
+npm run reset:content       # Execute reset (requires SANITY_API_TOKEN)
+npm run seed                # Seed fresh content
+```
 
 ## Deployment Notes
 

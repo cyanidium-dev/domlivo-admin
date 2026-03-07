@@ -1,5 +1,4 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
-import {languageField} from '../objects'
 
 export const homePage = defineType({
   name: 'homePage',
@@ -20,13 +19,11 @@ export const homePage = defineType({
   ],
 
   fields: [
-    languageField,
-
     // HERO
     defineField({
       name: 'heroTitle',
       title: 'Hero Title',
-      type: 'string',
+      type: 'localizedString',
       group: 'hero',
       description: 'Main headline in the homepage hero section.',
       validation: (Rule) => Rule.required(),
@@ -34,14 +31,14 @@ export const homePage = defineType({
     defineField({
       name: 'heroSubtitle',
       title: 'Hero Subtitle',
-      type: 'text',
+      type: 'localizedText',
       group: 'hero',
       description: 'Supporting text below the hero headline.',
     }),
     defineField({
       name: 'heroShortLine',
       title: 'Hero Short Line',
-      type: 'string',
+      type: 'localizedString',
       group: 'hero',
     }),
     defineField({
@@ -55,7 +52,7 @@ export const homePage = defineType({
     defineField({
       name: 'heroCta',
       title: 'Hero CTA',
-      type: 'ctaLink',
+      type: 'localizedCtaLink',
       group: 'hero',
     }),
 
@@ -70,19 +67,19 @@ export const homePage = defineType({
     defineField({
       name: 'featuredTitle',
       title: 'Featured Title',
-      type: 'string',
+      type: 'localizedString',
       group: 'featured',
     }),
     defineField({
       name: 'featuredSubtitle',
       title: 'Featured Subtitle',
-      type: 'text',
+      type: 'localizedText',
       group: 'featured',
     }),
     defineField({
       name: 'featuredCta',
       title: 'Featured CTA',
-      type: 'ctaLink',
+      type: 'localizedCtaLink',
       group: 'featured',
     }),
 
@@ -90,19 +87,19 @@ export const homePage = defineType({
     defineField({
       name: 'citiesTitle',
       title: 'Cities Title',
-      type: 'string',
+      type: 'localizedString',
       group: 'cities',
     }),
     defineField({
       name: 'citiesSubtitle',
       title: 'Cities Subtitle',
-      type: 'text',
+      type: 'localizedText',
       group: 'cities',
     }),
     defineField({
       name: 'citiesCta',
       title: 'Cities CTA',
-      type: 'ctaLink',
+      type: 'localizedCtaLink',
       group: 'cities',
     }),
 
@@ -110,19 +107,19 @@ export const homePage = defineType({
     defineField({
       name: 'propertyTypesTitle',
       title: 'Property Types Title',
-      type: 'string',
+      type: 'localizedString',
       group: 'propertyTypes',
     }),
     defineField({
       name: 'propertyTypesSubtitle',
       title: 'Property Types Subtitle',
-      type: 'text',
+      type: 'localizedText',
       group: 'propertyTypes',
     }),
     defineField({
       name: 'propertyTypesCta',
       title: 'Property Types CTA',
-      type: 'ctaLink',
+      type: 'localizedCtaLink',
       group: 'propertyTypes',
     }),
 
@@ -130,13 +127,13 @@ export const homePage = defineType({
     defineField({
       name: 'investmentTitle',
       title: 'Investment Title',
-      type: 'string',
+      type: 'localizedString',
       group: 'investment',
     }),
     defineField({
       name: 'investmentSubtitle',
       title: 'Investment Subtitle',
-      type: 'text',
+      type: 'localizedText',
       group: 'investment',
     }),
     defineField({
@@ -165,7 +162,7 @@ export const homePage = defineType({
     defineField({
       name: 'investmentCta',
       title: 'Investment CTA',
-      type: 'ctaLink',
+      type: 'localizedCtaLink',
       group: 'investment',
     }),
 
@@ -173,14 +170,13 @@ export const homePage = defineType({
     defineField({
       name: 'aboutTitle',
       title: 'About Title',
-      type: 'string',
+      type: 'localizedString',
       group: 'about',
     }),
     defineField({
       name: 'aboutText',
       title: 'About Text',
-      type: 'array',
-      of: [{type: 'block'}],
+      type: 'localizedText',
       group: 'about',
     }),
     defineField({
@@ -204,20 +200,19 @@ export const homePage = defineType({
     defineField({
       name: 'agentsTitle',
       title: 'Agents Title',
-      type: 'string',
+      type: 'localizedString',
       group: 'agents',
     }),
     defineField({
       name: 'agentsSubtitle',
       title: 'Agents Subtitle',
-      type: 'text',
+      type: 'localizedText',
       group: 'agents',
     }),
     defineField({
       name: 'agentsText',
       title: 'Agents Text',
-      type: 'array',
-      of: [{type: 'block'}],
+      type: 'localizedText',
       group: 'agents',
     }),
     defineField({
@@ -232,7 +227,7 @@ export const homePage = defineType({
     defineField({
       name: 'agentsCta',
       title: 'Agents CTA',
-      type: 'ctaLink',
+      type: 'localizedCtaLink',
       group: 'agents',
     }),
 
@@ -247,19 +242,19 @@ export const homePage = defineType({
     defineField({
       name: 'blogTitle',
       title: 'Blog Title',
-      type: 'string',
+      type: 'localizedString',
       group: 'blog',
     }),
     defineField({
       name: 'blogSubtitle',
       title: 'Blog Subtitle',
-      type: 'text',
+      type: 'localizedText',
       group: 'blog',
     }),
     defineField({
       name: 'blogCta',
       title: 'Blog CTA',
-      type: 'ctaLink',
+      type: 'localizedCtaLink',
       group: 'blog',
     }),
 
@@ -267,14 +262,13 @@ export const homePage = defineType({
     defineField({
       name: 'seoText',
       title: 'SEO Text',
-      type: 'array',
-      of: [{type: 'block'}],
+      type: 'localizedText',
       group: 'seo',
     }),
     defineField({
       name: 'seo',
       title: 'SEO',
-      type: 'seo',
+      type: 'localizedSeo',
       group: 'seo',
     }),
 
@@ -289,28 +283,22 @@ export const homePage = defineType({
     defineField({
       name: 'faqTitle',
       title: 'FAQ Title',
-      type: 'string',
+      type: 'localizedString',
       group: 'faq',
     }),
     defineField({
       name: 'faqItems',
       title: 'FAQ Items',
       type: 'array',
-      of: [defineArrayMember({type: 'faqItem'})],
+      of: [defineArrayMember({type: 'localizedFaqItem'})],
       group: 'faq',
       validation: (Rule) => Rule.required().min(1).max(20),
     }),
   ],
 
   preview: {
-    select: {
-      language: 'language',
-    },
-    prepare(selection) {
-      return {
-        title: 'Home Page',
-        subtitle: selection.language || undefined,
-      }
+    prepare() {
+      return {title: 'Home Page'}
     },
   },
 })

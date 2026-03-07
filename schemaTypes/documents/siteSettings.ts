@@ -1,5 +1,4 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
-import {languageField} from '../objects'
 
 export const siteSettings = defineType({
   name: 'siteSettings',
@@ -15,20 +14,18 @@ export const siteSettings = defineType({
   ],
 
   fields: [
-    languageField,
-
     // BRANDING
     defineField({
       name: 'siteName',
       title: 'Site Name',
-      type: 'string',
+      type: 'localizedString',
       group: 'branding',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'siteTagline',
       title: 'Site Tagline',
-      type: 'string',
+      type: 'localizedString',
       group: 'branding',
     }),
     defineField({
@@ -75,14 +72,14 @@ export const siteSettings = defineType({
       name: 'footerQuickLinks',
       title: 'Footer Quick Links',
       type: 'array',
-      of: [defineArrayMember({type: 'footerLink'})],
+      of: [defineArrayMember({type: 'localizedFooterLink'})],
       group: 'footer',
       validation: (Rule) => Rule.max(20),
     }),
     defineField({
       name: 'copyrightText',
       title: 'Copyright Text',
-      type: 'string',
+      type: 'localizedString',
       group: 'footer',
     }),
 
@@ -90,21 +87,15 @@ export const siteSettings = defineType({
     defineField({
       name: 'defaultSeo',
       title: 'Default SEO',
-      type: 'seo',
+      type: 'localizedSeo',
       group: 'seo',
       description: 'Default meta and Open Graph values used when page-specific SEO is not set',
     }),
   ],
 
   preview: {
-    select: {
-      language: 'language',
-    },
-    prepare(selection) {
-      return {
-        title: 'Site Settings',
-        subtitle: selection.language || undefined,
-      }
+    prepare() {
+      return {title: 'Site Settings'}
     },
   },
 })
