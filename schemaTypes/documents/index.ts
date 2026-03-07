@@ -3,9 +3,23 @@ import {district} from './district'
 import {blogPost} from './blogPost'
 import {agent} from './agent'
 import {property} from './property'
+import {propertyType} from './propertyType'
+import {locationTag} from './locationTag'
+import {homePage} from './homePage'
+import {siteSettings} from './siteSettings'
 
 /**
  * Document types (standalone content)
  * Add new document schemas here.
  */
-export const documents = [city, district, blogPost, agent, property]
+export const documents = [
+  city,
+  district,
+  blogPost,
+  agent,
+  property,
+  propertyType,
+  locationTag,
+  homePage,
+  siteSettings,
+]

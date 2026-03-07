@@ -1,4 +1,4 @@
-import {defineType, defineField} from 'sanity'
+import {defineType, defineField, defineArrayMember} from 'sanity'
 import {languageField} from '../objects'
 
 export const city = defineType({
@@ -6,13 +6,25 @@ export const city = defineType({
   title: 'City',
   type: 'document',
 
+  groups: [
+    {name: 'basic', title: 'Basic', default: true},
+    {name: 'hero', title: 'Hero'},
+    {name: 'content', title: 'Content'},
+    {name: 'districts', title: 'Districts'},
+    {name: 'media', title: 'Media'},
+    {name: 'faq', title: 'FAQ'},
+    {name: 'seo', title: 'SEO'},
+  ],
+
   fields: [
+    // BASIC
     languageField,
 
     defineField({
       name: 'title',
       title: 'City name',
       type: 'string',
+      group: 'basic',
       validation: (Rule) => Rule.required(),
     }),
 
@@ -23,13 +35,242 @@ export const city = defineType({
         source: 'title',
         maxLength: 96,
       },
+      group: 'basic',
       validation: (Rule) => Rule.required(),
+    }),
+
+    defineField({
+      name: 'popular',
+      title: 'Popular',
+      type: 'boolean',
+      group: 'basic',
+      description: 'Mark as a popular city for filtering and highlighting.',
+    }),
+
+    defineField({
+      name: 'order',
+      title: 'Order',
+      type: 'number',
+      group: 'basic',
+      description: 'Display order (lower numbers first).',
+    }),
+
+    defineField({
+      name: 'isPublished',
+      title: 'Published',
+      type: 'boolean',
+      group: 'basic',
+      initialValue: true,
+      description: 'Show this city on the website.',
+    }),
+
+    // HERO
+    defineField({
+      name: 'heroTitle',
+      title: 'Hero Title',
+      type: 'string',
+      group: 'hero',
+      description: 'Main headline on the city landing page hero section.',
+    }),
+
+    defineField({
+      name: 'heroSubtitle',
+      title: 'Hero Subtitle',
+      type: 'text',
+      group: 'hero',
+      description: 'Supporting text in the city landing page hero.',
+    }),
+
+    defineField({
+      name: 'heroShortLine',
+      title: 'Hero Short Line',
+      type: 'string',
+      group: 'hero',
+      description: 'Short tagline shown in the hero area.',
+    }),
+
+    defineField({
+      name: 'heroImage',
+      title: 'Hero Image',
+      type: 'image',
+      group: 'hero',
+      description: 'Main image for the city landing page hero.',
+      options: {hotspot: true},
+    }),
+
+    defineField({
+      name: 'heroCta',
+      title: 'Hero CTA',
+      type: 'ctaLink',
+      group: 'hero',
+    }),
+
+    // CONTENT
+    defineField({
+      name: 'shortDescription',
+      title: 'Short Description',
+      type: 'text',
+      group: 'content',
+      description: 'Brief summary of the city; used in cards and listings.',
+    }),
+
+    defineField({
+      name: 'description',
+      title: 'Description',
+      type: 'array',
+      of: [{type: 'block'}],
+      group: 'content',
+      description: 'Main content for the city landing page.',
+    }),
+
+    defineField({
+      name: 'investmentText',
+      title: 'Investment Text',
+      type: 'array',
+      of: [{type: 'block'}],
+      group: 'content',
+      description: 'Content for the investment section on the city page.',
+    }),
+
+    defineField({
+      name: 'featuredPropertiesTitle',
+      title: 'Featured Properties Title',
+      type: 'string',
+      group: 'content',
+      description: 'Title shown above the featured properties slider on the city page.',
+    }),
+
+    defineField({
+      name: 'featuredPropertiesSubtitle',
+      title: 'Featured Properties Subtitle',
+      type: 'text',
+      group: 'content',
+      description: 'Subtitle shown above the featured properties slider.',
+    }),
+
+    defineField({
+      name: 'allPropertiesCta',
+      title: 'All Properties CTA',
+      type: 'ctaLink',
+      group: 'content',
+    }),
+
+    // DISTRICTS
+    defineField({
+      name: 'districtsTitle',
+      title: 'Districts Title',
+      type: 'string',
+      group: 'districts',
+    }),
+
+    defineField({
+      name: 'districtsIntro',
+      title: 'Districts Introduction',
+      type: 'array',
+      of: [{type: 'block'}],
+      group: 'districts',
+      description: 'Introductory text for the districts section.',
+    }),
+
+    defineField({
+      name: 'districtStats',
+      title: 'District Stats',
+      type: 'array',
+      of: [defineArrayMember({type: 'districtStat'})],
+      group: 'districts',
+      validation: (Rule) => Rule.max(20),
+    }),
+
+    // MEDIA
+    defineField({
+      name: 'cityVideoUrl',
+      title: 'City Video URL',
+      type: 'string',
+      group: 'media',
+      description: 'Paste a YouTube or Vimeo URL. Used for the city video section.',
+    }),
+
+    defineField({
+      name: 'galleryTitle',
+      title: 'Gallery Title',
+      type: 'string',
+      group: 'media',
+    }),
+
+    defineField({
+      name: 'gallerySubtitle',
+      title: 'Gallery Subtitle',
+      type: 'text',
+      group: 'media',
+    }),
+
+    defineField({
+      name: 'gallery',
+      title: 'Gallery',
+      type: 'array',
+      group: 'media',
+      of: [
+        defineArrayMember({
+          type: 'image',
+          options: {hotspot: true},
+        }),
+      ],
+      validation: (Rule) =>
+        Rule.min(1).error('Add at least one image').max(20).error('Maximum 20 images allowed'),
+    }),
+
+    // FAQ
+    defineField({
+      name: 'faqTitle',
+      title: 'FAQ Title',
+      type: 'string',
+      group: 'faq',
+    }),
+
+    defineField({
+      name: 'faqItems',
+      title: 'FAQ Items',
+      type: 'array',
+      of: [defineArrayMember({type: 'faqItem'})],
+      group: 'faq',
+      validation: (Rule) => Rule.max(20),
+    }),
+
+    // SEO
+    defineField({
+      name: 'seoText',
+      title: 'SEO Text',
+      type: 'array',
+      of: [{type: 'block'}],
+      group: 'seo',
+      description: 'Additional content for SEO; can be displayed at bottom of page.',
     }),
 
     defineField({
       name: 'seo',
       title: 'SEO',
       type: 'seo',
+      group: 'seo',
     }),
   ],
+
+  preview: {
+    select: {
+      title: 'title',
+      slug: 'slug.current',
+      language: 'language',
+      media: 'heroImage',
+    },
+    prepare(selection) {
+      const {title, slug, language, media} = selection
+      const langPart = language ? `${language} • ` : ''
+      const slugPart = slug || 'no-slug'
+      const subtitle = `${langPart}${slugPart}`
+      return {
+        title,
+        subtitle,
+        media,
+      }
+    },
+  },
 })

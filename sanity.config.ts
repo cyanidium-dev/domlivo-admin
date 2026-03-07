@@ -18,12 +18,27 @@ export default defineConfig({
     visionTool(),
     documentInternationalization({
       supportedLanguages: languages,
-      schemaTypes: ['city', 'district', 'blogPost'],
+      schemaTypes: ['city', 'district', 'blogPost', 'homePage', 'siteSettings'],
       languageField: 'language',
     }),
   ],
 
   schema: {
     types: schemaTypes,
+    templates: (prev) => [
+      ...prev,
+      ...languages.map((lang) => ({
+        id: `homePage-${lang.id}`,
+        title: `Home Page (${lang.title})`,
+        schemaType: 'homePage',
+        value: {language: lang.id},
+      })),
+      ...languages.map((lang) => ({
+        id: `siteSettings-${lang.id}`,
+        title: `Site Settings (${lang.title})`,
+        schemaType: 'siteSettings',
+        value: {language: lang.id},
+      })),
+    ],
   },
 })

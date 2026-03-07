@@ -9,18 +9,20 @@ export const property = defineType({
     {name: 'basic', title: 'Basic', default: true},
     {name: 'pricing', title: 'Pricing'},
     {name: 'location', title: 'Location'},
+    {name: 'details', title: 'Details'},
     {name: 'media', title: 'Media'},
-    {name: 'analytics', title: 'Analytics'},
     {name: 'seo', title: 'SEO'},
+    {name: 'analytics', title: 'Analytics'},
   ],
 
   fields: [
+    // BASIC
     defineField({
       name: 'title',
       title: 'Title',
-      type: 'string',
-      description: 'Main title of the property listing',
+      type: 'localizedString',
       group: 'basic',
+      description: 'Property title per language. Used on multilingual frontend pages.',
       validation: (Rule) => Rule.required(),
     }),
 
@@ -28,20 +30,32 @@ export const property = defineType({
       name: 'slug',
       type: 'slug',
       title: 'URL slug',
-      description: 'Used in the property URL; generated from title',
+      description: 'Used in the property URL. Generated from title.',
       group: 'basic',
       options: {
-        source: 'title',
+        source: (document: Record<string, unknown>) => {
+          const t = document?.title as {en?: string; ru?: string; uk?: string; sq?: string} | undefined
+          return (t && (t.en || t.ru || t.uk || t.sq)) || ''
+        },
         maxLength: 96,
       },
       validation: (Rule) => Rule.required(),
     }),
 
     defineField({
-      name: 'description',
-      type: 'array',
-      of: [{type: 'block'}],
+      name: 'shortDescription',
+      title: 'Short Description',
+      type: 'localizedText',
       group: 'basic',
+      description: 'Brief summary per language for cards and listings.',
+    }),
+
+    defineField({
+      name: 'description',
+      title: 'Description',
+      type: 'localizedText',
+      group: 'basic',
+      description: 'Full description per language for the property detail page.',
     }),
 
     defineField({
@@ -53,14 +67,82 @@ export const property = defineType({
     }),
 
     defineField({
-      name: 'price',
-      title: 'Price in EUR',
-      type: 'number',
-      description: 'Listing price in euros (EUR)',
-      group: 'pricing',
-      validation: (Rule) => Rule.required().min(0).error('Price must be a positive value'),
+      name: 'type',
+      title: 'Property Type',
+      type: 'reference',
+      to: [{type: 'propertyType'}],
+      group: 'basic',
+      description: 'e.g. Apartment, House, Land',
+      validation: (Rule) => Rule.required(),
     }),
 
+    defineField({
+      name: 'status',
+      title: 'Status',
+      type: 'string',
+      group: 'basic',
+      options: {
+        list: [
+          {title: 'Sale', value: 'sale'},
+          {title: 'Rent', value: 'rent'},
+          {title: 'Short-term', value: 'short-term'},
+        ],
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+
+    defineField({
+      name: 'isPublished',
+      title: 'Published',
+      type: 'boolean',
+      group: 'basic',
+      initialValue: true,
+      description: 'Show this property on the website.',
+    }),
+
+    // PRICING
+    defineField({
+      name: 'price',
+      title: 'Price',
+      type: 'number',
+      group: 'pricing',
+      description: 'Listing price.',
+      validation: (Rule) =>
+        Rule.required().min(0).error('Price must be a positive value'),
+    }),
+
+    defineField({
+      name: 'currency',
+      title: 'Currency',
+      type: 'string',
+      group: 'pricing',
+      initialValue: 'EUR',
+      options: {
+        list: [
+          {title: 'EUR', value: 'EUR'},
+          {title: 'USD', value: 'USD'},
+          {title: 'ALL', value: 'ALL'},
+        ],
+      },
+    }),
+
+    defineField({
+      name: 'featured',
+      title: 'Featured',
+      type: 'boolean',
+      group: 'pricing',
+      initialValue: false,
+    }),
+
+    defineField({
+      name: 'investment',
+      title: 'Investment',
+      type: 'boolean',
+      group: 'pricing',
+      initialValue: false,
+    }),
+
+    // LOCATION
     defineField({
       name: 'city',
       type: 'reference',
@@ -89,9 +171,96 @@ export const property = defineType({
     }),
 
     defineField({
-      name: 'gallery',
+      name: 'address',
+      title: 'Address',
+      type: 'localizedString',
+      group: 'location',
+      description: 'Street address per language.',
+    }),
+
+    defineField({
+      name: 'coordinatesLat',
+      title: 'Latitude',
+      type: 'number',
+      group: 'location',
+      validation: (Rule) =>
+        Rule.min(-90).max(90).error('Latitude must be between -90 and 90'),
+    }),
+
+    defineField({
+      name: 'coordinatesLng',
+      title: 'Longitude',
+      type: 'number',
+      group: 'location',
+      validation: (Rule) =>
+        Rule.min(-180).max(180).error('Longitude must be between -180 and 180'),
+    }),
+
+    defineField({
+      name: 'locationTags',
+      title: 'Location Tags',
       type: 'array',
+      of: [defineArrayMember({type: 'reference', to: [{type: 'locationTag'}]})],
+      group: 'location',
+      description: 'Tags for filtering and discovery (e.g. near beach, central).',
+    }),
+
+    // DETAILS
+    defineField({
+      name: 'area',
+      title: 'Area (m²)',
+      type: 'number',
+      group: 'details',
+      validation: (Rule) => Rule.min(0),
+    }),
+
+    defineField({
+      name: 'bedrooms',
+      title: 'Bedrooms',
+      type: 'number',
+      group: 'details',
+      validation: (Rule) => Rule.min(0),
+    }),
+
+    defineField({
+      name: 'bathrooms',
+      title: 'Bathrooms',
+      type: 'number',
+      group: 'details',
+      validation: (Rule) => Rule.min(0),
+    }),
+
+    defineField({
+      name: 'yearBuilt',
+      title: 'Year Built',
+      type: 'number',
+      group: 'details',
+      validation: (Rule) =>
+        Rule.min(1800).max(2100).error('Year must be between 1800 and 2100'),
+    }),
+
+    defineField({
+      name: 'amenities',
+      title: 'Amenities',
+      type: 'array',
+      of: [{type: 'string'}],
+      group: 'details',
+      description: 'List of amenities (e.g. Parking, Pool, Balcony).',
+    }),
+
+    defineField({
+      name: 'propertyCode',
+      title: 'Property Code',
+      type: 'string',
+      group: 'details',
+      description: 'Internal reference code for this property.',
+    }),
+
+    // MEDIA
+    defineField({
+      name: 'gallery',
       title: 'Gallery',
+      type: 'array',
       group: 'media',
       of: [
         defineArrayMember({
@@ -103,10 +272,19 @@ export const property = defineType({
         Rule.required()
           .min(1)
           .error('Add at least one image')
-          .max(20)
-          .error('Maximum 20 images allowed'),
+          .max(30)
+          .error('Maximum 30 images allowed'),
     }),
 
+    // SEO
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo',
+      group: 'seo',
+    }),
+
+    // ANALYTICS
     defineField({
       name: 'createdAt',
       type: 'datetime',
@@ -116,10 +294,30 @@ export const property = defineType({
     }),
 
     defineField({
-      name: 'seo',
-      title: 'SEO',
-      type: 'seo',
-      group: 'seo',
+      name: 'viewCount',
+      title: 'View Count',
+      type: 'number',
+      group: 'analytics',
+      initialValue: 0,
+      readOnly: true,
+    }),
+
+    defineField({
+      name: 'saveCount',
+      title: 'Save Count',
+      type: 'number',
+      group: 'analytics',
+      initialValue: 0,
+      readOnly: true,
+    }),
+
+    defineField({
+      name: 'contactCount',
+      title: 'Contact Count',
+      type: 'number',
+      group: 'analytics',
+      initialValue: 0,
+      readOnly: true,
     }),
 
     // TODO: migrate existing properties to populate ownerUserId
@@ -129,6 +327,7 @@ export const property = defineType({
       type: 'string',
       readOnly: true,
       hidden: true,
+      group: 'analytics',
       initialValue: (_, context) =>
         (context as {currentUser?: {id?: string}}).currentUser?.id ?? '',
     }),
@@ -136,20 +335,36 @@ export const property = defineType({
 
   preview: {
     select: {
-      title: 'title',
+      titleEn: 'title.en',
+      titleRu: 'title.ru',
+      titleUk: 'title.uk',
+      titleSq: 'title.sq',
+      status: 'status',
       price: 'price',
+      currency: 'currency',
       cityTitle: 'city.title',
       media: 'gallery.0',
     },
     prepare(selection) {
-      const {title, price, cityTitle, media} = selection
-      const priceStr = price != null ? `€${Number(price).toLocaleString()}` : null
-      const subtitle = [priceStr, cityTitle].filter(Boolean).join(' • ') || 'No price set'
-      return {
-        title,
-        subtitle,
+      const {
+        titleEn,
+        titleRu,
+        titleUk,
+        titleSq,
+        status,
+        price,
+        currency,
+        cityTitle,
         media,
-      }
+      } = selection
+      const title = titleEn || titleRu || titleUk || titleSq || 'Untitled'
+      const priceStr =
+        price != null
+          ? `${Number(price).toLocaleString()} ${currency || 'EUR'}`
+          : null
+      const parts = [status, priceStr, cityTitle].filter(Boolean)
+      const subtitle = parts.join(' • ') || 'No price set'
+      return {title, subtitle, media}
     },
   },
 })
