@@ -33,9 +33,9 @@ export const property = defineType({
       description: 'Used in the property URL. Generated from title.',
       group: 'basic',
       options: {
-        source: (document: Record<string, unknown>) => {
-          const t = document?.title as {en?: string; ru?: string; uk?: string; sq?: string} | undefined
-          return (t && (t.en || t.ru || t.uk || t.sq)) || ''
+        source: (doc: Record<string, unknown>) => {
+          const t = doc?.title as {en?: string} | undefined
+          return t?.en ?? ''
         },
         maxLength: 96,
       },
@@ -98,6 +98,25 @@ export const property = defineType({
       group: 'basic',
       initialValue: true,
       description: 'Show this property on the website.',
+    }),
+
+    defineField({
+      name: 'lifecycleStatus',
+      title: 'Lifecycle Status',
+      type: 'string',
+      group: 'basic',
+      options: {
+        list: [
+          {title: 'Draft', value: 'draft'},
+          {title: 'Active', value: 'active'},
+          {title: 'Reserved', value: 'reserved'},
+          {title: 'Sold', value: 'sold'},
+          {title: 'Rented', value: 'rented'},
+          {title: 'Archived', value: 'archived'},
+        ],
+      },
+      initialValue: 'active',
+      description: 'Property listing lifecycle. Active = visible for deal; Archived = hidden from listings.',
     }),
 
     // PRICING
@@ -241,11 +260,20 @@ export const property = defineType({
 
     defineField({
       name: 'amenities',
-      title: 'Amenities',
+      title: 'Amenities (Legacy)',
       type: 'array',
       of: [{type: 'string'}],
       group: 'details',
-      description: 'List of amenities (e.g. Parking, Pool, Balcony).',
+      description: 'DEPRECATED: Free-text list. Prefer amenitiesRefs for filtering.',
+    }),
+
+    defineField({
+      name: 'amenitiesRefs',
+      title: 'Amenities',
+      type: 'array',
+      of: [defineArrayMember({type: 'reference', to: [{type: 'amenity'}]})],
+      group: 'details',
+      description: 'Select amenities for filtering and display. Preferred over amenities.',
     }),
 
     defineField({

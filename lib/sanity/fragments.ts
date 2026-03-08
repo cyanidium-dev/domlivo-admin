@@ -135,6 +135,12 @@ export const LOCATION_TAG_REF_FRAGMENT = `_id,
   title,
   description`
 
+/** Amenity: for filters and display */
+export const AMENITY_FRAGMENT = `_id,
+  title,
+  order,
+  active`
+
 /** Property card: catalog / list */
 export const PROPERTY_CARD_FRAGMENT = `_id,
   title,
@@ -144,6 +150,7 @@ export const PROPERTY_CARD_FRAGMENT = `_id,
   featured,
   investment,
   status,
+  lifecycleStatus,
   "city": city->{
     _id,
     title,
@@ -172,6 +179,7 @@ export const PROPERTY_FULL_FRAGMENT = `_id,
   price,
   currency,
   status,
+  lifecycleStatus,
   featured,
   investment,
   "city": city->{
@@ -197,6 +205,11 @@ export const PROPERTY_FULL_FRAGMENT = `_id,
   },
   gallery,
   amenities,
+  "amenitiesRefs": amenitiesRefs[]->{
+    _id,
+    title,
+    order
+  },
   area,
   bedrooms,
   bathrooms,
@@ -251,11 +264,12 @@ export const BLOG_POST_FULL_FRAGMENT = `_id,
   "coverImage": seo.ogImage,
   publishedAt,
   authorName,
+  authorRole,
+  authorImage,
   "categories": categories[]->{
     _id,
     title,
     slug
   },
-  readingTimeMinutes,
   seo,
   "schemaType": _type`

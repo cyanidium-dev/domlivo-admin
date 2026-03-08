@@ -116,13 +116,40 @@ async function main() {
       _id: `locationTag-${lt.slugBase}`,
       _type: 'locationTag',
       title: lt.title,
-      slug: {sq: lt.slugBase, en: lt.slugBase, ru: lt.slugBase, uk: lt.slugBase},
+      slug: {current: lt.slugBase},
       description: lt.description,
       active: true,
     })
     locationTagIds[lt.slugBase] = doc._id
   }
   console.log('Location tags:', locationTags.length)
+
+  // --- 2b. Amenities (for property filtering) ---
+  const amenities = [
+    {id: 'pool', title: L('Pishinë', 'Pool', 'Бассейн', 'Басейн')},
+    {id: 'parking', title: L('Parkim', 'Parking', 'Парковка', 'Парківка')},
+    {id: 'sea-view', title: L('Pamje deti', 'Sea View', 'Вид на море', 'Вид на море')},
+    {id: 'elevator', title: L('Ashensor', 'Elevator', 'Лифт', 'Ліфт')},
+    {id: 'furnished', title: L('E mobiluar', 'Furnished', 'Меблирована', 'Мебльована')},
+    {id: 'balcony', title: L('Ballkon', 'Balcony', 'Балкон', 'Балкон')},
+    {id: 'garden', title: L('Kopsht', 'Garden', 'Сад', 'Сад')},
+    {id: 'terrace', title: L('Tarracë', 'Terrace', 'Терраса', 'Тераса')},
+    {id: 'ac', title: L('Kondicioner', 'Air Conditioning', 'Кондиционер', 'Кондиціонер')},
+    {id: 'wifi', title: L('WiFi', 'WiFi', 'WiFi', 'WiFi')},
+  ]
+  const amenityIds: Record<string, string> = {}
+  for (let i = 0; i < amenities.length; i++) {
+    const a = amenities[i]
+    const doc = await client.createOrReplace({
+      _id: `amenity-${a.id}`,
+      _type: 'amenity',
+      title: a.title,
+      order: i + 1,
+      active: true,
+    })
+    amenityIds[a.id] = doc._id
+  }
+  console.log('Amenities:', amenities.length)
 
   // --- 3. Agents ---
   const agents = [
@@ -358,7 +385,7 @@ async function main() {
       _id: c.id,
       _type: 'city',
       title: c.title,
-      slug: {sq: c.slugBase, en: c.slugBase, ru: c.slugBase, uk: c.slugBase},
+      slug: {current: c.slugBase},
       popular: true,
       order: c.order,
       isPublished: true,
@@ -426,7 +453,7 @@ async function main() {
       _id: d.id,
       _type: 'district',
       title: d.title,
-      slug: {sq: d.slugBase, en: d.slugBase, ru: d.slugBase, uk: d.slugBase},
+      slug: {current: d.slugBase},
       city: {_type: 'reference', _ref: d.cityId},
       isPublished: true,
       order: d.order,
@@ -551,16 +578,16 @@ async function main() {
 
   // --- 8. Properties (10 demo) ---
   const props = [
-    {slug: 'modern-apartment-blloku', cityId: 'city-tirana', districtId: 'district-blloku', typeSlug: 'apartment', agentIdx: 0, status: 'sale' as const, price: 125000, bedrooms: 2, bathrooms: 1, area: 75, tags: ['city-center', 'new-building'], title: L('Apartament modern në Blloku', 'Modern Apartment in Blloku', 'Современная квартира в Блоку', 'Сучасна квартира в Блоку'), shortDesc: L('2 dhoma në Tiranë', '2-bed in Tirana', '2-комн. в Тиранe', '2-кімн. в Тірані'), desc: L('Apartament i gjerë.', 'Spacious apartment.', 'Просторная квартира.', 'Просторна квартира.'), featured: true},
-    {slug: 'sea-view-durres', cityId: 'city-durres', districtId: 'district-plazh', typeSlug: 'apartment', agentIdx: 1, status: 'sale' as const, price: 95000, bedrooms: 2, bathrooms: 2, area: 65, tags: ['sea-view', 'beachfront'], title: L('Apartament me pamje deti', 'Sea View Apartment', 'Квартира с видом на море', 'Квартира з видом на море'), shortDesc: L('Bregdeti i Durrësit', 'Beachfront Durres', 'У моря в Дурресе', 'Біля моря в Дурресі'), desc: L('Ideal për qira.', 'Ideal for rental.', 'Идеально для аренды.', 'Ідеально для оренди.'), featured: true},
-    {slug: 'villa-ksamil', cityId: 'city-sarande', districtId: 'district-ksamil', typeSlug: 'villa', agentIdx: 2, status: 'sale' as const, price: 450000, bedrooms: 4, bathrooms: 4, area: 220, tags: ['beachfront', 'luxury'], title: L('Vilë në Ksamil', 'Villa in Ksamil', 'Вилла в Ксамиле', 'Вілла в Ксамілі'), shortDesc: L('4 dhoma me pishinë', '4-bed with pool', '4 спальни с бассейном', '4 спальні з басейном'), desc: L('Vilë premium.', 'Premium villa.', 'Премиум вилла.', 'Преміум вілла.'), featured: true},
-    {slug: 'apartment-qender', cityId: 'city-tirana', districtId: 'district-qender', typeSlug: 'apartment', agentIdx: 0, status: 'sale' as const, price: 78000, bedrooms: 1, bathrooms: 1, area: 45, tags: ['city-center'], title: L('Apartament qendror', 'Central Apartment', 'Центральная квартира', 'Центральна квартира'), shortDesc: L('1 dhomë', '1-bed', '1-комн.', '1-кімн.'), desc: L('Afër Sheshit.', 'Near Skanderbeg Square.', 'У площади Скандербега.', 'Біля площі Скандербега.'), featured: false},
-    {slug: 'house-komuna-parisit', cityId: 'city-tirana', districtId: 'district-komuna-parisit', typeSlug: 'house', agentIdx: 1, status: 'sale' as const, price: 185000, bedrooms: 3, bathrooms: 2, area: 140, tags: ['near-park'], title: L('Shtëpi familjare', 'Family House', 'Семейный дом', 'Сімейний будинок'), shortDesc: L('3 dhoma me kopsht', '3-bed with garden', '3-комн. с садом', '3-кімн. з садом'), desc: L('Lagje e qetë.', 'Quiet neighborhood.', 'Тихий район.', 'Тихій район.'), featured: false},
-    {slug: 'short-term-lungomare', cityId: 'city-vlore', districtId: 'district-lungomare', typeSlug: 'apartment', agentIdx: 2, status: 'short-term' as const, price: 650, bedrooms: 2, bathrooms: 1, area: 70, tags: ['sea-view', 'tourist-area'], title: L('Qira pushimi', 'Holiday Rental', 'Аренда для отдыха', 'Оренда для відпочинку'), shortDesc: L('2 dhoma në bregdet', '2-bed waterfront', '2-комн. на набережной', '2-кімн. на набережній'), desc: L('Pamje e detit.', 'Sea views.', 'Вид на море.', 'Вид на море.'), featured: true},
-    {slug: 'commercial-durres', cityId: 'city-durres', districtId: 'district-durres-city-center', typeSlug: 'commercial', agentIdx: 1, status: 'sale' as const, price: 180000, bedrooms: 0, bathrooms: 2, area: 100, tags: ['city-center', 'investment'], title: L('Hapësirë tregtare', 'Commercial Space', 'Коммерческая площадь', 'Комерційна площа'), shortDesc: L('100m²', '100m²', '100м²', '100м²'), desc: L('Vendndodhje kryesore.', 'Prime location.', 'Выгодное расположение.', 'Вигідна локація.'), featured: false},
-    {slug: 'apartment-sarande-center', cityId: 'city-sarande', districtId: 'district-sarande-city-center', typeSlug: 'apartment', agentIdx: 0, status: 'sale' as const, price: 85000, bedrooms: 2, bathrooms: 1, area: 58, tags: ['city-center', 'tourist-area'], title: L('Apartament në Sarandë', 'Apartment in Sarande', 'Квартира в Саранде', 'Квартира в Саранді'), shortDesc: L('2 dhoma qendër', '2-bed center', '2-комн. центр', '2-кімн. центр'), desc: L('Qira gjatë gjithë vitit.', 'Year-round rental.', 'Круглогодичная аренда.', 'Оренда цілий рік.'), featured: false},
-    {slug: 'villa-uji-i-ftohte', cityId: 'city-vlore', districtId: 'district-uji-i-ftohte', typeSlug: 'villa', agentIdx: 2, status: 'sale' as const, price: 320000, bedrooms: 3, bathrooms: 3, area: 180, tags: ['sea-view', 'luxury'], title: L('Vilë afër plazhit', 'Villa near Beach', 'Вилла у пляжа', 'Вілла біля пляжу'), shortDesc: L('3 dhoma me pishinë', '3-bed with pool', '3 спальни с бассейном', '3 спальні з басейном'), desc: L('Vend i qetë.', 'Peaceful location.', 'Спокойное место.', 'Спокійне місце.'), featured: true},
-    {slug: 'studio-blloku-rent', cityId: 'city-tirana', districtId: 'district-blloku', typeSlug: 'apartment', agentIdx: 0, status: 'rent' as const, price: 450, bedrooms: 1, bathrooms: 1, area: 35, tags: ['city-center'], title: L('Studio për qira', 'Studio for Rent', 'Студия в аренду', 'Студія в оренду'), shortDesc: L('Studio në Blloku', 'Studio in Blloku', 'Студия в Блоку', 'Студія в Блоку'), desc: L('E mobiluar.', 'Fully furnished.', 'Меблирована.', 'Мебльована.'), featured: false},
+    {slug: 'modern-apartment-blloku', cityId: 'city-tirana', districtId: 'district-blloku', typeSlug: 'apartment', agentIdx: 0, status: 'sale' as const, price: 125000, bedrooms: 2, bathrooms: 1, area: 75, tags: ['city-center', 'new-building'], amenitySlugs: ['elevator', 'balcony', 'parking'] as const, title: L('Apartament modern në Blloku', 'Modern Apartment in Blloku', 'Современная квартира в Блоку', 'Сучасна квартира в Блоку'), shortDesc: L('2 dhoma në Tiranë', '2-bed in Tirana', '2-комн. в Тиранe', '2-кімн. в Тірані'), desc: L('Apartament i gjerë.', 'Spacious apartment.', 'Просторная квартира.', 'Просторна квартира.'), featured: true},
+    {slug: 'sea-view-durres', cityId: 'city-durres', districtId: 'district-plazh', typeSlug: 'apartment', agentIdx: 1, status: 'sale' as const, price: 95000, bedrooms: 2, bathrooms: 2, area: 65, tags: ['sea-view', 'beachfront'], amenitySlugs: ['sea-view', 'balcony', 'ac'] as const, title: L('Apartament me pamje deti', 'Sea View Apartment', 'Квартира с видом на море', 'Квартира з видом на море'), shortDesc: L('Bregdeti i Durrësit', 'Beachfront Durres', 'У моря в Дурресе', 'Біля моря в Дурресі'), desc: L('Ideal për qira.', 'Ideal for rental.', 'Идеально для аренды.', 'Ідеально для оренди.'), featured: true},
+    {slug: 'villa-ksamil', cityId: 'city-sarande', districtId: 'district-ksamil', typeSlug: 'villa', agentIdx: 2, status: 'sale' as const, price: 450000, bedrooms: 4, bathrooms: 4, area: 220, tags: ['beachfront', 'luxury'], amenitySlugs: ['pool', 'garden', 'terrace', 'parking', 'ac', 'wifi'] as const, title: L('Vilë në Ksamil', 'Villa in Ksamil', 'Вилла в Ксамиле', 'Вілла в Ксамілі'), shortDesc: L('4 dhoma me pishinë', '4-bed with pool', '4 спальни с бассейном', '4 спальні з басейном'), desc: L('Vilë premium.', 'Premium villa.', 'Премиум вилла.', 'Преміум вілла.'), featured: true},
+    {slug: 'apartment-qender', cityId: 'city-tirana', districtId: 'district-qender', typeSlug: 'apartment', agentIdx: 0, status: 'sale' as const, price: 78000, bedrooms: 1, bathrooms: 1, area: 45, tags: ['city-center'], amenitySlugs: ['elevator', 'wifi'] as const, title: L('Apartament qendror', 'Central Apartment', 'Центральная квартира', 'Центральна квартира'), shortDesc: L('1 dhomë', '1-bed', '1-комн.', '1-кімн.'), desc: L('Afër Sheshit.', 'Near Skanderbeg Square.', 'У площади Скандербега.', 'Біля площі Скандербега.'), featured: false},
+    {slug: 'house-komuna-parisit', cityId: 'city-tirana', districtId: 'district-komuna-parisit', typeSlug: 'house', agentIdx: 1, status: 'sale' as const, price: 185000, bedrooms: 3, bathrooms: 2, area: 140, tags: ['near-park'], amenitySlugs: ['garden', 'parking'] as const, title: L('Shtëpi familjare', 'Family House', 'Семейный дом', 'Сімейний будинок'), shortDesc: L('3 dhoma me kopsht', '3-bed with garden', '3-комн. с садом', '3-кімн. з садом'), desc: L('Lagje e qetë.', 'Quiet neighborhood.', 'Тихий район.', 'Тихій район.'), featured: false},
+    {slug: 'short-term-lungomare', cityId: 'city-vlore', districtId: 'district-lungomare', typeSlug: 'apartment', agentIdx: 2, status: 'short-term' as const, price: 650, bedrooms: 2, bathrooms: 1, area: 70, tags: ['sea-view', 'tourist-area'], amenitySlugs: ['sea-view', 'ac', 'wifi', 'furnished'] as const, title: L('Qira pushimi', 'Holiday Rental', 'Аренда для отдыха', 'Оренда для відпочинку'), shortDesc: L('2 dhoma në bregdet', '2-bed waterfront', '2-комн. на набережной', '2-кімн. на набережній'), desc: L('Pamje e detit.', 'Sea views.', 'Вид на море.', 'Вид на море.'), featured: true},
+    {slug: 'commercial-durres', cityId: 'city-durres', districtId: 'district-durres-city-center', typeSlug: 'commercial', agentIdx: 1, status: 'sale' as const, price: 180000, bedrooms: 0, bathrooms: 2, area: 100, tags: ['city-center', 'investment'], amenitySlugs: ['parking', 'elevator'] as const, title: L('Hapësirë tregtare', 'Commercial Space', 'Коммерческая площадь', 'Комерційна площа'), shortDesc: L('100m²', '100m²', '100м²', '100м²'), desc: L('Vendndodhje kryesore.', 'Prime location.', 'Выгодное расположение.', 'Вигідна локація.'), featured: false},
+    {slug: 'apartment-sarande-center', cityId: 'city-sarande', districtId: 'district-sarande-city-center', typeSlug: 'apartment', agentIdx: 0, status: 'sale' as const, price: 85000, bedrooms: 2, bathrooms: 1, area: 58, tags: ['city-center', 'tourist-area'], amenitySlugs: ['balcony', 'wifi', 'ac'] as const, title: L('Apartament në Sarandë', 'Apartment in Sarande', 'Квартира в Саранде', 'Квартира в Саранді'), shortDesc: L('2 dhoma qendër', '2-bed center', '2-комн. центр', '2-кімн. центр'), desc: L('Qira gjatë gjithë vitit.', 'Year-round rental.', 'Круглогодичная аренда.', 'Оренда цілий рік.'), featured: false},
+    {slug: 'villa-uji-i-ftohte', cityId: 'city-vlore', districtId: 'district-uji-i-ftohte', typeSlug: 'villa', agentIdx: 2, status: 'sale' as const, price: 320000, bedrooms: 3, bathrooms: 3, area: 180, tags: ['sea-view', 'luxury'], amenitySlugs: ['pool', 'terrace', 'sea-view', 'parking'] as const, title: L('Vilë afër plazhit', 'Villa near Beach', 'Вилла у пляжа', 'Вілла біля пляжу'), shortDesc: L('3 dhoma me pishinë', '3-bed with pool', '3 спальни с бассейном', '3 спальні з басейном'), desc: L('Vend i qetë.', 'Peaceful location.', 'Спокойное место.', 'Спокійне місце.'), featured: true},
+    {slug: 'studio-blloku-rent', cityId: 'city-tirana', districtId: 'district-blloku', typeSlug: 'apartment', agentIdx: 0, status: 'rent' as const, price: 450, bedrooms: 1, bathrooms: 1, area: 35, tags: ['city-center'], amenitySlugs: ['furnished', 'wifi', 'ac'] as const, title: L('Studio për qira', 'Studio for Rent', 'Студия в аренду', 'Студія в оренду'), shortDesc: L('Studio në Blloku', 'Studio in Blloku', 'Студия в Блоку', 'Студія в Блоку'), desc: L('E mobiluar.', 'Fully furnished.', 'Меблирована.', 'Мебльована.'), featured: false},
   ]
 
   for (const p of props) {
@@ -588,6 +615,8 @@ async function main() {
       coordinatesLat: 41.3275,
       coordinatesLng: 19.8187,
       locationTags: addKeysToArrayItems(p.tags.map((t) => ({_type: 'reference', _ref: locationTagIds[t]}))),
+      amenitiesRefs: addKeysToArrayItems((p.amenitySlugs ?? []).map((s) => ({_type: 'reference', _ref: amenityIds[s]}))),
+      lifecycleStatus: 'active',
       ownerUserId: 'seed-script',
     })
   }
@@ -604,7 +633,7 @@ async function main() {
       _id: c.id,
       _type: 'blogCategory',
       title: c.title,
-      slug: {sq: c.slugBase, en: c.slugBase, ru: c.slugBase, uk: c.slugBase},
+      slug: {current: c.slugBase},
       description: c.description,
       order: i + 1,
     })
@@ -639,13 +668,22 @@ async function main() {
   ]
   for (let i = 0; i < blogPosts.length; i++) {
     const p = blogPosts[i]
+    const blockEn = block(p.excerpt.en || p.excerpt.sq, `bp-${i}-en`)
+    const blockSq = block(p.excerpt.sq || p.excerpt.en, `bp-${i}-sq`)
+    const blockRu = block(p.excerpt.ru || p.excerpt.en, `bp-${i}-ru`)
+    const blockUk = block(p.excerpt.uk || p.excerpt.en, `bp-${i}-uk`)
     await client.createOrReplace({
       _id: `blogPost-${p.slugBase}`,
       _type: 'blogPost',
       title: p.title,
-      slug: {sq: p.slugBase, en: p.slugBase, ru: p.slugBase, uk: p.slugBase},
+      slug: {current: p.slugBase},
       excerpt: p.excerpt,
-      content: [block(p.excerpt.en || p.excerpt.sq)],
+      content: {
+        en: [blockEn],
+        sq: [blockSq],
+        ru: [blockRu],
+        uk: [blockUk],
+      },
       publishedAt: new Date().toISOString(),
       categories: [{_type: 'reference', _ref: blogCategoryIds[p.categoryIdx]}],
       seo: {

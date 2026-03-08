@@ -103,13 +103,13 @@ The project uses **field-level i18n** only. There are no per-language document v
 ### Adding localized fields to a document
 
 - Use `localizedString` or `localizedText` for text that varies by language.
-- Use `localizedSlug` for slugs per language, `localizedCtaLink` for CTAs, `localizedSeo` for SEO meta per language, `localizedFaqItem` for FAQ items, `localizedFooterLink` for footer links.
+- Use `localizedSlug` for slugs per language (blog, locationTag, etc.); use single `slug` for city and district. `localizedCtaLink` for CTAs, `localizedSeo` for SEO meta per language, `localizedFaqItem` for FAQ items, `localizedFooterLink` for footer links.
 - **Shared across languages:** images, videos, URLs, numbers, references, booleans. Use `image`, `string`, `number`, `reference`, `boolean` etc. without localization.
 - Frontend resolves the value for the current locale (e.g. `title[locale]` with fallback).
 
 ### Frontend compatibility
 
-For all field-level i18n types (city, district, homePage, siteSettings, property, blogPost, blogCategory, **propertyType**, **locationTag**), the frontend must resolve localized fields with a helper such as `getLocalizedValue(obj, locale)` (or equivalent). In particular: `propertyType.title`, `locationTag.title`, `locationTag.slug` (and their `shortDescription` / `description`) are objects `{ en, ru, uk, sq }` — do not render them as raw objects; pick the value for the current locale with fallback.
+For all field-level i18n types (city, district, homePage, siteSettings, property, blogPost, blogCategory, **propertyType**, **locationTag**), the frontend must resolve localized fields with a helper such as `getLocalizedValue(obj, locale)` (or equivalent). In particular: `propertyType.title`, `locationTag.title`, `locationTag.slug`, `shortDescription`, `description` are objects `{ en, ru, uk, sq }` — do not render them as raw objects; pick the value for the current locale with fallback.
 
 ### Adding new languages
 

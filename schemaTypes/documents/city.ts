@@ -27,8 +27,16 @@ export const city = defineType({
 
     defineField({
       name: 'slug',
-      type: 'localizedSlug',
+      type: 'slug',
+      title: 'URL slug',
       group: 'basic',
+      options: {
+        source: (doc: Record<string, unknown>) => {
+          const t = doc?.title as {en?: string} | undefined
+          return t?.en ?? ''
+        },
+        maxLength: 96,
+      },
       validation: (Rule) => Rule.required(),
     }),
 
@@ -247,15 +255,14 @@ export const city = defineType({
     select: {
       titleEn: 'title.en',
       titleSq: 'title.sq',
-      slugEn: 'slug.en',
-      slugSq: 'slug.sq',
+      slug: 'slug.current',
       media: 'heroImage',
     },
     prepare(selection) {
-      const {titleEn, titleSq, slugEn, slugSq, media} = selection
-      const title = titleEn || titleSq || 'Untitled'
-      const slug = slugEn || slugSq || 'no-slug'
-      return {title, subtitle: slug, media}
+      const s = selection || {}
+      const title = s.titleEn || s.titleSq || 'Untitled city'
+      const slug = s.slug || 'no-slug'
+      return {title: String(title), subtitle: String(slug), media: s.media}
     },
   },
 })

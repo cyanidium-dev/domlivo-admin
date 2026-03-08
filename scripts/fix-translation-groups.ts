@@ -1,10 +1,11 @@
 /**
- * Fix Translation Groups
+ * Fix Translation Groups (DEPRECATED)
  *
  * Links existing multilingual documents into documentInternationalization translation groups.
- * Creates/updates translation.metadata documents so the Translations pane shows linked translations.
+ * Used only with @sanity/document-internationalization (document-level i18n).
  *
- * Run: npm run fix:translations
+ * This project uses field-level i18n; document-internationalization is not used.
+ * Kept for reference. Run directly: tsx scripts/fix-translation-groups.ts
  */
 
 import path from 'path'

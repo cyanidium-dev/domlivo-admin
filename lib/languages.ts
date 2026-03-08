@@ -1,7 +1,7 @@
 /**
  * Supported languages for the Domlivo CMS.
  * Single source of truth — add new languages here only.
- * Used by @sanity/document-internationalization plugin.
+ * Used for field-level i18n (localizedString, localizedSlug, localizedText, localizedSeo).
  */
 export interface Language {
   id: string

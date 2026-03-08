@@ -20,8 +20,15 @@ export const locationTag = defineType({
 
     defineField({
       name: 'slug',
-      title: 'Slug',
-      type: 'localizedSlug',
+      title: 'URL slug',
+      type: 'slug',
+      options: {
+        source: (doc: Record<string, unknown>) => {
+          const t = doc?.title as {en?: string} | undefined
+          return t?.en ?? ''
+        },
+        maxLength: 96,
+      },
       validation: (Rule) => Rule.required(),
     }),
 
@@ -43,13 +50,11 @@ export const locationTag = defineType({
     select: {
       titleEn: 'title.en',
       titleSq: 'title.sq',
-      slugEn: 'slug.en',
-      slugSq: 'slug.sq',
+      slug: 'slug.current',
     },
     prepare(selection) {
       const title = selection.titleEn || selection.titleSq || 'Untitled'
-      const subtitle = selection.slugEn || selection.slugSq || 'no-slug'
-      return {title, subtitle}
+      return {title, subtitle: selection.slug || 'no-slug'}
     },
   },
 })

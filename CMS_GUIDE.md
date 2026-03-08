@@ -53,12 +53,12 @@ Each city is **one document**. All languages for that city (name, hero, descript
 
 1. Go to **Locations → Cities**.
 2. Click **Create**.
-3. Fill in the city name and slug for each language (en, ru, uk, sq) in the localized fields.
+3. Fill in the city name (per language) and a single URL slug (shared).
 4. Add content in the tabs: Basic, Hero, Content, Districts, Media, FAQ, SEO. Use the language tabs inside each text field where available.
 
 **Important fields:**
 
-- **Basic** — City name (per language), slug (per language), popular flag, order, published.
+- **Basic** — City name (per language), slug (single, shared), popular flag, order, published.
 - **Hero** — Title, subtitle, short line, image (shared), CTA (per language).
 - **Content** — Description, investment text, featured properties titles (per language).
 - **Districts** — Districts section title, intro, district stats (up to 20).
@@ -74,14 +74,13 @@ Each district is **one document** with all languages in the same form. Districts
 
 **How to create a district:**
 
-1. Go to **Locations → Districts**.
-2. Click **Create**.
-3. Set **City** (required).
-4. Fill in name, slug, and content in the tabs. Use language tabs in text fields for each locale.
+1. Go to **Cities → [City] → Districts in this City** to create a district with city auto-assigned, or use **All Districts** and set City manually.
+2. Fill in name (per language), slug (single), and content.
+3. Use language tabs in text fields for each locale.
 
 **Important fields:**
 
-- **Basic** — District name (per language), slug (per language), city, published, order.
+- **Basic** — District name (per language), slug (single, shared), city, published, order.
 - **Hero** — Title, subtitle, image (shared), CTA (per language).
 - **Content** — Description, metrics (up to 10), CTA.
 - **Media** — Gallery (at least 1 image, shared).

@@ -12,6 +12,10 @@ import {localizedFaqItem} from './localizedFaqItem'
 import {localizedCtaLink} from './localizedCtaLink'
 import {localizedSeo} from './localizedSeo'
 import {localizedFooterLink} from './localizedFooterLink'
+import {localizedBlockContent} from './localizedBlockContent'
+import {blogTable} from './blogTable'
+import {blogCallout} from './blogCallout'
+import {blogFaqBlock} from './blogFaqBlock'
 
 /**
  * Object types (embeddable/reusable)
@@ -20,6 +24,9 @@ import {localizedFooterLink} from './localizedFooterLink'
 export const objects = [
   seo,
   faqItem,
+  blogTable,
+  blogCallout,
+  blogFaqBlock,
   ctaLink,
   socialLink,
   footerLink,
@@ -27,11 +34,10 @@ export const objects = [
   districtMetric,
   localizedString,
   localizedText,
+  localizedBlockContent,
   localizedSlug,
   localizedFaqItem,
   localizedCtaLink,
   localizedSeo,
   localizedFooterLink,
 ]
-
-export {languageField} from './languageField'

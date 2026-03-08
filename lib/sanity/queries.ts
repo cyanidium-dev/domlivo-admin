@@ -16,6 +16,7 @@ import {
   PROPERTY_FULL_FRAGMENT,
   PROPERTY_TYPE_FRAGMENT,
   LOCATION_TAG_FRAGMENT,
+  AMENITY_FRAGMENT,
   BLOG_CATEGORY_FRAGMENT,
   BLOG_POST_CARD_FRAGMENT,
   BLOG_POST_FULL_FRAGMENT,
@@ -92,8 +93,8 @@ export const CITIES_LIST_QUERY = groq`*[_type == "city" && isPublished == true] 
   ${CITY_CARD_FRAGMENT}
 }`
 
-/** Params: { slug: string } — use slug.en or slug for locale */
-export const CITY_PAGE_QUERY = groq`*[_type == "city" && (slug.en == $slug || slug.sq == $slug || slug.ru == $slug || slug.uk == $slug)][0]{
+/** Params: { slug: string } — slug.current */
+export const CITY_PAGE_QUERY = groq`*[_type == "city" && slug.current == $slug][0]{
   title,
   slug,
   heroTitle,
@@ -117,8 +118,8 @@ export const CITY_PAGE_QUERY = groq`*[_type == "city" && (slug.en == $slug || sl
 // DISTRICTS
 // -----------------------------------------------------------------------------
 
-/** Params: { slug: string } — use slug.en or slug for locale */
-export const DISTRICT_PAGE_QUERY = groq`*[_type == "district" && (slug.en == $slug || slug.sq == $slug || slug.ru == $slug || slug.uk == $slug)][0]{
+/** Params: { slug: string } — slug.current */
+export const DISTRICT_PAGE_QUERY = groq`*[_type == "district" && slug.current == $slug][0]{
   title,
   slug,
   heroTitle,
@@ -154,10 +155,19 @@ export const LOCATION_TAGS_QUERY = groq`*[_type == "locationTag" && active == tr
 }`
 
 // -----------------------------------------------------------------------------
+// AMENITIES
+// -----------------------------------------------------------------------------
+
+export const AMENITIES_QUERY = groq`*[_type == "amenity" && active == true] | order(order asc){
+  ${AMENITY_FRAGMENT}
+}`
+
+// -----------------------------------------------------------------------------
 // PROPERTIES
 // -----------------------------------------------------------------------------
 
-export const PROPERTIES_LIST_QUERY = groq`*[_type == "property" && isPublished == true]{
+/** Listed properties: published, not archived. Treat undefined lifecycleStatus as active. */
+export const PROPERTIES_LIST_QUERY = groq`*[_type == "property" && isPublished == true && (lifecycleStatus == "active" || !defined(lifecycleStatus))]{
   ${PROPERTY_CARD_FRAGMENT}
 }`
 
@@ -199,6 +209,7 @@ export const POPULAR_CITIES_QUERY = groq`*[_type == "city" && isPublished == tru
 // FEATURED PROPERTIES
 // -----------------------------------------------------------------------------
 
-export const FEATURED_PROPERTIES_QUERY = groq`*[_type == "property" && isPublished == true && featured == true]{
+/** Featured properties: published, active lifecycle, featured. */
+export const FEATURED_PROPERTIES_QUERY = groq`*[_type == "property" && isPublished == true && featured == true && (lifecycleStatus == "active" || !defined(lifecycleStatus))]{
   ${PROPERTY_CARD_FRAGMENT}
 }`

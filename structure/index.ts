@@ -7,22 +7,12 @@ export const structure: StructureResolver = (S, context) =>
       S.listItem()
         .title('Home Page')
         .id('homePage')
-        .child(
-          S.document()
-            .schemaType('homePage')
-            .documentId('homePage')
-            .title('Home Page')
-        ),
+        .child(S.document().schemaType('homePage').documentId('homePage')),
 
       S.listItem()
         .title('Site Settings')
         .id('siteSettings')
-        .child(
-          S.document()
-            .schemaType('siteSettings')
-            .documentId('siteSettings')
-            .title('Site Settings')
-        ),
+        .child(S.document().schemaType('siteSettings').documentId('siteSettings')),
 
       S.divider(),
 
@@ -31,15 +21,44 @@ export const structure: StructureResolver = (S, context) =>
         .child(
           S.documentTypeList('city')
             .title('Cities')
-            .defaultOrdering([{field: 'order', direction: 'asc'}, {field: 'title.en', direction: 'asc'}])
+            .child((cityId) =>
+              S.list()
+                .title('City')
+                .items([
+                  S.listItem()
+                    .title('Edit City')
+                    .child(S.document().schemaType('city').documentId(cityId)),
+
+                  S.listItem()
+                    .title('Districts in this City')
+                    .child(
+                      S.documentTypeList('district')
+                        .title('Districts')
+                        .filter('_type == "district" && city._ref == $cityId')
+                        .params({cityId})
+                        .initialValueTemplates([
+                          S.initialValueTemplateItem('district-in-city', {
+                            cityId,
+                          }),
+                        ])
+                        .defaultOrdering([
+                          {field: 'order', direction: 'asc'},
+                          {field: 'title.en', direction: 'asc'},
+                        ]),
+                    ),
+                ]),
+            ),
         ),
 
       S.listItem()
-        .title('Districts')
+        .title('All Districts')
         .child(
           S.documentTypeList('district')
-            .title('Districts')
-            .defaultOrdering([{field: 'order', direction: 'asc'}, {field: 'title.en', direction: 'asc'}])
+            .title('All Districts')
+            .defaultOrdering([
+              {field: 'order', direction: 'asc'},
+              {field: 'title.en', direction: 'asc'},
+            ]),
         ),
 
       S.divider(),
@@ -50,7 +69,6 @@ export const structure: StructureResolver = (S, context) =>
           S.list()
             .title('Properties')
             .items([
-              // TODO: migrate existing properties to populate ownerUserId
               S.listItem()
                 .title('My Properties')
                 .child(
@@ -61,12 +79,19 @@ export const structure: StructureResolver = (S, context) =>
                     .params({
                       userId: context.currentUser?.id,
                     })
+                    .defaultOrdering([{field: 'createdAt', direction: 'desc'}]),
                 ),
 
               S.divider(),
 
-              S.documentTypeListItem('property').title('All Properties'),
-            ])
+              S.listItem()
+                .title('All Properties')
+                .child(
+                  S.documentTypeList('property')
+                    .title('All Properties')
+                    .defaultOrdering([{field: 'createdAt', direction: 'desc'}]),
+                ),
+            ]),
         ),
 
       S.divider(),
@@ -74,6 +99,8 @@ export const structure: StructureResolver = (S, context) =>
       S.documentTypeListItem('propertyType').title('Property Types'),
 
       S.documentTypeListItem('locationTag').title('Location Tags'),
+
+      S.documentTypeListItem('amenity').title('Amenities'),
 
       S.divider(),
 
@@ -89,6 +116,6 @@ export const structure: StructureResolver = (S, context) =>
             .items([
               S.documentTypeListItem('blogCategory').title('Categories'),
               S.documentTypeListItem('blogPost').title('Posts'),
-            ])
+            ]),
         ),
     ])

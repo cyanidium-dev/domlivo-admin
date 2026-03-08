@@ -26,8 +26,16 @@ export const district = defineType({
 
     defineField({
       name: 'slug',
-      type: 'localizedSlug',
+      type: 'slug',
+      title: 'URL slug',
       group: 'basic',
+      options: {
+        source: (doc: Record<string, unknown>) => {
+          const t = doc?.title as {en?: string} | undefined
+          return t?.en ?? ''
+        },
+        maxLength: 96,
+      },
       validation: (Rule) => Rule.required(),
     }),
 
@@ -128,7 +136,8 @@ export const district = defineType({
       type: 'array',
       of: [defineArrayMember({type: 'districtMetric'})],
       group: 'content',
-      description: 'Key metrics displayed on the district page (e.g. average price, properties count).',
+      description:
+        'Key metrics displayed on the district page (e.g. average price, properties count).',
       validation: (Rule) => Rule.max(10),
     }),
 
@@ -208,15 +217,35 @@ export const district = defineType({
     select: {
       titleEn: 'title.en',
       titleSq: 'title.sq',
-      slugEn: 'slug.en',
-      cityRef: 'city',
-      media: 'heroImage',
+      titleRu: 'title.ru',
+      titleUk: 'title.uk',
+      cityTitleEn: 'city.title.en',
+      cityTitleSq: 'city.title.sq',
+      cityTitleRu: 'city.title.ru',
+      cityTitleUk: 'city.title.uk',
+      slug: 'slug.current',
     },
     prepare(selection) {
-      const {titleEn, titleSq, slugEn, cityRef, media} = selection
-      const title = titleEn || titleSq || 'Untitled'
-      const subtitle = slugEn || (cityRef as {_ref?: string})?._ref || undefined
-      return {title, subtitle, media}
+      const title =
+        selection.titleEn ||
+        selection.titleSq ||
+        selection.titleRu ||
+        selection.titleUk ||
+        'Untitled district'
+
+      const cityTitle =
+        selection.cityTitleEn ||
+        selection.cityTitleSq ||
+        selection.cityTitleRu ||
+        selection.cityTitleUk ||
+        'No city'
+
+      const subtitle = selection.slug ? `${cityTitle} · ${selection.slug}` : cityTitle
+
+      return {
+        title,
+        subtitle,
+      }
     },
   },
 })
