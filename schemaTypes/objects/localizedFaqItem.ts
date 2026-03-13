@@ -26,9 +26,10 @@ export const localizedFaqItem = defineType({
       qSq: 'question.sq',
       qRu: 'question.ru',
       qUk: 'question.uk',
+      qIt: 'question.it',
     },
-    prepare({qEn, qSq, qRu, qUk}: {qEn?: string; qSq?: string; qRu?: string; qUk?: string}) {
-      const title = qEn || qSq || qRu || qUk || 'FAQ Item'
+    prepare({qEn, qSq, qRu, qUk, qIt}: {qEn?: string; qSq?: string; qRu?: string; qUk?: string; qIt?: string}) {
+      const title = qEn || qSq || qRu || qUk || qIt || 'FAQ Item'
       return {title}
     },
   },

@@ -95,8 +95,11 @@ export const city = defineType({
       title: 'Hero Image',
       type: 'image',
       group: 'hero',
-      description: 'Main image for the city landing page hero.',
+      description: 'Main image for the city landing page hero. Also used in city cards on homepage.',
       options: {hotspot: true},
+      fields: [
+        {name: 'alt', type: 'string', title: 'Alternative text', description: 'For accessibility and card display'},
+      ],
     }),
 
     defineField({

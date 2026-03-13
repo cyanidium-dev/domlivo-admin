@@ -294,6 +294,9 @@ export const property = defineType({
         defineArrayMember({
           type: 'image',
           options: {hotspot: true},
+          fields: [
+            {name: 'alt', type: 'string', title: 'Alternative text', description: 'For accessibility and card display'},
+          ],
         }),
       ],
       validation: (Rule) =>

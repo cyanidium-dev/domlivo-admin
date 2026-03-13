@@ -20,6 +20,7 @@ import {
   BLOG_CATEGORY_FRAGMENT,
   BLOG_POST_CARD_FRAGMENT,
   BLOG_POST_FULL_FRAGMENT,
+  HOMEPAGE_SECTIONS_FRAGMENT,
 } from './fragments'
 
 // -----------------------------------------------------------------------------
@@ -27,45 +28,8 @@ import {
 // -----------------------------------------------------------------------------
 
 export const HOME_PAGE_QUERY = groq`*[_type == "homePage"][0]{
-  heroTitle,
-  heroSubtitle,
-  heroShortLine,
-  heroBackgroundImage,
-  heroCta,
-  featuredEnabled,
-  featuredTitle,
-  featuredSubtitle,
-  featuredCta,
-  citiesTitle,
-  citiesSubtitle,
-  citiesCta,
-  propertyTypesTitle,
-  propertyTypesSubtitle,
-  propertyTypesCta,
-  investmentTitle,
-  investmentSubtitle,
-  investmentBenefits,
-  investmentPrimaryImage,
-  investmentSecondaryImage,
-  investmentCta,
-  aboutTitle,
-  aboutText,
-  aboutBenefits,
-  agentsEnabled,
-  agentsTitle,
-  agentsSubtitle,
-  agentsText,
-  agentsBenefits,
-  agentsCta,
-  blogEnabled,
-  blogTitle,
-  blogSubtitle,
-  blogCta,
-  seoText,
-  seo,
-  faqEnabled,
-  faqTitle,
-  faqItems
+  ${HOMEPAGE_SECTIONS_FRAGMENT},
+  seo
 }`
 
 // -----------------------------------------------------------------------------

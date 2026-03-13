@@ -6,16 +6,17 @@ export const localizedSlug = defineType({
   type: 'object',
 
   fields: [
-    defineField({name: 'sq', title: 'Albanian', type: 'string'}),
     defineField({name: 'en', title: 'English', type: 'string'}),
-    defineField({name: 'ru', title: 'Russian', type: 'string'}),
     defineField({name: 'uk', title: 'Ukrainian', type: 'string'}),
+    defineField({name: 'ru', title: 'Russian', type: 'string'}),
+    defineField({name: 'sq', title: 'Albanian', type: 'string'}),
+    defineField({name: 'it', title: 'Italian', type: 'string'}),
   ],
 
   preview: {
-    select: {en: 'en', sq: 'sq', ru: 'ru', uk: 'uk'},
-    prepare({en, sq, ru, uk}: {en?: string; sq?: string; ru?: string; uk?: string}) {
-      const title = en || sq || ru || uk || 'No slug'
+    select: {en: 'en', uk: 'uk', ru: 'ru', sq: 'sq', it: 'it'},
+    prepare({en, uk, ru, sq, it}: {en?: string; uk?: string; ru?: string; sq?: string; it?: string}) {
+      const title = en || uk || ru || sq || it || 'No slug'
       return {title}
     },
   },

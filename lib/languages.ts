@@ -10,7 +10,8 @@ export interface Language {
 
 export const languages: Language[] = [
   {id: 'en', title: 'English'},
-  {id: 'ru', title: 'Russian'},
   {id: 'uk', title: 'Ukrainian'},
+  {id: 'ru', title: 'Russian'},
   {id: 'sq', title: 'Albanian'},
+  {id: 'it', title: 'Italian'},
 ]

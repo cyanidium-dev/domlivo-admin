@@ -19,9 +19,28 @@ export const propertyType = defineType({
     }),
 
     defineField({
+      name: 'slug',
+      type: 'slug',
+      title: 'URL slug',
+      description: 'Used in /property-types/[slug]. Same style as city/property.',
+      options: {
+        source: (doc: Record<string, unknown>) => {
+          const t = doc?.title as {en?: string} | undefined
+          return t?.en ?? ''
+        },
+        maxLength: 96,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+
+    defineField({
       name: 'image',
+      title: 'Image',
       type: 'image',
       options: {hotspot: true},
+      fields: [
+        {name: 'alt', type: 'string', title: 'Alternative text', description: 'For accessibility and card display'},
+      ],
     }),
 
     defineField({

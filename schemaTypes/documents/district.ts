@@ -94,8 +94,11 @@ export const district = defineType({
       title: 'Hero Image',
       type: 'image',
       group: 'hero',
-      description: 'Main image for the district landing page hero.',
+      description: 'Main image for the district landing page hero. Also used in district cards on homepage.',
       options: {hotspot: true},
+      fields: [
+        {name: 'alt', type: 'string', title: 'Alternative text', description: 'For accessibility and card display'},
+      ],
     }),
 
     defineField({

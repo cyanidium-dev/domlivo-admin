@@ -16,6 +16,16 @@ import {localizedBlockContent} from './localizedBlockContent'
 import {blogTable} from './blogTable'
 import {blogCallout} from './blogCallout'
 import {blogFaqBlock} from './blogFaqBlock'
+import {homeHeroSection} from './homeHeroSection'
+import {homePropertyCarouselSection} from './homePropertyCarouselSection'
+import {homeLocationCarouselSection} from './homeLocationCarouselSection'
+import {homePropertyTypesSection} from './homePropertyTypesSection'
+import {homeInvestmentSection} from './homeInvestmentSection'
+import {homeAboutSection} from './homeAboutSection'
+import {homeAgentsPromoSection} from './homeAgentsPromoSection'
+import {homeBlogSection} from './homeBlogSection'
+import {homeSeoTextSection} from './homeSeoTextSection'
+import {homeFaqSection} from './homeFaqSection'
 
 /**
  * Object types (embeddable/reusable)
@@ -40,4 +50,14 @@ export const objects = [
   localizedCtaLink,
   localizedSeo,
   localizedFooterLink,
+  homeHeroSection,
+  homePropertyCarouselSection,
+  homeLocationCarouselSection,
+  homePropertyTypesSection,
+  homeInvestmentSection,
+  homeAboutSection,
+  homeAgentsPromoSection,
+  homeBlogSection,
+  homeSeoTextSection,
+  homeFaqSection,
 ]

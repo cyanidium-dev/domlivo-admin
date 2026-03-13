@@ -109,6 +109,7 @@ export const DISTRICT_REF_FRAGMENT = `_id,
 /** Property type: full selection */
 export const PROPERTY_TYPE_FRAGMENT = `_id,
   title,
+  "slug": slug.current,
   shortDescription,
   image,
   order,
@@ -116,11 +117,13 @@ export const PROPERTY_TYPE_FRAGMENT = `_id,
 
 /** Property type ref (minimal) */
 export const PROPERTY_TYPE_REF_FRAGMENT = `_id,
-  title`
+  title,
+  "slug": slug.current`
 
 /** Property type ref (for detail page) */
 export const PROPERTY_TYPE_FULL_REF_FRAGMENT = `_id,
   title,
+  "slug": slug.current,
   shortDescription,
   image`
 
@@ -163,7 +166,8 @@ export const PROPERTY_CARD_FRAGMENT = `_id,
   },
   "type": type->{
     _id,
-    title
+    title,
+    "slug": slug.current
   },
   "gallery": gallery[0],
   bedrooms,
@@ -195,6 +199,7 @@ export const PROPERTY_FULL_FRAGMENT = `_id,
   "type": type->{
     _id,
     title,
+    "slug": slug.current,
     shortDescription,
     image
   },
@@ -273,3 +278,40 @@ export const BLOG_POST_FULL_FRAGMENT = `_id,
   },
   seo,
   "schemaType": _type`
+
+// -----------------------------------------------------------------------------
+// HOMEPAGE SECTIONS
+// -----------------------------------------------------------------------------
+
+/** Polymorphic homepage section projection. Each section type returns only its fields; others are null. */
+export const HOMEPAGE_SECTIONS_FRAGMENT = `homepageSections[]{
+  _type,
+  _key,
+  title,
+  subtitle,
+  shortLine,
+  backgroundImage,
+  cta,
+  mode,
+  "properties": properties[]->{
+    ${PROPERTY_CARD_FRAGMENT}
+  },
+  "cities": cities[]->{
+    ${CITY_CARD_FRAGMENT}
+  },
+  "districts": districts[]->{
+    ${DISTRICT_CARD_FRAGMENT}
+  },
+  "propertyTypes": propertyTypes[]->{
+    ${PROPERTY_TYPE_FRAGMENT}
+  },
+  description,
+  benefits,
+  primaryImage,
+  secondaryImage,
+  "posts": posts[]->{
+    ${BLOG_POST_CARD_FRAGMENT}
+  },
+  content,
+  "items": items
+}`

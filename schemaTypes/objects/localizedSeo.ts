@@ -36,6 +36,9 @@ export const localizedSeo = defineType({
       type: 'image',
       options: {hotspot: true},
       description: 'Shared image for all languages. Recommended: 1200×630 px.',
+      fields: [
+        {name: 'alt', type: 'string', title: 'Alternative text', description: 'For accessibility and SEO'},
+      ],
     }),
     defineField({
       name: 'noIndex',

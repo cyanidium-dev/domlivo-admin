@@ -7,21 +7,23 @@ export const localizedString = defineType({
 
   fields: [
     defineField({name: 'en', title: 'English', type: 'string'}),
-    defineField({name: 'ru', title: 'Russian', type: 'string'}),
     defineField({name: 'uk', title: 'Ukrainian', type: 'string'}),
+    defineField({name: 'ru', title: 'Russian', type: 'string'}),
     defineField({name: 'sq', title: 'Albanian', type: 'string'}),
+    defineField({name: 'it', title: 'Italian', type: 'string'}),
   ],
 
   preview: {
     select: {
       en: 'en',
-      ru: 'ru',
       uk: 'uk',
+      ru: 'ru',
       sq: 'sq',
+      it: 'it',
     },
     prepare(selection) {
-      const {en, ru, uk, sq} = selection
-      const title = en || ru || uk || sq || 'No translation'
+      const {en, uk, ru, sq, it} = selection
+      const title = en || uk || ru || sq || it || 'No translation'
       return {title}
     },
   },
