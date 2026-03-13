@@ -17,6 +17,7 @@
     "fix:keys": "tsx scripts/fixMissingKeys.ts",
     "migrate:city-district-slug": "tsx scripts/migrateCityDistrictSlug.ts",
     "migrate:property-type-slug": "tsx scripts/migratePropertyTypeSlugs.ts",
+    "migrate:amenity-slug": "tsx scripts/migrateAmenitySlugs.ts",
     "reset:content:dry": "tsx scripts/resetContentForFieldLevelI18n.ts --dry",
     "reset:content": "tsx scripts/resetContentForFieldLevelI18n.ts --execute",
     "audit:blog": "tsx scripts/auditOldBlogContent.ts",

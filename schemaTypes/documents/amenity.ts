@@ -18,6 +18,21 @@ export const amenity = defineType({
     }),
 
     defineField({
+      name: 'slug',
+      title: 'URL slug',
+      type: 'slug',
+      options: {
+        source: (doc: Record<string, unknown>) => {
+          const t = doc?.title as {en?: string} | undefined
+          return t?.en ?? ''
+        },
+        maxLength: 96,
+      },
+      validation: (Rule) => Rule.required(),
+      description: 'Stable key for filters and URLs. Non-localized.',
+    }),
+
+    defineField({
       name: 'order',
       type: 'number',
       title: 'Order',

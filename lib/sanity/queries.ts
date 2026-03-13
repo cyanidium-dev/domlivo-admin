@@ -148,8 +148,8 @@ export const BLOG_POSTS_QUERY = groq`*[_type == "blogPost"] | order(publishedAt 
   ${BLOG_POST_CARD_FRAGMENT}
 }`
 
-/** Params: { slug: string } — use slug.en or slug for locale */
-export const BLOG_POST_BY_SLUG_QUERY = groq`*[_type == "blogPost" && (slug.en == $slug || slug.sq == $slug || slug.ru == $slug || slug.uk == $slug)][0]{
+/** Params: { slug: string } — slug.current */
+export const BLOG_POST_BY_SLUG_QUERY = groq`*[_type == "blogPost" && slug.current == $slug][0]{
   ${BLOG_POST_FULL_FRAGMENT}
 }`
 
