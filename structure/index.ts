@@ -14,6 +14,14 @@ export const structure: StructureResolver = (S, context) =>
         .id('siteSettings')
         .child(S.document().schemaType('siteSettings').documentId('siteSettings')),
 
+      S.listItem()
+        .title('Catalog SEO Pages')
+        .child(
+          S.documentTypeList('catalogSeoPage')
+            .title('Catalog SEO Pages')
+            .defaultOrdering([{field: 'pageScope', direction: 'asc'}]),
+        ),
+
       S.divider(),
 
       S.listItem()

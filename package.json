@@ -13,6 +13,7 @@
     "seed": "tsx scripts/seed.ts",
     "seed:full": "tsx scripts/seedFull.ts",
     "seed:homepage": "tsx scripts/seedHomepage.ts",
+    "seed:catalog-seo": "tsx scripts/seedCatalogSeoPages.ts",
     "wipe:dataset": "tsx scripts/wipeDataset.ts",
     "fix:keys": "tsx scripts/fixMissingKeys.ts",
     "migrate:city-district-slug": "tsx scripts/migrateCityDistrictSlug.ts",
@@ -32,20 +33,20 @@
     "sanity"
   ],
   "dependencies": {
+    "@sanity/vision": "^5.15.0",
     "next-sanity": "^12.1.0",
-    "@sanity/vision": "^5.13.0",
     "react": "^19.1",
     "react-dom": "^19.1",
-    "sanity": "^5.13.0",
+    "sanity": "^5.15.0",
     "styled-components": "^6.1.18"
   },
   "devDependencies": {
     "@sanity/client": "^6.25.0",
     "@sanity/eslint-config-studio": "^6.0.0",
     "@types/react": "^19.1",
+    "dotenv": "^16.4.5",
     "eslint": "^9.28",
     "prettier": "^3.5",
-    "dotenv": "^16.4.5",
     "tsx": "^4.19.0",
     "typescript": "^5.8"
   },

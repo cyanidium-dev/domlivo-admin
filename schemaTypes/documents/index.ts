@@ -1,3 +1,4 @@
+import {catalogSeoPage} from './catalogSeoPage'
 import {city} from './city'
 import {district} from './district'
 import {amenity} from './amenity'
@@ -15,6 +16,7 @@ import {siteSettings} from './siteSettings'
  * Add new document schemas here.
  */
 export const documents = [
+  catalogSeoPage,
   city,
   district,
   amenity,
