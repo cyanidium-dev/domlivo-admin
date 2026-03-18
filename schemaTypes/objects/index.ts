@@ -33,6 +33,7 @@ import {cityRichDescriptionSection} from './cityRichDescriptionSection'
 import {districtsComparisonSection} from './districtsComparisonSection'
 import {linkedGallerySection} from './linkedGallerySection'
 import {faqSection} from './faqSection'
+import {landingGridSection} from './landingGridSection'
 
 /**
  * Object types (embeddable/reusable)
@@ -74,4 +75,5 @@ export const objects = [
   districtsComparisonSection,
   linkedGallerySection,
   faqSection,
+  landingGridSection,
 ]

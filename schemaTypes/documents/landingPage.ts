@@ -32,6 +32,7 @@ export const landingPage = defineType({
         list: [
           {title: 'Home', value: 'home'},
           {title: 'City', value: 'city'},
+          {title: 'City Index', value: 'cityIndex'},
           {title: 'District', value: 'district'},
           {title: 'Property type', value: 'propertyType'},
           {title: 'Investment', value: 'investment'},
@@ -106,6 +107,7 @@ export const landingPage = defineType({
         defineArrayMember({type: 'cityRichDescriptionSection'}),
         defineArrayMember({type: 'districtsComparisonSection'}),
         defineArrayMember({type: 'linkedGallerySection'}),
+        defineArrayMember({type: 'landingGridSection'}),
       ],
     }),
 

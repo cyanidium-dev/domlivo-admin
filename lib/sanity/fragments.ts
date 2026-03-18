@@ -324,6 +324,94 @@ export const LANDING_PAGE_SECTIONS_FRAGMENT = `pageSections[]{
   content,
   cardCtaLabel,
   "items": items,
+  sourceMode,
+  auto,
+  "landings": select(
+    sourceMode == "manual" => manualItems[]->{
+      _id,
+      pageType,
+      slug,
+      title,
+      cardTitle,
+      cardDescription,
+      cardImage,
+      linkedCity->{_id, slug, title},
+      linkedDistrict->{_id, slug, title, "city": city->{_id, slug, title}},
+      linkedPropertyType->{_id, title, "slug": slug.current}
+    },
+    sourceMode == "auto" && auto.sort == "createdAtDesc" => *[
+      _type == "landingPage" &&
+      (^.auto.enabledOnly != true || enabled != false) &&
+      pageType in ^.auto.pageTypes &&
+      _id != "landing-home" &&
+      _id != ^.^._id
+    ] | order(_createdAt desc)[0...200]{
+      _id,
+      pageType,
+      slug,
+      title,
+      cardTitle,
+      cardDescription,
+      cardImage,
+      linkedCity->{_id, slug, title},
+      linkedDistrict->{_id, slug, title, "city": city->{_id, slug, title}},
+      linkedPropertyType->{_id, title, "slug": slug.current}
+    },
+    sourceMode == "auto" && auto.sort == "createdAtAsc" => *[
+      _type == "landingPage" &&
+      (^.auto.enabledOnly != true || enabled != false) &&
+      pageType in ^.auto.pageTypes &&
+      _id != "landing-home" &&
+      _id != ^.^._id
+    ] | order(_createdAt asc)[0...200]{
+      _id,
+      pageType,
+      slug,
+      title,
+      cardTitle,
+      cardDescription,
+      cardImage,
+      linkedCity->{_id, slug, title},
+      linkedDistrict->{_id, slug, title, "city": city->{_id, slug, title}},
+      linkedPropertyType->{_id, title, "slug": slug.current}
+    },
+    sourceMode == "auto" && auto.sort == "titleDesc" => *[
+      _type == "landingPage" &&
+      (^.auto.enabledOnly != true || enabled != false) &&
+      pageType in ^.auto.pageTypes &&
+      _id != "landing-home" &&
+      _id != ^.^._id
+    ] | order(title.en desc)[0...200]{
+      _id,
+      pageType,
+      slug,
+      title,
+      cardTitle,
+      cardDescription,
+      cardImage,
+      linkedCity->{_id, slug, title},
+      linkedDistrict->{_id, slug, title, "city": city->{_id, slug, title}},
+      linkedPropertyType->{_id, title, "slug": slug.current}
+    },
+    sourceMode == "auto" => *[
+      _type == "landingPage" &&
+      (^.auto.enabledOnly != true || enabled != false) &&
+      pageType in ^.auto.pageTypes &&
+      _id != "landing-home" &&
+      _id != ^.^._id
+    ] | order(title.en asc)[0...200]{
+      _id,
+      pageType,
+      slug,
+      title,
+      cardTitle,
+      cardDescription,
+      cardImage,
+      linkedCity->{_id, slug, title},
+      linkedDistrict->{_id, slug, title, "city": city->{_id, slug, title}},
+      linkedPropertyType->{_id, title, "slug": slug.current}
+    }
+  ),
   manualItems,
   auto
 }`
