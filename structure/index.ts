@@ -5,9 +5,49 @@ export const structure: StructureResolver = (S, context) =>
     .title('Content')
     .items([
       S.listItem()
-        .title('Home Page')
-        .id('homePage')
-        .child(S.document().schemaType('homePage').documentId('homePage')),
+        .title('Home Landing')
+        .id('landingHome')
+        .child(
+          S.document()
+            .schemaType('landingPage')
+            .documentId('landing-home'),
+        ),
+
+      S.listItem()
+        .title('Landing Pages')
+        .child(
+          S.list()
+            .title('Landing Pages')
+            .items([
+              S.listItem()
+                .title('All Landing Pages')
+                .child(S.documentTypeList('landingPage').title('All Landing Pages')),
+              S.divider(),
+              S.listItem()
+                .title('City Landings')
+                .child(S.documentTypeList('landingPage').filter('_type == "landingPage" && pageType == "city"')),
+              S.listItem()
+                .title('District Landings')
+                .child(S.documentTypeList('landingPage').filter('_type == "landingPage" && pageType == "district"')),
+              S.listItem()
+                .title('Property Type Landings')
+                .child(
+                  S.documentTypeList('landingPage').filter(
+                    '_type == "landingPage" && pageType == "propertyType"',
+                  ),
+                ),
+              S.listItem()
+                .title('Investment Landings')
+                .child(
+                  S.documentTypeList('landingPage').filter('_type == "landingPage" && pageType == "investment"'),
+                ),
+              S.listItem()
+                .title('Custom Landings')
+                .child(
+                  S.documentTypeList('landingPage').filter('_type == "landingPage" && pageType == "custom"'),
+                ),
+            ]),
+        ),
 
       S.listItem()
         .title('Site Settings')

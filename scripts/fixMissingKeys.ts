@@ -74,7 +74,7 @@ function countFixedItems<T>(items: T[]): number {
 const ARRAY_FIELDS_BY_TYPE: Record<string, string[]> = {
   city: ['gallery', 'faqItems', 'districtStats'],
   district: ['gallery', 'faqItems', 'metrics'],
-  homePage: ['homepageSections'],
+  landingPage: ['pageSections'],
   siteSettings: ['socialLinks', 'footerQuickLinks'],
   property: ['gallery', 'locationTags'],
   blogPost: ['gallery'],

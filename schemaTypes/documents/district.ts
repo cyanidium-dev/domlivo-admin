@@ -48,6 +48,14 @@ export const district = defineType({
     }),
 
     defineField({
+      name: 'popular',
+      title: 'Popular',
+      type: 'boolean',
+      group: 'basic',
+      description: 'Mark as a popular district for filtering and highlighting (e.g. homepage sliders).',
+    }),
+
+    defineField({
       name: 'isPublished',
       title: 'Published',
       type: 'boolean',

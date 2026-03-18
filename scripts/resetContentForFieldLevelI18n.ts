@@ -106,19 +106,9 @@ async function run() {
   }
   const allDistrictIds = collectWithDrafts(districtDocs.map((d) => d._id))
 
-  // HomePage: old per-language + broken migrated
-  const homePageDocs = await client.fetch<Doc[]>('*[_type == "homePage"]{_id, _type, language}')
-  for (const d of homePageDocs) {
-    const pubId = d._id.startsWith('drafts.') ? d._id.slice(7) : d._id
-    const reason =
-      pubId === 'homePage-migrated'
-        ? 'Broken migrated doc from failed migration'
-        : /^homePage-(en|sq|ru|uk)$/.test(pubId)
-          ? 'Old document-level i18n homePage'
-          : 'HomePage doc'
-    toDelete.push({id: d._id, type: 'homePage', reason})
-  }
-  const allHomePageIds = collectWithDrafts(homePageDocs.map((d) => d._id))
+  // Legacy homePage: removed from canonical architecture.
+  // The canonical homepage is landingPage with _id == "landing-home".
+  const allHomePageIds: string[] = []
 
   // SiteSettings: old per-language + broken migrated
   const siteSettingsDocs = await client.fetch<Doc[]>('*[_type == "siteSettings"]{_id, _type, language}')

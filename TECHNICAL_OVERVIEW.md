@@ -14,7 +14,7 @@ A structured technical report for senior developers onboarding to the project.
 - **City and district SEO pages** — Landing pages for locations (Tirana, Durres, Vlore, Sarande, etc.)
 - **Blog** — Articles and categories with full localization
 - **Site-wide settings** — Branding, contact info, footer, default SEO
-- **Homepage content** — Hero, featured section, cities, property types, investment, about, agents, blog, FAQ
+- **Landing pages (incl. homepage)** — Universal landing builder with ordered sections (homepage is `landing-home`)
 - **Agents** — Real estate agents linked to properties; “My Properties” view for agents
 
 ### Main features
@@ -129,7 +129,7 @@ domlivo-admin/
 │   │   ├── agent.ts
 │   │   ├── blogPost.ts
 │   │   ├── blogCategory.ts
-│   │   ├── homePage.ts
+│   │   ├── landingPage.ts
 │   │   └── siteSettings.ts
 │   └── objects/            # Reusable object schemas
 │       ├── seo.ts
@@ -149,7 +149,7 @@ domlivo-admin/
 ├── structure/
 │   └── index.ts            # Studio desk structure
 ├── scripts/                # Node scripts
-│   ├── seed.ts             # Create demo content
+│   ├── seed.ts             # Create demo content (includes landing-home)
 │   ├── resetContentForFieldLevelI18n.ts
 │   ├── resetBlogContent.ts
 │   ├── resetTypesAndTags.ts
@@ -246,7 +246,7 @@ domlivo-admin/
 
 | Type | Role | Key fields |
 |------|------|------------|
-| `homePage` | Singleton | hero, featured, cities, propertyTypes, investment, about, agents, blog, seo, faq |
+| `landingPage` (`landing-home`) | Singleton | hero, featured, locations, propertyTypes, investment, about, agents, blog, seo, faq |
 | `siteSettings` | Singleton | siteName, logo, contact, social, footer, defaultSeo |
 | `city` | SEO pages | title (localized), slug (single), hero, description, districts, gallery, faq, seo |
 | `district` | SEO pages | title (localized), slug (single), city, hero, description, gallery, faq, seo |
@@ -356,7 +356,7 @@ npm run deploy
 ### Complete
 
 - Field-level i18n for all main content
-- Schemas: city, district, property, propertyType, locationTag, agent, blogPost, blogCategory, homePage, siteSettings
+- Schemas: landingPage, city, district, property, propertyType, locationTag, agent, blogPost, blogCategory, siteSettings
 - Studio structure and “My Properties” filter
 - GROQ queries and fragments
 - Seed script for demo content

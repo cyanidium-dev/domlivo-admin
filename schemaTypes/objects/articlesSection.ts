@@ -1,13 +1,20 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
 
-export const homeBlogSection = defineType({
-  name: 'homeBlogSection',
-  title: 'Blog Preview',
+export const articlesSection = defineType({
+  name: 'articlesSection',
+  title: 'Articles / Blog Preview',
   type: 'object',
   fields: [
     defineField({name: 'title', title: 'Section Title', type: 'localizedString'}),
     defineField({name: 'subtitle', title: 'Subtitle / Description', type: 'localizedText'}),
     defineField({name: 'cta', title: 'CTA', type: 'localizedCtaLink'}),
+    defineField({
+      name: 'cardCtaLabel',
+      title: 'Card CTA label (optional)',
+      type: 'localizedString',
+      description:
+        'Optional per-card CTA label override (e.g. “Read more”). If empty, frontend may use defaults.',
+    }),
     defineField({
       name: 'mode',
       title: 'Content Mode',
@@ -20,8 +27,7 @@ export const homeBlogSection = defineType({
         layout: 'radio',
       },
       initialValue: 'latest',
-      description:
-        'Latest: frontend fetches newest posts by publishedAt. Selected: use the list below.',
+      description: 'Latest: frontend fetches newest posts by publishedAt. Selected: use the list below.',
     }),
     defineField({
       name: 'posts',
@@ -44,7 +50,8 @@ export const homeBlogSection = defineType({
   preview: {
     select: {title: 'title.en', mode: 'mode'},
     prepare({title, mode}: {title?: string; mode?: string}) {
-      return {title: title || 'Blog', subtitle: mode === 'selected' ? 'Selected' : 'Latest'}
+      return {title: title || 'Articles', subtitle: mode === 'selected' ? 'Selected' : 'Latest'}
     },
   },
 })
+

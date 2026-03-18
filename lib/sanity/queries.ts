@@ -20,15 +20,68 @@ import {
   BLOG_CATEGORY_FRAGMENT,
   BLOG_POST_CARD_FRAGMENT,
   BLOG_POST_FULL_FRAGMENT,
-  HOMEPAGE_SECTIONS_FRAGMENT,
+  LANDING_PAGE_SECTIONS_FRAGMENT,
 } from './fragments'
 
 // -----------------------------------------------------------------------------
-// HOMEPAGE
+// HOMEPAGE (canonical: landing-home)
 // -----------------------------------------------------------------------------
 
-export const HOME_PAGE_QUERY = groq`*[_type == "homePage"][0]{
-  ${HOMEPAGE_SECTIONS_FRAGMENT},
+export const HOME_PAGE_QUERY = groq`*[_type == "landingPage" && _id == "landing-home"][0]{
+  ${LANDING_PAGE_SECTIONS_FRAGMENT},
+  seo
+}`
+
+// -----------------------------------------------------------------------------
+// LANDING PAGES (canonical)
+// -----------------------------------------------------------------------------
+
+/** Params: { slug: string } — landingPage.slug.current */
+export const LANDING_PAGE_BY_SLUG_QUERY = groq`*[_type == "landingPage" && slug.current == $slug && enabled != false][0]{
+  _id,
+  pageType,
+  title,
+  slug,
+  enabled,
+  linkedCity->{
+    _id,
+    title,
+    slug
+  },
+  linkedDistrict->{
+    _id,
+    title,
+    slug,
+    "city": city->{
+      _id,
+      title,
+      slug
+    }
+  },
+  linkedPropertyType->{
+    _id,
+    title,
+    "slug": slug.current
+  },
+  ${LANDING_PAGE_SECTIONS_FRAGMENT},
+  seo
+}`
+
+/** Params: { citySlug: string } — city.slug.current */
+export const CITY_LANDING_BY_CITY_SLUG_QUERY = groq`*[_type == "landingPage" && pageType == "city" && linkedCity->slug.current == $citySlug && enabled != false][0]{
+  _id,
+  pageType,
+  title,
+  slug,
+  enabled,
+  linkedCity->{
+    _id,
+    title,
+    slug,
+    heroImage,
+    shortDescription
+  },
+  ${LANDING_PAGE_SECTIONS_FRAGMENT},
   seo
 }`
 

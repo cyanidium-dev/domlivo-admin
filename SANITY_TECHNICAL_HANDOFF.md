@@ -1,6 +1,6 @@
 # Sanity CMS — Technical Handoff for Senior Engineers
 
-This document describes the actual Sanity CMS/admin architecture of the domlivo real estate platform. It is based on direct inspection of the codebase (schema, structure, queries, fragments, config). No code was changed.
+This document describes the actual Sanity CMS/admin architecture of the domlivo real estate platform. It is based on direct inspection of the codebase (schema, structure, queries, fragments, config).
 
 ---
 
@@ -10,13 +10,13 @@ This document describes the actual Sanity CMS/admin architecture of the domlivo 
 
 **Schema architecture:**
 - **Flat schema:** All types are registered in two arrays — `documents` and `objects` — and combined in `schemaTypes/index.ts` as `[...documents, ...objects]`. No nested schema packages.
-- **Documents (11):** `city`, `district`, `amenity`, `blogCategory`, `blogPost`, `agent`, `property`, `propertyType`, `locationTag`, `homePage`, `siteSettings`. These are top-level, listable (except singletons).
-- **Objects (28):** Reusable/embedding types: SEO (non-localized `seo` + localized `localizedSeo`), link/CTA types, localized field wrappers (`localizedString`, `localizedText`, `localizedBlockContent`, etc.), homepage section blocks (`homeHeroSection`, …), FAQ/item types, blog block types (`blogTable`, `blogCallout`, `blogFaqBlock`), district stats/metrics.
-- **Singletons:** `homePage` (documentId `homePage`) and `siteSettings` (documentId `siteSettings`) are forced in the desk via `S.document().schemaType(...).documentId(...)`. So there is exactly one home page and one site settings document.
+- **Documents:** `landingPage`, `city`, `district`, `amenity`, `blogCategory`, `blogPost`, `agent`, `property`, `propertyType`, `locationTag`, `catalogSeoPage`, `siteSettings`.
+- **Objects (canonical):** Reusable/embedding types: SEO (non-localized `seo` + localized `localizedSeo`), link/CTA types, localized field wrappers (`localizedString`, `localizedText`, `localizedBlockContent`, etc.), **generic landing section blocks** (`heroSection`, `propertyCarouselSection`, …), FAQ/item types, blog block types (`blogTable`, `blogCallout`, `blogFaqBlock`), district stats/metrics.
+- **Singletons:** Homepage is `landingPage` with `_id == "landing-home"` (pageType `home`), and `siteSettings` (documentId `siteSettings`) is forced in the desk. Editors manage the homepage via the canonical landing builder.
 - **References:** Property → agent, propertyType, city, district, locationTags[], amenitiesRefs[]; district → city; blogPost → blogCategory[]; homepage sections → property[], city[], district[], propertyType[], blogPost[]. Filtering is used (e.g. district list filtered by `city._ref`) and one initial-value template exists for “district in city”.
 - **Localization:** Field-level only. No document-level or “language document” pattern. Locales are fixed: `en`, `uk`, `ru`, `sq`, `it` (see `lib/languages.ts`). Localized content is stored in object types that hold one key per language (e.g. `localizedString`: `{ en, uk, ru, sq, it }`). Slug is **single** (Sanity `slug` type with `current`) for city, district, property, propertyType, blogPost, blogCategory, locationTag — not per-locale.
-- **Admin workflow:** Desk is custom (`structure/index.ts`). Top-level: Home Page, Site Settings, then Cities (with nested “Districts in this City”), All Districts, Properties (My Properties filtered by `ownerUserId`, All Properties), Property Types, Location Tags, Amenities, Agents, Blog (Categories + Posts). Ordering is set for districts (order asc, title.en asc) and properties (createdAt desc). No role-based visibility in schema; “My Properties” depends on `ownerUserId` and current user id.
-- **Frontend relation:** Next.js consumes GROQ via `lib/sanity/queries.ts` and `lib/sanity/fragments.ts`. Queries return raw localized objects; the frontend is expected to resolve locale with something like `getLocalizedValue(field, locale)`. No locale is resolved inside GROQ. Slug for routing is `slug.current` everywhere except one query (blog post by slug — see below).
+- **Admin workflow:** Desk is custom (`structure/index.ts`). Top-level: Home Landing (canonical), Landing Pages, Site Settings, then Cities (with nested “Districts in this City”), All Districts, Properties, taxonomies, Blog. Ordering is set for districts (order asc, title.en asc) and properties (createdAt desc).
+- **Frontend relation:** Next.js consumes GROQ via `lib/sanity/queries.ts` and `lib/sanity/fragments.ts`. Homepage query reads the canonical homepage landing: `landingPage` with `_id == "landing-home"`.
 
 ---
 
@@ -29,14 +29,14 @@ This document describes the actual Sanity CMS/admin architecture of the domlivo 
 
 **Document schemas (all under `schemaTypes/documents/`)**
 - `index.ts` — exports array `documents`.
-- `homePage.ts`, `siteSettings.ts`, `city.ts`, `district.ts`, `property.ts`, `propertyType.ts`, `agent.ts`, `amenity.ts`, `locationTag.ts`, `blogPost.ts`, `blogCategory.ts`.
+- `landingPage.ts`, `siteSettings.ts`, `city.ts`, `district.ts`, `property.ts`, `propertyType.ts`, `agent.ts`, `amenity.ts`, `locationTag.ts`, `blogPost.ts`, `blogCategory.ts`.
 
 **Object schemas (all under `schemaTypes/objects/`)**
 - `index.ts` — exports array `objects`.
 - Localization: `localizedString.ts`, `localizedText.ts`, `localizedSlug.ts`, `localizedCtaLink.ts`, `localizedSeo.ts`, `localizedFaqItem.ts`, `localizedFooterLink.ts`, `localizedBlockContent.ts`.
-- SEO: `seo.ts` (non-localized), used by `property`; `localizedSeo.ts` used by homePage, siteSettings, city, district, blogPost.
+- SEO: `seo.ts` (non-localized), used by `property`; `localizedSeo.ts` used by landing pages (`landingPage`), siteSettings, city, district, blogPost.
 - Links: `ctaLink.ts`, `footerLink.ts`, `socialLink.ts`.
-- Homepage sections: `homeHeroSection.ts`, `homePropertyCarouselSection.ts`, `homeLocationCarouselSection.ts`, `homePropertyTypesSection.ts`, `homeInvestmentSection.ts`, `homeAboutSection.ts`, `homeAgentsPromoSection.ts`, `homeBlogSection.ts`, `homeSeoTextSection.ts`, `homeFaqSection.ts`.
+- Landing sections (canonical): `heroSection.ts`, `propertyCarouselSection.ts`, `locationCarouselSection.ts`, `propertyTypesSection.ts`, `investmentSection.ts`, `aboutSection.ts`, `agentsPromoSection.ts`, `articlesSection.ts`, `seoTextSection.ts`, `faqSection.ts`.
 - Blog blocks: `blogTable.ts`, `blogCallout.ts`, `blogFaqBlock.ts`.
 - Other: `faqItem.ts`, `districtStat.ts`, `districtMetric.ts`.
 
@@ -49,7 +49,7 @@ This document describes the actual Sanity CMS/admin architecture of the domlivo 
 **Query layer**
 - `lib/sanity/index.ts` — re-exports queries and fragments.
 - `lib/sanity/queries.ts` — named GROQ queries (HOME_PAGE_QUERY, SITE_SETTINGS_QUERY, city/district/property/blog/settings lists and by-slug).
-- `lib/sanity/fragments.ts` — reusable GROQ fragments (PROPERTY_CARD_FRAGMENT, CITY_CARD_FRAGMENT, HOMEPAGE_SECTIONS_FRAGMENT, etc.). Fragments do not resolve locale; they return raw fields.
+- `lib/sanity/fragments.ts` — reusable GROQ fragments (PROPERTY_CARD_FRAGMENT, CITY_CARD_FRAGMENT, LANDING_PAGE_SECTIONS_FRAGMENT, etc.). Fragments do not resolve locale; they return raw fields.
 
 **Localization config**
 - `lib/languages.ts` — list of 5 languages (en, uk, ru, sq, it). Referenced in comments as source of truth for localized types.
@@ -59,7 +59,7 @@ This document describes the actual Sanity CMS/admin architecture of the domlivo 
 - `scripts/lib/addKeysToArrayItems.ts` — utility used by seeds to add `_key` to array items; no schema dependency.
 
 **Seeds / migrations (reference only; do not run without intent)**
-- `scripts/seed.ts`, `scripts/seedFull.ts`, `scripts/seedHomepage.ts` — populate data.
+- `scripts/seed.ts`, `scripts/seedFull.ts` — populate data (canonical homepage seeds `landing-home`).
 - `scripts/migrateCityDistrictSlug.ts`, `scripts/migratePropertyTypeSlugs.ts` — slug migrations.
 - `scripts/wipeDataset.ts`, `scripts/resetContentForFieldLevelI18n.ts`, etc. — reset/migration helpers.
 
@@ -94,8 +94,8 @@ This document describes the actual Sanity CMS/admin architecture of the domlivo 
 
 **Home page**  
 - **Role:** Single page built from ordered sections.  
-- **Fields:** homepageSections[] (polymorphic: 10 section types), seo (localizedSeo). Validation: at most one homeHeroSection.  
-- **Section types:** homeHeroSection, homePropertyCarouselSection, homeLocationCarouselSection, homePropertyTypesSection, homeInvestmentSection, homeAboutSection, homeAgentsPromoSection, homeBlogSection, homeSeoTextSection, homeFaqSection. Sections reference property[], city[], district[], propertyType[], blogPost[] where applicable; some have “mode” (e.g. auto vs selected) and conditional validation.  
+- **Fields:** `pageSections[]` (polymorphic builder), `seo` (localizedSeo). Validation is per-section; homepage is a `landingPage` singleton (`landing-home`).
+- **Section types (canonical):** heroSection, propertyCarouselSection, locationCarouselSection, propertyTypesSection, investmentSection, aboutSection, agentsPromoSection, articlesSection, seoTextSection, faqSection. Sections reference property[], city[], district[], propertyType[], blogPost[] where applicable; some have “mode” (e.g. auto vs selected) and conditional validation.
 - **Scaling:** Adding section types is straightforward; adding many more could make the array long for editors.
 
 **Site settings**  
@@ -152,7 +152,7 @@ This document describes the actual Sanity CMS/admin architecture of the domlivo 
 
 # 5. Schema quality analysis
 
-**Naming:** Consistent: camelCase, document names match domain (city, district, property, propertyType, blogPost, homePage, siteSettings). Section types are prefixed `home*Section`.
+**Naming:** Consistent: camelCase, document names match domain (city, district, property, propertyType, blogPost, landingPage, siteSettings). Section types are currently prefixed `home*Section` but are used as universal builder blocks.
 
 **Field design:**  
 - Good: groups used on heavy documents (property, city, district, blogPost, siteSettings); descriptions present on many fields; required fields and options (e.g. status, lifecycleStatus) are clear.  
@@ -161,18 +161,18 @@ This document describes the actual Sanity CMS/admin architecture of the domlivo 
 
 **References:** Correct use of `to: [{type: '...'}]`. Filter on district by city ref is correct. No weak refs used in the inspected code.
 
-**Duplication:** Two SEO types — `seo` (non-localized, used by property) and `localizedSeo` (used by homePage, siteSettings, city, district, blogPost). So property is the only document with non-localized SEO; that’s a deliberate but inconsistent choice.
+**Duplication:** Two SEO types — `seo` (non-localized, used by property) and `localizedSeo` (used by landingPage, siteSettings, city, district, blogPost). So property is the only document with non-localized SEO; that’s a deliberate but inconsistent choice.
 
 **Normalization:** Entities are normalized (city, district, propertyType, agent, etc. as separate documents). Homepage sections embed references and resolve them in queries; no denormalization of full content into sections.
 
 **Validation:**  
 - Present: required(), min/max, custom() for conditional rules (e.g. “at least one property when mode is selected”).  
 - Missing: no “at least one language” on localizedString/localizedText; no cross-field rules (e.g. maxPrice >= minPrice if both set).  
-- Hero count on homePage is enforced (max one hero section).
+- Hero count enforcement (max one hero) is currently done on the legacy homePage schema (removed from active schema). Landing pages can implement similar validation if needed.
 
 **Editor UX:** Groups and ordering improve UX. Hidden fields based on parent (e.g. “selected” list when mode is “selected”) are used. Initial value templates only for district-in-city. No document-level preview that shows a chosen locale.
 
-**Maintainability:** Schema is in one place and easy to find. Adding a new homepage section type requires: new object schema, registration in objects/index, and adding to homePage’s `of` array plus to HOMEPAGE_SECTIONS_FRAGMENT. Risk: fragment and section type list can get out of sync.
+**Maintainability:** Schema is in one place and easy to find. Adding a new landing section type requires: new object schema, registration in objects/index, and adding to `landingPage.pageSections` `of` array plus to `LANDING_PAGE_SECTIONS_FRAGMENT`. Risk: fragment and section type list can get out of sync.
 
 ---
 
@@ -184,7 +184,7 @@ This document describes the actual Sanity CMS/admin architecture of the domlivo 
 
 **Sections/blocks:** Homepage is an array of polymorphic sections with `_type` and `_key`; each section type has a known shape. Fragment returns all possible fields; non-applicable fields are null for other section types. Frontend can switch on `_type` and use only the relevant subset. Mode (auto vs selected) implies that for “auto” the frontend must run a separate query (e.g. featured properties, latest posts); contract is documented in section descriptions.
 
-**SEO:** Page-level SEO is in localizedSeo (homePage, city, district, blogPost) or defaultSeo (siteSettings). Property uses non-localized `seo`. So property detail pages have one language per SEO set unless the frontend overlays something else. Fragment exposes meta/og fields; no resolution in GROQ.
+**SEO:** Page-level SEO is in localizedSeo (landingPage, city, district, blogPost) or defaultSeo (siteSettings). Property uses non-localized `seo`. Fragment exposes meta/og fields; no resolution in GROQ.
 
 **Catalog/filters:** There is no single “catalog config” document. Properties list and featured properties queries exist; filter options (cities, property types, status, price range, bedrooms) must be computed from the same dataset (e.g. distinct status, min/max price, etc.) or from separate queries. Fragments don’t include a dedicated “filter options” query; that’s expected to be built by the frontend or additional GROQ. So catalog structure is “data-driven and flexible” but not “pre-shaped” for filters in the schema.
 
@@ -250,7 +250,7 @@ This document describes the actual Sanity CMS/admin architecture of the domlivo 
    - **Future pain:** Bugs if frontend assumes a single shape.
 
 7. **Homepage section fragment is a single large projection**  
-   - **What:** HOMEPAGE_SECTIONS_FRAGMENT lists every section field and nested reference; unused fields are null per section type.  
+  - **What:** `LANDING_PAGE_SECTIONS_FRAGMENT` lists every section field and nested reference; unused fields are null per section type.
    - **Why it’s a problem:** Any new section field must be added to the fragment; easy to forget.  
    - **Severity:** Low.  
    - **Future pain:** New fields not visible to frontend until fragment is updated.
@@ -285,7 +285,7 @@ This document describes the actual Sanity CMS/admin architecture of the domlivo 
 **Acceptable for now:**  
 - Two SEO types (seo vs localizedSeo) and property using non-localized SEO, as long as product accepts single-language meta for listings.  
 - localizedSlug in schema but unused (could be removed or marked “do not use” in a follow-up).  
-- HOMEPAGE_SECTIONS_FRAGMENT as one big projection, with a discipline to update it when section schemas change.
+- `LANDING_PAGE_SECTIONS_FRAGMENT` as one big projection, with a discipline to update it when section schemas change.
 
 **Do not touch without a bigger plan:**  
 - Changing from field-level to document-level localization.  
@@ -301,13 +301,13 @@ This document describes the actual Sanity CMS/admin architecture of the domlivo 
 
 # 11. Handoff summary for another engineer
 
-**What this CMS is:** A single-dataset Sanity v5 studio for a real estate platform. Content is document-centric and reference-based. The home page is one document with an ordered array of section blocks (hero, carousels, about, blog, FAQ, etc.). Listings (property), locations (city, district), taxonomy (propertyType, amenity, locationTag), and blog (blogPost, blogCategory) are separate collections. Two singletons: homePage and siteSettings. Localization is field-level only: every localized field is an object with keys en, uk, ru, sq, it. Slugs are single (slug.current) for all main entities; there is no per-locale slug. The frontend gets raw localized objects and is expected to resolve locale with a helper like getLocalizedValue(field, locale).
+**What this CMS is:** A single-dataset Sanity v5 studio for a real estate platform. Content is document-centric and reference-based. The homepage is the canonical `landingPage` singleton (`landing-home`) with an ordered array of section blocks (hero, carousels, about, blog, FAQ, etc.). Listings (property), locations (city, district), taxonomy (propertyType, amenity, locationTag), and blog (blogPost, blogCategory) are separate collections. Two singletons: landing-home and siteSettings. Localization is field-level only: every localized field is an object with keys en, uk, ru, sq, it. Slugs are single (slug.current) for all main entities; there is no per-locale slug. The frontend gets raw localized objects and is expected to resolve locale with a helper like getLocalizedValue(field, locale).
 
 **Entities that matter most:**  
 - **property** — core listing; has status (sale/rent/short-term), price, city, district, type, agent, gallery, and visibility (isPublished + lifecycleStatus).  
 - **city / district** — location hierarchy; district belongs to city; both have hero, content, FAQ, SEO.  
 - **propertyType** — type of property (apartment, house, etc.); used in filters and homepage.  
-- **homePage** — single document; homepageSections[] drives the whole page; sections can reference properties, cities, districts, property types, blog posts.  
+- **landing-home (landingPage)** — singleton; `pageSections[]` drives the whole page; sections can reference properties, cities, districts, property types, blog posts, and other landing pages.
 - **siteSettings** — global branding, footer, contact, default SEO.  
 - **blogPost / blogCategory** — blog with single slug per post and localized content/blocks.
 
@@ -334,7 +334,7 @@ This document describes the actual Sanity CMS/admin architecture of the domlivo 
 **Rules to avoid making the CMS worse:**  
 - Do not introduce a new localization pattern (e.g. document-per-locale or localized slug) without a project-wide decision.  
 - Do not add a new locale key without updating every localized object type and lib/languages.ts.  
-- When adding a new homepage section type, add it to the schema, to homePage’s `of` array, and to HOMEPAGE_SECTIONS_FRAGMENT.  
+- When adding a new landing section type, add it to the schema, to `landingPage.pageSections` `of` array, and to `LANDING_PAGE_SECTIONS_FRAGMENT`.
 - Keep slug as single (slug.current) for any new routed document.  
 - When adding a new query that filters by slug, use `slug.current == $slug` for documents that use the Sanity slug type.
 

@@ -16,16 +16,23 @@ import {localizedBlockContent} from './localizedBlockContent'
 import {blogTable} from './blogTable'
 import {blogCallout} from './blogCallout'
 import {blogFaqBlock} from './blogFaqBlock'
-import {homeHeroSection} from './homeHeroSection'
-import {homePropertyCarouselSection} from './homePropertyCarouselSection'
-import {homeLocationCarouselSection} from './homeLocationCarouselSection'
-import {homePropertyTypesSection} from './homePropertyTypesSection'
-import {homeInvestmentSection} from './homeInvestmentSection'
-import {homeAboutSection} from './homeAboutSection'
-import {homeAgentsPromoSection} from './homeAgentsPromoSection'
-import {homeBlogSection} from './homeBlogSection'
-import {homeSeoTextSection} from './homeSeoTextSection'
-import {homeFaqSection} from './homeFaqSection'
+import {heroSearchTab} from './heroSearchTab'
+import {heroSection} from './heroSection'
+import {propertyCarouselSection} from './propertyCarouselSection'
+import {homePropertyCarouselTab} from './homePropertyCarouselTab'
+import {locationCarouselSection} from './locationCarouselSection'
+import {propertyTypesSection} from './propertyTypesSection'
+import {investmentSection} from './investmentSection'
+import {aboutSection} from './aboutSection'
+import {agentsPromoSection} from './agentsPromoSection'
+import {articlesSection} from './articlesSection'
+import {seoTextSection} from './seoTextSection'
+import {landingCarouselSection} from './landingCarouselSection'
+import {localizedFaqItemRich} from './localizedFaqItemRich'
+import {cityRichDescriptionSection} from './cityRichDescriptionSection'
+import {districtsComparisonSection} from './districtsComparisonSection'
+import {linkedGallerySection} from './linkedGallerySection'
+import {faqSection} from './faqSection'
 
 /**
  * Object types (embeddable/reusable)
@@ -47,17 +54,24 @@ export const objects = [
   localizedBlockContent,
   localizedSlug,
   localizedFaqItem,
+  localizedFaqItemRich,
   localizedCtaLink,
   localizedSeo,
   localizedFooterLink,
-  homeHeroSection,
-  homePropertyCarouselSection,
-  homeLocationCarouselSection,
-  homePropertyTypesSection,
-  homeInvestmentSection,
-  homeAboutSection,
-  homeAgentsPromoSection,
-  homeBlogSection,
-  homeSeoTextSection,
-  homeFaqSection,
+  heroSearchTab,
+  heroSection,
+  propertyCarouselSection,
+  homePropertyCarouselTab,
+  locationCarouselSection,
+  propertyTypesSection,
+  investmentSection,
+  aboutSection,
+  agentsPromoSection,
+  articlesSection,
+  seoTextSection,
+  landingCarouselSection,
+  cityRichDescriptionSection,
+  districtsComparisonSection,
+  linkedGallerySection,
+  faqSection,
 ]

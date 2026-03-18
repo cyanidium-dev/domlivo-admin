@@ -4,6 +4,23 @@ Complete content model reference for the Domlivo CMS. All multilingual content u
 
 ## Document Types
 
+### LandingPage
+
+**Purpose:** Universal SEO/editorial landing pages using an ordered section builder.
+
+**Homepage:** `landingPage` singleton with `_id: "landing-home"` and `pageType: "home"` (route `/` on frontend).
+
+**Key fields (high-level):**
+- `pageType` (home/city/district/propertyType/investment/custom)
+- `enabled`
+- `title` (localized)
+- `slug` (non-home)
+- `pageSections[]` (ordered block builder)
+- optional linked entity refs (`linkedCity`, `linkedDistrict`, `linkedPropertyType`, …)
+- `seo` (localizedSeo)
+
+---
+
 ### City
 
 **Purpose:** SEO landing pages for cities (e.g. Tirana, Durres, Vlore, Saranda).
@@ -200,7 +217,7 @@ Complete content model reference for the Domlivo CMS. All multilingual content u
 
 ### HomePage
 
-**Purpose:** Homepage content. **Singleton** — one document (documentId: `homePage`).
+**Purpose:** Homepage content is the canonical landing: `landingPage` singleton with `_id: "landing-home"` and `pageType: "home"`.
 
 **Multilingual:** Field-level. All sections use localizedString, localizedText, localizedCtaLink, localizedSeo, localizedFaqItem where text varies; images and toggles are shared.
 

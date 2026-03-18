@@ -12,6 +12,7 @@ domlivo-admin/
 │   ├── index.ts              # Exports documents + objects
 │   ├── documents/            # Document schemas
 │   │   ├── index.ts
+│   │   ├── landingPage.ts
 │   │   ├── city.ts
 │   │   ├── district.ts
 │   │   ├── property.ts
@@ -19,7 +20,6 @@ domlivo-admin/
 │   │   ├── locationTag.ts
 │   │   ├── agent.ts
 │   │   ├── blogPost.ts
-│   │   ├── homePage.ts
 │   │   └── siteSettings.ts
 │   └── objects/              # Reusable object schemas
 │       ├── index.ts
@@ -98,7 +98,7 @@ City and district schemas use field groups. To add a field:
 
 ## Multilingual Content (Field-Level Only)
 
-The project uses **field-level i18n** only. There are no per-language document variants for city, district, homePage, siteSettings, blogPost, propertyType, or locationTag.
+The project uses **field-level i18n** only. There are no per-language document variants for city, district, landingPage, siteSettings, blogPost, propertyType, or locationTag.
 
 ### Adding localized fields to a document
 
@@ -109,7 +109,7 @@ The project uses **field-level i18n** only. There are no per-language document v
 
 ### Frontend compatibility
 
-For all field-level i18n types (city, district, homePage, siteSettings, property, blogPost, blogCategory, **propertyType**, **locationTag**), the frontend must resolve localized fields with a helper such as `getLocalizedValue(obj, locale)` (or equivalent). In particular: `propertyType.title`, `locationTag.title`, `locationTag.slug`, `shortDescription`, `description` are objects `{ en, ru, uk, sq }` — do not render them as raw objects; pick the value for the current locale with fallback.
+For all field-level i18n types (city, district, landingPage, siteSettings, property, blogPost, blogCategory, **propertyType**, **locationTag**), the frontend must resolve localized fields with a helper such as `getLocalizedValue(obj, locale)` (or equivalent).
 
 ### Adding new languages
 
@@ -150,11 +150,11 @@ preview: {
 
 For localized content, select each locale and choose the first non-empty value in `prepare`.
 
-## Desk Structure
+## Desk Structure (canonical)
 
 Defined in `structure/index.ts`:
 
-- **Home Page** — Singleton (documentId: homePage).
+- **Home Landing** — Singleton (`landingPage`, documentId: `landing-home`).
 - **Site Settings** — Singleton (documentId: siteSettings).
 - **Locations** — **Cities** list, **Districts** list (ordered by `order`, then title).
 - **Properties** — **My Properties** (filtered by `ownerUserId == $userId`), **All Properties**.

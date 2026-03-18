@@ -8,8 +8,8 @@ import {agent} from './agent'
 import {property} from './property'
 import {propertyType} from './propertyType'
 import {locationTag} from './locationTag'
-import {homePage} from './homePage'
 import {siteSettings} from './siteSettings'
+import {landingPage} from './landingPage'
 
 /**
  * Document types (standalone content)
@@ -17,6 +17,7 @@ import {siteSettings} from './siteSettings'
  */
 export const documents = [
   catalogSeoPage,
+  landingPage,
   city,
   district,
   amenity,
@@ -26,6 +27,5 @@ export const documents = [
   property,
   propertyType,
   locationTag,
-  homePage,
   siteSettings,
 ]

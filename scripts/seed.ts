@@ -70,6 +70,24 @@ function block(text: string, key?: string) {
   }
 }
 
+function blocksFromPlainText(text: string) {
+  const paras = text
+    .split(/\n\s*\n/g)
+    .map((p) => p.trim())
+    .filter(Boolean)
+  return paras.map((p) => block(p))
+}
+
+function localizedBlockContentFromLiText(t: Li) {
+  return {
+    en: blocksFromPlainText(t.en),
+    ru: blocksFromPlainText(t.ru),
+    uk: blocksFromPlainText(t.uk),
+    sq: blocksFromPlainText(t.sq),
+    it: blocksFromPlainText(t.it),
+  }
+}
+
 async function uploadPlaceholderImage(): Promise<string> {
   const res = await fetch('https://picsum.photos/800/600')
   const buffer = Buffer.from(await res.arrayBuffer())
@@ -499,7 +517,8 @@ async function main() {
   const invImg2 = await uploadPlaceholderImage()
   const homeSections = addKeysToArrayItems([
     {
-      _type: 'homeHeroSection',
+      _type: 'heroSection',
+      enabled: true,
       title: Li('Gjeni pronën e ëndrrave tuaja në Shqipëri', 'Find your dream property in Albania', 'Найдите недвижимость мечты в Албании', 'Знайдіть нерухомість мрії в Албанії', 'Trova la proprietà dei tuoi sogni in Albania'),
       subtitle: Li('Apartamente, vila dhe pasuri investimi në të gjithë Shqipërinë', 'Apartments, villas and investment real estate across Albania', 'Квартиры, виллы и инвестиционная недвижимость по всей Албании', 'Квартири, вілли та інвестиційна нерухомість по всій Албанії', 'Appartamenti, ville e immobili per investimenti in tutta l\'Albania'),
       shortLine: Li('Listime të verifikuara • Çmime transparente • Pa komisione të fshehura', 'Verified listings • Transparent prices • No hidden commissions', 'Проверенные объявления • Прозрачные цены • Без скрытых комиссий', 'Перевірені оголошення • Прозорі ціни • Без прихованих комісій', 'Annunci verificati • Prezzi trasparenti • Nessuna commissione nascosta'),
@@ -507,29 +526,33 @@ async function main() {
       cta: ctaLi('/properties', Li('Shiko pronat', 'Browse Properties', 'Смотреть объекты', 'Переглянути об\'єкти', 'Sfoglia proprietà')),
     },
     {
-      _type: 'homePropertyCarouselSection',
+      _type: 'propertyCarouselSection',
+      enabled: true,
       title: Li('Prona të Zgjedhura në Shqipëri', 'Featured Properties in Albania', 'Избранные объекты в Албании', 'Обрані об\'єкти в Албанії', 'Proprietà in evidenza in Albania'),
       subtitle: Li('Apartamente, vila dhe pronë investimi të përzgjedhura me kujdes', 'Hand-picked apartments, villas and investment properties', 'Тщательно отобранные квартиры, виллы и объекты для инвестиций', 'Ретельно відібрані квартири, вілли та інвестиційні об\'єкти', 'Appartamenti, ville e immobili per investimenti selezionati a mano'),
       cta: ctaLi('/properties', Li('Shiko të gjitha pronat', 'View All Properties', 'Смотреть все объекты', 'Переглянути всі об\'єкти', 'Vedi tutte le proprietà')),
       mode: 'auto',
     },
     {
-      _type: 'homeLocationCarouselSection',
+      _type: 'locationCarouselSection',
+      enabled: true,
       title: Li('Qytetet më të Kërkuara në Shqipëri', 'Popular Cities in Albania', 'Популярные города Албании', 'Популярні міста Албанії', 'Città più richieste in Albania'),
       subtitle: Li('Eksploroni vendet më të kërkuara për blerjen e pasurive', 'Explore the most demanded locations for buying property', 'Исследуйте самые востребованные локации для покупки недвижимости', 'Досліджуйте найпопулярніші локації для купівлі нерухомості', 'Esplora le località più richieste per l\'acquisto di immobili'),
       cta: ctaLi('/cities', Li('Eksploro lokacionet', 'Explore Locations', 'Смотреть локации', 'Дослідити локації', 'Esplora le località')),
-      cities: ['city-tirana', 'city-durres', 'city-vlore', 'city-sarande'].map((id) => ({_type: 'reference' as const, _ref: id})),
-      districts: [],
+      mode: 'manual',
+      manualItems: ['city-tirana', 'city-durres', 'city-vlore', 'city-sarande'].map((id) => ({_type: 'reference' as const, _ref: id})),
     },
     {
-      _type: 'homePropertyTypesSection',
+      _type: 'propertyTypesSection',
+      enabled: true,
       title: Li('Llojet e Pasurive', 'Property Types', 'Типы недвижимости', 'Типи нерухомості', 'Tipi di proprietà'),
       subtitle: Li('Zgjidhni llojin e pasurisë që u përshtatet qëllimeve tuaja', 'Choose the type of real estate that suits your goals', 'Выберите тип недвижимости под ваши цели', 'Оберіть тип нерухомості за вашими цілями', 'Scegli il tipo di immobile che si adatta ai tuoi obiettivi'),
       cta: ctaLi('/properties', Li('Shiko pronat', 'View Properties', 'Смотреть объекты', 'Переглянути об\'єкти', 'Vedi proprietà')),
       propertyTypes: [],
     },
     {
-      _type: 'homeInvestmentSection',
+      _type: 'investmentSection',
+      enabled: true,
       title: Li('Investoni në Pasurinë Shqiptare', 'Invest in Albanian Real Estate', 'Инвестируйте в недвижимость Албании', 'Інвестуйте в нерухомість Албанії', 'Investi nel mercato immobiliare albanese'),
       description: Li(
         'Shqipëria është një nga tregjet me rritje më të shpejtë të pasurive në Evropë. Investitorët tërhiqen nga çmimet e ulëta hyrëse, turizmi në rritje dhe kërkesa e lartë për qira përgjatë bregut Adriatik dhe Jon.',
@@ -548,7 +571,8 @@ async function main() {
       secondaryImage: img(invImg2),
     },
     {
-      _type: 'homeAboutSection',
+      _type: 'aboutSection',
+      enabled: true,
       title: Li('Pse të zgjidhni Domlivo', 'Why Choose Domlivo', 'Почему Domlivo', 'Чому Domlivo', 'Perché scegliere Domlivo'),
       description: Li(
         'Domlivo është një platformë pasurish e fokusuar në tregun shqiptar. Ndihmojmë blerësit të zbulojnë pronë të verifikuar, të lidhen me agjentë të besuar dhe të marrin vendime të sigurta investimi.',
@@ -564,7 +588,8 @@ async function main() {
       ],
     },
     {
-      _type: 'homeAgentsPromoSection',
+      _type: 'agentsPromoSection',
+      enabled: true,
       title: Li('Punoni me Ekspertët Lokalë', 'Work With Local Experts', 'Работайте с местными экспертами', 'Працюйте з місцевими експертами', 'Lavora con esperti locali'),
       subtitle: Li('Lidhuni me agjentë të përvojshëm të pasurive', 'Connect with experienced real estate agents', 'Свяжитесь с опытными агентами по недвижимости', 'Зв\'яжіться з досвідченими агентами з нерухомості', 'Connettiti con agenti immobiliari esperti'),
       description: Li(
@@ -582,55 +607,65 @@ async function main() {
       cta: ctaLi('/agents', Li('Kontakto një agjent', 'Contact an Agent', 'Связаться с агентом', 'Зв\'язатися з агентом', 'Contatta un agente')),
     },
     {
-      _type: 'homeBlogSection',
+      _type: 'articlesSection',
       title: Li('Njohuri për Pasuri', 'Real Estate Insights', 'Обзоры рынка недвижимости', 'Огляди ринку нерухомості', 'Approfondimenti immobiliari'),
       subtitle: Li('Udhëzues, këshilla dhe analiza të tregut për pasuri në Shqipëri', 'Guides, tips and market insights about property in Albania', 'Гайды, советы и обзоры рынка недвижимости в Албании', 'Гайди, поради та огляди ринку нерухомості в Албанії', 'Guide, consigli e analisi di mercato sugli immobili in Albania'),
       cta: ctaLi('/blog', Li('Lexo të gjitha artikujt', 'Read All Articles', 'Читать все статьи', 'Читати всі статті', 'Leggi tutti gli articoli')),
       mode: 'latest',
     },
     {
-      _type: 'homeSeoTextSection',
-      content: Li(
+      _type: 'seoTextSection',
+      enabled: true,
+      content: localizedBlockContentFromLiText(Li(
         'Blerja e pasurive në Shqipëri është bërë gjithnjë e më tërheqëse për blerësit dhe investitorët ndërkombëtarë. Vendi ofron një kombinim unik të stilit të jetesës mesdhetare, çmimeve të përballueshme të pasurive dhe potencialit të fortë investimi afatgjatë. Qytete si Tirana, Durrësi, Vlorë dhe Sarandë po përjetojnë zhvillim të qëndrueshëm dhe kërkesë në rritje nga blerësit vendas dhe ndërkombëtarë. Pavarësisht nëse kërkoni një apartament pushimi, një investim qiraje ose një banesë të përhershme, tregu shqiptar i pasurive ofron një gamë të gjerë mundësish.',
         'Buying property in Albania has become increasingly attractive for international buyers and investors. The country offers a unique combination of Mediterranean lifestyle, affordable real estate prices and strong long-term investment potential. Cities such as Tirana, Durres, Vlora and Saranda are experiencing steady development and growing demand from both local and international buyers. Whether you are looking for a holiday apartment, a rental investment or a permanent residence, the Albanian property market offers a wide range of opportunities.',
         'Покупка недвижимости в Албании становится всё привлекательнее для международных покупателей и инвесторов. Страна предлагает уникальное сочетание средиземноморского образа жизни, доступных цен на недвижимость и сильного долгосрочного инвестиционного потенциала. Такие города, как Тирана, Дуррес, Влёра и Саранда, переживают стабильное развитие и растущий спрос со стороны местных и иностранных покупателей. Независимо от того, ищете ли вы квартиру для отдыха, объект для сдачи в аренду или постоянное жильё, албанский рынок недвижимости предлагает широкий выбор возможностей.',
         'Купівля нерухомості в Албанії стає дедалі привабливішою для міжнародних покупців та інвесторів. Країна пропонує унікальне поєднання середземноморського способу життя, доступних цін на нерухомість та сильного довгострокового інвестиційного потенціалу. Такі міста, як Тірана, Дуррес, Вльора та Саранда, переживають стабільний розвиток і зростаючий попит з боку місцевих та іноземних покупців. Незалежно від того, шукаєте ви квартиру для відпочинку, об\'єкт для оренди чи постійне житло, албанський ринок нерухомості пропонує широкий вибір можливостей.',
         'L\'acquisto di immobili in Albania è diventato sempre più attraente per acquirenti e investitori internazionali. Il paese offre una combinazione unica di stile di vita mediterraneo, prezzi immobiliari accessibili e forte potenziale di investimento a lungo termine. Città come Tirana, Durazzo, Valona e Saranda stanno vivendo uno sviluppo costante e una domanda in crescita da parte di acquirenti locali e internazionali. Che cerchiate un appartamento per le vacanze, un investimento in affitto o una residenza permanente, il mercato immobiliare albanese offre un\'ampia gamma di opportunità.'
-      ),
+      )),
     },
     {
-      _type: 'homeFaqSection',
+      _type: 'faqSection',
+      enabled: true,
       title: Li('Pyetje të Shpeshta', 'Frequently Asked Questions', 'Часто задаваемые вопросы', 'Поширені питання', 'Domande frequenti'),
       items: addKeysToArrayItems([
-        faqItemLi(
+        {_type: 'localizedFaqItem', ...faqItemLi(
           Li('A mund të huajt të blejnë pronë në Shqipëri?', 'Can foreigners buy property in Albania?', 'Могут ли иностранцы купить недвижимость в Албании?', 'Чи можуть іноземці купити нерухомість в Албанії?', 'Gli stranieri possono acquistare immobili in Albania?'),
           Li('Po. Qytetarët e huaj mund të blejnë ligjërisht pasuri në Shqipëri. Procesi i blerjes është i qartë dhe të drejtat e pronësisë mbrohen me ligj.', 'Yes. Foreign citizens can legally purchase real estate in Albania. The buying process is straightforward and property ownership rights are protected by law.', 'Да. Иностранные граждане могут на законных основаниях приобретать недвижимость в Албании. Процесс покупки прозрачен, права собственности защищены законом.', 'Так. Іноземні громадяни можуть на законних підставах купувати нерухомість в Албанії. Процес купівлі прозорий, права власності захищені законом.', 'Sì. I cittadini stranieri possono acquistare legalmente immobili in Albania. Il processo di acquisto è lineare e i diritti di proprietà sono protetti dalla legge.')
-        ),
-        faqItemLi(
+        )},
+        {_type: 'localizedFaqItem', ...faqItemLi(
           Li('Cilat janë qytetet më të kërkuara për blerjen e pasurive?', 'What are the most popular cities for buying property?', 'Какие города наиболее популярны для покупки недвижимости?', 'Які міста найпопулярніші для купівлі нерухомості?', 'Quali sono le città più popolari per l\'acquisto di immobili?'),
           Li('Lokalitetet më të kërkuara përfshijnë Tiranën, Durrësin, Vlorën dhe Sarandën. Këto qytete ofrojnë kërkesë të lartë për qira dhe infrastrukturë të mirë.', 'The most popular locations include Tirana, Durres, Vlore and Saranda. These cities offer strong rental demand and good infrastructure.', 'Наиболее популярные локации — Тирана, Дуррес, Влёра и Саранда. Эти города отличаются высоким спросом на аренду и развитой инфраструктурой.', 'Найпопулярніші локації — Тірана, Дуррес, Вльора та Саранда. Ці міста мають високий попит на оренду та розвинену інфраструктуру.', 'Le località più popolari includono Tirana, Durazzo, Valona e Saranda. Queste città offrono forte domanda di affitti e buone infrastrutture.')
-        ),
-        faqItemLi(
+        )},
+        {_type: 'localizedFaqItem', ...faqItemLi(
           Li('Sa kohë zgjat procesi i blerjes?', 'How long does the buying process take?', 'Сколько длится процесс покупки?', 'Скільки триває процес купівлі?', 'Quanto dura il processo di acquisto?'),
           Li('Në shumicën e rasteve, blerja e një prone në Shqipëri mund të përfundojë brenda disa javëve pas nënshkrimit të marrëveshjes paraprake.', 'In most cases a property purchase in Albania can be completed within several weeks after signing the preliminary agreement.', 'В большинстве случаев покупка недвижимости в Албании может быть завершена в течение нескольких недель после подписания предварительного соглашения.', 'У більшості випадків купівлю нерухомості в Албанії можна завершити протягом кількох тижнів після підписання попередньої угоди.', 'Nella maggior parte dei casi l\'acquisto di un immobile in Albania può essere completato entro poche settimane dalla firma del preliminare.')
-        ),
+        )},
       ]),
     },
   ])
   await client.createOrReplace({
-    _id: 'homePage',
-    _type: 'homePage',
-    homepageSections: homeSections,
+    _id: 'landing-home',
+    _type: 'landingPage',
+    pageType: 'home',
+    enabled: true,
+    pageSections: homeSections,
     seo: {
       metaTitle: Li('Domlivo', 'Domlivo', 'Domlivo', 'Domlivo', 'Domlivo'),
-      metaDescription: Li('Pasuri në Shqipëri', 'Property in Albania', 'Недвижимость в Албании', 'Нерухомість в Албанії', 'Immobiliare in Albania'),
+      metaDescription: Li(
+        'Pasuri në Shqipëri',
+        'Property in Albania',
+        'Недвижимость в Албании',
+        'Нерухомість в Албанії',
+        'Immobiliare in Albania',
+      ),
       ogTitle: Li('Domlivo', 'Domlivo', 'Domlivo', 'Domlivo', 'Domlivo'),
       ogDescription: Li('Pasuri në Shqipëri', 'Property in Albania', 'Недвижимость', 'Нерухомість', 'Immobiliare'),
       ogImage: imgRef(),
       noIndex: false,
     },
   })
-  console.log('HomePage: 1 (sections)')
+  console.log('Landing (home): 1 (pageSections)')
 
   // --- 7. SiteSettings (ONE singleton) ---
   await client.createOrReplace({

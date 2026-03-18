@@ -1,10 +1,11 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
 
-export const homeInvestmentSection = defineType({
-  name: 'homeInvestmentSection',
-  title: 'Investment Properties',
+export const investmentSection = defineType({
+  name: 'investmentSection',
+  title: 'Investment Section',
   type: 'object',
   fields: [
+    defineField({name: 'enabled', title: 'Enabled / Visible', type: 'boolean', initialValue: true}),
     defineField({name: 'title', title: 'Section Title', type: 'localizedString'}),
     defineField({name: 'description', title: 'Description', type: 'localizedText'}),
     defineField({
@@ -31,9 +32,11 @@ export const homeInvestmentSection = defineType({
     }),
   ],
   preview: {
-    select: {title: 'title.en'},
-    prepare({title}: {title?: string}) {
-      return {title: title || 'Investment', subtitle: 'Investment section'}
+    select: {title: 'title.en', enabled: 'enabled'},
+    prepare({title, enabled}: {title?: string; enabled?: boolean}) {
+      const status = enabled === false ? ' (hidden)' : ''
+      return {title: (title || 'Investment') + status, subtitle: 'Investment section'}
     },
   },
 })
+

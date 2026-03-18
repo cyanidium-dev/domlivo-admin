@@ -282,19 +282,26 @@ export const BLOG_POST_FULL_FRAGMENT = `_id,
   "schemaType": _type`
 
 // -----------------------------------------------------------------------------
-// HOMEPAGE SECTIONS
+// LANDING PAGE SECTIONS (canonical builder for landingPage)
 // -----------------------------------------------------------------------------
 
-/** Polymorphic homepage section projection. Each section type returns only its fields; others are null. */
-export const HOMEPAGE_SECTIONS_FRAGMENT = `homepageSections[]{
+/** Polymorphic landing page section projection for landingPage.pageSections[]. */
+export const LANDING_PAGE_SECTIONS_FRAGMENT = `pageSections[]{
   _type,
   _key,
+  enabled,
   title,
   subtitle,
   shortLine,
   backgroundImage,
   cta,
   mode,
+  seoTextUnderCta,
+  search,
+  videoUrl,
+  columns,
+  rows,
+  closingText,
   "properties": properties[]->{
     ${PROPERTY_CARD_FRAGMENT}
   },
@@ -315,5 +322,8 @@ export const HOMEPAGE_SECTIONS_FRAGMENT = `homepageSections[]{
     ${BLOG_POST_CARD_FRAGMENT}
   },
   content,
-  "items": items
+  cardCtaLabel,
+  "items": items,
+  manualItems,
+  auto
 }`

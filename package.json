@@ -5,6 +5,11 @@
   "main": "package.json",
   "license": "UNLICENSED",
   "scripts": {
+    "postinstall": "node scripts/postinstall-fix-sanity-cli-worker.cjs",
+    "seed:city-landings": "tsx scripts/seedCityLandingsTiranaDurres.ts",
+    "verify:landing-translations": "tsx scripts/verifyLandingTranslations.ts",
+    "migrate:landing-sections": "tsx scripts/migrateLandingSectionTypes.ts",
+    "fix:landing-seo": "tsx scripts/fixMissingLandingSeo.ts",
     "dev": "sanity dev",
     "start": "sanity start",
     "build": "sanity build",
@@ -12,10 +17,10 @@
     "deploy-graphql": "sanity graphql deploy",
     "seed": "tsx scripts/seed.ts",
     "seed:full": "tsx scripts/seedFull.ts",
-    "seed:homepage": "tsx scripts/seedHomepage.ts",
     "seed:catalog-seo": "tsx scripts/seedCatalogSeoPages.ts",
     "wipe:dataset": "tsx scripts/wipeDataset.ts",
     "fix:keys": "tsx scripts/fixMissingKeys.ts",
+    "verify:canonical-home": "tsx scripts/verifyCanonicalHomepageLanding.ts",
     "migrate:city-district-slug": "tsx scripts/migrateCityDistrictSlug.ts",
     "migrate:property-type-slug": "tsx scripts/migratePropertyTypeSlugs.ts",
     "migrate:amenity-slug": "tsx scripts/migrateAmenitySlugs.ts",
@@ -27,17 +32,18 @@
     "reset:taxonomy:dry": "tsx scripts/resetPropertyTypesAndTags.ts --dry",
     "reset:taxonomy": "tsx scripts/resetPropertyTypesAndTags.ts --execute",
     "reset:types-tags:dry": "tsx scripts/resetTypesAndTags.ts --dry",
-    "reset:types-tags": "tsx scripts/resetTypesAndTags.ts --execute"
+    "reset:types-tags": "tsx scripts/resetTypesAndTags.ts --execute",
+    "delete:legacy-homePage": "tsx scripts/deleteLegacyHomePageDoc.ts"
   },
   "keywords": [
     "sanity"
   ],
   "dependencies": {
-    "@sanity/vision": "^5.15.0",
+    "@sanity/vision": "^5.16.0",
     "next-sanity": "^12.1.0",
     "react": "^19.1",
     "react-dom": "^19.1",
-    "sanity": "^5.15.0",
+    "sanity": "^5.16.0",
     "styled-components": "^6.1.18"
   },
   "devDependencies": {
