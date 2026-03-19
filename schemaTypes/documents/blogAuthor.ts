@@ -18,23 +18,23 @@ export const blogAuthor = defineType({
   fields: [
     defineField({
       name: 'name',
-      title: 'Name',
+      title: 'Author name',
       type: 'string',
       group: 'basic',
-      validation: (Rule) => Rule.required(),
-      description: 'Public author name shown in bylines.',
+      validation: (Rule: any) => Rule.required(),
+      description: 'Public name shown in article bylines.',
     }),
     defineField({
       name: 'slug',
-      title: 'URL slug',
+      title: 'Author URL slug',
       type: 'slug',
       group: 'basic',
       options: {
         source: 'name',
         maxLength: 96,
       },
-      validation: (Rule) => Rule.required(),
-      description: 'Stable author slug for author pages.',
+      validation: (Rule: any) => Rule.required(),
+      description: 'Used in the author page URL.',
     }),
     defineField({
       name: 'active',
@@ -42,26 +42,26 @@ export const blogAuthor = defineType({
       type: 'boolean',
       group: 'basic',
       initialValue: true,
-      description: 'When disabled, this author should be hidden from listings.',
+      description: 'Disable to hide this author from editor-facing listings.',
     }),
 
     defineField({
       name: 'role',
-      title: 'Role / Title',
+      title: 'Role / title',
       type: 'localizedString',
       group: 'profile',
-      description: 'Localized role shown under author name.',
+      description: 'Optional localized role shown under the author name (e.g. “Real Estate Advisor”).',
     }),
     defineField({
       name: 'bio',
       title: 'Bio',
       type: 'localizedText',
       group: 'profile',
-      description: 'Localized short biography.',
+      description: 'Optional localized short biography.',
     }),
     defineField({
       name: 'photo',
-      title: 'Profile image',
+      title: 'Author avatar',
       type: 'image',
       group: 'profile',
       options: {hotspot: true},
@@ -70,20 +70,20 @@ export const blogAuthor = defineType({
     }),
     defineField({
       name: 'email',
-      title: 'Email (internal)',
+      title: 'Email (optional, internal)',
       type: 'string',
       group: 'profile',
-      validation: (Rule) => Rule.email(),
+      validation: (Rule: any) => Rule.email(),
       description: 'Optional internal contact email.',
     }),
     defineField({
       name: 'socialLinks',
-      title: 'Social Links',
+      title: 'Social links',
       type: 'array',
       group: 'profile',
       of: [defineArrayMember({type: 'socialLink'})],
-      validation: (Rule) => Rule.max(10),
-      description: 'Optional social profiles.',
+      validation: (Rule: any) => Rule.max(10),
+      description: 'Optional social profile links.',
     }),
 
     defineField({
@@ -104,10 +104,10 @@ export const blogAuthor = defineType({
       media: 'photo',
       slug: 'slug.current',
     },
-    prepare({title, roleEn, roleSq, active, media, slug}) {
-      const parts = [slug || 'no-slug']
+    prepare({title, roleEn, roleSq, active, media}: any) {
+      const parts: string[] = []
+      parts.push(active === false ? 'Inactive' : 'Active')
       if (roleEn || roleSq) parts.push(roleEn || roleSq)
-      if (active === false) parts.push('inactive')
       return {
         title: title || 'Unnamed author',
         subtitle: parts.join(' · '),

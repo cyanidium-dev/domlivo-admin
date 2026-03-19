@@ -32,15 +32,15 @@ export const blogPost = defineType({
         maxLength: 96,
       },
       validation: (Rule: any) => Rule.required(),
-      description: 'URL path. Generated from English title.',
+      description: 'Used in the article URL (generated from the English title).',
     }),
     defineField({
       name: 'publishedAt',
-      title: 'Published at',
+      title: 'Publish date',
       type: 'datetime',
       group: 'basic',
       validation: (Rule: any) => Rule.required(),
-      description: 'Publication date. Used for sorting and display.',
+      description: 'Date shown on the public site and used for sorting.',
     }),
 
     // --- Content (localized) ---
@@ -52,7 +52,9 @@ export const blogPost = defineType({
       validation: (Rule: any) =>
         Rule.required().custom((value: any) => {
           const en = (value as {en?: string} | undefined)?.en
-          return String(en || '').trim() ? true : 'English title is required.'
+          return String(en || '').trim()
+            ? true
+            : 'Please add the English title (required for URL generation).'
         }),
       description: 'Article headline per language.',
     }),
@@ -61,7 +63,7 @@ export const blogPost = defineType({
       title: 'Subtitle',
       type: 'localizedString',
       group: 'content',
-      description: 'Optional secondary heading shown under the article title.',
+      description: 'Optional secondary heading shown under the main title.',
     }),
     defineField({
       name: 'excerpt',
@@ -69,7 +71,7 @@ export const blogPost = defineType({
       type: 'localizedText',
       group: 'content',
       rows: 3,
-      description: 'Short summary per language for cards and meta descriptions.',
+      description: 'Short summary per language (used for cards and search snippets).',
     }),
     defineField({
       name: 'content',
@@ -79,10 +81,12 @@ export const blogPost = defineType({
       validation: (Rule: any) =>
         Rule.required().custom((value: any) => {
           const en = (value as {en?: unknown[]} | undefined)?.en
-          return Array.isArray(en) && en.length > 0 ? true : 'English article body is required.'
+          return Array.isArray(en) && en.length > 0
+            ? true
+            : 'Please add at least one content block in English.'
         }),
       description:
-        'Main article content per language. Add paragraphs, headings, lists, images, tables, FAQ blocks, callouts, buttons, recommended-articles blocks, and real-estate embeds for each locale.',
+        'Main article content per language. Add paragraphs, images, tables, FAQ, callouts, buttons, recommended-articles, and property embeds for each locale.',
     }),
 
     // --- Media ---
@@ -102,7 +106,9 @@ export const blogPost = defineType({
           const hasAsset = Boolean((value as {asset?: unknown}).asset)
           const alt = (value as {alt?: string}).alt
           if (!hasAsset) return true
-          return String(alt || '').trim() ? true : 'Add alternative text for the cover image.'
+          return String(alt || '').trim()
+            ? true
+            : 'Please add alternative text for the cover image (accessibility/SEO).'
         }),
       description: 'Main image for the article. Used in cards and Open Graph.',
     }),
@@ -114,8 +120,9 @@ export const blogPost = defineType({
       type: 'array',
       group: 'categorization',
       of: [{type: 'reference', to: [{type: 'blogCategory'}]}],
-      validation: (Rule: any) => Rule.required().min(1).max(3).error('Select 1 to 3 categories.'),
-      description: 'Assign one or more categories.',
+      validation: (Rule: any) =>
+        Rule.required().min(1).max(3).error('Choose 1 to 3 categories.'),
+      description: 'Pick the categories that describe this article (used for filtering).',
     }),
     defineField({
       name: 'author',
@@ -124,7 +131,7 @@ export const blogPost = defineType({
       group: 'categorization',
       to: [{type: 'blogAuthor'}],
       validation: (Rule: any) => Rule.required(),
-      description: 'Primary author profile for byline and author pages.',
+      description: 'Select the primary author profile.',
     }),
     defineField({
       name: 'featured',
@@ -132,29 +139,35 @@ export const blogPost = defineType({
       type: 'boolean',
       group: 'categorization',
       initialValue: false,
-      description: 'Highlight this post on the blog homepage.',
+      description: 'If enabled, this post will be highlighted on the blog homepage.',
     }),
     defineField({
       name: 'authorName',
-      title: 'Author name',
+      title: 'Author name (legacy fallback)',
       type: 'string',
       group: 'categorization',
-      description: 'Legacy fallback author name. Prefer Author reference field.',
+      description:
+        'Legacy fallback. Prefer using the Author reference field above for new posts.',
+      hidden: ({document}: any) => Boolean(document?.author),
     }),
     defineField({
       name: 'authorRole',
-      title: 'Author role',
+      title: 'Author role (legacy fallback)',
       type: 'string',
       group: 'categorization',
-      description: 'Legacy fallback author role. Prefer Author reference field.',
+      description:
+        'Legacy fallback. Prefer using the Author reference field above for new posts.',
+      hidden: ({document}: any) => Boolean(document?.author),
     }),
     defineField({
       name: 'authorImage',
-      title: 'Author photo',
+      title: 'Author photo (legacy fallback)',
       type: 'image',
       group: 'categorization',
       options: {hotspot: true},
-      description: 'Legacy fallback author image. Prefer Author reference field.',
+      description:
+        'Legacy fallback. Prefer using the Author reference field above for new posts.',
+      hidden: ({document}: any) => Boolean(document?.author),
     }),
     defineField({
       name: 'relatedPosts',
@@ -162,7 +175,7 @@ export const blogPost = defineType({
       type: 'array',
       group: 'categorization',
       of: [{type: 'reference', to: [{type: 'blogPost'}]}],
-      description: 'Suggest related articles.',
+      description: 'Manually curated “related” posts (shown under this article).',
       validation: (Rule: any) =>
         Rule.max(6).custom((value: any, context: any) => {
           if (!Array.isArray(value)) return true
@@ -174,7 +187,9 @@ export const blogPost = defineType({
             const draftId = `drafts.${publishedId}`
             return ref === currentId || ref === publishedId || ref === draftId
           })
-          return hasSelfReference ? 'A post cannot reference itself as related.' : true
+          return hasSelfReference
+            ? 'You can’t select the same post as a related post.'
+            : true
         }),
     }),
     defineField({
@@ -183,7 +198,7 @@ export const blogPost = defineType({
       type: 'array',
       group: 'categorization',
       of: [{type: 'reference', to: [{type: 'property'}]}],
-      validation: (Rule: any) => Rule.max(3),
+      validation: (Rule: any) => Rule.max(3).error('Choose up to 3 properties.'),
       description: 'Optional recommended properties shown under the article.',
     }),
 
@@ -201,11 +216,11 @@ export const blogPost = defineType({
           const hasTitle = String(seo.metaTitle?.en || '').trim().length > 0
           const hasDescription = String(seo.metaDescription?.en || '').trim().length > 0
           if (!hasTitle || !hasDescription) {
-            return 'For published posts, SEO requires English meta title and meta description.'
+            return 'Before publishing, add English meta title and meta description.'
           }
           return true
         }),
-      description: 'Meta title, description, Open Graph per language.',
+      description: 'Used for Google search results and social sharing (Open Graph) per language.',
     }),
   ],
 
@@ -213,12 +228,9 @@ export const blogPost = defineType({
     select: {
       titleEn: 'title.en',
       titleSq: 'title.sq',
-      subtitleEn: 'subtitle.en',
-      slug: 'slug.current',
       publishedAt: 'publishedAt',
-      featured: 'featured',
       categoryTitle: 'categories.0->title.en',
-      authorName: 'author.name',
+      authorRefName: 'author->name',
       legacyAuthorName: 'authorName',
       media: 'coverImage',
     },
@@ -226,27 +238,19 @@ export const blogPost = defineType({
       const {
         titleEn,
         titleSq,
-        subtitleEn,
-        slug,
         publishedAt,
-        featured,
         categoryTitle,
-        authorName,
+        authorRefName,
         legacyAuthorName,
         media,
       } = selection
       const title = titleEn || titleSq || 'Untitled'
-      const parts = [slug || 'no-slug']
-      if (categoryTitle) parts.push(categoryTitle)
-      if (authorName || legacyAuthorName) parts.push(authorName || legacyAuthorName)
-      if (featured) parts.push('★ Featured')
-      if (publishedAt) {
-        const d = new Date(publishedAt)
-        parts.push(d.toLocaleDateString())
-      }
+      const authorDisplayName = authorRefName || legacyAuthorName || ''
+      const dateLabel = publishedAt ? new Date(publishedAt).toLocaleDateString() : ''
+      const subtitleParts = [categoryTitle, dateLabel, authorDisplayName].filter(Boolean)
       return {
-        title: subtitleEn ? `${title}: ${subtitleEn}` : title,
-        subtitle: parts.join(' · '),
+        title,
+        subtitle: subtitleParts.join(' · '),
         media,
       }
     },

@@ -16,19 +16,19 @@ export const blogCategory = defineType({
   fields: [
     defineField({
       name: 'title',
-      title: 'Title',
+      title: 'Category name',
       type: 'localizedString',
       group: 'basic',
-      validation: (Rule) =>
-        Rule.required().custom((value) => {
+      validation: (Rule: any) =>
+        Rule.required().custom((value: any) => {
           const en = (value as {en?: string} | undefined)?.en
           return String(en || '').trim() ? true : 'English title is required.'
         }),
-      description: 'Category name (e.g. Guides, Market News).',
+      description: 'Name editors use in the blog category list (e.g. Guides, Market News).',
     }),
     defineField({
       name: 'slug',
-      title: 'URL slug',
+      title: 'Category URL slug',
       type: 'slug',
       group: 'basic',
       options: {
@@ -38,23 +38,23 @@ export const blogCategory = defineType({
         },
         maxLength: 96,
       },
-      validation: (Rule) => Rule.required(),
-      description: 'URL path for category pages.',
+      validation: (Rule: any) => Rule.required(),
+      description: 'Used in the category page URL.',
     }),
     defineField({
       name: 'description',
       title: 'Description',
       type: 'localizedText',
       group: 'basic',
-      description: 'Short description for category pages and meta.',
+      description: 'Short category text shown on category pages and used for meta.',
       rows: 3,
     }),
     defineField({
       name: 'order',
-      title: 'Order',
+      title: 'Sort order',
       type: 'number',
       group: 'basic',
-      description: 'Display order (lower numbers first).',
+      description: 'Controls where this category appears (lower numbers first).',
     }),
     defineField({
       name: 'active',
@@ -62,14 +62,14 @@ export const blogCategory = defineType({
       type: 'boolean',
       group: 'basic',
       initialValue: true,
-      description: 'When disabled, category is hidden from filters and listings.',
+      description: 'When disabled, this category is hidden from blog filters and listings.',
     }),
     defineField({
       name: 'seo',
       title: 'SEO',
       type: 'localizedSeo',
       group: 'seo',
-      description: 'Optional category SEO metadata for category landing pages.',
+      description: 'Optional meta and Open Graph (Google search + social sharing) per language.',
     }),
   ],
 
@@ -77,14 +77,14 @@ export const blogCategory = defineType({
     select: {
       titleEn: 'title.en',
       titleSq: 'title.sq',
-      slug: 'slug.current',
       active: 'active',
+      order: 'order',
     },
-    prepare(selection) {
+    prepare(selection: any) {
       const title = selection.titleEn || selection.titleSq || 'Untitled'
-      const sub = [selection.slug || 'no-slug']
-      if (selection.active === false) sub.push('inactive')
-      return {title, subtitle: sub.join(' · ')}
+      const status = selection.active === false ? 'Inactive' : 'Active'
+      const orderPart = selection.order != null ? `Order ${selection.order}` : ''
+      return {title, subtitle: [status, orderPart].filter(Boolean).join(' · ')}
     },
   },
 })

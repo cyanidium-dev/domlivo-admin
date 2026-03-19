@@ -6,13 +6,13 @@ import {defineType, defineField} from 'sanity'
  */
 export const blogCtaBlock = defineType({
   name: 'blogCtaBlock',
-  title: 'Button block',
+  title: 'CTA button block',
   type: 'object',
 
   fields: [
     defineField({
       name: 'variant',
-      title: 'Style variant',
+      title: 'Button style',
       type: 'string',
       options: {
         list: [
@@ -24,14 +24,14 @@ export const blogCtaBlock = defineType({
       },
       initialValue: 'primary',
       validation: (Rule: any) => Rule.required(),
-      description: 'Visual style hint for the frontend.',
+      description: 'Select how this CTA should look on the page.',
     }),
     defineField({
       name: 'cta',
-      title: 'Button',
+      title: 'Button text & link',
       type: 'localizedCtaLink',
       validation: (Rule: any) => Rule.required(),
-      description: 'Button label and destination URL (localized label).',
+      description: 'Localized label and destination URL.',
     }),
   ],
 
@@ -42,9 +42,13 @@ export const blogCtaBlock = defineType({
       href: 'cta.href',
     },
     prepare({variant, labelEn, href}: {variant?: string; labelEn?: string; href?: string}) {
+      const variantLabel =
+        variant === 'primary' ? 'Primary' : variant === 'secondary' ? 'Secondary' : variant === 'link' ? 'Link' : ''
+      const buttonText = labelEn || href || 'CTA'
+      const buttonVariant = variantLabel || variant || 'Primary'
       return {
-        title: labelEn || href || 'CTA',
-        subtitle: variant ? `Button (${variant})` : 'Button',
+        title: buttonText,
+        subtitle: buttonVariant,
       }
     },
   },
