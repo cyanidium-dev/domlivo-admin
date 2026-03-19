@@ -3,6 +3,7 @@ import {city} from './city'
 import {district} from './district'
 import {amenity} from './amenity'
 import {blogCategory} from './blogCategory'
+import {blogAuthor} from './blogAuthor'
 import {blogPost} from './blogPost'
 import {agent} from './agent'
 import {property} from './property'
@@ -21,6 +22,7 @@ export const documents = [
   city,
   district,
   amenity,
+  blogAuthor,
   blogCategory,
   blogPost,
   agent,

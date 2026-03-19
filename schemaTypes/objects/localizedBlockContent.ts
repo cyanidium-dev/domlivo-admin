@@ -51,6 +51,9 @@ const richContentArrayOf = [
   defineArrayMember({type: 'blogTable'}),
   defineArrayMember({type: 'blogFaqBlock'}),
   defineArrayMember({type: 'blogCallout'}),
+  defineArrayMember({type: 'blogCtaBlock'}),
+  defineArrayMember({type: 'blogRelatedPostsBlock'}),
+  defineArrayMember({type: 'blogPropertyEmbedBlock'}),
 ]
 
 export const localizedBlockContent = defineType({
