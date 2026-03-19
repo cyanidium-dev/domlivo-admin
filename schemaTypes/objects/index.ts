@@ -16,6 +16,9 @@ import {localizedBlockContent} from './localizedBlockContent'
 import {blogTable} from './blogTable'
 import {blogCallout} from './blogCallout'
 import {blogFaqBlock} from './blogFaqBlock'
+import {blogCtaBlock} from './blogCtaBlock'
+import {blogRelatedPostsBlock} from './blogRelatedPostsBlock'
+import {blogPropertyEmbedBlock} from './blogPropertyEmbedBlock'
 import {heroSearchTab} from './heroSearchTab'
 import {heroSection} from './heroSection'
 import {propertyCarouselSection} from './propertyCarouselSection'
@@ -45,6 +48,9 @@ export const objects = [
   blogTable,
   blogCallout,
   blogFaqBlock,
+  blogCtaBlock,
+  blogRelatedPostsBlock,
+  blogPropertyEmbedBlock,
   ctaLink,
   socialLink,
   footerLink,

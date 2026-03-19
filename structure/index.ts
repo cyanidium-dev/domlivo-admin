@@ -166,6 +166,7 @@ export const structure: StructureResolver = (S, context) =>
           S.list()
             .title('Blog')
             .items([
+              S.documentTypeListItem('blogAuthor').title('Authors'),
               S.documentTypeListItem('blogCategory').title('Categories'),
               S.documentTypeListItem('blogPost').title('Posts'),
             ]),
