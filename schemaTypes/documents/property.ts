@@ -1,4 +1,6 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
+import {CoordinatesLatInput} from '../../components/sanity/coordinates/CoordinatesLatInput'
+import {CoordinatesLngInput} from '../../components/sanity/coordinates/CoordinatesLngInput'
 
 export const property = defineType({
   name: 'property',
@@ -202,6 +204,7 @@ export const property = defineType({
       title: 'Latitude',
       type: 'number',
       group: 'location',
+      components: {input: CoordinatesLatInput},
       validation: (Rule) =>
         Rule.min(-90).max(90).error('Latitude must be between -90 and 90'),
     }),
@@ -211,6 +214,7 @@ export const property = defineType({
       title: 'Longitude',
       type: 'number',
       group: 'location',
+      components: {input: CoordinatesLngInput},
       validation: (Rule) =>
         Rule.min(-180).max(180).error('Longitude must be between -180 and 180'),
     }),
