@@ -15,6 +15,14 @@ export const investmentSection = defineType({
       of: [defineArrayMember({type: 'localizedString'})],
       validation: (Rule) => Rule.max(3),
     }),
+    defineField({
+      name: 'stats',
+      title: 'Stats',
+      type: 'array',
+      of: [defineArrayMember({type: 'investmentStat'})],
+      description: 'Optional stats cards for the investment block.',
+      validation: (Rule) => Rule.max(12),
+    }),
     defineField({name: 'cta', title: 'CTA', type: 'localizedCtaLink'}),
     defineField({
       name: 'primaryImage',

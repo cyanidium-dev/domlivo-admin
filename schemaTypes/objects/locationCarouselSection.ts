@@ -31,6 +31,20 @@ export const locationCarouselSection = defineType({
         'Auto: frontend selects cities/districts based on their own fields (e.g. popular/published and order). Manual: use the selected list below.',
     }),
     defineField({
+      name: 'linkTargetType',
+      title: 'Link Target Type',
+      type: 'string',
+      initialValue: 'landing',
+      options: {
+        list: [
+          {title: 'Catalog', value: 'catalog'},
+          {title: 'Landing', value: 'landing'},
+        ],
+        layout: 'radio',
+      },
+      description: 'Defines whether location cards should link to catalog routes or landing routes.',
+    }),
+    defineField({
       name: 'auto',
       title: 'Auto Settings',
       type: 'object',

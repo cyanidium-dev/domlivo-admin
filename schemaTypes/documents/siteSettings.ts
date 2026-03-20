@@ -77,6 +77,14 @@ export const siteSettings = defineType({
       validation: (Rule) => Rule.max(20),
     }),
     defineField({
+      name: 'policyLinks',
+      title: 'Footer Policy Links',
+      type: 'array',
+      of: [defineArrayMember({type: 'localizedFooterLink'})],
+      group: 'footer',
+      validation: (Rule) => Rule.max(20),
+    }),
+    defineField({
       name: 'copyrightText',
       title: 'Copyright Text',
       type: 'localizedString',

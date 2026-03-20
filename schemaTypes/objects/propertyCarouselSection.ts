@@ -50,6 +50,57 @@ export const propertyCarouselSection = defineType({
         'Auto: frontend fetches featured/popular properties from API. Selected: use the list below.',
     }),
     defineField({
+      name: 'limit',
+      title: 'Limit',
+      type: 'number',
+      description: 'Optional maximum number of items for this section.',
+      validation: (Rule) => Rule.min(1).max(100),
+    }),
+    defineField({
+      name: 'sort',
+      title: 'Sort',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Newest', value: 'newest'},
+          {title: 'Price: Low to High', value: 'priceAsc'},
+          {title: 'Price: High to Low', value: 'priceDesc'},
+          {title: 'Popular', value: 'popular'},
+        ],
+      },
+      description: 'Optional sort strategy for this section.',
+    }),
+    defineField({
+      name: 'autoMode',
+      title: 'Auto Mode Settings',
+      type: 'object',
+      hidden: ({parent}) => parent?.mode !== 'auto',
+      description: 'Optional settings applied only when Content Mode = Auto.',
+      fields: [
+        defineField({
+          name: 'limit',
+          title: 'Limit',
+          type: 'number',
+          description: 'Maximum number of properties to show in auto mode.',
+          validation: (Rule) => Rule.min(1).max(100),
+        }),
+        defineField({
+          name: 'sort',
+          title: 'Sort',
+          type: 'string',
+          options: {
+            list: [
+              {title: 'Newest', value: 'newest'},
+              {title: 'Price: Low to High', value: 'priceAsc'},
+              {title: 'Price: High to Low', value: 'priceDesc'},
+              {title: 'Popular', value: 'popular'},
+            ],
+          },
+          description: 'Optional sort strategy used in auto mode.',
+        }),
+      ],
+    }),
+    defineField({
       name: 'properties',
       title: 'Selected Properties',
       type: 'array',
