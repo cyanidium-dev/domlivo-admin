@@ -232,32 +232,34 @@ export const blogPost = defineType({
     select: {
       titleEn: 'title.en',
       titleSq: 'title.sq',
+      titleUk: 'title.uk',
+      titleRu: 'title.ru',
+      titleIt: 'title.it',
+      slug: 'slug.current',
       publishedAt: 'publishedAt',
       featured: 'featured',
-      categoryTitle: 'categories.0->title.en',
-      authorRefName: 'author->name',
+      categoryTitle: 'categories.0.title.en',
+      authorName: 'author.name',
       legacyAuthorName: 'authorName',
       media: 'coverImage',
     },
     prepare(selection: any) {
-      const {
-        titleEn,
-        titleSq,
-        publishedAt,
-        featured,
-        categoryTitle,
-        authorRefName,
-        legacyAuthorName,
-        media,
-      } = selection
-      const title = titleEn || titleSq || 'Untitled'
-      const authorDisplayName = authorRefName || legacyAuthorName || ''
-      const dateLabel = publishedAt ? new Date(publishedAt).toLocaleDateString() : ''
-      const subtitleParts = [featured ? '★ Featured' : null, categoryTitle, dateLabel, authorDisplayName].filter(Boolean)
+      const s = selection || {}
+      const title =
+        s.titleEn || s.titleSq || s.titleUk || s.titleRu || s.titleIt || 'Untitled'
+      const authorDisplayName = s.authorName || s.legacyAuthorName || ''
+      const dateLabel = s.publishedAt ? new Date(s.publishedAt).toLocaleDateString() : ''
+      const subtitleParts = [
+        s.featured ? '★ Featured' : null,
+        s.categoryTitle,
+        dateLabel,
+        authorDisplayName,
+        s.slug ? `/${s.slug}` : null,
+      ].filter(Boolean)
       return {
         title,
-        subtitle: subtitleParts.join(' · '),
-        media,
+        subtitle: subtitleParts.join(' · ') || 'Blog post',
+        media: s.media,
       }
     },
   },
