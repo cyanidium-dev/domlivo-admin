@@ -2,7 +2,7 @@ import {defineType, defineField} from 'sanity'
 
 /**
  * Button / CTA block for blog article content.
- * Uses existing `localizedCtaLink` for label+href per locale.
+ * Uses localizedCtaLink: href (relative path or full URL) + label (per locale).
  */
 export const blogCtaBlock = defineType({
   name: 'blogCtaBlock',
@@ -24,14 +24,15 @@ export const blogCtaBlock = defineType({
       },
       initialValue: 'primary',
       validation: (Rule: any) => Rule.required(),
-      description: 'Select how this CTA should look on the page.',
+      description: 'Visual style of the button on the page.',
     }),
     defineField({
       name: 'cta',
-      title: 'Button text & link',
+      title: 'Link destination & button text',
       type: 'localizedCtaLink',
       validation: (Rule: any) => Rule.required(),
-      description: 'Localized label and destination URL.',
+      description:
+        'Set the link URL (e.g. /properties or https://...) and the button text per language. English text is required.',
     }),
   ],
 

@@ -45,6 +45,11 @@ const imageBlockDefinition = () =>
     ],
   })
 
+/**
+ * Allowed block types for article/rich content body.
+ * Related posts and property embeds are managed via dedicated blogPost fields
+ * (relatedPosts, relatedProperties), not inline blocks.
+ */
 const richContentArrayOf = [
   blockContentDefinition(),
   imageBlockDefinition(),
@@ -52,8 +57,6 @@ const richContentArrayOf = [
   defineArrayMember({type: 'blogFaqBlock'}),
   defineArrayMember({type: 'blogCallout'}),
   defineArrayMember({type: 'blogCtaBlock'}),
-  defineArrayMember({type: 'blogRelatedPostsBlock'}),
-  defineArrayMember({type: 'blogPropertyEmbedBlock'}),
 ]
 
 export const localizedBlockContent = defineType({
