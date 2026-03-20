@@ -52,9 +52,10 @@ export const blogTable = defineType({
   ],
 
   preview: {
-    select: {title: 'title.en'},
-    prepare({title}: {title?: string}) {
-      return {title: title || 'Table', subtitle: 'Table block'}
+    select: {title: 'title.en', rowCount: 'rows'},
+    prepare({title, rowCount}: {title?: string; rowCount?: unknown[]}) {
+      const n = Array.isArray(rowCount) ? rowCount.length : 0
+      return {title: title || 'Table', subtitle: n > 0 ? `${n} row(s)` : 'Table block'}
     },
   },
 })

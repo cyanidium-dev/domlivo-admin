@@ -44,14 +44,20 @@ export const blogPropertyEmbedBlock = defineType({
   ],
 
   preview: {
-    select: {title: 'title.en', mode: 'mode', count: 'properties'},
-    prepare({title, mode, count}: {title?: string; mode?: string; count?: unknown[]}) {
+    select: {
+      title: 'title.en',
+      mode: 'mode',
+      count: 'properties',
+      firstTitle: 'properties.0->title.en',
+    },
+    prepare({title, mode, count, firstTitle}: {title?: string; mode?: string; count?: unknown[]; firstTitle?: string}) {
       const n = Array.isArray(count) ? count.length : 0
       const modeLabel =
         mode === 'card' ? 'Card grid' : mode === 'list' ? 'List' : mode === 'compact' ? 'Compact' : mode || ''
-      const word = 'properties'
+      const heading = title || 'Property recommendations'
+      const detail = n > 0 && firstTitle ? `${n} · ${firstTitle}` : `${n} property(ies)`
       const modePart = modeLabel ? ` • ${modeLabel}` : ''
-      return {title: title || 'Property recommendations', subtitle: `${n} ${word}${modePart}`}
+      return {title: heading, subtitle: detail + modePart}
     },
   },
 })

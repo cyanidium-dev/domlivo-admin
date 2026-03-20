@@ -42,7 +42,7 @@ export const blogAuthor = defineType({
       type: 'boolean',
       group: 'basic',
       initialValue: true,
-      description: 'Disable to hide this author from editor-facing listings.',
+      description: 'When disabled, this author is hidden from the author picker and blog listings.',
     }),
 
     defineField({
@@ -106,11 +106,11 @@ export const blogAuthor = defineType({
     },
     prepare({title, roleEn, roleSq, active, media}: any) {
       const parts: string[] = []
-      parts.push(active === false ? 'Inactive' : 'Active')
+      if (active === false) parts.push('Inactive')
       if (roleEn || roleSq) parts.push(roleEn || roleSq)
       return {
         title: title || 'Unnamed author',
-        subtitle: parts.join(' · '),
+        subtitle: parts.length > 0 ? parts.join(' · ') : 'Author',
         media,
       }
     },

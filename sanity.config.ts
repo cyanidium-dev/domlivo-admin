@@ -4,6 +4,7 @@ import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
 import {structure} from './structure'
 import {districtInCityTemplate} from './templates/districtInCity'
+import {blogSettingsTemplate} from './templates/blogSettings'
 
 export default defineConfig({
   name: 'default',
@@ -16,6 +17,6 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
-    templates: (prev) => [...prev, districtInCityTemplate],
+    templates: (prev) => [...prev, districtInCityTemplate, blogSettingsTemplate],
   },
 })

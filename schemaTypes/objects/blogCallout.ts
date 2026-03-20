@@ -39,6 +39,7 @@ export const blogCallout = defineType({
       type: 'array',
       of: [{type: 'block'}],
       validation: (Rule) => Rule.required(),
+      description: 'Callout body text.',
     }),
   ],
 

@@ -17,6 +17,7 @@ import {
   PROPERTY_TYPE_FRAGMENT,
   LOCATION_TAG_FRAGMENT,
   AMENITY_FRAGMENT,
+  BLOG_AUTHOR_FRAGMENT,
   BLOG_CATEGORY_FRAGMENT,
   BLOG_POST_CARD_FRAGMENT,
   BLOG_POST_FULL_FRAGMENT,
@@ -194,12 +195,67 @@ export const PROPERTY_BY_SLUG_QUERY = groq`*[_type == "property" && slug.current
 }`
 
 // -----------------------------------------------------------------------------
-// BLOG
+// BLOG — Frontend query contract
+// -----------------------------------------------------------------------------
+//
+// BLOG_SETTINGS_QUERY: Returns blog index hero + SEO. Null if document not created.
+//   → Create via Studio: Blog > Blog Settings, or "Create new" > Blog Settings template.
+//
+// BLOG_POSTS_QUERY: Paginated listing. Params: { category?, author?, limit?, offset? }
+//   - category: slug string (e.g. 'real-estate'). Omit/empty = all categories.
+//   - author: slug string. Omit/empty = all authors.
+//   - limit: page size. Default 100 when omitted.
+//   - offset: skip N. Default 0. Use offset = (page - 1) * limit for ?page=N.
+//   → /blog: { limit: 12, offset: 0 }
+//   → /blog?category=X: { category: 'X', limit: 12, offset: 0 }
+//   → /blog?page=2: { limit: 12, offset: 12 }
+//
+// BLOG_POSTS_COUNT_QUERY: Total count for same filter. Params: { category?, author? }
+//   → Pass same category/author as BLOG_POSTS_QUERY for pagination UI.
+//
+// BLOG_POST_BY_SLUG_QUERY: Single post. Params: { slug: string }
+//
+// BLOG_CATEGORIES_QUERY: Active categories for filter bar. No params.
+//
+// BLOG_AUTHORS_QUERY: Active authors. No params.
+//
+// BLOG_AUTHOR_BY_SLUG_QUERY: Single author. Params: { slug: string }
+//
 // -----------------------------------------------------------------------------
 
-export const BLOG_POSTS_QUERY = groq`*[_type == "blogPost"] | order(publishedAt desc){
+/** Blog index page config. Singleton documentId: blog-settings. Returns null if not created. */
+export const BLOG_SETTINGS_QUERY = groq`*[_type == "blogSettings" && _id == "blog-settings"][0]{
+  heroTitle,
+  heroDescription,
+  seo
+}`
+
+/** Active authors for author index and filter. */
+export const BLOG_AUTHORS_QUERY = groq`*[_type == "blogAuthor" && active != false] | order(name asc){
+  ${BLOG_AUTHOR_FRAGMENT}
+}`
+
+/**
+ * Filter expression for blog posts. Shared by BLOG_POSTS_QUERY and BLOG_POSTS_COUNT_QUERY.
+ * - category: filter by category slug (categories[].slug.current)
+ * - author: filter by author slug (author->slug.current)
+ */
+const BLOG_POSTS_FILTER = `_type == "blogPost" &&
+  (!defined($category) || $category == "" || $category in categories[]->slug.current) &&
+  (!defined($author) || $author == "" || author->slug.current == $author)`
+
+/**
+ * Blog posts with optional filters and pagination.
+ * Params: { category?: string, author?: string, limit?: number, offset?: number }
+ * For ?category=real-estate: pass { category: 'real-estate' }
+ * For ?page=2 with pageSize=12: pass { limit: 12, offset: 12 }
+ */
+export const BLOG_POSTS_QUERY = groq`*[${BLOG_POSTS_FILTER}] | order(publishedAt desc)[coalesce($offset, 0)...coalesce($offset, 0) + coalesce($limit, 100)]{
   ${BLOG_POST_CARD_FRAGMENT}
 }`
+
+/** Total count of posts matching the same filter as BLOG_POSTS_QUERY. Use for pagination. Params: { category?: string, author?: string } */
+export const BLOG_POSTS_COUNT_QUERY = groq`count(*[${BLOG_POSTS_FILTER}])`
 
 /** Params: { slug: string } — slug.current */
 export const BLOG_POST_BY_SLUG_QUERY = groq`*[_type == "blogPost" && slug.current == $slug][0]{
@@ -210,8 +266,14 @@ export const BLOG_POST_BY_SLUG_QUERY = groq`*[_type == "blogPost" && slug.curren
 // BLOG CATEGORIES
 // -----------------------------------------------------------------------------
 
-export const BLOG_CATEGORIES_QUERY = groq`*[_type == "blogCategory"] | order(order asc){
+/** Active categories for filter UI, sorted by order. Stable slug-based taxonomy. */
+export const BLOG_CATEGORIES_QUERY = groq`*[_type == "blogCategory" && active != false] | order(order asc){
   ${BLOG_CATEGORY_FRAGMENT}
+}`
+
+/** Params: { slug: string } — author slug for author profile page */
+export const BLOG_AUTHOR_BY_SLUG_QUERY = groq`*[_type == "blogAuthor" && slug.current == $slug][0]{
+  ${BLOG_AUTHOR_FRAGMENT}
 }`
 
 // -----------------------------------------------------------------------------
