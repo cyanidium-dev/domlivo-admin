@@ -20,6 +20,7 @@
     "seed:full": "tsx scripts/seedFull.ts",
     "seed:catalog-seo": "tsx scripts/seedCatalogSeoPages.ts",
     "seed:blog": "tsx scripts/seed-blog.ts",
+    "clear:blog": "tsx scripts/clear-blog.ts",
     "wipe:dataset": "tsx scripts/wipeDataset.ts",
     "fix:keys": "tsx scripts/fixMissingKeys.ts",
     "verify:canonical-home": "tsx scripts/verifyCanonicalHomepageLanding.ts",
