@@ -8,15 +8,36 @@ export const localizedCtaLink = defineType({
   fields: [
     defineField({
       name: 'href',
-      title: 'URL',
+      title: 'Link destination',
       type: 'string',
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) =>
+        Rule.required().custom((value: string) => {
+          if (!value || typeof value !== 'string') return true
+          const v = value.trim()
+          if (!v) return 'Link destination is required.'
+          if (
+            v.startsWith('/') ||
+            v.startsWith('http://') ||
+            v.startsWith('https://') ||
+            v.startsWith('mailto:') ||
+            v.startsWith('tel:')
+          )
+            return true
+          return 'Use a relative path (e.g. /properties), full URL (https://...), mailto:, or tel:.'
+        }),
+      description:
+        'Relative path (e.g. /properties), full URL (https://...), mailto:, or tel:. Must start with /, http, https, mailto:, or tel:.',
     }),
     defineField({
       name: 'label',
-      title: 'Label',
+      title: 'Button text',
       type: 'localizedString',
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) =>
+        Rule.required().custom((value: any) => {
+          const en = (value as {en?: string} | undefined)?.en
+          return String(en || '').trim() ? true : 'Add at least the English button text.'
+        }),
+      description: 'Button/link text per language. English is required for the frontend.',
     }),
   ],
 
