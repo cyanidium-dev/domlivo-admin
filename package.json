@@ -42,6 +42,7 @@
   ],
   "dependencies": {
     "@sanity/vision": "^5.16.0",
+    "maplibre-gl": "^5.20.2",
     "next-sanity": "^12.1.0",
     "react": "^19.1",
     "react-dom": "^19.1",
