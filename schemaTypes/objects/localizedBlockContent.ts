@@ -2,7 +2,7 @@ import {defineType, defineField, defineArrayMember} from 'sanity'
 
 /**
  * Localized Portable Text / block content.
- * Each language (en, sq, ru, uk) has its own rich content array.
+ * Each language (en, uk, ru, sq, it) has its own rich content array.
  */
 const blockContentDefinition = () =>
   defineArrayMember({

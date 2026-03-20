@@ -2,7 +2,7 @@ import {defineType, defineField} from 'sanity'
 
 /**
  * Blog post: full-featured SEO article.
- * All content fields (title, excerpt, body) are localized (en, sq, ru, uk).
+ * All content fields (title, excerpt, body) are localized (en, uk, ru, sq, it).
  */
 export const blogPost = defineType({
   name: 'blogPost',
@@ -10,10 +10,11 @@ export const blogPost = defineType({
   type: 'document',
 
   groups: [
-    {name: 'basic', title: 'Basic', default: true},
-    {name: 'content', title: 'Content'},
-    {name: 'media', title: 'Media'},
-    {name: 'categorization', title: 'Categorization'},
+    {name: 'basic', title: 'Basic info', default: true},
+    {name: 'content', title: 'Article content'},
+    {name: 'media', title: 'Cover image'},
+    {name: 'categorization', title: 'Categories & author'},
+    {name: 'related', title: 'Related content'},
     {name: 'seo', title: 'SEO'},
   ],
 
@@ -86,7 +87,7 @@ export const blogPost = defineType({
             : 'Please add at least one content block in English.'
         }),
       description:
-        'Main article content per language. Add paragraphs, images, tables, FAQ, callouts, buttons, recommended-articles, and property embeds for each locale.',
+        'Article body per language. Add paragraphs, images, tables, FAQ blocks, callouts, CTAs, recommended articles, and property embeds.',
     }),
 
     // --- Media ---
@@ -120,9 +121,10 @@ export const blogPost = defineType({
       type: 'array',
       group: 'categorization',
       of: [{type: 'reference', to: [{type: 'blogCategory'}]}],
+      options: {filter: 'active != false'},
       validation: (Rule: any) =>
         Rule.required().min(1).max(3).error('Choose 1 to 3 categories.'),
-      description: 'Pick the categories that describe this article (used for filtering).',
+      description: 'Categories for this article. Used for filtering on the blog listing.',
     }),
     defineField({
       name: 'author',
@@ -130,8 +132,9 @@ export const blogPost = defineType({
       type: 'reference',
       group: 'categorization',
       to: [{type: 'blogAuthor'}],
+      options: {filter: 'active != false'},
       validation: (Rule: any) => Rule.required(),
-      description: 'Select the primary author profile.',
+      description: 'Primary author shown in the byline.',
     }),
     defineField({
       name: 'featured',
@@ -173,9 +176,9 @@ export const blogPost = defineType({
       name: 'relatedPosts',
       title: 'Related posts',
       type: 'array',
-      group: 'categorization',
+      group: 'related',
       of: [{type: 'reference', to: [{type: 'blogPost'}]}],
-      description: 'Manually curated “related” posts (shown under this article).',
+      description: 'Posts shown in the “Read next” section under this article (max 6).',
       validation: (Rule: any) =>
         Rule.max(6).custom((value: any, context: any) => {
           if (!Array.isArray(value)) return true
@@ -196,10 +199,11 @@ export const blogPost = defineType({
       name: 'relatedProperties',
       title: 'Related properties',
       type: 'array',
-      group: 'categorization',
+      group: 'related',
       of: [{type: 'reference', to: [{type: 'property'}]}],
+      options: {filter: 'isPublished == true'},
       validation: (Rule: any) => Rule.max(3).error('Choose up to 3 properties.'),
-      description: 'Optional recommended properties shown under the article.',
+      description: 'Properties shown as recommendations under the article (max 3).',
     }),
 
     // --- SEO ---
@@ -229,6 +233,7 @@ export const blogPost = defineType({
       titleEn: 'title.en',
       titleSq: 'title.sq',
       publishedAt: 'publishedAt',
+      featured: 'featured',
       categoryTitle: 'categories.0->title.en',
       authorRefName: 'author->name',
       legacyAuthorName: 'authorName',
@@ -239,6 +244,7 @@ export const blogPost = defineType({
         titleEn,
         titleSq,
         publishedAt,
+        featured,
         categoryTitle,
         authorRefName,
         legacyAuthorName,
@@ -247,7 +253,7 @@ export const blogPost = defineType({
       const title = titleEn || titleSq || 'Untitled'
       const authorDisplayName = authorRefName || legacyAuthorName || ''
       const dateLabel = publishedAt ? new Date(publishedAt).toLocaleDateString() : ''
-      const subtitleParts = [categoryTitle, dateLabel, authorDisplayName].filter(Boolean)
+      const subtitleParts = [featured ? '★ Featured' : null, categoryTitle, dateLabel, authorDisplayName].filter(Boolean)
       return {
         title,
         subtitle: subtitleParts.join(' · '),

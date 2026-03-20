@@ -5,6 +5,7 @@ import {amenity} from './amenity'
 import {blogCategory} from './blogCategory'
 import {blogAuthor} from './blogAuthor'
 import {blogPost} from './blogPost'
+import {blogSettings} from './blogSettings'
 import {agent} from './agent'
 import {property} from './property'
 import {propertyType} from './propertyType'
@@ -25,6 +26,7 @@ export const documents = [
   blogAuthor,
   blogCategory,
   blogPost,
+  blogSettings,
   agent,
   property,
   propertyType,

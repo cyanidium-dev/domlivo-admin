@@ -24,7 +24,7 @@ export const blogCategory = defineType({
           const en = (value as {en?: string} | undefined)?.en
           return String(en || '').trim() ? true : 'English title is required.'
         }),
-      description: 'Name editors use in the blog category list (e.g. Guides, Market News).',
+      description: 'Category name shown in filters and category pages (e.g. Guides, Market News).',
     }),
     defineField({
       name: 'slug',
@@ -77,14 +77,17 @@ export const blogCategory = defineType({
     select: {
       titleEn: 'title.en',
       titleSq: 'title.sq',
+      slug: 'slug.current',
       active: 'active',
       order: 'order',
     },
     prepare(selection: any) {
       const title = selection.titleEn || selection.titleSq || 'Untitled'
-      const status = selection.active === false ? 'Inactive' : 'Active'
+      const status = selection.active === false ? 'Inactive' : ''
       const orderPart = selection.order != null ? `Order ${selection.order}` : ''
-      return {title, subtitle: [status, orderPart].filter(Boolean).join(' · ')}
+      const slugPart = selection.slug ? `/${selection.slug}` : ''
+      const subtitleParts = [status, orderPart, slugPart].filter(Boolean)
+      return {title, subtitle: subtitleParts.join(' · ') || 'Category'}
     },
   },
 })

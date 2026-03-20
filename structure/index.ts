@@ -166,9 +166,24 @@ export const structure: StructureResolver = (S, context) =>
           S.list()
             .title('Blog')
             .items([
-              S.documentTypeListItem('blogAuthor').title('Authors'),
-              S.documentTypeListItem('blogCategory').title('Categories'),
-              S.documentTypeListItem('blogPost').title('Posts'),
+              S.documentTypeListItem('blogPost')
+                .title('Posts')
+                .defaultOrdering([{field: 'publishedAt', direction: 'desc'}]),
+              S.documentTypeListItem('blogCategory')
+                .title('Categories')
+                .defaultOrdering([{field: 'order', direction: 'asc'}]),
+              S.documentTypeListItem('blogAuthor')
+                .title('Authors')
+                .defaultOrdering([{field: 'name', direction: 'asc'}]),
+              S.divider(),
+              S.listItem()
+                .title('Blog Settings')
+                .id('blogSettings')
+                .child(
+                  S.document()
+                    .schemaType('blogSettings')
+                    .documentId('blog-settings'),
+                ),
             ]),
         ),
     ])

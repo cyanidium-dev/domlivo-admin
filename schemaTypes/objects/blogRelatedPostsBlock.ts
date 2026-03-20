@@ -31,10 +31,16 @@ export const blogRelatedPostsBlock = defineType({
   ],
 
   preview: {
-    select: {title: 'title.en', count: 'posts'},
-    prepare({title, count}: {title?: string; count?: unknown[]}) {
+    select: {
+      title: 'title.en',
+      count: 'posts',
+      firstTitle: 'posts.0->title.en',
+    },
+    prepare({title, count, firstTitle}: {title?: string; count?: unknown[]; firstTitle?: string}) {
       const n = Array.isArray(count) ? count.length : 0
-      return {title: title || 'Recommended articles', subtitle: `${n} posts selected`}
+      const heading = title || 'Recommended articles'
+      const detail = n > 0 && firstTitle ? `${n} posts · ${firstTitle}` : `${n} post(s)`
+      return {title: heading, subtitle: detail}
     },
   },
 })

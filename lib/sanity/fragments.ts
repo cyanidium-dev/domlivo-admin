@@ -235,17 +235,29 @@ export const PROPERTY_FULL_FRAGMENT = `_id,
 // BLOG
 // -----------------------------------------------------------------------------
 
-/** Blog category: full selection */
+/** Blog author: full selection for byline and author pages */
+export const BLOG_AUTHOR_FRAGMENT = `_id,
+  name,
+  "slug": slug.current,
+  role,
+  bio,
+  photo,
+  socialLinks`
+
+/** Blog category: full selection (stable for filter UI) */
 export const BLOG_CATEGORY_FRAGMENT = `_id,
   title,
-  slug,
+  "slug": slug.current,
   description,
-  order`
+  order,
+  active`
 
-/** Blog category ref */
+/** Blog category ref (for post embedding) */
 export const BLOG_CATEGORY_REF_FRAGMENT = `_id,
   title,
-  slug`
+  "slug": slug.current,
+  description,
+  order`
 
 /** Blog post card: list */
 export const BLOG_POST_CARD_FRAGMENT = `_id,
@@ -255,10 +267,16 @@ export const BLOG_POST_CARD_FRAGMENT = `_id,
   coverImage,
   "ogImage": seo.ogImage,
   publishedAt,
+  featured,
+  "author": author->{
+    ${BLOG_AUTHOR_FRAGMENT}
+  },
   "categories": categories[]->{
     _id,
     title,
-    slug
+    "slug": slug.current,
+    description,
+    order
   }`
 
 /** Blog post full: article page */
@@ -270,13 +288,38 @@ export const BLOG_POST_FULL_FRAGMENT = `_id,
   coverImage,
   "ogImage": seo.ogImage,
   publishedAt,
-  authorName,
-  authorRole,
-  authorImage,
+  featured,
+  "author": author->{
+    ${BLOG_AUTHOR_FRAGMENT}
+  },
   "categories": categories[]->{
     _id,
     title,
-    slug
+    "slug": slug.current,
+    description,
+    order
+  },
+  "relatedPosts": relatedPosts[]->{
+    _id,
+    title,
+    slug,
+    excerpt,
+    coverImage,
+    publishedAt,
+    "author": author->{
+      _id,
+      name,
+      "slug": slug.current,
+      photo
+    },
+    "categories": categories[]->{
+      _id,
+      title,
+      "slug": slug.current
+    }
+  },
+  "relatedProperties": relatedProperties[]->{
+    ${PROPERTY_CARD_FRAGMENT}
   },
   seo,
   "schemaType": _type`
