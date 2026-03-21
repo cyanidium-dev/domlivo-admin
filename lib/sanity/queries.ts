@@ -101,6 +101,7 @@ export const SITE_SETTINGS_QUERY = groq`*[_type == "siteSettings"][0]{
   footerQuickLinks,
   policyLinks,
   copyrightText,
+  similarPropertiesCount,
   defaultSeo
 }`
 

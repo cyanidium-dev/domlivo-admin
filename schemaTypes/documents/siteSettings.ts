@@ -10,6 +10,7 @@ export const siteSettings = defineType({
     {name: 'contact', title: 'Contact'},
     {name: 'social', title: 'Social'},
     {name: 'footer', title: 'Footer'},
+    {name: 'content', title: 'Content'},
     {name: 'seo', title: 'SEO'},
   ],
 
@@ -89,6 +90,17 @@ export const siteSettings = defineType({
       title: 'Copyright Text',
       type: 'localizedString',
       group: 'footer',
+    }),
+
+    // CONTENT
+    defineField({
+      name: 'similarPropertiesCount',
+      title: 'Similar Properties Count',
+      type: 'number',
+      group: 'content',
+      initialValue: 2,
+      validation: (Rule) => Rule.min(1).max(12),
+      description: 'Number of similar properties shown on property details page.',
     }),
 
     // SEO
