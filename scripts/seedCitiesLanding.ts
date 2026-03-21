@@ -159,6 +159,25 @@ async function run() {
         },
       },
       {
+        _type: 'articlesSection',
+        title: Li(
+          'Useful articles',
+          'Полезные статьи',
+          'Корисні статті',
+          'Artikuj të dobishëm',
+          'Articoli utili',
+        ),
+        subtitle: Li(
+          'Guides and market insights for buying property in Albania.',
+          'Гайды и обзоры рынка недвижимости Албании.',
+          'Гайди та огляди ринку нерухомості Албанії.',
+          'Udhëzues dhe analiza për blerje prone në Shqipëri.',
+          'Guide e approfondimenti per acquistare in Albania.',
+        ),
+        cta: {href: '/blog', label: Li('Read all', 'Читать все', 'Читати всі', 'Lexo të gjitha', 'Leggi tutti')},
+        mode: 'latest',
+      },
+      {
         _type: 'faqSection',
         enabled: true,
         title: Li('FAQ', 'FAQ', 'FAQ', 'FAQ', 'FAQ'),
@@ -198,25 +217,6 @@ async function run() {
             ),
           },
         ],
-      },
-      {
-        _type: 'articlesSection',
-        title: Li(
-          'Useful articles',
-          'Полезные статьи',
-          'Корисні статті',
-          'Artikuj të dobishëm',
-          'Articoli utili',
-        ),
-        subtitle: Li(
-          'Guides and market insights for buying property in Albania.',
-          'Гайды и обзоры рынка недвижимости Албании.',
-          'Гайди та огляди ринку нерухомості Албанії.',
-          'Udhëzues dhe analiza për blerje prone në Shqipëri.',
-          'Guide e approfondimenti per acquistare in Albania.',
-        ),
-        cta: {href: '/blog', label: Li('Read all', 'Читать все', 'Читати всі', 'Lexo të gjitha', 'Leggi tutti')},
-        mode: 'latest',
       },
     ],
   }

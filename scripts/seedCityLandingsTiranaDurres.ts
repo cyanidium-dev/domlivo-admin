@@ -297,6 +297,21 @@ Kjo e bën Tiranën një zgjedhje tërheqëse për familjet, profesionistët dhe
       items: [],
     },
     {
+      _type: 'articlesSection',
+      title: Li(
+        'Useful articles for buying property in Tirana',
+        'Полезные статьи о покупке в Тиране',
+        'Корисні статті про купівлю нерухомості в Тирані',
+        'Artikuj të dobishëm për blerje pronash në Tiranë',
+        'Articoli utili per acquistare a Tirana',
+      ),
+      subtitle: Li('', '', '', '', ''),
+      cta: {href: '/blog', label: Li('View all articles', 'Все статьи', 'Усі статті', 'Shiko të gjithë artikujt', 'Tutti gli articoli')},
+      cardCtaLabel: Li('Read more', 'Подробнее', 'Дізнатися більше', 'Lexo më shumë', 'Leggi di più'),
+      mode: 'selected',
+      posts: [],
+    },
+    {
       _type: 'faqSection',
       enabled: true,
       title: Li('Frequently asked questions', 'Частые вопросы', 'Питання та відповіді', 'Pyetje të shpeshta', 'Domande frequenti'),
@@ -328,21 +343,6 @@ Tregu lokal është karakterizuar nga stabilitet i çmimeve dhe kërkesë e qën
 Domlivo ofron një platformë të thjeshtë dhe transparente për të eksploruar ofertat më të mira në Tiranë. Të gjitha pronat kontrollohen para publikimit për të siguruar që çmimet janë reale dhe të azhurnuara. Me filtrat inteligjentë sipas çmimit, sipërfaqes, dhe tipit të pronës, përdoruesit mund të gjenden shpejt pronën ideale që i përshtatet buxhetit dhe qëllimeve të tyre.`),
         it: blocksFromText('Nel 2026, il mercato immobiliare di Tirana rimane tra i più dinamici della regione.'),
       },
-    },
-    {
-      _type: 'articlesSection',
-      title: Li(
-        'Useful articles for buying property in Tirana',
-        'Полезные статьи о покупке в Тиране',
-        'Корисні статті про купівлю нерухомості в Тирані',
-        'Artikuj të dobishëm për blerje pronash në Tiranë',
-        'Articoli utili per acquistare a Tirana',
-      ),
-      subtitle: Li('', '', '', '', ''),
-      cta: {href: '/blog', label: Li('View all articles', 'Все статьи', 'Усі статті', 'Shiko të gjithë artikujt', 'Tutti gli articoli')},
-      cardCtaLabel: Li('Read more', 'Подробнее', 'Дізнатися більше', 'Lexo më shumë', 'Leggi di più'),
-      mode: 'selected',
-      posts: [],
     },
   ]
 }
@@ -467,6 +467,21 @@ function buildDurresSections(): any[] {
       items: [],
     },
     {
+      _type: 'articlesSection',
+      title: Li(
+        'Useful articles for buying property in Durres',
+        'Полезные статьи о покупке в Дурресе',
+        'Корисні статті про купівлю нерухомості в Дурресі',
+        'Artikuj të dobishëm për blerje pronash në Durrës',
+        'Articoli utili per acquistare a Durazzo',
+      ),
+      subtitle: Li('', '', '', '', ''),
+      cta: {href: '/blog', label: Li('View all articles', 'Все статьи', 'Усі статті', 'Shiko të gjithë artikujt', 'Tutti gli articoli')},
+      cardCtaLabel: Li('Read more', 'Подробнее', 'Дізнатися більше', 'Lexo më shumë', 'Leggi di più'),
+      mode: 'selected',
+      posts: [],
+    },
+    {
       _type: 'faqSection',
       enabled: true,
       title: Li('Frequently asked questions', 'Частые вопросы', 'Питання та відповіді', 'Pyetje të shpeshta', 'Domande frequenti'),
@@ -502,21 +517,6 @@ Prezzi e domanda variano in base alla distanza dalla spiaggia, alla qualità del
 
 Domlivo ti aiuta a esplorare offerte verificate a Durazzo con prezzi trasparenti. Usa i filtri per budget, metratura e tipologia per trovare e confrontare rapidamente gli immobili.`),
       },
-    },
-    {
-      _type: 'articlesSection',
-      title: Li(
-        'Useful articles for buying property in Durres',
-        'Полезные статьи о покупке в Дурресе',
-        'Корисні статті про купівлю нерухомості в Дурресі',
-        'Artikuj të dobishëm për blerje pronash në Durrës',
-        'Articoli utili per acquistare a Durazzo',
-      ),
-      subtitle: Li('', '', '', '', ''),
-      cta: {href: '/blog', label: Li('View all articles', 'Все статьи', 'Усі статті', 'Shiko të gjithë artikujt', 'Tutti gli articoli')},
-      cardCtaLabel: Li('Read more', 'Подробнее', 'Дізнатися більше', 'Lexo më shumë', 'Leggi di più'),
-      mode: 'selected',
-      posts: [],
     },
   ]
 }
