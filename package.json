@@ -35,6 +35,7 @@
     "reset:content:dry": "tsx scripts/resetContentForFieldLevelI18n.ts --dry",
     "reset:content": "tsx scripts/resetContentForFieldLevelI18n.ts --execute",
     "audit:blog": "tsx scripts/auditOldBlogContent.ts",
+    "audit:icon-keys": "tsx scripts/audit-property-icon-keys.ts",
     "reset:blog:dry": "tsx scripts/resetBlogContent.ts --dry",
     "reset:blog": "tsx scripts/resetBlogContent.ts --execute",
     "reset:taxonomy:dry": "tsx scripts/resetPropertyTypesAndTags.ts --dry",
