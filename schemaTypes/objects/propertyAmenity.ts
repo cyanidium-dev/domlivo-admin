@@ -1,5 +1,5 @@
 import {defineType, defineField} from 'sanity'
-import {PROPERTY_ICON_OPTIONS} from '../constants/iconOptions'
+import {PROPERTY_ICON_KEYS, PROPERTY_ICON_OPTIONS} from '../constants/iconOptions'
 
 /**
  * Amenity item stored directly on the property.
@@ -31,6 +31,12 @@ export const propertyAmenity = defineType({
       options: {
         list: [...PROPERTY_ICON_OPTIONS],
       },
+      validation: (Rule) =>
+        Rule.custom((val) =>
+          !val || (typeof val === 'string' && (PROPERTY_ICON_KEYS as readonly string[]).includes(val))
+            ? true
+            : 'Icon must be from the list. Use custom icon upload for other options.',
+        ),
       description: 'Choose an icon from the list. Shown in the Property details block.',
     }),
     defineField({
