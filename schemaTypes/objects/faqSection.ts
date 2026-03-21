@@ -12,6 +12,25 @@ export const faqSection = defineType({
     defineField({name: 'enabled', title: 'Enabled / Visible', type: 'boolean', initialValue: true}),
     defineField({name: 'title', title: 'Section Title', type: 'localizedString'}),
     defineField({
+      name: 'imageMode',
+      title: 'Image',
+      type: 'string',
+      options: {
+        layout: 'radio',
+        list: [
+          {value: 'withImage', title: 'With image'},
+          {value: 'withoutImage', title: 'Without image'},
+        ],
+      },
+      initialValue: 'withoutImage',
+    }),
+    defineField({
+      name: 'image',
+      title: 'Section Image',
+      type: 'image',
+      hidden: ({parent}) => parent?.imageMode !== 'withImage',
+    }),
+    defineField({
       name: 'items',
       title: 'FAQ Items',
       type: 'array',

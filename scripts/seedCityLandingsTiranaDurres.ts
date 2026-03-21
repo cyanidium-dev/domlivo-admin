@@ -254,19 +254,19 @@ Kjo e bën Tiranën një zgjedhje tërheqëse për familjet, profesionistët dhe
         'Tirana ofron zona të ndryshme me karakteristika unike për blerësit dhe investitorët. Rajonet qendrore janë ideale për ata që duan qasje të shpejtë në punë, dyqane dhe shërbime, ndërsa zonat periferike ofrojnë qetësi dhe hapësira më të mëdha për vila dhe shtëpi familjare.',
         'Tirana offre zone con caratteristiche diverse per acquirenti e investitori.',
       ),
-      columns: {
-        colRegion: Li('District', 'Район', 'Район', 'Rajoni', 'Zona'),
-        colAvgPrice: Li('Avg price €/m²', 'Ср. цена €/м²', 'Середня ціна €/м²', 'Çmimi mesatar €/m²', 'Prezzo medio €/m²'),
-        colAvgArea: Li('Avg area m²', 'Ср. площадь м²', 'Середня площа м²', 'Sipërfaqja mesatare m²', 'Superficie media m²'),
-        colPopularity: Li('Popularity', 'Популярность', 'Популярність', 'Popullariteti', 'Popolarità'),
-      },
+      headings: [
+        Li('District', 'Район', 'Район', 'Rajoni', 'Zona'),
+        Li('Avg price €/m²', 'Ср. цена €/м²', 'Середня ціна €/м²', 'Çmimi mesatar €/m²', 'Prezzo medio €/m²'),
+        Li('Avg area m²', 'Ср. площадь м²', 'Середня площа м²', 'Sipërfaqja mesatare m²', 'Superficie media m²'),
+        Li('Popularity', 'Популярность', 'Популярність', 'Popullariteti', 'Popolarità'),
+      ],
       rows: [
-        {region: Li('Center', 'Центр', 'Центр', 'Qendër', 'Centro'), avgPriceEurM2: '2,200 €', avgAreaM2: '80 m²', popularity: Li('Very high', 'Очень высокая', 'Дуже висока', 'Shumë e lartë', 'Molto alta')},
-        {region: Li('Blloku', 'Блоку', 'Блок', 'Blloku', 'Blloku'), avgPriceEurM2: '2,500 €', avgAreaM2: '75 m²', popularity: Li('Very high', 'Очень высокая', 'Дуже висока', 'Shumë e lartë', 'Molto alta')},
-        {region: Li('New Tirana', 'Новая Тирана', 'Нова Тирана', 'Tirana e Re', 'Nuova Tirana'), avgPriceEurM2: '1,700 €', avgAreaM2: '85 m²', popularity: Li('High', 'Высокая', 'Висока', 'E lartë', 'Alta')},
-        {region: Li('Laprakë', 'Лапраке', 'Лапрак', 'Laprakë', 'Laprakë'), avgPriceEurM2: '1,600 €', avgAreaM2: '90 m²', popularity: Li('Medium', 'Средняя', 'Середня', 'Mesatare', 'Media')},
-        {region: Li('Kombinat', 'Комбинат', 'Комбінат', 'Kombinat', 'Kombinat'), avgPriceEurM2: '1,400 €', avgAreaM2: '95 m²', popularity: Li('Medium', 'Средняя', 'Середня', 'Mesatare', 'Media')},
-        {region: Li('Yzberisht', 'Изберишт', 'Ізберішт', 'Yzberisht', 'Yzberisht'), avgPriceEurM2: '1,300 €', avgAreaM2: '100 m²', popularity: Li('Low', 'Низкая', 'Низька', 'E ulët', 'Bassa')},
+        {cells: [Li('Center', 'Центр', 'Центр', 'Qendër', 'Centro'), Li('2,200 €', '2 200 €', '2 200 €', '2 200 €', '2.200 €'), Li('80 m²', '80 м²', '80 м²', '80 m²', '80 m²'), Li('Very high', 'Очень высокая', 'Дуже висока', 'Shumë e lartë', 'Molto alta')]},
+        {cells: [Li('Blloku', 'Блоку', 'Блок', 'Blloku', 'Blloku'), Li('2,500 €', '2 500 €', '2 500 €', '2 500 €', '2.500 €'), Li('75 m²', '75 м²', '75 м²', '75 m²', '75 m²'), Li('Very high', 'Очень высокая', 'Дуже висока', 'Shumë e lartë', 'Molto alta')]},
+        {cells: [Li('New Tirana', 'Новая Тирана', 'Нова Тирана', 'Tirana e Re', 'Nuova Tirana'), Li('1,700 €', '1 700 €', '1 700 €', '1 700 €', '1.700 €'), Li('85 m²', '85 м²', '85 м²', '85 m²', '85 m²'), Li('High', 'Высокая', 'Висока', 'E lartë', 'Alta')]},
+        {cells: [Li('Laprakë', 'Лапраке', 'Лапрак', 'Laprakë', 'Laprakë'), Li('1,600 €', '1 600 €', '1 600 €', '1 600 €', '1.600 €'), Li('90 m²', '90 м²', '90 м²', '90 m²', '90 m²'), Li('Medium', 'Средняя', 'Середня', 'Mesatare', 'Media')]},
+        {cells: [Li('Kombinat', 'Комбинат', 'Комбінат', 'Kombinat', 'Kombinat'), Li('1,400 €', '1 400 €', '1 400 €', '1 400 €', '1.400 €'), Li('95 m²', '95 м²', '95 м²', '95 m²', '95 m²'), Li('Medium', 'Средняя', 'Середня', 'Mesatare', 'Media')]},
+        {cells: [Li('Yzberisht', 'Изберишт', 'Ізберішт', 'Yzberisht', 'Yzberisht'), Li('1,300 €', '1 300 €', '1 300 €', '1 300 €', '1.300 €'), Li('100 m²', '100 м²', '100 м²', '100 m²', '100 m²'), Li('Low', 'Низкая', 'Низька', 'E ulët', 'Bassa')]},
       ],
       closingText: Li(
         'This overview shows that prices and sizes vary by district.',
@@ -295,6 +295,21 @@ Kjo e bën Tiranën një zgjedhje tërheqëse për familjet, profesionistët dhe
         'Esplora visivamente le zone principali.',
       ),
       items: [],
+    },
+    {
+      _type: 'articlesSection',
+      title: Li(
+        'Useful articles for buying property in Tirana',
+        'Полезные статьи о покупке в Тиране',
+        'Корисні статті про купівлю нерухомості в Тирані',
+        'Artikuj të dobishëm për blerje pronash në Tiranë',
+        'Articoli utili per acquistare a Tirana',
+      ),
+      subtitle: Li('', '', '', '', ''),
+      cta: {href: '/blog', label: Li('View all articles', 'Все статьи', 'Усі статті', 'Shiko të gjithë artikujt', 'Tutti gli articoli')},
+      cardCtaLabel: Li('Read more', 'Подробнее', 'Дізнатися більше', 'Lexo më shumë', 'Leggi di più'),
+      mode: 'selected',
+      posts: [],
     },
     {
       _type: 'faqSection',
@@ -328,21 +343,6 @@ Tregu lokal është karakterizuar nga stabilitet i çmimeve dhe kërkesë e qën
 Domlivo ofron një platformë të thjeshtë dhe transparente për të eksploruar ofertat më të mira në Tiranë. Të gjitha pronat kontrollohen para publikimit për të siguruar që çmimet janë reale dhe të azhurnuara. Me filtrat inteligjentë sipas çmimit, sipërfaqes, dhe tipit të pronës, përdoruesit mund të gjenden shpejt pronën ideale që i përshtatet buxhetit dhe qëllimeve të tyre.`),
         it: blocksFromText('Nel 2026, il mercato immobiliare di Tirana rimane tra i più dinamici della regione.'),
       },
-    },
-    {
-      _type: 'articlesSection',
-      title: Li(
-        'Useful articles for buying property in Tirana',
-        'Полезные статьи о покупке в Тиране',
-        'Корисні статті про купівлю нерухомості в Тирані',
-        'Artikuj të dobishëm për blerje pronash në Tiranë',
-        'Articoli utili per acquistare a Tirana',
-      ),
-      subtitle: Li('', '', '', '', ''),
-      cta: {href: '/blog', label: Li('View all articles', 'Все статьи', 'Усі статті', 'Shiko të gjithë artikujt', 'Tutti gli articoli')},
-      cardCtaLabel: Li('Read more', 'Подробнее', 'Дізнатися більше', 'Lexo më shumë', 'Leggi di più'),
-      mode: 'selected',
-      posts: [],
     },
   ]
 }
@@ -428,15 +428,15 @@ function buildDurresSections(): any[] {
         'Krahasoni zonat qendrore dhe bregdetare sipas qëllimeve tuaja.',
         'Confronta zone centrali e costiere in base ai tuoi obiettivi.',
       ),
-      columns: {
-        colRegion: Li('Area', 'Район', 'Район', 'Zona', 'Zona'),
-        colAvgPrice: Li('Avg price €/m²', 'Ср. цена €/м²', 'Середня ціна €/м²', 'Çmimi mesatar €/m²', 'Prezzo medio €/m²'),
-        colAvgArea: Li('Avg area m²', 'Ср. площадь м²', 'Середня площа м²', 'Sipërfaqja mesatare m²', 'Superficie media m²'),
-        colPopularity: Li('Popularity', 'Популярность', 'Популярність', 'Popullariteti', 'Popolarità'),
-      },
+      headings: [
+        Li('Area', 'Район', 'Район', 'Zona', 'Zona'),
+        Li('Avg price €/m²', 'Ср. цена €/м²', 'Середня ціна €/м²', 'Çmimi mesatar €/m²', 'Prezzo medio €/m²'),
+        Li('Avg area m²', 'Ср. площадь м²', 'Середня площа м²', 'Sipërfaqja mesatare m²', 'Superficie media m²'),
+        Li('Popularity', 'Популярность', 'Популярність', 'Popullariteti', 'Popolarità'),
+      ],
       rows: [
-        {region: Li('City center', 'Центр', 'Центр', 'Qendër', 'Centro'), avgPriceEurM2: '1,700 €', avgAreaM2: '80 m²', popularity: Li('High', 'Высокая', 'Висока', 'E lartë', 'Alta')},
-        {region: Li('Beachfront', 'Пляж', 'Пляж', 'Plazh', 'Spiaggia'), avgPriceEurM2: '1,900 €', avgAreaM2: '75 m²', popularity: Li('Very high', 'Очень высокая', 'Дуже висока', 'Shumë e lartë', 'Molto alta')},
+        {cells: [Li('City center', 'Центр', 'Центр', 'Qendër', 'Centro'), Li('1,700 €', '1 700 €', '1 700 €', '1 700 €', '1.700 €'), Li('80 m²', '80 м²', '80 м²', '80 m²', '80 m²'), Li('High', 'Высокая', 'Висока', 'E lartë', 'Alta')]},
+        {cells: [Li('Beachfront', 'Пляж', 'Пляж', 'Plazh', 'Spiaggia'), Li('1,900 €', '1 900 €', '1 900 €', '1 900 €', '1.900 €'), Li('75 m²', '75 м²', '75 м²', '75 m²', '75 m²'), Li('Very high', 'Очень высокая', 'Дуже висока', 'Shumë e lartë', 'Molto alta')]},
       ],
       closingText: Li(
         'Durres prices vary by distance to the sea and new-build availability.',
@@ -465,6 +465,21 @@ function buildDurresSections(): any[] {
         'Esplora visivamente le zone costiere più richieste.',
       ),
       items: [],
+    },
+    {
+      _type: 'articlesSection',
+      title: Li(
+        'Useful articles for buying property in Durres',
+        'Полезные статьи о покупке в Дурресе',
+        'Корисні статті про купівлю нерухомості в Дурресі',
+        'Artikuj të dobishëm për blerje pronash në Durrës',
+        'Articoli utili per acquistare a Durazzo',
+      ),
+      subtitle: Li('', '', '', '', ''),
+      cta: {href: '/blog', label: Li('View all articles', 'Все статьи', 'Усі статті', 'Shiko të gjithë artikujt', 'Tutti gli articoli')},
+      cardCtaLabel: Li('Read more', 'Подробнее', 'Дізнатися більше', 'Lexo më shumë', 'Leggi di più'),
+      mode: 'selected',
+      posts: [],
     },
     {
       _type: 'faqSection',
@@ -502,21 +517,6 @@ Prezzi e domanda variano in base alla distanza dalla spiaggia, alla qualità del
 
 Domlivo ti aiuta a esplorare offerte verificate a Durazzo con prezzi trasparenti. Usa i filtri per budget, metratura e tipologia per trovare e confrontare rapidamente gli immobili.`),
       },
-    },
-    {
-      _type: 'articlesSection',
-      title: Li(
-        'Useful articles for buying property in Durres',
-        'Полезные статьи о покупке в Дурресе',
-        'Корисні статті про купівлю нерухомості в Дурресі',
-        'Artikuj të dobishëm për blerje pronash në Durrës',
-        'Articoli utili per acquistare a Durazzo',
-      ),
-      subtitle: Li('', '', '', '', ''),
-      cta: {href: '/blog', label: Li('View all articles', 'Все статьи', 'Усі статті', 'Shiko të gjithë artikujt', 'Tutti gli articoli')},
-      cardCtaLabel: Li('Read more', 'Подробнее', 'Дізнатися більше', 'Lexo më shumë', 'Leggi di più'),
-      mode: 'selected',
-      posts: [],
     },
   ]
 }
