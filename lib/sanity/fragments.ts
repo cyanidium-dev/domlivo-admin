@@ -346,9 +346,10 @@ export const LANDING_PAGE_SECTIONS_FRAGMENT = `pageSections[]{
   seoTextUnderCta,
   search,
   mediaType,
+  imageMode,
   image,
   videoUrl,
-  columns,
+  headings,
   rows,
   closingText,
   "properties": properties[]->{
@@ -463,5 +464,23 @@ export const LANDING_PAGE_SECTIONS_FRAGMENT = `pageSections[]{
     }
   ),
   manualItems,
-  auto
+  auto,
+  "resolvedManualItems": select(
+    _type == "locationCarouselSection" && mode == "manual" => manualItems[]->{
+      _id,
+      _type,
+      title,
+      "slug": slug.current,
+      heroImage,
+      popular,
+      order,
+      "city": select(
+        _type == "district" => city->{
+          _id,
+          title,
+          "slug": slug.current
+        }
+      )
+    }
+  )
 }`

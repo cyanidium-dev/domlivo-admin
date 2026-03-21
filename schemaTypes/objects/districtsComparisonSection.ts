@@ -2,22 +2,19 @@ import {defineType, defineField, defineArrayMember} from 'sanity'
 
 export const districtsComparisonSection = defineType({
   name: 'districtsComparisonSection',
-  title: 'Districts Comparison (Table)',
+  title: 'Comparison Table',
   type: 'object',
   fields: [
     defineField({name: 'enabled', title: 'Enabled / Visible', type: 'boolean', initialValue: true}),
     defineField({name: 'title', title: 'Title', type: 'localizedString'}),
     defineField({name: 'description', title: 'Description', type: 'localizedText'}),
     defineField({
-      name: 'columns',
-      title: 'Table Columns',
-      type: 'object',
-      fields: [
-        defineField({name: 'colRegion', title: 'Region column label', type: 'localizedString'}),
-        defineField({name: 'colAvgPrice', title: 'Avg price column label', type: 'localizedString'}),
-        defineField({name: 'colAvgArea', title: 'Avg area column label', type: 'localizedString'}),
-        defineField({name: 'colPopularity', title: 'Popularity column label', type: 'localizedString'}),
-      ],
+      name: 'headings',
+      title: 'Table Headings',
+      description: 'Column headers. Each row must have the same number of cells as headings.',
+      type: 'array',
+      of: [defineArrayMember({type: 'localizedString'})],
+      validation: (Rule) => Rule.required().min(1).max(12),
     }),
     defineField({
       name: 'rows',
@@ -27,20 +24,50 @@ export const districtsComparisonSection = defineType({
         defineArrayMember({
           type: 'object',
           fields: [
-            defineField({name: 'region', title: 'Region', type: 'localizedString', validation: (Rule) => Rule.required()}),
-            defineField({name: 'avgPriceEurM2', title: 'Avg price €/m²', type: 'string'}),
-            defineField({name: 'avgAreaM2', title: 'Avg area m²', type: 'string'}),
-            defineField({name: 'popularity', title: 'Popularity', type: 'localizedString'}),
+            defineField({
+              name: 'cells',
+              title: 'Cells',
+              description: 'Number of cells must match the number of headings. First cell can act as a row label when needed.',
+              type: 'array',
+              of: [defineArrayMember({type: 'localizedString'})],
+            }),
           ],
           preview: {
-            select: {region: 'region.en'},
-            prepare({region}: {region?: string}) {
-              return {title: region || 'Row'}
+            select: {
+              firstCellEn: 'cells.0.en',
+              firstCellUk: 'cells.0.uk',
+              firstCellRu: 'cells.0.ru',
+              firstCellSq: 'cells.0.sq',
+              firstCellIt: 'cells.0.it',
+            },
+            prepare({firstCellEn, firstCellUk, firstCellRu, firstCellSq, firstCellIt}: {
+              firstCellEn?: string
+              firstCellUk?: string
+              firstCellRu?: string
+              firstCellSq?: string
+              firstCellIt?: string
+            }) {
+              const title = firstCellEn || firstCellUk || firstCellRu || firstCellSq || firstCellIt || 'Row'
+              return {title}
             },
           },
         }),
       ],
-      validation: (Rule) => Rule.min(1).max(50),
+      validation: (Rule) =>
+        Rule.custom((rows, context) => {
+          const parent = context.parent as {headings?: unknown[]}
+          const headingCount = Array.isArray(parent?.headings) ? parent.headings.length : 0
+          if (headingCount === 0) return true
+          if (!Array.isArray(rows)) return true
+          for (let i = 0; i < rows.length; i++) {
+            const row = rows[i] as {cells?: unknown[]} | undefined
+            const cellCount = Array.isArray(row?.cells) ? row.cells.length : 0
+            if (cellCount !== headingCount) {
+              return `Row ${i + 1}: expected ${headingCount} cell(s) to match headings, got ${cellCount}`
+            }
+          }
+          return true
+        }),
     }),
     defineField({name: 'closingText', title: 'Closing Text', type: 'localizedText'}),
     defineField({name: 'cta', title: 'CTA', type: 'localizedCtaLink'}),
@@ -50,8 +77,7 @@ export const districtsComparisonSection = defineType({
     prepare({title, enabled, count}: {title?: string; enabled?: boolean; count?: unknown[]}) {
       const n = Array.isArray(count) ? count.length : 0
       const status = enabled === false ? ' (hidden)' : ''
-      return {title: (title || 'Districts comparison') + status, subtitle: `${n} row(s)`}
+      return {title: (title || 'Comparison table') + status, subtitle: `${n} row(s)`}
     },
   },
 })
-
