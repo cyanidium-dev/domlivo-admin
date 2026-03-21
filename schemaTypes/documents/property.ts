@@ -264,20 +264,22 @@ export const property = defineType({
 
     defineField({
       name: 'amenities',
-      title: 'Amenities (Legacy)',
+      title: 'Amenities',
       type: 'array',
-      of: [{type: 'string'}],
+      of: [defineArrayMember({type: 'propertyAmenity'})],
       group: 'details',
-      description: 'DEPRECATED: Free-text list. Prefer amenitiesRefs for filtering.',
+      description:
+        'Used for property filtering and the Property details block. Each item has title, short description, icon picker, and optional custom icon upload.',
     }),
 
     defineField({
-      name: 'amenitiesRefs',
-      title: 'Amenities',
+      name: 'propertyOffers',
+      title: 'Property Offers',
       type: 'array',
-      of: [defineArrayMember({type: 'reference', to: [{type: 'amenity'}]})],
+      of: [defineArrayMember({type: 'propertyOffer'})],
       group: 'details',
-      description: 'Select amenities for filtering and display. Preferred over amenities.',
+      description:
+        'Shown in the What this property offers block on the frontend. Each item has title, icon picker, and optional custom icon upload.',
     }),
 
     defineField({

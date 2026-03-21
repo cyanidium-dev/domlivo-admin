@@ -38,6 +38,8 @@ import {districtsComparisonSection} from './districtsComparisonSection'
 import {linkedGallerySection} from './linkedGallerySection'
 import {faqSection} from './faqSection'
 import {landingGridSection} from './landingGridSection'
+import {propertyAmenity} from './propertyAmenity'
+import {propertyOffer} from './propertyOffer'
 
 /**
  * Object types (embeddable/reusable)
@@ -84,4 +86,6 @@ export const objects = [
   linkedGallerySection,
   faqSection,
   landingGridSection,
+  propertyAmenity,
+  propertyOffer,
 ]
