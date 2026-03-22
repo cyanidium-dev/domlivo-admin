@@ -690,6 +690,13 @@ async function main() {
       {href: '/blog', label: L('Blog', 'Blog', 'Блог', 'Блог')},
     ]),
     copyrightText: L('© 2025 Domlivo', '© 2025 Domlivo', '© 2025 Domlivo', '© 2025 Domlivo'),
+    priceRangeSteps: addKeysToArrayItems([
+      {_type: 'priceRangeStep' as const, min: 0, max: 50000},
+      {_type: 'priceRangeStep' as const, min: 50000, max: 100000},
+      {_type: 'priceRangeStep' as const, min: 100000, max: 200000},
+      {_type: 'priceRangeStep' as const, min: 200000, max: 500000},
+      {_type: 'priceRangeStep' as const, min: 500000, max: 1000000},
+    ]),
     defaultSeo: {metaTitle: L('Domlivo', 'Domlivo', 'Domlivo', 'Domlivo'), metaDescription: L('Pasuri në Shqipëri', 'Property in Albania', 'Недвижимость', 'Нерухомість'), noIndex: false},
   })
   console.log('SiteSettings: 1')
