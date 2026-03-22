@@ -103,19 +103,12 @@ export const siteSettings = defineType({
       description: 'Number of similar properties shown on property details page.',
     }),
     defineField({
-      name: 'priceRangeSteps',
-      title: 'Price Range Steps',
-      type: 'array',
-      of: [defineArrayMember({type: 'priceRangeStep'})],
+      name: 'priceRange',
+      title: 'Price Range',
+      type: 'priceRange',
       group: 'content',
       description:
-        'Used by hero search and properties filters. Values are in EUR. Frontend falls back to defaults if empty.',
-      validation: (Rule) =>
-        Rule.custom((value) => {
-          if (!value || !Array.isArray(value)) return true
-          if (value.length === 0) return 'Add at least one price range step.'
-          return true
-        }),
+        'Used by hero search and properties filters. Values are in EUR. Frontend falls back to defaults if missing.',
     }),
 
     // SEO

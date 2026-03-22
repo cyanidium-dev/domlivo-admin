@@ -102,9 +102,9 @@ export const SITE_SETTINGS_QUERY = groq`*[_type == "siteSettings"][0]{
   policyLinks,
   copyrightText,
   similarPropertiesCount,
-  priceRangeSteps[]{
-    min,
-    max
+  priceRange{
+    from,
+    to
   },
   defaultSeo
 }`
