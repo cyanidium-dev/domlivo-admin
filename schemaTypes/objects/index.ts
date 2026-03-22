@@ -40,6 +40,7 @@ import {faqSection} from './faqSection'
 import {landingGridSection} from './landingGridSection'
 import {propertyAmenity} from './propertyAmenity'
 import {propertyOffer} from './propertyOffer'
+import {priceRangeStep} from './priceRangeStep'
 
 /**
  * Object types (embeddable/reusable)
@@ -88,4 +89,5 @@ export const objects = [
   landingGridSection,
   propertyAmenity,
   propertyOffer,
+  priceRangeStep,
 ]
