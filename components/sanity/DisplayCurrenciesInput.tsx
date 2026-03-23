@@ -1,8 +1,16 @@
 import React from 'react'
-import {Box, Card, Checkbox, Stack, TextInput} from '@sanity/ui'
+import {Box, Card, Checkbox, Stack, Text, TextInput} from '@sanity/ui'
 import {FormField, PatchEvent, set, useFormValue} from 'sanity'
 
 type CurrencyRateItem = {_key?: string; code?: string; name?: string; symbol?: string}
+
+/** Build a readable label; never returns empty. */
+function getOptionLabel(r: CurrencyRateItem): string {
+  const code = typeof r?.code === 'string' ? r.code.trim() : ''
+  const name = typeof r?.name === 'string' ? r.name.trim() : ''
+  if (!code) return '?'
+  return name ? `${code} — ${name}` : code
+}
 
 /** Normalize to a unique array of non-empty currency codes, preserving order. */
 function normalizeCurrencyArray(arr: unknown): string[] {
@@ -43,8 +51,8 @@ export const DisplayCurrenciesInput = React.forwardRef(
       const s = (search || '').trim().toLowerCase()
       if (!s) return rates
       return rates.filter((r) => {
-        const code = (r?.code || '').toLowerCase()
-        const name = (r?.name || '').toLowerCase()
+        const code = String(r?.code ?? '').toLowerCase()
+        const name = String(r?.name ?? '').toLowerCase()
         return code.includes(s) || name.includes(s)
       })
     }, [rates, search])
@@ -67,7 +75,7 @@ export const DisplayCurrenciesInput = React.forwardRef(
         if (isCurrentlySelected && selected.length <= 1) return // At least one required
         const next = isCurrentlySelected
           ? selected.filter((c: string) => c !== trimmed)
-          : normalizeCurrencyArray([...selected, trimmed]).sort()
+          : normalizeCurrencyArray([...selected, trimmed])
         onChange(PatchEvent.from(set(next)))
       },
       [onChange, readOnly, selected],
@@ -97,13 +105,28 @@ export const DisplayCurrenciesInput = React.forwardRef(
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.currentTarget.value)}
                 readOnly={readOnly}
               />
+              {selected.length > 0 && (
+                <Box padding={2} radius={2} tone="default" border>
+                  <Stack space={2}>
+                    <Text size={1} weight="medium" muted>
+                      Selected (display order):
+                    </Text>
+                    <Text size={1}>
+                      {selected.map((c) => {
+                        const rate = rates.find((r) => String(r?.code ?? '').trim() === c)
+                        const label = rate ? getOptionLabel(rate) : c
+                        return label
+                      }).join(' • ')}
+                    </Text>
+                  </Stack>
+                </Box>
+              )}
               <Box style={{maxHeight: 240, overflowY: 'auto'}}>
                 <Stack space={2}>
                   {filtered.map((r: CurrencyRateItem) => {
-                    const code = String(r?.code ?? '').trim()
+                    const code = typeof r?.code === 'string' ? r.code.trim() : ''
                     if (!code) return null
-                    const name = String(r?.name ?? '').trim()
-                    const label = name ? `${code} — ${name}` : code || '?'
+                    const label = getOptionLabel(r)
                     const isChecked = selected.includes(code)
                     return (
                       <Card
