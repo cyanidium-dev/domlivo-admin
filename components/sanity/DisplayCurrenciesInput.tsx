@@ -1,5 +1,5 @@
 import React from 'react'
-import {Box, Card, Checkbox, Stack, Text, TextInput} from '@sanity/ui'
+import {Box, Card, Checkbox, Flex, Stack, Text, TextInput} from '@sanity/ui'
 import {FormField, PatchEvent, set, useFormValue} from 'sanity'
 
 type CurrencyRateItem = {_key?: string; code?: string; name?: string; symbol?: string}
@@ -136,12 +136,14 @@ export const DisplayCurrenciesInput = React.forwardRef(
                         style={{cursor: readOnly ? 'default' : 'pointer'}}
                         onClick={() => handleToggle(code)}
                       >
-                        <Checkbox
-                          checked={isChecked}
-                          disabled={readOnly}
-                          label={label}
-                          onChange={() => handleToggle(code)}
-                        />
+                        <Flex align="center" gap={2}>
+                          <Checkbox
+                            checked={isChecked}
+                            disabled={readOnly}
+                            onChange={() => handleToggle(code)}
+                          />
+                          <Text size={1}>{label}</Text>
+                        </Flex>
                       </Card>
                     )
                   })}
