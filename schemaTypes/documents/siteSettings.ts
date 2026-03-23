@@ -1,4 +1,5 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
+import {CurrencyRatesInput} from '../../components/sanity/CurrencyRatesInput'
 import {DisplayCurrenciesInput} from '../../components/sanity/DisplayCurrenciesInput'
 
 export const siteSettings = defineType({
@@ -122,6 +123,9 @@ export const siteSettings = defineType({
       group: 'currency',
       readOnly: true,
       description: 'Rates synced by cron. Do not edit manually. EUR = base (1).',
+      components: {
+        input: CurrencyRatesInput,
+      },
       options: {
         collapsible: true,
         collapsed: true,
@@ -160,6 +164,11 @@ export const siteSettings = defineType({
 
           if (!value || !Array.isArray(value) || value.length < 1) {
             return 'Select at least one display currency.'
+          }
+
+          const unique = [...new Set(value.filter((c): c is string => typeof c === 'string'))]
+          if (unique.length !== value.length) {
+            return 'Duplicate currencies are not allowed.'
           }
 
           const invalid = value.filter((code) => typeof code === 'string' && !codes.has(code))
