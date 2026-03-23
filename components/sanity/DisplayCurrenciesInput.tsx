@@ -4,6 +4,25 @@ import {FormField, PatchEvent, set, useFormValue} from 'sanity'
 
 type CurrencyRateItem = {_key?: string; code?: string; name?: string; symbol?: string}
 
+/** Normalize to a unique array of non-empty currency codes, preserving order. */
+function normalizeCurrencyArray(arr: unknown): string[] {
+  if (!Array.isArray(arr)) return []
+  const seen = new Set<string>()
+  const result: string[] = []
+  for (const item of arr) {
+    const code = typeof item === 'string' ? item.trim() : ''
+    if (!code || seen.has(code)) continue
+    seen.add(code)
+    result.push(code)
+  }
+  return result
+}
+
+function arraysEqual(a: string[], b: string[]): boolean {
+  if (a.length !== b.length) return false
+  return a.every((v, i) => v === b[i])
+}
+
 export const DisplayCurrenciesInput = React.forwardRef(
   function DisplayCurrenciesInput(props: {
     value?: string[]
@@ -18,11 +37,7 @@ export const DisplayCurrenciesInput = React.forwardRef(
 
     const ratesRaw = useFormValue(['currencyRates']) as CurrencyRateItem[] | undefined
     const rates = Array.isArray(ratesRaw) ? ratesRaw : []
-    const selected = React.useMemo(
-      () =>
-        [...new Set(Array.isArray(value) ? value.filter((c: unknown): c is string => typeof c === 'string') : [])],
-      [value],
-    )
+    const selected = React.useMemo(() => normalizeCurrencyArray(value), [value])
 
     const filtered = React.useMemo(() => {
       const s = (search || '').trim().toLowerCase()
@@ -34,14 +49,25 @@ export const DisplayCurrenciesInput = React.forwardRef(
       })
     }, [rates, search])
 
+    React.useEffect(() => {
+      if (readOnly || !onChange) return
+      const raw = Array.isArray(value) ? value : []
+      const normalized = normalizeCurrencyArray(raw)
+      if (!arraysEqual(normalized, raw)) {
+        onChange(PatchEvent.from(set(normalized)))
+      }
+    }, [value, onChange, readOnly])
+
     const handleToggle = React.useCallback(
       (code: string) => {
         if (!onChange || readOnly) return
-        const isCurrentlySelected = selected.includes(code)
+        const trimmed = (code || '').trim()
+        if (!trimmed) return
+        const isCurrentlySelected = selected.includes(trimmed)
         if (isCurrentlySelected && selected.length <= 1) return // At least one required
         const next = isCurrentlySelected
-          ? selected.filter((c: string) => c !== code)
-          : [...new Set([...selected, code])].sort()
+          ? selected.filter((c: string) => c !== trimmed)
+          : normalizeCurrencyArray([...selected, trimmed]).sort()
         onChange(PatchEvent.from(set(next)))
       },
       [onChange, readOnly, selected],

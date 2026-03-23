@@ -162,6 +162,11 @@ export const siteSettings = defineType({
             return 'Select at least one display currency.'
           }
 
+          const unique = [...new Set(value.filter((c): c is string => typeof c === 'string'))]
+          if (unique.length !== value.length) {
+            return 'Duplicate currencies are not allowed.'
+          }
+
           const invalid = value.filter((code) => typeof code === 'string' && !codes.has(code))
           if (invalid.length > 0) {
             return `Selected currencies not in rates: ${invalid.join(', ')}. Remove them or sync rates.`
