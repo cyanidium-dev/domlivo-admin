@@ -1,4 +1,5 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
+import {DisplayCurrenciesInput} from '../../components/sanity/DisplayCurrenciesInput'
 
 export const siteSettings = defineType({
   name: 'siteSettings',
@@ -11,6 +12,7 @@ export const siteSettings = defineType({
     {name: 'social', title: 'Social'},
     {name: 'footer', title: 'Footer'},
     {name: 'content', title: 'Content'},
+    {name: 'currency', title: 'Currency'},
     {name: 'seo', title: 'SEO'},
   ],
 
@@ -109,6 +111,63 @@ export const siteSettings = defineType({
       group: 'content',
       description:
         'Used by hero search and properties filters. Values are in EUR. Frontend falls back to defaults if missing.',
+    }),
+
+    // CURRENCY
+    defineField({
+      name: 'currencyRates',
+      title: 'Exchange Rates',
+      type: 'array',
+      of: [defineArrayMember({type: 'currencyRate'})],
+      group: 'currency',
+      readOnly: true,
+      description: 'Rates synced by cron. Do not edit manually. EUR = base (1).',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+    }),
+    defineField({
+      name: 'currencyLastSyncedAt',
+      title: 'Last Synced At',
+      type: 'datetime',
+      group: 'currency',
+      readOnly: true,
+      description: 'When exchange rates were last updated by the cron job.',
+    }),
+    defineField({
+      name: 'displayCurrencies',
+      title: 'Display Currencies',
+      type: 'array',
+      of: [{type: 'string'}],
+      group: 'currency',
+      description:
+        'Currencies the frontend can show. Select from the synced rates above. At least one required.',
+      components: {
+        input: DisplayCurrenciesInput,
+      },
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const rates = (context.document?.currencyRates as {code?: string}[] | undefined) ?? []
+          const codes = new Set(rates.map((r) => r?.code).filter(Boolean))
+
+          if (codes.size === 0) {
+            if (value && Array.isArray(value) && value.length > 0) {
+              return 'Sync exchange rates first, then select display currencies.'
+            }
+            return true
+          }
+
+          if (!value || !Array.isArray(value) || value.length < 1) {
+            return 'Select at least one display currency.'
+          }
+
+          const invalid = value.filter((code) => typeof code === 'string' && !codes.has(code))
+          if (invalid.length > 0) {
+            return `Selected currencies not in rates: ${invalid.join(', ')}. Remove them or sync rates.`
+          }
+          return true
+        }),
     }),
 
     // SEO

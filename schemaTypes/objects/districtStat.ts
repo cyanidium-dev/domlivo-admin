@@ -15,8 +15,9 @@ export const districtStat = defineType({
 
     defineField({
       name: 'averagePricePerM2',
-      title: 'Average Price per m²',
+      title: 'Average Price per m² (EUR)',
       type: 'number',
+      description: 'Values in EUR.',
     }),
 
     defineField({
