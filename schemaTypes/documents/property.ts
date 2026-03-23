@@ -1,6 +1,10 @@
+import React from 'react'
 import {defineType, defineField, defineArrayMember} from 'sanity'
 import {CoordinatesLatInput} from '../../components/sanity/coordinates/CoordinatesLatInput'
 import {CoordinatesLngInput} from '../../components/sanity/coordinates/CoordinatesLngInput'
+import {SeoWithCopyButtonInput} from '../../components/sanity/SeoWithCopyButtonInput'
+import {DescriptionWithAppendFactsInput} from '../../components/sanity/DescriptionWithAppendFactsInput'
+import {GalleryWithCopyAltInput} from '../../components/sanity/GalleryWithCopyAltInput'
 
 export const property = defineType({
   name: 'property',
@@ -58,6 +62,7 @@ export const property = defineType({
       type: 'localizedText',
       group: 'basic',
       description: 'Full description per language for the property detail page.',
+      components: {input: DescriptionWithAppendFactsInput},
     }),
 
     defineField({
@@ -281,12 +286,15 @@ export const property = defineType({
       title: 'Gallery',
       type: 'array',
       group: 'media',
+      description:
+        'Tip: you can drag and drop multiple images onto this gallery block to upload them at once. Drop them on the array block, not inside a single image item.',
       of: [
         defineArrayMember({
           type: 'image',
           options: {hotspot: true},
           fields: [
             {name: 'alt', type: 'string', title: 'Alternative text', description: 'For accessibility and card display'},
+            {name: 'label', type: 'string', title: 'Label', description: 'Editorial label / caption'},
           ],
         }),
       ],
@@ -296,14 +304,19 @@ export const property = defineType({
           .error('Add at least one image')
           .max(30)
           .error('Maximum 30 images allowed'),
+      components: {input: GalleryWithCopyAltInput},
     }),
 
     // SEO
     defineField({
       name: 'seo',
       title: 'SEO',
-      type: 'seo',
+      type: 'localizedSeo',
       group: 'seo',
+      components: {
+        input: (props: Record<string, unknown>) =>
+          React.createElement(SeoWithCopyButtonInput, {...props, sourceType: 'property'}),
+      },
     }),
 
     // ANALYTICS

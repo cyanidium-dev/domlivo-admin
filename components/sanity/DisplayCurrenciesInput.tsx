@@ -1,5 +1,14 @@
 import React from 'react'
-import {Box, Card, Checkbox, Flex, Stack, Text, TextInput} from '@sanity/ui'
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Card,
+  Flex,
+  Popover,
+  Stack,
+  Text,
+} from '@sanity/ui'
 import {FormField, PatchEvent, set, useFormValue} from 'sanity'
 
 type CurrencyRateItem = {_key?: string; code?: string; name?: string; symbol?: string}
@@ -26,11 +35,6 @@ function normalizeCurrencyArray(arr: unknown): string[] {
   return result
 }
 
-function arraysEqual(a: string[], b: string[]): boolean {
-  if (a.length !== b.length) return false
-  return a.every((v, i) => v === b[i])
-}
-
 export const DisplayCurrenciesInput = React.forwardRef(
   function DisplayCurrenciesInput(props: {
     value?: string[]
@@ -41,45 +45,83 @@ export const DisplayCurrenciesInput = React.forwardRef(
     presence?: unknown
   }) {
     const {value = [], onChange, readOnly, type, markers, presence} = props
-    const [search, setSearch] = React.useState('')
+    const [addOpen, setAddOpen] = React.useState(false)
 
     const ratesRaw = useFormValue(['currencyRates']) as CurrencyRateItem[] | undefined
     const rates = Array.isArray(ratesRaw) ? ratesRaw : []
     const selected = React.useMemo(() => normalizeCurrencyArray(value), [value])
 
-    const filtered = React.useMemo(() => {
-      const s = (search || '').trim().toLowerCase()
-      if (!s) return rates
-      return rates.filter((r) => {
-        const code = String(r?.code ?? '').toLowerCase()
-        const name = String(r?.name ?? '').toLowerCase()
-        return code.includes(s) || name.includes(s)
-      })
-    }, [rates, search])
+    const availableRates = React.useMemo(
+      () => rates.filter((r) => {
+        const code = typeof r?.code === 'string' ? r.code.trim() : ''
+        return code && !selected.includes(code)
+      }),
+      [rates, selected],
+    )
+
+    const options = React.useMemo(
+      () =>
+        availableRates.map((r) => {
+          const code = typeof r?.code === 'string' ? r.code.trim() : ''
+          return {value: code}
+        }),
+      [availableRates],
+    )
+
+    const handleAdd = React.useCallback(
+      (code: string) => {
+        if (!onChange || readOnly) return
+        const trimmed = (code || '').trim()
+        if (!trimmed || selected.includes(trimmed)) return
+        const next = [...selected, trimmed]
+        onChange(PatchEvent.from(set(next)))
+        setAddOpen(false)
+      },
+      [onChange, readOnly, selected],
+    )
+
+    const handleRemove = React.useCallback(
+      (code: string) => {
+        if (!onChange || readOnly) return
+        const trimmed = (code || '').trim()
+        if (!trimmed || selected.length <= 1) return
+        const next = selected.filter((c) => c !== trimmed)
+        onChange(PatchEvent.from(set(next)))
+      },
+      [onChange, readOnly, selected],
+    )
+
+    const handleMoveUp = React.useCallback(
+      (index: number) => {
+        if (!onChange || readOnly || index <= 0) return
+        const next = [...selected]
+        ;[next[index - 1], next[index]] = [next[index], next[index - 1]]
+        onChange(PatchEvent.from(set(next)))
+      },
+      [onChange, readOnly, selected],
+    )
+
+    const handleMoveDown = React.useCallback(
+      (index: number) => {
+        if (!onChange || readOnly || index >= selected.length - 1) return
+        const next = [...selected]
+        ;[next[index], next[index + 1]] = [next[index + 1], next[index]]
+        onChange(PatchEvent.from(set(next)))
+      },
+      [onChange, readOnly, selected],
+    )
 
     React.useEffect(() => {
       if (readOnly || !onChange) return
       const raw = Array.isArray(value) ? value : []
       const normalized = normalizeCurrencyArray(raw)
-      if (!arraysEqual(normalized, raw)) {
+      if (
+        normalized.length !== raw.length ||
+        normalized.some((c, i) => raw[i] !== c)
+      ) {
         onChange(PatchEvent.from(set(normalized)))
       }
     }, [value, onChange, readOnly])
-
-    const handleToggle = React.useCallback(
-      (code: string) => {
-        if (!onChange || readOnly) return
-        const trimmed = (code || '').trim()
-        if (!trimmed) return
-        const isCurrentlySelected = selected.includes(trimmed)
-        if (isCurrentlySelected && selected.length <= 1) return // At least one required
-        const next = isCurrentlySelected
-          ? selected.filter((c: string) => c !== trimmed)
-          : normalizeCurrencyArray([...selected, trimmed])
-        onChange(PatchEvent.from(set(next)))
-      },
-      [onChange, readOnly, selected],
-    )
 
     const inputId = React.useId()
 
@@ -94,66 +136,125 @@ export const DisplayCurrenciesInput = React.forwardRef(
         <Stack space={3}>
           {rates.length === 0 ? (
             <Card padding={3} tone="caution" radius={2}>
-              No exchange rates available. Sync rates via cron first, then select display currencies.
+              <Text size={1}>
+                No exchange rates available. Sync rates via cron first, then select display
+                currencies.
+              </Text>
             </Card>
           ) : (
             <>
-              <TextInput
-                id={inputId}
-                placeholder="Search by code or name..."
-                value={search}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.currentTarget.value)}
-                readOnly={readOnly}
-              />
-              {selected.length > 0 && (
-                <Box padding={2} radius={2} tone="default" border>
-                  <Stack space={2}>
-                    <Text size={1} weight="medium" muted>
-                      Selected (display order):
-                    </Text>
-                    <Text size={1}>
-                      {selected.map((c) => {
-                        const rate = rates.find((r) => String(r?.code ?? '').trim() === c)
-                        const label = rate ? getOptionLabel(rate) : c
-                        return label
-                      }).join(' • ')}
-                    </Text>
-                  </Stack>
-                </Box>
-              )}
-              <Box style={{maxHeight: 240, overflowY: 'auto'}}>
-                <Stack space={2}>
-                  {filtered.map((r: CurrencyRateItem) => {
-                    const code = typeof r?.code === 'string' ? r.code.trim() : ''
-                    if (!code) return null
-                    const label = getOptionLabel(r)
-                    const isChecked = selected.includes(code)
-                    return (
-                      <Card
-                        key={r?._key ?? code}
-                        padding={2}
-                        radius={2}
-                        style={{cursor: readOnly ? 'default' : 'pointer'}}
-                        onClick={() => handleToggle(code)}
-                      >
-                        <Flex align="center" gap={2}>
-                          <Checkbox
-                            checked={isChecked}
-                            disabled={readOnly}
-                            onChange={() => handleToggle(code)}
+              <Box>
+                <Text size={1} weight="medium" muted style={{marginBottom: 8, display: 'block'}}>
+                  Order = display order. Drag via ↑↓ or add below.
+                </Text>
+
+                {selected.length > 0 && (
+                  <Stack space={2} style={{marginBottom: 12}}>
+                    {selected.map((code, index) => {
+                      const rate = rates.find((r) => String(r?.code ?? '').trim() === code)
+                      const label = rate ? getOptionLabel(rate) : code
+                      return (
+                        <Card
+                          key={code}
+                          padding={2}
+                          radius={2}
+                          tone="default"
+                          border
+                          style={{display: 'flex', alignItems: 'center', gap: 8}}
+                        >
+                          <Flex gap={1} style={{flexShrink: 0}}>
+                            <Button
+                              mode="ghost"
+                              padding={2}
+                              tone="default"
+                              disabled={readOnly || index === 0}
+                              text="↑"
+                              title="Move up"
+                              fontSize={1}
+                              onClick={() => handleMoveUp(index)}
+                            />
+                            <Button
+                              mode="ghost"
+                              padding={2}
+                              tone="default"
+                              disabled={readOnly || index === selected.length - 1}
+                              text="↓"
+                              title="Move down"
+                              fontSize={1}
+                              onClick={() => handleMoveDown(index)}
+                            />
+                          </Flex>
+                          <Text size={1} style={{flex: 1}}>
+                            {label}
+                          </Text>
+                          <Button
+                            mode="ghost"
+                            padding={2}
+                            tone="critical"
+                            disabled={readOnly || selected.length <= 1}
+                            text="Remove"
+                            fontSize={0}
+                            onClick={() => handleRemove(code)}
                           />
-                          <Text size={1}>{label}</Text>
-                        </Flex>
-                      </Card>
-                    )
-                  })}
-                </Stack>
+                        </Card>
+                      )
+                    })}
+                  </Stack>
+                )}
+
+                <Popover
+                  content={
+                    addOpen ? (
+                      <Box padding={2} style={{minWidth: 280}}>
+                        <Autocomplete
+                          id={`${inputId}-add-currency`}
+                          options={options}
+                          placeholder="Search by code or name..."
+                          filterOption={(query, option) => {
+                            const q = (query || '').trim().toLowerCase()
+                            if (!q) return true
+                            const rate = availableRates.find(
+                              (r) => String(r?.code ?? '').trim() === option.value,
+                            )
+                            const label = rate ? getOptionLabel(rate).toLowerCase() : option.value.toLowerCase()
+                            return label.includes(q) || option.value.toLowerCase().includes(q)
+                          }}
+                          renderOption={(option) => {
+                            const rate = availableRates.find(
+                              (r) => String(r?.code ?? '').trim() === option.value,
+                            )
+                            const label = rate ? getOptionLabel(rate) : option.value
+                            return (
+                              <Box padding={2}>
+                                <Text size={1}>{label}</Text>
+                              </Box>
+                            )
+                          }}
+                          onSelect={(code) => handleAdd(code)}
+                        />
+                      </Box>
+                    ) : null
+                  }
+                  open={addOpen}
+                  placement="bottom-start"
+                  portal
+                  onClose={() => setAddOpen(false)}
+                >
+                  <Button
+                    mode="ghost"
+                    tone="primary"
+                    text="Add currency"
+                    disabled={readOnly || availableRates.length === 0}
+                    onClick={() => setAddOpen(true)}
+                  />
+                </Popover>
+
+                {availableRates.length === 0 && selected.length > 0 && (
+                  <Text size={1} muted style={{marginTop: 8, display: 'block'}}>
+                    All available currencies are already selected.
+                  </Text>
+                )}
               </Box>
-              {selected.length > 0 && (
-                <Box style={{fontSize: 12, color: 'var(--card-muted-fg-color)'}}>
-                  {selected.length} selected
-                </Box>
-              )}
             </>
           )}
         </Stack>

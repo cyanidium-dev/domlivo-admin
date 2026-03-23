@@ -1,4 +1,5 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
+import {GalleryWithCopyAltInput} from '../../components/sanity/GalleryWithCopyAltInput'
 
 export const district = defineType({
   name: 'district',
@@ -179,15 +180,21 @@ export const district = defineType({
       title: 'Gallery',
       type: 'array',
       group: 'media',
-      description: 'Image gallery for the district page. Add at least one image.',
+      description:
+        'Image gallery for the district page. Add at least one image. Tip: you can drag and drop multiple images onto this gallery block to upload them at once. Drop them on the array block, not inside a single image item.',
       of: [
         defineArrayMember({
           type: 'image',
           options: {hotspot: true},
+          fields: [
+            {name: 'alt', type: 'string', title: 'Alternative text', description: 'For accessibility'},
+            {name: 'label', type: 'string', title: 'Label', description: 'Editorial label / caption'},
+          ],
         }),
       ],
       validation: (Rule) =>
         Rule.min(1).error('Add at least one image').max(20).error('Maximum 20 images allowed'),
+      components: {input: GalleryWithCopyAltInput},
     }),
 
     // FAQ
