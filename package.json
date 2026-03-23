@@ -27,6 +27,8 @@
     "migrate:city-district-slug": "tsx scripts/migrateCityDistrictSlug.ts",
     "migrate:property-type-slug": "tsx scripts/migratePropertyTypeSlugs.ts",
     "migrate:amenity-slug": "tsx scripts/migrateAmenitySlugs.ts",
+    "migrate:remove-property-currency:dry": "tsx scripts/migrateRemovePropertyCurrency.ts --dry-run",
+    "migrate:remove-property-currency": "tsx scripts/migrateRemovePropertyCurrency.ts",
     "migrate:property-amenities-offers:dry": "tsx scripts/migrate-property-amenities-and-offers.ts --dry-run",
     "migrate:property-amenities-offers": "tsx scripts/migrate-property-amenities-and-offers.ts --execute",
     "migrate:property-amenities-offers:fill": "tsx scripts/migrate-property-amenities-and-offers.ts --execute --fill-missing-from-catalog",

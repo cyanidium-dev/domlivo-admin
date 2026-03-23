@@ -41,6 +41,7 @@ import {landingGridSection} from './landingGridSection'
 import {propertyAmenity} from './propertyAmenity'
 import {propertyOffer} from './propertyOffer'
 import {priceRange} from './priceRange'
+import {currencyRate} from './currencyRate'
 
 /**
  * Object types (embeddable/reusable)
@@ -90,4 +91,5 @@ export const objects = [
   propertyAmenity,
   propertyOffer,
   priceRange,
+  currencyRate,
 ]

@@ -124,27 +124,12 @@ export const property = defineType({
     // PRICING
     defineField({
       name: 'price',
-      title: 'Price',
+      title: 'Price (EUR)',
       type: 'number',
       group: 'pricing',
-      description: 'Listing price.',
+      description: 'Listing price in EUR (base currency). All property prices are stored in EUR.',
       validation: (Rule) =>
         Rule.required().min(0).error('Price must be a positive value'),
-    }),
-
-    defineField({
-      name: 'currency',
-      title: 'Currency',
-      type: 'string',
-      group: 'pricing',
-      initialValue: 'EUR',
-      options: {
-        list: [
-          {title: 'EUR', value: 'EUR'},
-          {title: 'USD', value: 'USD'},
-          {title: 'ALL', value: 'ALL'},
-        ],
-      },
     }),
 
     defineField({
@@ -378,7 +363,6 @@ export const property = defineType({
       titleSq: 'title.sq',
       status: 'status',
       price: 'price',
-      currency: 'currency',
       cityTitle: 'city.title',
       media: 'gallery.0',
     },
@@ -390,15 +374,12 @@ export const property = defineType({
         titleSq,
         status,
         price,
-        currency,
         cityTitle,
         media,
       } = selection
       const title = titleEn || titleRu || titleUk || titleSq || 'Untitled'
       const priceStr =
-        price != null
-          ? `${Number(price).toLocaleString()} ${currency || 'EUR'}`
-          : null
+        price != null ? `€${Number(price).toLocaleString()}` : null
       const parts = [status, priceStr, cityTitle].filter(Boolean)
       const subtitle = parts.join(' • ') || 'No price set'
       return {title, subtitle, media}

@@ -106,6 +106,14 @@ export const SITE_SETTINGS_QUERY = groq`*[_type == "siteSettings"][0]{
     from,
     to
   },
+  currencyRates[]{
+    code,
+    rate,
+    name,
+    symbol
+  },
+  currencyLastSyncedAt,
+  displayCurrencies,
   defaultSeo
 }`
 

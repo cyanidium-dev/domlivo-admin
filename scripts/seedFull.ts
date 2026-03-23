@@ -453,7 +453,6 @@ async function main() {
       status: p.status,
       isPublished: true,
       price: p.price,
-      currency: 'EUR',
       featured: p.featured,
       investment: p.featured,
       city: {_type: 'reference', _ref: p.cityId},
