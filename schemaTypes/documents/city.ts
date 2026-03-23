@@ -214,6 +214,10 @@ export const city = defineType({
         defineArrayMember({
           type: 'image',
           options: {hotspot: true},
+          fields: [
+            {name: 'alt', type: 'string', title: 'Alternative text', description: 'For accessibility'},
+            {name: 'label', type: 'string', title: 'Label', description: 'Editorial label / caption'},
+          ],
         }),
       ],
       validation: (Rule) =>

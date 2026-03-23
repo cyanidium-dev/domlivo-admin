@@ -287,6 +287,7 @@ export const property = defineType({
           options: {hotspot: true},
           fields: [
             {name: 'alt', type: 'string', title: 'Alternative text', description: 'For accessibility and card display'},
+            {name: 'label', type: 'string', title: 'Label', description: 'Editorial label / caption'},
           ],
         }),
       ],
@@ -302,7 +303,7 @@ export const property = defineType({
     defineField({
       name: 'seo',
       title: 'SEO',
-      type: 'seo',
+      type: 'localizedSeo',
       group: 'seo',
     }),
 
