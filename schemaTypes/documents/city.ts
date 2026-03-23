@@ -1,4 +1,7 @@
+import React from 'react'
 import {defineType, defineField, defineArrayMember} from 'sanity'
+import {SeoWithCopyButtonInput} from '../../components/sanity/SeoWithCopyButtonInput'
+import {GalleryWithCopyAltInput} from '../../components/sanity/GalleryWithCopyAltInput'
 
 export const city = defineType({
   name: 'city',
@@ -210,6 +213,8 @@ export const city = defineType({
       title: 'Gallery',
       type: 'array',
       group: 'media',
+      description:
+        'Tip: you can drag and drop multiple images onto this gallery block to upload them at once. Drop them on the array block, not inside a single image item.',
       of: [
         defineArrayMember({
           type: 'image',
@@ -222,6 +227,7 @@ export const city = defineType({
       ],
       validation: (Rule) =>
         Rule.min(1).error('Add at least one image').max(20).error('Maximum 20 images allowed'),
+      components: {input: GalleryWithCopyAltInput},
     }),
 
     // FAQ
@@ -255,6 +261,10 @@ export const city = defineType({
       title: 'SEO',
       type: 'localizedSeo',
       group: 'seo',
+      components: {
+        input: (props: Record<string, unknown>) =>
+          React.createElement(SeoWithCopyButtonInput, {...props, sourceType: 'city'}),
+      },
     }),
   ],
 
