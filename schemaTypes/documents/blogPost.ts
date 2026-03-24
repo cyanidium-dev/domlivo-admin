@@ -142,7 +142,8 @@ export const blogPost = defineType({
       type: 'boolean',
       group: 'categorization',
       initialValue: false,
-      description: 'If enabled, this post will be highlighted on the blog homepage.',
+      description:
+        'When enabled, this post is prioritized in blog listings. Featured posts can also be used as fallback picks when the related-posts sidebar needs more articles than were selected manually on a post.',
     }),
     defineField({
       name: 'authorName',
@@ -178,9 +179,10 @@ export const blogPost = defineType({
       type: 'array',
       group: 'related',
       of: [{type: 'reference', to: [{type: 'blogPost'}]}],
-      description: 'Posts shown in the “Read next” section under this article (max 6).',
+      description:
+        'Manual picks for the blog article related-posts sidebar (up to 5). Do not include the current article. If you select fewer than the sidebar count set in Blog Settings, the site fills the rest from featured posts first, then from the latest posts.',
       validation: (Rule: any) =>
-        Rule.max(6).custom((value: any, context: any) => {
+        Rule.max(5).error('You can select at most 5 related posts.').custom((value: any, context: any) => {
           if (!Array.isArray(value)) return true
           const currentId = context.document?._id
           const hasSelfReference = value.some((item) => {
