@@ -1,4 +1,5 @@
-import {defineType, defineField, defineArrayMember} from 'sanity'
+import {defineType, defineField} from 'sanity'
+import {articleBodyBlockMember} from './localizedBlockContent'
 
 /**
  * Callout / info block for blog posts.
@@ -37,9 +38,9 @@ export const blogCallout = defineType({
       name: 'content',
       title: 'Content',
       type: 'array',
-      of: [{type: 'block'}],
+      of: [articleBodyBlockMember()],
       validation: (Rule) => Rule.required(),
-      description: 'Callout body text.',
+      description: 'Callout body text (same rich text and links as the main article body).',
     }),
   ],
 

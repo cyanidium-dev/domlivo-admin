@@ -1,39 +1,74 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
 
 /**
- * Localized Portable Text / block content.
- * Each language (en, uk, ru, sq, it) has its own rich content array.
+ * Inline link href rules: aligned with localizedCtaLink, plus #anchors for same-page links.
+ * Duplicated here (not imported from localizedCtaLink) per project scope for this change set.
  */
-const blockContentDefinition = () =>
-  defineArrayMember({
-    type: 'block',
-    styles: [
-      {title: 'Paragraph', value: 'normal'},
-      {title: 'H2', value: 'h2'},
-      {title: 'H3', value: 'h3'},
-      {title: 'H4', value: 'h4'},
-      {title: 'Quote', value: 'blockquote'},
-    ],
-    lists: [
-      {title: 'Bullet', value: 'bullet'},
-      {title: 'Numbered', value: 'number'},
-    ],
-    marks: {
-      decorators: [
-        {title: 'Strong', value: 'strong'},
-        {title: 'Emphasis', value: 'em'},
-        {title: 'Code', value: 'code'},
-      ],
-      annotations: [
-        {
-          name: 'link',
-          type: 'object',
-          title: 'Link',
-          fields: [{name: 'href', type: 'url', title: 'URL'}],
-        },
+function validateInlineLinkHref(value: unknown): true | string {
+  if (!value || typeof value !== 'string') return true
+  const v = value.trim()
+  if (!v) return 'Link destination is required.'
+  if (
+    v.startsWith('/') ||
+    v.startsWith('http://') ||
+    v.startsWith('https://') ||
+    v.startsWith('mailto:') ||
+    v.startsWith('tel:') ||
+    v.startsWith('#')
+  )
+    return true
+  return 'Use a relative path (e.g. /properties), full URL (https://...), mailto:, tel:, or #anchor.'
+}
+
+const articleBodyBlockStyles = [
+  {title: 'Paragraph', value: 'normal'},
+  {title: 'H2', value: 'h2'},
+  {title: 'H3', value: 'h3'},
+  {title: 'H4', value: 'h4'},
+  {title: 'Quote', value: 'blockquote'},
+] as const
+
+const articleBodyBlockLists = [
+  {title: 'Bullet', value: 'bullet'},
+  {title: 'Numbered', value: 'number'},
+] as const
+
+const articleBodyBlockMarks = {
+  decorators: [
+    {title: 'Strong', value: 'strong'},
+    {title: 'Emphasis', value: 'em'},
+    {title: 'Code', value: 'code'},
+  ],
+  annotations: [
+    {
+      name: 'link',
+      type: 'object',
+      title: 'Link',
+      fields: [
+        defineField({
+          name: 'href',
+          title: 'URL',
+          type: 'string',
+          validation: (Rule) => Rule.required().custom(validateInlineLinkHref),
+          description:
+            'Relative path (e.g. /properties), full URL (https://...), mailto:, tel:, or #anchor. Use the CTA block for button-style links.',
+        }),
       ],
     },
+  ],
+}
+
+/**
+ * Portable Text block definition shared by localized article body and blog callout inner content.
+ */
+export function articleBodyBlockMember() {
+  return defineArrayMember({
+    type: 'block',
+    styles: [...articleBodyBlockStyles],
+    lists: [...articleBodyBlockLists],
+    marks: articleBodyBlockMarks,
   })
+}
 
 const imageBlockDefinition = () =>
   defineArrayMember({
@@ -51,7 +86,7 @@ const imageBlockDefinition = () =>
  * (relatedPosts, relatedProperties), not inline blocks.
  */
 const richContentArrayOf = [
-  blockContentDefinition(),
+  articleBodyBlockMember(),
   imageBlockDefinition(),
   defineArrayMember({type: 'blogTable'}),
   defineArrayMember({type: 'blogFaqBlock'}),
