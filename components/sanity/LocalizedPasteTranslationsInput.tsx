@@ -5,7 +5,7 @@
 
 import React, {useCallback, useEffect, useId, useState} from 'react'
 import {createPortal} from 'react-dom'
-import {Box, Button, Card, Code, Flex, Stack, Text, TextArea} from '@sanity/ui'
+import {Box, Button, Card, Code, Flex, Stack, Text, TextArea, Tooltip} from '@sanity/ui'
 import {PatchEvent, set} from 'sanity'
 import {
   parseLocalizedPaste,
@@ -47,6 +47,37 @@ function buildPreviewText(typeName: string, r: ParseLocalizedPasteSuccess): stri
   parts.push('Only pasted locales are updated; other languages stay as they are.')
   return parts.join('\n')
 }
+
+/** Shown in tooltip — full detail lives in docs/editor-localized-paste.md */
+const FORMAT_EXAMPLES_TOOLTIP = (
+  <Box padding={2} style={{maxWidth: 340, maxHeight: 'min(50vh, 260px)', overflowY: 'auto'}}>
+    <Stack space={3}>
+      <Text size={1} weight="semibold">
+        Separator
+      </Text>
+      <Code size={1} language="text">{`---EN---
+Paragraph.
+
+---UK---
+Абзац.`}</Code>
+      <Text size={1} weight="semibold">
+        Labels
+      </Text>
+      <Code size={1} language="text">{`EN:
+Text
+
+UK:
+Текст`}</Code>
+      <Text size={1} weight="semibold">
+        JSON
+      </Text>
+      <Code size={1} language="text">{`{"en":"Hello","uk":"Привіт"}`}</Code>
+      <Text muted size={1}>
+        Locales: en, uk, ru, sq, it (UA→uk, AL→sq). CSV not supported.
+      </Text>
+    </Stack>
+  </Box>
+)
 
 function PasteModal({
   open,
@@ -117,36 +148,23 @@ function PasteModal({
           <Text id={labelId} size={2} weight="semibold">
             Paste translations — {title}
           </Text>
-          <Text muted size={1}>
-            Best for long or multiline text: <strong>separator</strong> (---EN---) or <strong>JSON</strong>.
-            Comma-separated lists are not supported (commas and line breaks break them).
-          </Text>
-          <Stack space={2}>
-            <Text size={1} weight="semibold">
-              Quick examples
+          <Flex align="center" gap={3} wrap="wrap" justify="space-between">
+            <Text muted size={1} style={{flex: '1 1 200px'}}>
+              Use <strong>---EN---</strong> blocks, <strong>EN:</strong> labels, or <strong>JSON</strong>. Preview,
+              then Apply. CSV / comma-rows are not supported.
             </Text>
-            <Code size={1} language="text">
-              {`---EN---
-Paragraph one.
-
-Paragraph two.
-
----UK---
-Абзац.`}
-            </Code>
-            <Code size={1} language="text">
-              {`EN:
-Text here
-
-UK:
-Текст`}
-            </Code>
-            <Code size={1} language="text">
-              {`{"en":"Hello","uk":"Привіт"}`}
-            </Code>
-          </Stack>
+            <Tooltip content={FORMAT_EXAMPLES_TOOLTIP} placement="top" portal>
+              <Button
+                mode="ghost"
+                text="Examples"
+                fontSize={1}
+                padding={2}
+                aria-label="Show paste format examples (hover or focus)"
+              />
+            </Tooltip>
+          </Flex>
           <TextArea
-            rows={12}
+            rows={14}
             value={draft}
             onChange={(e) => {
               setDraft(e.currentTarget.value)
