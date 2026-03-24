@@ -1,6 +1,6 @@
 import React from 'react'
 import {defineType, defineField, defineArrayMember} from 'sanity'
-import {SeoWithCopyButtonInput} from '../../components/sanity/SeoWithCopyButtonInput'
+import {SeoFillInfoInput} from '../../components/sanity/SeoFillInfoInput'
 import {GalleryWithCopyAltInput} from '../../components/sanity/GalleryWithCopyAltInput'
 
 export const city = defineType({
@@ -263,7 +263,7 @@ export const city = defineType({
       group: 'seo',
       components: {
         input: (props: Record<string, unknown>) =>
-          React.createElement(SeoWithCopyButtonInput, {...props, sourceType: 'city'}),
+          React.createElement(SeoFillInfoInput, {...props, sourceType: 'city'}),
       },
     }),
   ],

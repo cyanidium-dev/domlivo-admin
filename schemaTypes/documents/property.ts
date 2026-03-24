@@ -2,8 +2,7 @@ import React from 'react'
 import {defineType, defineField, defineArrayMember} from 'sanity'
 import {CoordinatesLatInput} from '../../components/sanity/coordinates/CoordinatesLatInput'
 import {CoordinatesLngInput} from '../../components/sanity/coordinates/CoordinatesLngInput'
-import {SeoWithCopyButtonInput} from '../../components/sanity/SeoWithCopyButtonInput'
-import {DescriptionWithAppendFactsInput} from '../../components/sanity/DescriptionWithAppendFactsInput'
+import {SeoFillInfoInput} from '../../components/sanity/SeoFillInfoInput'
 import {GalleryWithCopyAltInput} from '../../components/sanity/GalleryWithCopyAltInput'
 
 export const property = defineType({
@@ -62,7 +61,6 @@ export const property = defineType({
       type: 'localizedText',
       group: 'basic',
       description: 'Full description per language for the property detail page.',
-      components: {input: DescriptionWithAppendFactsInput},
     }),
 
     defineField({
@@ -315,7 +313,7 @@ export const property = defineType({
       group: 'seo',
       components: {
         input: (props: Record<string, unknown>) =>
-          React.createElement(SeoWithCopyButtonInput, {...props, sourceType: 'property'}),
+          React.createElement(SeoFillInfoInput, {...props, sourceType: 'property'}),
       },
     }),
 
