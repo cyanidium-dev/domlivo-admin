@@ -1,4 +1,5 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
+import {LocalizedPasteTranslationsInput} from '../../components/sanity/LocalizedPasteTranslationsInput'
 
 /**
  * Inline link href rules: aligned with localizedCtaLink, plus #anchors for same-page links.
@@ -98,6 +99,10 @@ export const localizedBlockContent = defineType({
   name: 'localizedBlockContent',
   title: 'Localized Block Content',
   type: 'object',
+
+  components: {
+    input: LocalizedPasteTranslationsInput,
+  },
 
   fields: [
     defineField({

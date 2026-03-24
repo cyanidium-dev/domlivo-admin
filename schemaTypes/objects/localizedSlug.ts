@@ -1,5 +1,9 @@
 import {defineType, defineField} from 'sanity'
 
+/**
+ * Legacy type: kept for dataset compatibility. No current document fields use this type
+ * (URLs use single `slug`). No bulk paste helper — slugs need per-locale URL safety rules.
+ */
 export const localizedSlug = defineType({
   name: 'localizedSlug',
   title: 'Localized Slug',
