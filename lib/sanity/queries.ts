@@ -106,6 +106,10 @@ export const SITE_SETTINGS_QUERY = groq`*[_type == "siteSettings"][0]{
     from,
     to
   },
+  areaRange{
+    from,
+    to
+  },
   currencyRates[]{
     code,
     rate,

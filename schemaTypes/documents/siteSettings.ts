@@ -113,6 +113,33 @@ export const siteSettings = defineType({
       description:
         'Used by hero search and properties filters. Values are in EUR. Frontend falls back to defaults if missing.',
     }),
+    defineField({
+      name: 'areaRange',
+      title: 'Area Range',
+      type: 'areaRange',
+      group: 'content',
+      description:
+        'Default area bounds for the catalog area slider. If left empty, frontend falls back to property data.',
+      validation: (Rule) =>
+        Rule.custom((value) => {
+          if (value == null || typeof value !== 'object') return true
+          const {from, to} = value as {from?: unknown; to?: unknown}
+          if (from == null && to == null) return true
+          if (from == null || to == null) {
+            return 'Set both From and To, or leave both empty.'
+          }
+          if (typeof from !== 'number' || typeof to !== 'number') {
+            return 'From and To must be numbers.'
+          }
+          if (from < 0 || to < 0) {
+            return 'Values cannot be negative.'
+          }
+          if (to < from) {
+            return 'To must be greater than or equal to From.'
+          }
+          return true
+        }),
+    }),
 
     // CURRENCY
     defineField({
