@@ -251,13 +251,14 @@ export const property = defineType({
     }),
 
     defineField({
-      name: 'amenities',
+      name: 'amenitiesRefs',
       title: 'Amenities',
       type: 'array',
-      of: [defineArrayMember({type: 'propertyAmenity'})],
+      of: [defineArrayMember({type: 'reference', to: [{type: 'amenity'}]})],
       group: 'details',
       description:
-        'Used for property filtering and the Property details block. Each item has title, short description, icon picker, and optional custom icon upload.',
+        'Which amenities this property has. Used for catalog filters and the property detail page. Each linked Amenity document holds titles, descriptions, and icons for display.',
+      validation: (Rule) => Rule.unique(),
     }),
 
     defineField({
@@ -276,6 +277,15 @@ export const property = defineType({
       type: 'string',
       group: 'details',
       description: 'Internal reference code for this property.',
+    }),
+
+    defineField({
+      name: 'articlesSection',
+      title: 'Articles Section',
+      type: 'articlesSection',
+      group: 'details',
+      description:
+        'Optional blog/articles block for the property detail page. Use Selected posts for manual picks.',
     }),
 
     // MEDIA

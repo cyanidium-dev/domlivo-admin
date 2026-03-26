@@ -106,6 +106,21 @@ export const siteSettings = defineType({
       description: 'Number of similar properties shown on property details page.',
     }),
     defineField({
+      name: 'maxFeaturedProperties',
+      title: 'Max Featured Properties',
+      type: 'number',
+      group: 'content',
+      initialValue: 6,
+      validation: (Rule) =>
+        Rule.required()
+          .integer()
+          .min(1)
+          .max(50)
+          .error('Enter a whole number from 1 to 50.'),
+      description:
+        'Maximum number of featured properties shown as promoted items above catalog results.',
+    }),
+    defineField({
       name: 'priceRange',
       title: 'Price Range',
       type: 'priceRange',

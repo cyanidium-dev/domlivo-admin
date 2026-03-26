@@ -38,7 +38,6 @@ import {districtsComparisonSection} from './districtsComparisonSection'
 import {linkedGallerySection} from './linkedGallerySection'
 import {faqSection} from './faqSection'
 import {landingGridSection} from './landingGridSection'
-import {propertyAmenity} from './propertyAmenity'
 import {propertyOffer} from './propertyOffer'
 import {priceRange} from './priceRange'
 import {areaRange} from './areaRange'
@@ -89,7 +88,6 @@ export const objects = [
   linkedGallerySection,
   faqSection,
   landingGridSection,
-  propertyAmenity,
   propertyOffer,
   priceRange,
   areaRange,
