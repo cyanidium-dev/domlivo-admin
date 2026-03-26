@@ -138,9 +138,15 @@ export const LOCATION_TAG_REF_FRAGMENT = `_id,
   title,
   description`
 
-/** Amenity: for filters and display */
+/** Amenity: for filters, property detail (refs), and catalog UI */
 export const AMENITY_FRAGMENT = `_id,
   title,
+  "slug": slug.current,
+  description,
+  iconKey,
+  customIcon{
+    ${IMAGE_FRAGMENT}
+  },
   order,
   active`
 
@@ -172,62 +178,6 @@ export const PROPERTY_CARD_FRAGMENT = `_id,
   bedrooms,
   bathrooms,
   area`
-
-/** Property full: detail page */
-export const PROPERTY_FULL_FRAGMENT = `_id,
-  title,
-  slug,
-  shortDescription,
-  description,
-  price,
-  status,
-  lifecycleStatus,
-  featured,
-  investment,
-  "city": city->{
-    _id,
-    title,
-    slug
-  },
-  "district": district->{
-    _id,
-    title,
-    slug
-  },
-  "type": type->{
-    _id,
-    title,
-    "slug": slug.current,
-    shortDescription,
-    image
-  },
-  "locationTags": locationTags[]->{
-    _id,
-    title,
-    description
-  },
-  gallery,
-  amenities,
-  "amenitiesRefs": amenitiesRefs[]->{
-    _id,
-    title,
-    order
-  },
-  area,
-  bedrooms,
-  bathrooms,
-  yearBuilt,
-  coordinatesLat,
-  coordinatesLng,
-  propertyCode,
-  "agent": agent->{
-    _id,
-    name,
-    email,
-    phone,
-    photo
-  },
-  seo`
 
 // -----------------------------------------------------------------------------
 // BLOG
@@ -276,6 +226,77 @@ export const BLOG_POST_CARD_FRAGMENT = `_id,
     description,
     order
   }`
+
+/**
+ * Single `articlesSection` object (e.g. on property) with resolved post cards.
+ * Matches landing page projection for the same block shape.
+ */
+export const PROPERTY_ARTICLES_SECTION_FRAGMENT = `title,
+  subtitle,
+  cta{
+    ${LOCALIZED_CTA_LINK_FRAGMENT}
+  },
+  cardCtaLabel,
+  mode,
+  "posts": posts[]->{
+    ${BLOG_POST_CARD_FRAGMENT}
+  }`
+
+/** Property full: detail page */
+export const PROPERTY_FULL_FRAGMENT = `_id,
+  title,
+  slug,
+  shortDescription,
+  description,
+  price,
+  status,
+  lifecycleStatus,
+  featured,
+  investment,
+  "city": city->{
+    _id,
+    title,
+    slug
+  },
+  "district": district->{
+    _id,
+    title,
+    slug
+  },
+  "type": type->{
+    _id,
+    title,
+    "slug": slug.current,
+    shortDescription,
+    image
+  },
+  "locationTags": locationTags[]->{
+    _id,
+    title,
+    description
+  },
+  gallery,
+  "amenitiesRefs": amenitiesRefs[]->{
+    ${AMENITY_FRAGMENT}
+  },
+  area,
+  bedrooms,
+  bathrooms,
+  yearBuilt,
+  coordinatesLat,
+  coordinatesLng,
+  propertyCode,
+  "agent": agent->{
+    _id,
+    name,
+    email,
+    phone,
+    photo
+  },
+  articlesSection{
+    ${PROPERTY_ARTICLES_SECTION_FRAGMENT}
+  },
+  seo`
 
 /** Blog post full: article page */
 export const BLOG_POST_FULL_FRAGMENT = `_id,

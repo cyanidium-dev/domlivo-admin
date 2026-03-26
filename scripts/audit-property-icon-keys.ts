@@ -31,7 +31,6 @@ const ALLOWED_KEYS = new Set<string>(PROPERTY_ICON_KEYS as unknown as string[])
 type PropertyDoc = {
   _id: string
   slug?: {current?: string}
-  amenities?: Array<{_key?: string; iconKey?: string; customIcon?: unknown}>
   propertyOffers?: Array<{_key?: string; iconKey?: string; customIcon?: unknown}>
 }
 
@@ -39,7 +38,6 @@ async function run() {
   const groq = `*[_type == "property"] {
     _id,
     "slug": slug.current,
-    amenities,
     propertyOffers
   }`
 
@@ -51,7 +49,7 @@ async function run() {
     process.exit(1)
   }
 
-  const unknownKeys = new Map<string, {count: number; source: 'amenities' | 'propertyOffers'; docIds: string[]}>()
+  const unknownKeys = new Map<string, {count: number; source: 'propertyOffers'; docIds: string[]}>()
   let missingIconKeyCount = 0
   const docMissing: string[] = []
   const inconsistencies: string[] = []
@@ -59,24 +57,7 @@ async function run() {
   for (const doc of docs) {
     const slugPart = doc.slug ? ` (${doc.slug})` : ''
 
-    const amenities = doc.amenities ?? []
     const offers = doc.propertyOffers ?? []
-
-    for (const item of amenities) {
-      const key = item.iconKey
-      if (!key || key.trim() === '') {
-        missingIconKeyCount++
-        if (!docMissing.includes(doc._id)) docMissing.push(doc._id)
-      } else if (!ALLOWED_KEYS.has(key)) {
-        const existing = unknownKeys.get(key)
-        if (existing) {
-          existing.count++
-          if (existing.docIds.length < 5) existing.docIds.push(doc._id)
-        } else {
-          unknownKeys.set(key, {count: 1, source: 'amenities', docIds: [doc._id]})
-        }
-      }
-    }
 
     for (const item of offers) {
       const key = item.iconKey

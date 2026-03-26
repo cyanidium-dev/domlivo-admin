@@ -3,7 +3,7 @@
  * Single source of truth — frontend maps these to Iconify IDs (ph: prefix).
  *
  * Used in:
- * - propertyAmenity.iconKey
+ * - amenity.iconKey (global taxonomy)
  * - propertyOffer.iconKey
  */
 
