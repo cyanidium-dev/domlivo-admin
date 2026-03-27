@@ -7,6 +7,15 @@ export const siteSettings = defineType({
   title: 'Site Settings',
   type: 'document',
 
+  fieldsets: [
+    {
+      name: 'promotionLimits',
+      title: 'Promotion Limits',
+      description: 'Maximum concurrent promotions per type. Studio validation blocks properties that would exceed these numbers.',
+      options: {collapsible: true, collapsed: false},
+    },
+  ],
+
   groups: [
     {name: 'branding', title: 'Branding', default: true},
     {name: 'contact', title: 'Contact'},
@@ -106,10 +115,11 @@ export const siteSettings = defineType({
       description: 'Number of similar properties shown on property details page.',
     }),
     defineField({
-      name: 'maxFeaturedProperties',
-      title: 'Max Featured Properties',
+      name: 'maxPremiumPromotions',
+      title: 'Max Premium promotions',
       type: 'number',
       group: 'content',
+      fieldset: 'promotionLimits',
       initialValue: 6,
       validation: (Rule) =>
         Rule.required()
@@ -118,7 +128,39 @@ export const siteSettings = defineType({
           .max(50)
           .error('Enter a whole number from 1 to 50.'),
       description:
-        'Maximum number of featured properties shown as promoted items above catalog results.',
+        'Maximum number of properties that can be marked as Premium at the same time. Studio validation prevents exceeding this limit.',
+    }),
+    defineField({
+      name: 'maxTopPromotions',
+      title: 'Max Top promotions',
+      type: 'number',
+      group: 'content',
+      fieldset: 'promotionLimits',
+      initialValue: 6,
+      validation: (Rule) =>
+        Rule.required()
+          .integer()
+          .min(1)
+          .max(50)
+          .error('Enter a whole number from 1 to 50.'),
+      description:
+        'Maximum number of properties that can be marked as Top at the same time. Studio validation prevents exceeding this limit.',
+    }),
+    defineField({
+      name: 'maxSalePromotions',
+      title: 'Max Sale promotions',
+      type: 'number',
+      group: 'content',
+      fieldset: 'promotionLimits',
+      initialValue: 6,
+      validation: (Rule) =>
+        Rule.required()
+          .integer()
+          .min(1)
+          .max(50)
+          .error('Enter a whole number from 1 to 50.'),
+      description:
+        'Maximum number of properties that can be marked as On Sale at the same time. Studio validation prevents exceeding this limit.',
     }),
     defineField({
       name: 'priceRange',

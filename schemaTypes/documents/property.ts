@@ -4,11 +4,15 @@ import {CoordinatesLatInput} from '../../components/sanity/coordinates/Coordinat
 import {CoordinatesLngInput} from '../../components/sanity/coordinates/CoordinatesLngInput'
 import {SeoFillInfoInput} from '../../components/sanity/SeoFillInfoInput'
 import {GalleryWithCopyAltInput} from '../../components/sanity/GalleryWithCopyAltInput'
+import {validatePropertyPromotionCaps} from '../utils/propertyPromotionCapValidation'
 
 export const property = defineType({
   name: 'property',
   title: 'Property',
   type: 'document',
+
+  validation: (Rule) =>
+    Rule.custom(async (_, context) => validatePropertyPromotionCaps(context)),
 
   groups: [
     {name: 'basic', title: 'Basic', default: true},
@@ -136,11 +140,80 @@ export const property = defineType({
     }),
 
     defineField({
-      name: 'featured',
-      title: 'Featured',
+      name: 'promoted',
+      title: 'Promoted',
       type: 'boolean',
       group: 'pricing',
       initialValue: false,
+      description: 'Highlight this listing in promotional placements (subject to site caps per type).',
+    }),
+
+    defineField({
+      name: 'promotionType',
+      title: 'Promotion type',
+      type: 'string',
+      group: 'pricing',
+      hidden: ({document}) => !document?.promoted,
+      options: {
+        list: [
+          {title: 'Premium', value: 'premium'},
+          {title: 'Top', value: 'top'},
+          {title: 'Sale', value: 'sale'},
+        ],
+        layout: 'radio',
+      },
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const doc = context.document as {promoted?: boolean} | undefined
+          if (!doc?.promoted) return true
+          if (!value) return 'Select a promotion type when Promoted is enabled.'
+          return true
+        }),
+    }),
+
+    defineField({
+      name: 'featuredOrder',
+      title: 'Display order',
+      type: 'number',
+      group: 'pricing',
+      hidden: ({document}) => !document?.promoted,
+      description:
+        'Optional manual ordering for promoted properties. Lower numbers appear first within the same promotion type.',
+      validation: (Rule) =>
+        Rule.custom((value) => {
+          if (value === undefined || value === null) return true
+          if (typeof value !== 'number' || !Number.isInteger(value)) {
+            return 'Use a whole number.'
+          }
+          if (value < 0 || value > 9999) return 'Use a value from 0 to 9999.'
+          return true
+        }),
+    }),
+
+    defineField({
+      name: 'discountPercent',
+      title: 'Discount (%)',
+      type: 'number',
+      group: 'pricing',
+      hidden: ({document}) =>
+        !document?.promoted || document?.promotionType !== 'sale',
+      description:
+        'Discount percentage shown for Sale promotions (used for promotional badge/display).',
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const doc = context.document as {
+            promoted?: boolean
+            promotionType?: string
+          }
+          if (!doc?.promoted || doc.promotionType !== 'sale') return true
+          if (value == null || Number.isNaN(value)) {
+            return 'Enter a discount between 1 and 100 for Sale promotions.'
+          }
+          if (typeof value !== 'number' || value < 1 || value > 100) {
+            return 'Discount must be between 1 and 100.'
+          }
+          return true
+        }),
     }),
 
     defineField({
