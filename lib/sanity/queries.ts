@@ -102,7 +102,9 @@ export const SITE_SETTINGS_QUERY = groq`*[_type == "siteSettings"][0]{
   policyLinks,
   copyrightText,
   similarPropertiesCount,
-  maxFeaturedProperties,
+  maxPremiumPromotions,
+  maxTopPromotions,
+  maxSalePromotions,
   priceRange{
     from,
     to
@@ -304,10 +306,13 @@ export const POPULAR_CITIES_QUERY = groq`*[_type == "city" && isPublished == tru
 }`
 
 // -----------------------------------------------------------------------------
-// FEATURED PROPERTIES
+// PROMOTED PROPERTIES
 // -----------------------------------------------------------------------------
 
-/** Featured properties: published, active lifecycle, featured. */
-export const FEATURED_PROPERTIES_QUERY = groq`*[_type == "property" && isPublished == true && featured == true && (lifecycleStatus == "active" || !defined(lifecycleStatus))]{
+/** Listed promotions: published, active lifecycle, promoted. */
+export const PROMOTED_PROPERTIES_QUERY = groq`*[_type == "property" && isPublished == true && promoted == true && (lifecycleStatus == "active" || !defined(lifecycleStatus))]{
   ${PROPERTY_CARD_FRAGMENT}
 }`
+
+/** @deprecated Use PROMOTED_PROPERTIES_QUERY */
+export const FEATURED_PROPERTIES_QUERY = PROMOTED_PROPERTIES_QUERY
