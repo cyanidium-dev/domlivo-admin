@@ -108,6 +108,7 @@ export const landingPage = defineType({
         defineArrayMember({type: 'districtsComparisonSection'}),
         defineArrayMember({type: 'linkedGallerySection'}),
         defineArrayMember({type: 'landingGridSection'}),
+        defineArrayMember({type: 'investorLogosSection'}),
       ],
     }),
 
