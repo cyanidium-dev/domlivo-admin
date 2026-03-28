@@ -70,7 +70,13 @@ export const districtsComparisonSection = defineType({
         }),
     }),
     defineField({name: 'closingText', title: 'Closing Text', type: 'localizedText'}),
-    defineField({name: 'cta', title: 'CTA', type: 'localizedCtaLink'}),
+    defineField({name: 'cta', title: 'Primary CTA', type: 'localizedCtaLink'}),
+    defineField({
+      name: 'secondaryCta',
+      title: 'Secondary CTA',
+      type: 'localizedCtaLink',
+      description: 'Optional secondary button displayed next to the primary CTA.',
+    }),
   ],
   preview: {
     select: {title: 'title.en', enabled: 'enabled', count: 'rows'},

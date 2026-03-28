@@ -162,6 +162,21 @@ function verifyLandingPage(doc: any): {missing: MissingEntry[]; summary: string[
       }
     }
 
+    if (section?.secondaryCta && isRecord(section.secondaryCta)) {
+      const label = section.secondaryCta.label
+      if (label && isRecord(label) && looksLikeLocalizedObject(label)) {
+        checkLocalizedObject(
+          label,
+          {
+            ...ctxBase,
+            ...formatSectionCtx(section, idx),
+            path: `pageSections[${idx}].secondaryCta.label`,
+          },
+          missing,
+        )
+      }
+    }
+
     // Extra strict: for hero search tabs, label override is optional; do not enforce.
   })
 

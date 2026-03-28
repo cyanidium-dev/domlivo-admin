@@ -363,6 +363,7 @@ export const LANDING_PAGE_SECTIONS_FRAGMENT = `pageSections[]{
   shortLine,
   backgroundImage,
   cta,
+  secondaryCta,
   mode,
   linkTargetType,
   limit,
