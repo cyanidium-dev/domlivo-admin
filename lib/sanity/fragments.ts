@@ -69,6 +69,21 @@ export const LOCALIZED_FOOTER_LINK_FRAGMENT = `href,
 export const SOCIAL_LINK_FRAGMENT = `platform,
   url`
 
+/** Resolved agent reference for investor logos row (landing page builder). */
+export const AGENT_INVESTOR_LOGOS_FRAGMENT = `_id,
+  name,
+  "slug": slug.current,
+  photo{
+    ${IMAGE_FRAGMENT}
+  },
+  agentLogo{
+    ${IMAGE_FRAGMENT}
+  },
+  telegramUrl,
+  facebookUrl,
+  instagramUrl,
+  youtubeUrl`
+
 // -----------------------------------------------------------------------------
 // CITY / DISTRICT
 // -----------------------------------------------------------------------------
@@ -401,6 +416,9 @@ export const LANDING_PAGE_SECTIONS_FRAGMENT = `pageSections[]{
   content,
   cardCtaLabel,
   "items": items,
+  "agents": agents[]->{
+    ${AGENT_INVESTOR_LOGOS_FRAGMENT}
+  },
   sourceMode,
   auto,
   "landings": select(

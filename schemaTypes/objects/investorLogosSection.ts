@@ -16,7 +16,7 @@ export const investorLogosSection = defineType({
       name: 'title',
       title: 'Section title (optional)',
       type: 'localizedString',
-      description: 'Optional heading above the logos row (e.g. “Our investors”).',
+      description: 'Optional heading above the row (e.g. “Our partners”).',
     }),
     defineField({
       name: 'description',
@@ -25,76 +25,21 @@ export const investorLogosSection = defineType({
       description: 'Optional short text under the title.',
     }),
     defineField({
-      name: 'items',
-      title: 'Logos',
+      name: 'agents',
+      title: 'Agents',
       type: 'array',
       description:
-        'Partner or investor logos in display order — drag to reorder. The frontend will render these in a horizontal scroll or marquee row; each logo is also a link.',
-      of: [
-        defineArrayMember({
-          type: 'object',
-          fields: [
-            defineField({
-              name: 'label',
-              title: 'Name / label (optional)',
-              type: 'string',
-              description: 'For editors (e.g. investor name). Helps identify the logo in this list.',
-            }),
-            defineField({
-              name: 'image',
-              title: 'Logo image',
-              type: 'image',
-              options: {hotspot: true},
-              fields: [
-                {
-                  name: 'alt',
-                  type: 'string',
-                  title: 'Alternative text',
-                  description: 'Describe the logo for screen readers (e.g. company name).',
-                },
-              ],
-              validation: (Rule) => Rule.required(),
-            }),
-            defineField({
-              name: 'href',
-              title: 'Link URL',
-              type: 'string',
-              description:
-                'Where this logo links when clicked. Use an internal path (e.g. /about) or a full external URL.',
-              validation: (Rule) =>
-                Rule.required().custom((value: string) => {
-                  if (!value || typeof value !== 'string') return true
-                  const v = value.trim()
-                  if (!v) return 'Link URL is required.'
-                  if (
-                    v.startsWith('/') ||
-                    v.startsWith('http://') ||
-                    v.startsWith('https://') ||
-                    v.startsWith('mailto:') ||
-                    v.startsWith('tel:')
-                  )
-                    return true
-                  return 'Use a relative path (e.g. /properties), full URL (https://...), mailto:, or tel:.'
-                }),
-            }),
-          ],
-          preview: {
-            select: {label: 'label', media: 'image', href: 'href'},
-            prepare({label, media, href}: {label?: string; media?: unknown; href?: string}) {
-              return {title: label || href || 'Logo', subtitle: href, media}
-            },
-          },
-        }),
-      ],
-      validation: (Rule) => Rule.min(1).max(50),
+        'Select agent profiles to show in this row. Order in this list is the display order — drag to reorder. Logo, photo, name, contact page slug, and social links come from each agent document (not entered manually here).',
+      of: [defineArrayMember({type: 'reference', to: [{type: 'agent'}]})],
+      validation: (Rule) => Rule.unique().min(1).max(50),
     }),
   ],
   preview: {
-    select: {title: 'title.en', enabled: 'enabled', count: 'items'},
+    select: {title: 'title.en', enabled: 'enabled', count: 'agents'},
     prepare({title, enabled, count}: {title?: string; enabled?: boolean; count?: unknown[]}) {
       const n = Array.isArray(count) ? count.length : 0
       const status = enabled === false ? ' (hidden)' : ''
-      return {title: (title || 'Investor logos') + status, subtitle: `${n} logo(s)`}
+      return {title: (title || 'Investor logos') + status, subtitle: `${n} agent(s)`}
     },
   },
 })
