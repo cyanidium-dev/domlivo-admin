@@ -376,6 +376,12 @@ export const LANDING_PAGE_SECTIONS_FRAGMENT = `pageSections[]{
   title,
   subtitle,
   shortLine,
+  tabs[]{
+    _key,
+    key,
+    label,
+    enabled
+  },
   backgroundImage,
   cta,
   secondaryCta,
@@ -389,6 +395,7 @@ export const LANDING_PAGE_SECTIONS_FRAGMENT = `pageSections[]{
   mediaType,
   imageMode,
   image,
+  media,
   videoUrl,
   headings,
   rows,
@@ -406,10 +413,37 @@ export const LANDING_PAGE_SECTIONS_FRAGMENT = `pageSections[]{
     ${PROPERTY_TYPE_FRAGMENT}
   },
   description,
-  stats,
+  variant,
+  eyebrow,
+  supportingText,
+  contentGroups[]{
+    _key,
+    groupTitle,
+    description,
+    groupDisplay,
+    bullets,
+    cards[]{
+      _key,
+      value,
+      label,
+      description
+    }
+  },
+  mediaMode,
+  promoMediaType,
   benefits,
-  primaryImage,
-  secondaryImage,
+  highlightsDisplay,
+  highlightsCards[]{
+    _key,
+    value,
+    label,
+    description
+  },
+  groupedMediaMode,
+  images[]{
+    _key,
+    ${IMAGE_FRAGMENT}
+  },
   "posts": posts[]->{
     ${BLOG_POST_CARD_FRAGMENT}
   },

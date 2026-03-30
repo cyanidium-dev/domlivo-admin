@@ -698,8 +698,11 @@ async function main() {
       propertyTypes: [],
     },
     {
-      _type: 'investmentSection',
+      _type: 'marketingContentSection',
       enabled: true,
+      variant: 'split',
+      mediaMode: 'custom',
+      highlightsDisplay: 'list',
       title: Li('Investoni në Pasurinë Shqiptare', 'Invest in Albanian Real Estate', 'Инвестируйте в недвижимость Албании', 'Інвестуйте в нерухомість Албанії', 'Investi nel mercato immobiliare albanese'),
       description: Li(
         'Shqipëria është një nga tregjet me rritje më të shpejtë të pasurive në Evropë. Investitorët tërhiqen nga çmimet e ulëta hyrëse, turizmi në rritje dhe kërkesa e lartë për qira përgjatë bregut Adriatik dhe Jon.',
@@ -714,12 +717,14 @@ async function main() {
         Li('Çmimet e pasurive ende nën mesataren e BE', 'Property prices still below EU average', 'Цены на недвижимость всё ещё ниже среднего по ЕС', 'Ціни на нерухомість досі нижчі за середні в ЄС', 'Prezzi immobiliari ancora sotto la media UE'),
       ],
       cta: ctaLi('/properties?investment=true', Li('Eksploro mundësitë e investimit', 'Explore Investment Opportunities', 'Смотреть инвестиционные возможности', 'Дослідити інвестиційні можливості', 'Esplora le opportunità di investimento')),
-      primaryImage: imgRef(invImg1),
-      secondaryImage: imgRef(invImg2),
+      images: [imgRef(invImg1), imgRef(invImg2)],
     },
     {
-      _type: 'aboutSection',
+      _type: 'marketingContentSection',
       enabled: true,
+      variant: 'split',
+      mediaMode: 'none',
+      highlightsDisplay: 'list',
       title: Li('Pse të zgjidhni Domlivo', 'Why Choose Domlivo', 'Почему Domlivo', 'Чому Domlivo', 'Perché scegliere Domlivo'),
       description: Li(
         'Domlivo është një platformë pasurish e fokusuar në tregun shqiptar. Ndihmojmë blerësit të zbulojnë pronë të verifikuar, të lidhen me agjentë të besuar dhe të marrin vendime të sigurta investimi.',
@@ -735,8 +740,11 @@ async function main() {
       ],
     },
     {
-      _type: 'agentsPromoSection',
+      _type: 'marketingContentSection',
       enabled: true,
+      variant: 'split',
+      mediaMode: 'none',
+      highlightsDisplay: 'list',
       title: Li('Punoni me Ekspertët Lokalë', 'Work With Local Experts', 'Работайте с местными экспертами', 'Працюйте з місцевими експертами', 'Lavora con esperti locali'),
       subtitle: Li('Lidhuni me agjentë të përvojshëm të pasurive', 'Connect with experienced real estate agents', 'Свяжитесь с опытными агентами по недвижимости', 'Зв\'яжіться з досвідченими агентами з нерухомості', 'Connettiti con agenti immobiliari esperti'),
       description: Li(
