@@ -25,10 +25,7 @@ import {propertyCarouselSection} from './propertyCarouselSection'
 import {homePropertyCarouselTab} from './homePropertyCarouselTab'
 import {locationCarouselSection} from './locationCarouselSection'
 import {propertyTypesSection} from './propertyTypesSection'
-import {investmentSection} from './investmentSection'
-import {investmentStat} from './investmentStat'
-import {aboutSection} from './aboutSection'
-import {agentsPromoSection} from './agentsPromoSection'
+import {marketingContentSection} from './marketingContentSection'
 import {articlesSection} from './articlesSection'
 import {seoTextSection} from './seoTextSection'
 import {landingCarouselSection} from './landingCarouselSection'
@@ -77,10 +74,7 @@ export const objects = [
   homePropertyCarouselTab,
   locationCarouselSection,
   propertyTypesSection,
-  investmentSection,
-  investmentStat,
-  aboutSection,
-  agentsPromoSection,
+  marketingContentSection,
   articlesSection,
   seoTextSection,
   landingCarouselSection,
