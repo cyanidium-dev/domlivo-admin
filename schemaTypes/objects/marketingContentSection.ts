@@ -109,7 +109,7 @@ export const marketingContentSection = defineType({
       hidden: ({parent}) =>
         parent?.variant === 'grouped' || parent?.highlightsDisplay === 'cards',
       description: 'Short points for the Text + media or Dark promo layouts.',
-      validation: (Rule) => Rule.max(6),
+      validation: (Rule) => Rule.max(12),
     }),
     defineField({
       name: 'highlightsCards',
@@ -150,7 +150,7 @@ export const marketingContentSection = defineType({
         }),
       ],
       validation: (Rule) =>
-        Rule.max(12).custom((value, context) => {
+        Rule.max(16).custom((value, context) => {
           const parent = context.parent as {
             variant?: string
             highlightsDisplay?: string
@@ -210,7 +210,7 @@ export const marketingContentSection = defineType({
               of: [defineArrayMember({type: 'localizedString'})],
               hidden: ({parent}) => parent?.groupDisplay === 'cards',
               validation: (Rule) =>
-                Rule.max(8).custom((value, context) => {
+                Rule.max(12).custom((value, context) => {
                   const parent = context.parent as {groupDisplay?: string} | undefined
                   if (parent?.groupDisplay === 'cards') return true
                   if (!Array.isArray(value) || value.length < 1) {
@@ -256,7 +256,7 @@ export const marketingContentSection = defineType({
                 }),
               ],
               validation: (Rule) =>
-                Rule.max(12).custom((value, context) => {
+                Rule.max(16).custom((value, context) => {
                   const parent = context.parent as {groupDisplay?: string} | undefined
                   if (parent?.groupDisplay !== 'cards') return true
                   if (!Array.isArray(value) || value.length < 1) {
