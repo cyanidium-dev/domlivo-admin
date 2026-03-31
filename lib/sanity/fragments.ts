@@ -440,6 +440,7 @@ export const LANDING_PAGE_SECTIONS_FRAGMENT = `pageSections[]{
     description
   },
   groupedMediaMode,
+  mediaSide,
   images[]{
     _key,
     ${IMAGE_FRAGMENT}
