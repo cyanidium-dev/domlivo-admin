@@ -389,6 +389,43 @@ export const marketingContentSection = defineType({
         'Optional visual for the section intro (grouped layout). Custom media: add images in the Images field.',
     }),
     defineField({
+      name: 'mediaSide',
+      title: 'Media side',
+      type: 'string',
+      group: 'media',
+      initialValue: 'right',
+      hidden: ({parent}) => {
+        const p = parent as {
+          variant?: string
+          mediaMode?: string
+          groupedMediaMode?: string
+        } | undefined
+        const splitCustom = p?.variant === 'split' && p?.mediaMode === 'custom'
+        const groupedCustom = p?.variant === 'grouped' && p?.groupedMediaMode === 'custom'
+        return !(splitCustom || groupedCustom)
+      },
+      options: {
+        list: [
+          {title: 'Left', value: 'left'},
+          {title: 'Right', value: 'right'},
+        ],
+      },
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const p = context.parent as {
+            variant?: string
+            mediaMode?: string
+            groupedMediaMode?: string
+          } | undefined
+          const splitCustom = p?.variant === 'split' && p?.mediaMode === 'custom'
+          const groupedCustom = p?.variant === 'grouped' && p?.groupedMediaMode === 'custom'
+          if (!splitCustom && !groupedCustom) return true
+          return value === 'left' || value === 'right' ? true : 'Choose whether media is on the left or right.'
+        }),
+      description:
+        'Text + media and Grouped layouts with custom media only. Dark promo uses a fixed layout.',
+    }),
+    defineField({
       name: 'images',
       title: 'Images',
       type: 'array',
