@@ -4,7 +4,8 @@ export const ctaSection = defineType({
   name: 'ctaSection',
   title: 'CTA',
   type: 'object',
-  description: 'Standalone call-to-action block with headline, supporting text, and one button/link.',
+  description:
+    'Standalone call-to-action block with headline, supporting text, and one or two buttons/links.',
 
   groups: [
     {name: 'content', title: 'Content', default: true},
@@ -43,10 +44,17 @@ export const ctaSection = defineType({
     }),
     defineField({
       name: 'cta',
-      title: 'Link / button',
+      title: 'Primary CTA',
       type: 'localizedCtaLink',
       group: 'action',
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'secondaryCta',
+      title: 'Secondary CTA',
+      type: 'localizedCtaLink',
+      group: 'action',
+      description: 'Optional second button next to the primary CTA.',
     }),
   ],
 
