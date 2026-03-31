@@ -97,6 +97,12 @@ export const SITE_SETTINGS_QUERY = groq`*[_type == "siteSettings"][0]{
   contactEmail,
   contactPhone,
   companyAddress,
+  contactsManagerPhoto{
+    asset,
+    crop,
+    hotspot,
+    alt
+  },
   socialLinks,
   footerQuickLinks,
   policyLinks,

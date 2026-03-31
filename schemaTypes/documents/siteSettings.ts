@@ -70,6 +70,18 @@ export const siteSettings = defineType({
       group: 'contact',
     }),
 
+    // Contacts page — manager portrait only; email and socials use Contact Email + Social Links (site-wide)
+    defineField({
+      name: 'contactsManagerPhoto',
+      title: 'Contacts page — Manager photo',
+      type: 'image',
+      group: 'contact',
+      options: {hotspot: true},
+      fields: [{name: 'alt', type: 'string', title: 'Alternative text', description: 'For accessibility'}],
+      description:
+        'Photo for the manager block on the general Contacts page. Email and social links come from “Contact Email” above and “Social Links” in the Social group.',
+    }),
+
     // SOCIAL
     defineField({
       name: 'socialLinks',
