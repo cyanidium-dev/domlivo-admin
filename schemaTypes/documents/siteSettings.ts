@@ -197,6 +197,26 @@ export const siteSettings = defineType({
           return true
         }),
     }),
+    defineField({
+      name: 'howToPublishVideoUrl',
+      title: 'How to Publish — Hero Video URL',
+      type: 'string',
+      group: 'content',
+      description:
+        'Optional embed URL for the hero video on `/how-to-publish` (and localized routes such as `/[locale]/how-to-publish`). Paste a YouTube, Vimeo, or other URL the frontend supports for embedding. Leave empty to hide the video or until a link is ready.',
+      validation: (Rule) =>
+        Rule.custom((value: string | undefined) => {
+          if (value == null || !String(value).trim()) return true
+          const v = String(value).trim()
+          if (!/^https?:\/\//i.test(v)) return 'Use a full URL starting with http:// or https://.'
+          try {
+            void new URL(v)
+            return true
+          } catch {
+            return 'Enter a valid URL.'
+          }
+        }),
+    }),
 
     // CURRENCY
     defineField({
