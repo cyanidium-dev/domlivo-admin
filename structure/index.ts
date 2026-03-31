@@ -66,6 +66,16 @@ export const structure: StructureResolver = (S, context) =>
             .defaultOrdering([{field: 'pageScope', direction: 'asc'}]),
         ),
 
+      S.listItem()
+        .title('Registration Requests')
+        .id('registrationRequests')
+        .child(
+          S.documentTypeList('registrationRequest')
+            .title('Registration Requests')
+            .initialValueTemplates([S.initialValueTemplateItem('registration-request-default')])
+            .defaultOrdering([{field: '_createdAt', direction: 'desc'}]),
+        ),
+
       S.divider(),
 
       S.listItem()

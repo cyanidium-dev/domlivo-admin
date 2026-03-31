@@ -5,6 +5,7 @@ import {schemaTypes} from './schemaTypes'
 import {structure} from './structure'
 import {districtInCityTemplate} from './templates/districtInCity'
 import {blogSettingsTemplate} from './templates/blogSettings'
+import {registrationRequestDefaultTemplate} from './templates/registrationRequestDefault'
 
 export default defineConfig({
   name: 'default',
@@ -17,6 +18,11 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
-    templates: (prev) => [...prev, districtInCityTemplate, blogSettingsTemplate],
+    templates: (prev) => [
+      ...prev,
+      districtInCityTemplate,
+      blogSettingsTemplate,
+      registrationRequestDefaultTemplate,
+    ],
   },
 })
