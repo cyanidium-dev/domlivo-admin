@@ -28,6 +28,7 @@ import {propertyTypesSection} from './propertyTypesSection'
 import {marketingContentSection} from './marketingContentSection'
 import {articlesSection} from './articlesSection'
 import {seoTextSection} from './seoTextSection'
+import {ctaSection} from './ctaSection'
 import {landingCarouselSection} from './landingCarouselSection'
 import {localizedFaqItemRich} from './localizedFaqItemRich'
 import {cityRichDescriptionSection} from './cityRichDescriptionSection'
@@ -77,6 +78,7 @@ export const objects = [
   marketingContentSection,
   articlesSection,
   seoTextSection,
+  ctaSection,
   landingCarouselSection,
   cityRichDescriptionSection,
   districtsComparisonSection,

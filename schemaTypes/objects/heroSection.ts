@@ -45,7 +45,13 @@ export const heroSection = defineType({
       options: {hotspot: true},
       fields: [{name: 'alt', type: 'string', title: 'Alternative text', description: 'For accessibility'}],
     }),
-    defineField({name: 'cta', title: 'CTA', type: 'localizedCtaLink'}),
+    defineField({name: 'cta', title: 'Primary CTA', type: 'localizedCtaLink'}),
+    defineField({
+      name: 'secondaryCta',
+      title: 'Secondary CTA',
+      type: 'localizedCtaLink',
+      description: 'Optional second button shown next to the primary CTA.',
+    }),
     defineField({
       name: 'seoTextUnderCta',
       title: 'SEO Text Under CTA (optional)',
