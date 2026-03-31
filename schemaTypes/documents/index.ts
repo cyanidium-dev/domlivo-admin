@@ -12,6 +12,7 @@ import {propertyType} from './propertyType'
 import {locationTag} from './locationTag'
 import {siteSettings} from './siteSettings'
 import {landingPage} from './landingPage'
+import {registrationRequest} from './registrationRequest'
 
 /**
  * Document types (standalone content)
@@ -32,4 +33,5 @@ export const documents = [
   propertyType,
   locationTag,
   siteSettings,
+  registrationRequest,
 ]
