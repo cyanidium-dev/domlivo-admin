@@ -25,17 +25,17 @@ async function run() {
     slug,
     seo,
     "sectionTypes": pageSections[]._type,
-    "grid": pageSections[_type=="landingGridSection"][0]{
+    "grid": pageSections[_type=="landingCollectionSection" && presentation=="grid"][0]{
       enabled,
       title,
-      sourceMode,
+      mode,
       auto,
       "landings": select(
-        sourceMode == "manual" => manualItems[]->{
+        mode == "manual" => manualItems[]->{
           _id, pageType, slug, title, cardTitle, cardDescription, cardImage,
           linkedCity->{_id, slug, title}
         },
-        sourceMode == "auto" => *[_type=="landingPage" && enabled!=false && pageType in ^.auto.pageTypes && _id != "landing-home" && _id != ^.^._id]
+        mode == "auto" => *[_type=="landingPage" && enabled!=false && pageType in ^.auto.pageTypes && _id != "landing-home" && _id != ^.^._id]
           | order(title.en asc)[0...200]{
             _id, pageType, slug, title, cardTitle, cardDescription, cardImage,
             linkedCity->{_id, slug, title}
