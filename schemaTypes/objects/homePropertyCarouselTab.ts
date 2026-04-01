@@ -17,14 +17,14 @@ export const homePropertyCarouselTab = defineType({
         ],
       },
       validation: (Rule) => Rule.required(),
-      description: 'Stable identifier used by the frontend to fetch the corresponding group.',
+      description: 'Tab key (popular, new, etc.). Determines which property group this tab loads.',
     }),
     defineField({
       name: 'label',
       title: 'Label',
       type: 'localizedString',
       description:
-        'Optional override for the tab label. If empty, the frontend may fall back to default translations.',
+        'Optional tab label. If empty, default labels for each language are used.',
     }),
     defineField({
       name: 'enabled',

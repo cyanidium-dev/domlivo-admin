@@ -1,9 +1,7 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
+import {PAGE_BUILDER_GROUPS} from '../constants/pageBuilderGroups'
 
-/**
- * Unified landing-page card section: grid or carousel presentation, manual or auto (grid only) sourcing.
- * Replaces `landingGridSection` and `landingCarouselSection`.
- */
+/** Landing page cards: grid or carousel; grid can be auto-filtered or manual; carousel is manual only. */
 export const landingCollectionSection = defineType({
   name: 'landingCollectionSection',
   title: 'Landing collection',
@@ -11,18 +9,22 @@ export const landingCollectionSection = defineType({
   description:
     'Show landing pages as a grid or carousel. Grid supports auto filters or a manual list; carousel uses a manual list only.',
 
+  groups: [...PAGE_BUILDER_GROUPS],
+
   fields: [
     defineField({
       name: 'enabled',
       title: 'Enabled / Visible',
       type: 'boolean',
+      group: 'settings',
       initialValue: true,
-      description: 'If disabled, the frontend should hide this section.',
+      description: 'If disabled, this section is hidden on the site.',
     }),
     defineField({
       name: 'presentation',
       title: 'Presentation',
       type: 'string',
+      group: 'layout',
       initialValue: 'grid',
       options: {
         list: [
@@ -32,20 +34,22 @@ export const landingCollectionSection = defineType({
         layout: 'radio',
       },
       validation: (Rule) => Rule.required(),
-      description: 'Grid: responsive card layout. Carousel: horizontal scrolling cards.',
+      description: 'Grid: responsive cards. Carousel: horizontal scrolling cards.',
     }),
-    defineField({name: 'title', title: 'Section Title', type: 'localizedString'}),
-    defineField({name: 'subtitle', title: 'Subtitle / Description', type: 'localizedText'}),
+    defineField({name: 'title', title: 'Section title', type: 'localizedString', group: 'content'}),
+    defineField({name: 'subtitle', title: 'Subtitle', type: 'localizedText', group: 'content'}),
     defineField({
       name: 'cta',
-      title: 'CTA (optional)',
+      title: 'Call to action (optional)',
       type: 'localizedCtaLink',
+      group: 'content',
       description: 'Optional button or link below the section header.',
     }),
     defineField({
       name: 'mode',
       title: 'Content mode',
       type: 'string',
+      group: 'data',
       options: {
         list: [
           {title: 'Auto (by filters)', value: 'auto'},
@@ -61,19 +65,20 @@ export const landingCollectionSection = defineType({
           if (p?.presentation === 'carousel') return true
           return value ? true : 'Choose how landings are loaded.'
         }),
-      description: 'Grid only: auto uses filters below; manual uses the ordered list. Carousel always uses the ordered list.',
+      description: 'Grid only: auto uses filters below; manual uses the ordered list.',
     }),
     defineField({
       name: 'manualItems',
       title: 'Manual landings (ordered)',
       type: 'array',
+      group: 'data',
       hidden: ({parent}) => {
         const p = parent as {presentation?: string; mode?: string} | undefined
         if (p?.presentation === 'carousel') return false
         return p?.mode !== 'manual'
       },
       of: [defineArrayMember({type: 'reference', to: [{type: 'landingPage'}]})],
-      description: 'Pick landing pages in display order. Used for carousel, or for grid in manual mode.',
+      description: 'Pick landing pages in display order.',
       validation: (Rule) =>
         Rule.custom((value, context) => {
           const p = context.parent as {presentation?: string; mode?: string} | undefined
@@ -89,6 +94,7 @@ export const landingCollectionSection = defineType({
       name: 'auto',
       title: 'Auto filters',
       type: 'object',
+      group: 'data',
       hidden: ({parent}) => {
         const p = parent as {presentation?: string; mode?: string} | undefined
         return p?.presentation !== 'grid' || p?.mode !== 'auto'
@@ -115,7 +121,7 @@ export const landingCollectionSection = defineType({
             }),
           ],
           validation: (Rule) => Rule.min(1),
-          description: 'Select which landing page types to include.',
+          description: 'Which landing page types to include.',
         }),
         defineField({
           name: 'enabledOnly',
@@ -175,7 +181,7 @@ export const landingCollectionSection = defineType({
       const pres = presentation === 'carousel' ? 'Carousel' : 'Grid'
       const sub =
         presentation === 'carousel'
-          ? `${pres} · ${count ?? 0} landing${(count ?? 0) === 1 ? '' : 's'}`
+          ? `${pres} · ${count ?? 0} card${(count ?? 0) === 1 ? '' : 's'}`
           : `${pres} · ${mode === 'manual' ? 'Manual' : 'Auto'}`
       return {title: truncated + status, subtitle: sub}
     },

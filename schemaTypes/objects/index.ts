@@ -27,6 +27,7 @@ import {locationCarouselSection} from './locationCarouselSection'
 import {propertyTypesSection} from './propertyTypesSection'
 import {marketingContentSection} from './marketingContentSection'
 import {articlesSection} from './articlesSection'
+import {propertyArticlesSection} from './propertyArticlesSection'
 import {seoTextSection} from './seoTextSection'
 import {ctaSection} from './ctaSection'
 import {landingCollectionSection} from './landingCollectionSection'
@@ -75,6 +76,7 @@ export const objects = [
   propertyTypesSection,
   marketingContentSection,
   articlesSection,
+  propertyArticlesSection,
   seoTextSection,
   ctaSection,
   landingCollectionSection,

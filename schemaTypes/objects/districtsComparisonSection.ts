@@ -1,17 +1,27 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
+import {PAGE_BUILDER_GROUPS} from '../constants/pageBuilderGroups'
 
 export const districtsComparisonSection = defineType({
   name: 'districtsComparisonSection',
-  title: 'Comparison Table',
+  title: 'Comparison table',
   type: 'object',
+  groups: [...PAGE_BUILDER_GROUPS],
   fields: [
-    defineField({name: 'enabled', title: 'Enabled / Visible', type: 'boolean', initialValue: true}),
-    defineField({name: 'title', title: 'Title', type: 'localizedString'}),
-    defineField({name: 'description', title: 'Description', type: 'localizedText'}),
+    defineField({
+      name: 'enabled',
+      title: 'Enabled / Visible',
+      type: 'boolean',
+      group: 'settings',
+      initialValue: true,
+      description: 'If disabled, this section is hidden on the site.',
+    }),
+    defineField({name: 'title', title: 'Title', type: 'localizedString', group: 'content'}),
+    defineField({name: 'description', title: 'Description', type: 'localizedText', group: 'content'}),
     defineField({
       name: 'headings',
-      title: 'Table Headings',
-      description: 'Column headers. Each row must have the same number of cells as headings.',
+      title: 'Column headings',
+      group: 'data',
+      description: 'Column headers. Each row must have the same number of cells.',
       type: 'array',
       of: [defineArrayMember({type: 'localizedString'})],
       validation: (Rule) => Rule.required().min(1).max(12),
@@ -20,6 +30,7 @@ export const districtsComparisonSection = defineType({
       name: 'rows',
       title: 'Rows',
       type: 'array',
+      group: 'data',
       of: [
         defineArrayMember({
           type: 'object',
@@ -27,7 +38,7 @@ export const districtsComparisonSection = defineType({
             defineField({
               name: 'cells',
               title: 'Cells',
-              description: 'Number of cells must match the number of headings. First cell can act as a row label when needed.',
+              description: 'Must match headings count. First cell can be a row label.',
               type: 'array',
               of: [defineArrayMember({type: 'localizedString'})],
             }),
@@ -47,8 +58,8 @@ export const districtsComparisonSection = defineType({
               firstCellSq?: string
               firstCellIt?: string
             }) {
-              const title = firstCellEn || firstCellUk || firstCellRu || firstCellSq || firstCellIt || 'Row'
-              return {title}
+              const t = firstCellEn || firstCellUk || firstCellRu || firstCellSq || firstCellIt || 'Row'
+              return {title: t}
             },
           },
         }),
@@ -63,19 +74,25 @@ export const districtsComparisonSection = defineType({
             const row = rows[i] as {cells?: unknown[]} | undefined
             const cellCount = Array.isArray(row?.cells) ? row.cells.length : 0
             if (cellCount !== headingCount) {
-              return `Row ${i + 1}: expected ${headingCount} cell(s) to match headings, got ${cellCount}`
+              return `Row ${i + 1}: expected ${headingCount} cell(s), got ${cellCount}`
             }
           }
           return true
         }),
     }),
-    defineField({name: 'closingText', title: 'Closing Text', type: 'localizedText'}),
-    defineField({name: 'cta', title: 'Primary CTA', type: 'localizedCtaLink'}),
+    defineField({name: 'closingText', title: 'Closing text', type: 'localizedText', group: 'content'}),
+    defineField({
+      name: 'cta',
+      title: 'Call to action (primary)',
+      type: 'localizedCtaLink',
+      group: 'content',
+    }),
     defineField({
       name: 'secondaryCta',
-      title: 'Secondary CTA',
+      title: 'Call to action (secondary)',
       type: 'localizedCtaLink',
-      description: 'Optional secondary button displayed next to the primary CTA.',
+      group: 'content',
+      description: 'Optional second button.',
     }),
   ],
   preview: {
@@ -83,7 +100,7 @@ export const districtsComparisonSection = defineType({
     prepare({title, enabled, count}: {title?: string; enabled?: boolean; count?: unknown[]}) {
       const n = Array.isArray(count) ? count.length : 0
       const status = enabled === false ? ' (hidden)' : ''
-      return {title: (title || 'Comparison table') + status, subtitle: `${n} row(s)`}
+      return {title: (title || 'Comparison') + status, subtitle: `${n} row${n === 1 ? '' : 's'}`}
     },
   },
 })

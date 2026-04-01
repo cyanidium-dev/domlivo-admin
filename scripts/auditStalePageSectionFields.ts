@@ -1,21 +1,15 @@
 /**
- * Audit landingPage.pageSections[] for specific legacy field names.
- * Run: npx tsx scripts/auditStalePageSectionFields.ts
+ * Audit landingPage.pageSections[] for legacy keys on propertyCarouselSection (see stalePropertyCarouselDatasetFields).
+ * Run: npm run audit:stale-page-section-fields
  */
 import path from 'path'
 import {config as loadDotenv} from 'dotenv'
 import {createClient} from '@sanity/client'
+import {STALE_PROPERTY_CAROUSEL_DATASET_FIELDS} from './lib/stalePropertyCarouselDatasetFields'
 
 loadDotenv({path: path.resolve(process.cwd(), '.env')})
 
-const TRACK = new Set([
-  'allowedPropertyKinds',
-  'cardFields',
-  'detailsCtaLabel',
-  'maxItems',
-  'minItems',
-  'rankingStrategy',
-])
+const TRACK = new Set<string>([...STALE_PROPERTY_CAROUSEL_DATASET_FIELDS])
 
 function collectStale(
   docId: string,

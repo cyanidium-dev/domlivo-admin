@@ -1,25 +1,22 @@
 import {defineType, defineField} from 'sanity'
+import {PAGE_BUILDER_GROUPS} from '../constants/pageBuilderGroups'
 
 export const ctaSection = defineType({
   name: 'ctaSection',
-  title: 'CTA',
+  title: 'Call to action',
   type: 'object',
-  description:
-    'Standalone call-to-action block with headline, supporting text, and one or two buttons/links.',
+  description: 'Headline, supporting text, and one or two buttons or links.',
 
-  groups: [
-    {name: 'content', title: 'Content', default: true},
-    {name: 'action', title: 'Action'},
-  ],
+  groups: [...PAGE_BUILDER_GROUPS],
 
   fields: [
     defineField({
       name: 'enabled',
       title: 'Enabled / Visible',
       type: 'boolean',
-      group: 'content',
+      group: 'settings',
       initialValue: true,
-      description: 'If disabled, the frontend should hide this section.',
+      description: 'If disabled, this section is hidden on the site.',
     }),
     defineField({
       name: 'eyebrow',
@@ -44,17 +41,17 @@ export const ctaSection = defineType({
     }),
     defineField({
       name: 'cta',
-      title: 'Primary CTA',
+      title: 'Call to action (primary)',
       type: 'localizedCtaLink',
-      group: 'action',
+      group: 'content',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'secondaryCta',
-      title: 'Secondary CTA',
+      title: 'Call to action (secondary)',
       type: 'localizedCtaLink',
-      group: 'action',
-      description: 'Optional second button next to the primary CTA.',
+      group: 'content',
+      description: 'Optional second button next to the primary.',
     }),
   ],
 
@@ -64,7 +61,7 @@ export const ctaSection = defineType({
       const status = enabled === false ? ' (hidden)' : ''
       return {
         title: (title || 'CTA') + status,
-        subtitle: 'CTA section',
+        subtitle: 'Call to action',
       }
     },
   },

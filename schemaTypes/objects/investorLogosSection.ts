@@ -1,35 +1,41 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
+import {PAGE_BUILDER_GROUPS} from '../constants/pageBuilderGroups'
 
 export const investorLogosSection = defineType({
   name: 'investorLogosSection',
-  title: 'Investor / Partner Logos (scrolling row)',
+  title: 'Investor / partner logos',
   type: 'object',
+  groups: [...PAGE_BUILDER_GROUPS],
   fields: [
     defineField({
       name: 'enabled',
       title: 'Enabled / Visible',
       type: 'boolean',
+      group: 'settings',
       initialValue: true,
-      description: 'If disabled, the frontend should hide this section.',
+      description: 'If disabled, this section is hidden on the site.',
     }),
     defineField({
       name: 'title',
       title: 'Section title (optional)',
       type: 'localizedString',
-      description: 'Optional heading above the row (e.g. “Our partners”).',
+      group: 'content',
+      description: 'Optional heading above the row.',
     }),
     defineField({
       name: 'description',
       title: 'Description (optional)',
       type: 'localizedText',
+      group: 'content',
       description: 'Optional short text under the title.',
     }),
     defineField({
       name: 'agents',
       title: 'Agents',
       type: 'array',
+      group: 'data',
       description:
-        'Select agent profiles to show in this row. Order in this list is the display order — drag to reorder. Logo, photo, name, contact page slug, and social links come from each agent document (not entered manually here).',
+        'Agents to show in this row (order = display order). Details come from each agent document.',
       of: [defineArrayMember({type: 'reference', to: [{type: 'agent'}]})],
       validation: (Rule) => Rule.unique().min(1).max(50),
     }),
@@ -39,7 +45,7 @@ export const investorLogosSection = defineType({
     prepare({title, enabled, count}: {title?: string; enabled?: boolean; count?: unknown[]}) {
       const n = Array.isArray(count) ? count.length : 0
       const status = enabled === false ? ' (hidden)' : ''
-      return {title: (title || 'Investor logos') + status, subtitle: `${n} agent(s)`}
+      return {title: (title || 'Investor logos') + status, subtitle: `${n} agent${n === 1 ? '' : 's'}`}
     },
   },
 })

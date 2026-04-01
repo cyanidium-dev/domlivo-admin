@@ -1,28 +1,38 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
+import {PAGE_BUILDER_GROUPS} from '../constants/pageBuilderGroups'
 
 export const propertyCarouselSection = defineType({
   name: 'propertyCarouselSection',
-  title: 'Property Carousel',
+  title: 'Property carousel',
   type: 'object',
+  groups: [...PAGE_BUILDER_GROUPS],
   fields: [
     defineField({
       name: 'enabled',
       title: 'Enabled / Visible',
       type: 'boolean',
+      group: 'settings',
       initialValue: true,
-      description: 'If disabled, the frontend should hide this block.',
+      description: 'If disabled, this block is hidden on the site.',
     }),
-    defineField({name: 'title', title: 'Section Title', type: 'localizedString'}),
-    defineField({name: 'subtitle', title: 'Subtitle', type: 'localizedText'}),
-    defineField({name: 'shortLine', title: 'Short line (optional)', type: 'localizedString'}),
-    defineField({name: 'cta', title: 'CTA', type: 'localizedCtaLink'}),
+    defineField({name: 'title', title: 'Section title', type: 'localizedString', group: 'content'}),
+    defineField({name: 'subtitle', title: 'Subtitle', type: 'localizedText', group: 'content'}),
+    defineField({name: 'shortLine', title: 'Short line (optional)', type: 'localizedString', group: 'content'}),
+    defineField({
+      name: 'cta',
+      title: 'Call to action (optional)',
+      type: 'localizedCtaLink',
+      group: 'content',
+      description: 'Optional button or link below the header.',
+    }),
     defineField({
       name: 'tabs',
-      title: 'Tabs / Groups',
+      title: 'Tabs / groups',
       type: 'array',
+      group: 'layout',
       of: [defineArrayMember({type: 'homePropertyCarouselTab'})],
       description:
-        'Configure which tabs are enabled and their order. If empty, the frontend may use its default tabs (popular/new/highDemand).',
+        'Which tab groups are enabled and in what order. If empty, default groups (e.g. popular / new) may be used.',
       validation: (Rule) =>
         Rule.custom((value) => {
           if (!value || !Array.isArray(value) || value.length === 0) return true
@@ -36,8 +46,9 @@ export const propertyCarouselSection = defineType({
     }),
     defineField({
       name: 'mode',
-      title: 'Content Mode',
+      title: 'Content mode',
       type: 'string',
+      group: 'data',
       options: {
         list: [
           {title: 'Auto (featured/popular)', value: 'auto'},
@@ -47,12 +58,13 @@ export const propertyCarouselSection = defineType({
       },
       initialValue: 'auto',
       description:
-        'Auto: frontend fetches featured/popular properties from API. Selected: use the list below.',
+        'Auto: featured or popular properties from the catalog. Selected: pick properties in the list below.',
     }),
     defineField({
       name: 'limit',
       title: 'Limit',
       type: 'number',
+      group: 'data',
       description: 'Optional maximum number of items for this section.',
       validation: (Rule) => Rule.min(1).max(100),
     }),
@@ -60,6 +72,7 @@ export const propertyCarouselSection = defineType({
       name: 'sort',
       title: 'Sort',
       type: 'string',
+      group: 'data',
       options: {
         list: [
           {title: 'Newest', value: 'newest'},
@@ -68,20 +81,21 @@ export const propertyCarouselSection = defineType({
           {title: 'Popular', value: 'popular'},
         ],
       },
-      description: 'Optional sort strategy for this section.',
+      description: 'Optional sort when using auto mode (top-level).',
     }),
     defineField({
       name: 'autoMode',
-      title: 'Auto Mode Settings',
+      title: 'Auto mode settings',
       type: 'object',
+      group: 'data',
       hidden: ({parent}) => parent?.mode !== 'auto',
-      description: 'Optional settings applied only when Content Mode = Auto.',
+      description: 'Optional overrides when Content mode = Auto.',
       fields: [
         defineField({
           name: 'limit',
           title: 'Limit',
           type: 'number',
-          description: 'Maximum number of properties to show in auto mode.',
+          description: 'Maximum properties to show in auto mode.',
           validation: (Rule) => Rule.min(1).max(100),
         }),
         defineField({
@@ -96,17 +110,18 @@ export const propertyCarouselSection = defineType({
               {title: 'Popular', value: 'popular'},
             ],
           },
-          description: 'Optional sort strategy used in auto mode.',
+          description: 'Sort used in auto mode.',
         }),
       ],
     }),
     defineField({
       name: 'properties',
-      title: 'Selected Properties',
+      title: 'Selected properties',
       type: 'array',
+      group: 'data',
       of: [defineArrayMember({type: 'reference', to: [{type: 'property'}]})],
       hidden: ({parent}) => parent?.mode !== 'selected',
-      description: 'When mode is Selected, add at least one property. Frontend will show this exact list.',
+      description: 'When mode is Selected, add at least one property. Order here is the display order.',
       validation: (Rule) =>
         Rule.custom((value, context) => {
           const parent = context.parent as {mode?: string} | undefined
@@ -119,11 +134,22 @@ export const propertyCarouselSection = defineType({
     }),
   ],
   preview: {
-    select: {title: 'title.en', mode: 'mode', enabled: 'enabled'},
-    prepare({title, mode, enabled}: {title?: string; mode?: string; enabled?: boolean}) {
+    select: {title: 'title.en', mode: 'mode', enabled: 'enabled', properties: 'properties'},
+    prepare({
+      title,
+      mode,
+      enabled,
+      properties,
+    }: {
+      title?: string
+      mode?: string
+      enabled?: boolean
+      properties?: unknown[]
+    }) {
       const status = enabled === false ? ' (hidden)' : ''
-      return {title: (title || 'Properties') + status, subtitle: mode === 'selected' ? 'Selected' : 'Auto'}
+      const n = Array.isArray(properties) ? properties.length : 0
+      const modeLabel = mode === 'selected' ? `Selected · ${n} props` : 'Auto'
+      return {title: (title || 'Properties') + status, subtitle: modeLabel}
     },
   },
 })
-

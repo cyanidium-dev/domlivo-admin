@@ -1,6 +1,8 @@
 /**
- * Wraps localized object inputs (string / text / block content) with a "Paste translations" helper.
- * Parses JSON, ---EN---, or EN: formats — see docs/editor-localized-paste.md
+ * Wraps localized object inputs (string / text / block content) with:
+ * - Collapsible layout + labeled locale snippets (localizedString / localizedText)
+ * - Collapsed: preview + Expand + Paste only; expanded: locale fields + Copy EN + Paste
+ * - "Paste translations…" (JSON, ---EN---, EN: — see docs/editor-localized-paste.md)
  */
 
 import React, {useCallback, useEffect, useId, useState} from 'react'
@@ -21,12 +23,57 @@ import {PROJECT_LOCALE_IDS} from '../../lib/sanity/localizedPaste/projectLocales
 /** localizedSlug excluded: legacy unused type; bulk paste risks invalid URL segments without validation. */
 const SUPPORTED_TYPES = new Set(['localizedString', 'localizedText', 'localizedBlockContent'])
 
+const SCALAR_LOCALE_TYPES = new Set(['localizedString', 'localizedText'])
+
+const LOCALE_PREVIEW_LABEL: Record<string, string> = {
+  en: 'EN',
+  uk: 'UK',
+  ru: 'RU',
+  sq: 'SQ',
+  it: 'IT',
+}
+
+/** Max locale lines in collapsed preview before "+N more" */
+const MAX_LOCALE_PREVIEW_LINES = 3
+const MAX_SNIPPET_CHARS = 56
+
 type Props = {
   value?: Record<string, unknown>
   onChange: (event: PatchEvent) => void
   renderDefault: (props: Record<string, unknown>) => React.ReactNode
   readOnly?: boolean
   schemaType: {name: string; title?: string}
+}
+
+/** Locale-labeled lines for collapsed preview; up to MAX_LOCALE_PREVIEW_LINES, then "+N more". */
+function buildCollapsedLocalePreview(v: Record<string, unknown> | undefined): string[] {
+  const out: string[] = []
+  if (!v) {
+    out.push('No translations yet')
+    return out
+  }
+  const filledIds = PROJECT_LOCALE_IDS.filter((id) => {
+    const s = v[id]
+    return typeof s === 'string' && s.trim().length > 0
+  })
+  const total = filledIds.length
+  if (total === 0) {
+    out.push('No translations yet')
+    return out
+  }
+  const shownIds = filledIds.slice(0, MAX_LOCALE_PREVIEW_LINES)
+  for (const id of shownIds) {
+    const raw = String(v[id]).trim().replace(/\s+/g, ' ')
+    const snippet =
+      raw.length > MAX_SNIPPET_CHARS ? `${raw.slice(0, Math.max(0, MAX_SNIPPET_CHARS - 1))}…` : raw
+    const tag = LOCALE_PREVIEW_LABEL[id] ?? id.toUpperCase()
+    out.push(`${tag}: ${snippet}`)
+  }
+  const hidden = total - shownIds.length
+  if (hidden > 0) {
+    out.push(`+${hidden} more`)
+  }
+  return out
 }
 
 function buildPreviewText(typeName: string, r: ParseLocalizedPasteSuccess): string {
@@ -219,11 +266,13 @@ export function LocalizedPasteTranslationsInput(props: Props) {
   const {value = {}, onChange, renderDefault, readOnly, schemaType} = props
   const typeName = schemaType.name
   const supported = SUPPORTED_TYPES.has(typeName)
+  const isScalarLocale = SCALAR_LOCALE_TYPES.has(typeName)
 
   const [open, setOpen] = useState(false)
   const [draft, setDraft] = useState('')
   const [parseError, setParseError] = useState<string | null>(null)
   const [previewText, setPreviewText] = useState<string | null>(null)
+  const [collapsed, setCollapsed] = useState(true)
 
   const doPreview = useCallback(() => {
     const result = parseLocalizedPaste(draft)
@@ -260,18 +309,98 @@ export function LocalizedPasteTranslationsInput(props: Props) {
     setParseError(null)
   }, [draft, onChange, typeName, value])
 
+  const copyEnToAll = useCallback(() => {
+    const v = value as Record<string, unknown> | undefined
+    const en = v?.en
+    if (en === undefined || en === null) return
+    const enStr = typeof en === 'string' ? en : String(en)
+    const next = {...v, en: enStr, uk: enStr, ru: enStr, sq: enStr, it: enStr}
+    onChange(PatchEvent.from(set(next)))
+  }, [value, onChange])
+
   const defaultNode = renderDefault(props as unknown as Record<string, unknown>)
+
+  const enHasText =
+    typeof (value as {en?: unknown})?.en === 'string' && String((value as {en?: string}).en).trim().length > 0
 
   if (!supported || readOnly) {
     return <>{defaultNode}</>
   }
 
+  const pasteButton = (
+    <Button mode="ghost" text="Paste translations…" onClick={() => setOpen(true)} fontSize={1} />
+  )
+
+  const expandedActions = (
+    <Flex gap={2} wrap="wrap" align="center" justify="flex-start">
+      <Button mode="ghost" text="Collapse" onClick={() => setCollapsed(true)} fontSize={1} />
+      <Button
+        mode="default"
+        tone="primary"
+        text="Copy EN to all"
+        onClick={copyEnToAll}
+        disabled={!enHasText}
+        title={enHasText ? 'Copy English value into UK, RU, SQ, IT' : 'Add English text first'}
+        fontSize={1}
+      />
+      {pasteButton}
+    </Flex>
+  )
+
+  if (isScalarLocale) {
+    const previewLines = buildCollapsedLocalePreview(value as Record<string, unknown>)
+
+    return (
+      <Stack space={3}>
+        {collapsed ? (
+          <Card padding={2} radius={2} tone="transparent" border>
+            <Stack space={2}>
+              <Stack space={2}>
+                {previewLines.map((line, i) => (
+                  <Text key={i} muted size={1} style={{lineHeight: 1.5, wordBreak: 'break-word'}}>
+                    {line}
+                  </Text>
+                ))}
+              </Stack>
+              <Flex gap={2} wrap="wrap" align="center" justify="flex-end">
+                <Button mode="ghost" text="Expand" onClick={() => setCollapsed(false)} fontSize={1} />
+                {pasteButton}
+              </Flex>
+            </Stack>
+          </Card>
+        ) : null}
+        {!collapsed ? (
+          <Stack space={3}>
+            {expandedActions}
+            {defaultNode}
+          </Stack>
+        ) : null}
+        <PasteModal
+          open={open}
+          onClose={() => {
+            setOpen(false)
+            setDraft('')
+            setParseError(null)
+            setPreviewText(null)
+          }}
+          title={schemaType.title || typeName}
+          draft={draft}
+          setDraft={setDraft}
+          parseError={parseError}
+          setParseError={setParseError}
+          previewText={previewText}
+          setPreviewText={setPreviewText}
+          onPreview={doPreview}
+          onApply={doApply}
+        />
+      </Stack>
+    )
+  }
+
   return (
     <Stack space={3}>
       {defaultNode}
-      <Flex>
-        <Button mode="ghost" text="Paste translations…" onClick={() => setOpen(true)} />
-      </Flex>
+      <Flex>{pasteButton}</Flex>
       <PasteModal
         open={open}
         onClose={() => {

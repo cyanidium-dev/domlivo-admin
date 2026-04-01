@@ -354,11 +354,10 @@ export const property = defineType({
 
     defineField({
       name: 'articlesSection',
-      title: 'Articles Section',
-      type: 'articlesSection',
+      title: 'Related articles',
+      type: 'propertyArticlesSection',
       group: 'details',
-      description:
-        'Optional blog/articles block for the property detail page. Use Selected posts for manual picks.',
+      description: 'Optional blog posts shown on this property page. Section labels are set by the site.',
     }),
 
     // MEDIA

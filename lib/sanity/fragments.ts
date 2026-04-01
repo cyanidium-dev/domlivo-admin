@@ -246,16 +246,9 @@ export const BLOG_POST_CARD_FRAGMENT = `_id,
   }`
 
 /**
- * Single `articlesSection` object (e.g. on property) with resolved post cards.
- * Matches landing page projection for the same block shape.
+ * Property detail `propertyArticlesSection`: manual posts only (no titles/mode).
  */
-export const PROPERTY_ARTICLES_SECTION_FRAGMENT = `title,
-  subtitle,
-  cta{
-    ${LOCALIZED_CTA_LINK_FRAGMENT}
-  },
-  cardCtaLabel,
-  mode,
+export const PROPERTY_ARTICLES_SECTION_FRAGMENT = `enabled,
   "posts": posts[]->{
     ${BLOG_POST_CARD_FRAGMENT}
   }`

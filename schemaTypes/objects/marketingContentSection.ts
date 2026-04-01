@@ -5,17 +5,17 @@ import {defineType, defineField, defineArrayMember} from 'sanity'
  */
 export const marketingContentSection = defineType({
   name: 'marketingContentSection',
-  title: 'Marketing Content',
+  title: 'Marketing content',
   type: 'object',
   description:
     'Headline, text, bullet highlights, optional button, and optional images or video—without tying this block to a single page type.',
 
   groups: [
+    {name: 'settings', title: 'Settings'},
     {name: 'layout', title: 'Layout', default: true},
     {name: 'content', title: 'Content'},
-    {name: 'highlights', title: 'Highlights'},
-    {name: 'action', title: 'CTA'},
     {name: 'media', title: 'Media'},
+    {name: 'data', title: 'Data'},
   ],
 
   fields: [
@@ -23,7 +23,7 @@ export const marketingContentSection = defineType({
       name: 'enabled',
       title: 'Enabled / Visible',
       type: 'boolean',
-      group: 'layout',
+      group: 'settings',
       initialValue: true,
       description: 'Turn off to hide this section on the page without removing it.',
     }),
@@ -86,7 +86,7 @@ export const marketingContentSection = defineType({
       name: 'highlightsDisplay',
       title: 'Highlights style',
       type: 'string',
-      group: 'highlights',
+      group: 'layout',
       initialValue: 'list',
       hidden: ({parent}) => parent?.variant === 'grouped',
       options: {
@@ -104,7 +104,7 @@ export const marketingContentSection = defineType({
       name: 'benefits',
       title: 'Bullet points',
       type: 'array',
-      group: 'highlights',
+      group: 'content',
       of: [defineArrayMember({type: 'localizedString'})],
       hidden: ({parent}) =>
         parent?.variant === 'grouped' || parent?.highlightsDisplay === 'cards',
@@ -115,7 +115,7 @@ export const marketingContentSection = defineType({
       name: 'highlightsCards',
       title: 'Highlight cards',
       type: 'array',
-      group: 'highlights',
+      group: 'content',
       hidden: ({parent}) =>
         parent?.variant === 'grouped' || parent?.highlightsDisplay !== 'cards',
       of: [
@@ -169,7 +169,7 @@ export const marketingContentSection = defineType({
       name: 'contentGroups',
       title: 'Content groups',
       type: 'array',
-      group: 'highlights',
+      group: 'content',
       hidden: ({parent}) => parent?.variant !== 'grouped',
       of: [
         defineArrayMember({
@@ -295,9 +295,9 @@ export const marketingContentSection = defineType({
 
     defineField({
       name: 'cta',
-      title: 'CTA (optional)',
+      title: 'Call to action (optional)',
       type: 'localizedCtaLink',
-      group: 'action',
+      group: 'content',
       description: 'Optional button or text link.',
     }),
 
