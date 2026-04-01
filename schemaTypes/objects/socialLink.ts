@@ -1,4 +1,18 @@
+import {LinkIcon} from '@sanity/icons'
 import {defineType, defineField} from 'sanity'
+
+/** Used on the object type and on `defineArrayMember` so list rows always show platform + URL. */
+export const socialLinkPreview = {
+  select: {
+    platform: 'platform',
+    url: 'url',
+  },
+  prepare({platform, url}: {platform?: string; url?: string}) {
+    const title = platform?.trim() || 'Social link'
+    const subtitle = url?.trim() || 'Add URL'
+    return {title, subtitle, media: LinkIcon}
+  },
+}
 
 export const socialLink = defineType({
   name: 'socialLink',
@@ -21,14 +35,5 @@ export const socialLink = defineType({
     }),
   ],
 
-  preview: {
-    select: {
-      title: 'platform',
-      subtitle: 'url',
-    },
-    prepare(selection) {
-      const {title, subtitle} = selection
-      return {title, subtitle}
-    },
-  },
+  preview: socialLinkPreview,
 })

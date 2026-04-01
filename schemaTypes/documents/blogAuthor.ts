@@ -1,4 +1,5 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
+import {socialLinkPreview} from '../objects/socialLink'
 
 /**
  * Reusable blog author profile.
@@ -81,7 +82,7 @@ export const blogAuthor = defineType({
       title: 'Social links',
       type: 'array',
       group: 'profile',
-      of: [defineArrayMember({type: 'socialLink'})],
+      of: [defineArrayMember({type: 'socialLink', preview: socialLinkPreview})],
       validation: (Rule: any) => Rule.max(10),
       description: 'Optional social profile links.',
     }),
