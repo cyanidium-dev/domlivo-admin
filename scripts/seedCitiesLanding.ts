@@ -113,7 +113,8 @@ async function run() {
         },
       },
       {
-        _type: 'landingGridSection',
+        _type: 'landingCollectionSection',
+        presentation: 'grid',
         enabled: true,
         title: Li(
           'City landing pages',
@@ -129,7 +130,7 @@ async function run() {
           'Hapni një faqe qyteti: përzgjedhje, krahasim zonash, galeri dhe FAQ.',
           'Apri una pagina città: selezioni, confronto zone, galleria e FAQ.',
         ),
-        sourceMode: 'auto',
+        mode: 'auto',
         auto: {
           pageTypes: ['city'],
           enabledOnly: true,

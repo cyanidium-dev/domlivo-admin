@@ -373,6 +373,7 @@ export const LANDING_PAGE_SECTIONS_FRAGMENT = `pageSections[]{
   _type,
   _key,
   enabled,
+  presentation,
   title,
   subtitle,
   shortLine,
@@ -450,14 +451,12 @@ export const LANDING_PAGE_SECTIONS_FRAGMENT = `pageSections[]{
   },
   content,
   cardCtaLabel,
-  "items": items,
   "agents": agents[]->{
     ${AGENT_INVESTOR_LOGOS_FRAGMENT}
   },
-  sourceMode,
   auto,
   "landings": select(
-    sourceMode == "manual" => manualItems[]->{
+    _type == "landingCollectionSection" && (presentation == "carousel" || mode == "manual") => manualItems[]->{
       _id,
       pageType,
       slug,
@@ -469,7 +468,7 @@ export const LANDING_PAGE_SECTIONS_FRAGMENT = `pageSections[]{
       linkedDistrict->{_id, slug, title, "city": city->{_id, slug, title}},
       linkedPropertyType->{_id, title, "slug": slug.current}
     },
-    sourceMode == "auto" && auto.sort == "createdAtDesc" => *[
+    _type == "landingCollectionSection" && presentation == "grid" && mode == "auto" && auto.sort == "createdAtDesc" => *[
       _type == "landingPage" &&
       (^.auto.enabledOnly != true || enabled != false) &&
       pageType in ^.auto.pageTypes &&
@@ -487,7 +486,7 @@ export const LANDING_PAGE_SECTIONS_FRAGMENT = `pageSections[]{
       linkedDistrict->{_id, slug, title, "city": city->{_id, slug, title}},
       linkedPropertyType->{_id, title, "slug": slug.current}
     },
-    sourceMode == "auto" && auto.sort == "createdAtAsc" => *[
+    _type == "landingCollectionSection" && presentation == "grid" && mode == "auto" && auto.sort == "createdAtAsc" => *[
       _type == "landingPage" &&
       (^.auto.enabledOnly != true || enabled != false) &&
       pageType in ^.auto.pageTypes &&
@@ -505,7 +504,7 @@ export const LANDING_PAGE_SECTIONS_FRAGMENT = `pageSections[]{
       linkedDistrict->{_id, slug, title, "city": city->{_id, slug, title}},
       linkedPropertyType->{_id, title, "slug": slug.current}
     },
-    sourceMode == "auto" && auto.sort == "titleDesc" => *[
+    _type == "landingCollectionSection" && presentation == "grid" && mode == "auto" && auto.sort == "titleDesc" => *[
       _type == "landingPage" &&
       (^.auto.enabledOnly != true || enabled != false) &&
       pageType in ^.auto.pageTypes &&
@@ -523,7 +522,7 @@ export const LANDING_PAGE_SECTIONS_FRAGMENT = `pageSections[]{
       linkedDistrict->{_id, slug, title, "city": city->{_id, slug, title}},
       linkedPropertyType->{_id, title, "slug": slug.current}
     },
-    sourceMode == "auto" => *[
+    _type == "landingCollectionSection" && presentation == "grid" && mode == "auto" => *[
       _type == "landingPage" &&
       (^.auto.enabledOnly != true || enabled != false) &&
       pageType in ^.auto.pageTypes &&

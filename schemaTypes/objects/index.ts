@@ -29,12 +29,11 @@ import {marketingContentSection} from './marketingContentSection'
 import {articlesSection} from './articlesSection'
 import {seoTextSection} from './seoTextSection'
 import {ctaSection} from './ctaSection'
-import {landingCarouselSection} from './landingCarouselSection'
+import {landingCollectionSection} from './landingCollectionSection'
 import {localizedFaqItemRich} from './localizedFaqItemRich'
 import {districtsComparisonSection} from './districtsComparisonSection'
 import {linkedGallerySection} from './linkedGallerySection'
 import {faqSection} from './faqSection'
-import {landingGridSection} from './landingGridSection'
 import {investorLogosSection} from './investorLogosSection'
 import {propertyOffer} from './propertyOffer'
 import {priceRange} from './priceRange'
@@ -78,11 +77,10 @@ export const objects = [
   articlesSection,
   seoTextSection,
   ctaSection,
-  landingCarouselSection,
+  landingCollectionSection,
   districtsComparisonSection,
   linkedGallerySection,
   faqSection,
-  landingGridSection,
   investorLogosSection,
   propertyOffer,
   priceRange,

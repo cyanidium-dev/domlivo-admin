@@ -69,12 +69,16 @@ function summarizeSectionMissing(section: any) {
     // posts optional by mode; do not enforce here
   }
 
-  if (t === 'landingGridSection') {
-    if (!section?.sourceMode) misses.push('sourceMode')
-    if (section?.sourceMode === 'manual' && (!Array.isArray(section?.manualItems) || section.manualItems.length === 0)) {
+  if (t === 'landingCollectionSection') {
+    if (!section?.presentation) misses.push('presentation')
+    if (!section?.mode && section?.presentation !== 'carousel') misses.push('mode')
+    if (
+      (section?.presentation === 'carousel' || section?.mode === 'manual') &&
+      (!Array.isArray(section?.manualItems) || section.manualItems.length === 0)
+    ) {
       misses.push('manualItems (empty)')
     }
-    if (section?.sourceMode === 'auto') {
+    if (section?.presentation === 'grid' && section?.mode === 'auto') {
       if (!section?.auto?.pageTypes || section.auto.pageTypes.length === 0) misses.push('auto.pageTypes (empty)')
     }
   }
