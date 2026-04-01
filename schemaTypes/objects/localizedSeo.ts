@@ -37,18 +37,6 @@ export const localizedSeo = defineType({
       description: 'Description when shared on social media.',
     }),
     defineField({
-      name: 'twitterTitle',
-      title: 'Twitter Title (optional)',
-      type: 'localizedString',
-      description: 'Optional title override for Twitter/X cards.',
-    }),
-    defineField({
-      name: 'twitterDescription',
-      title: 'Twitter Description (optional)',
-      type: 'localizedText',
-      description: 'Optional description override for Twitter/X cards.',
-    }),
-    defineField({
       name: 'ogImage',
       title: 'Open Graph Image',
       type: 'image',

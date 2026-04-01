@@ -1,17 +1,27 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
+import {PAGE_BUILDER_GROUPS} from '../constants/pageBuilderGroups'
 
 export const linkedGallerySection = defineType({
   name: 'linkedGallerySection',
-  title: 'Linked Gallery (Slider)',
+  title: 'Linked gallery',
   type: 'object',
+  groups: [...PAGE_BUILDER_GROUPS],
   fields: [
-    defineField({name: 'enabled', title: 'Enabled / Visible', type: 'boolean', initialValue: true}),
-    defineField({name: 'title', title: 'Title', type: 'localizedString'}),
-    defineField({name: 'description', title: 'Description', type: 'localizedText'}),
+    defineField({
+      name: 'enabled',
+      title: 'Enabled / Visible',
+      type: 'boolean',
+      group: 'settings',
+      initialValue: true,
+      description: 'If disabled, this section is hidden on the site.',
+    }),
+    defineField({name: 'title', title: 'Title', type: 'localizedString', group: 'content'}),
+    defineField({name: 'description', title: 'Description', type: 'localizedText', group: 'content'}),
     defineField({
       name: 'items',
-      title: 'Items',
+      title: 'Slides',
       type: 'array',
+      group: 'data',
       of: [
         defineArrayMember({
           type: 'object',
@@ -29,20 +39,20 @@ export const linkedGallerySection = defineType({
               name: 'href',
               title: 'Link URL',
               type: 'string',
-              description: 'Where this slide goes when clicked (district catalog, property page, etc.).',
+              description: 'Destination when the slide is clicked.',
               validation: (Rule) => Rule.required(),
             }),
           ],
           preview: {
             select: {title: 'title.en', media: 'image'},
             prepare({title, media}: {title?: string; media?: unknown}) {
-              return {title: title || 'Gallery item', media}
+              return {title: title || 'Slide', media}
             },
           },
         }),
       ],
       validation: (Rule) => Rule.min(1).max(50),
-      description: 'Slider items. Frontend should render in this exact order.',
+      description: 'Slides in display order.',
     }),
   ],
   preview: {
@@ -50,8 +60,7 @@ export const linkedGallerySection = defineType({
     prepare({title, enabled, count}: {title?: string; enabled?: boolean; count?: unknown[]}) {
       const n = Array.isArray(count) ? count.length : 0
       const status = enabled === false ? ' (hidden)' : ''
-      return {title: (title || 'Linked gallery') + status, subtitle: `${n} item(s)`}
+      return {title: (title || 'Linked gallery') + status, subtitle: `${n} slide${n === 1 ? '' : 's'}`}
     },
   },
 })
-

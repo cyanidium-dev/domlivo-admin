@@ -1,58 +1,53 @@
 import {defineType, defineField} from 'sanity'
+import {PAGE_BUILDER_GROUPS} from '../constants/pageBuilderGroups'
 
-/**
- * Canonical rich-text / SEO block for landings.
- * Replaces the former city-only block: optional title, video, and CTA live here when needed.
- */
+/** Rich text / SEO block for landing pages: body copy with optional heading, video, and CTA. */
 export const seoTextSection = defineType({
   name: 'seoTextSection',
   title: 'Rich text / SEO block',
   type: 'object',
   description:
-    'Long-form portable text for SEO, city intros, or campaign copy. Optional heading, video, and CTA support location-style layouts.',
+    'Long-form rich text for SEO, page intros, or campaign copy. Optional heading, video, and CTA.',
 
-  groups: [
-    {name: 'main', title: 'Content', default: true},
-    {name: 'extras', title: 'Optional heading & media'},
-  ],
+  groups: [...PAGE_BUILDER_GROUPS],
 
   fields: [
     defineField({
       name: 'enabled',
       title: 'Enabled / Visible',
       type: 'boolean',
-      group: 'main',
+      group: 'settings',
       initialValue: true,
-      description: 'If disabled, the frontend should hide this section.',
+      description: 'If disabled, this section is hidden on the site.',
     }),
     defineField({
       name: 'title',
       title: 'Heading (optional)',
       type: 'localizedString',
-      group: 'extras',
-      description: 'Optional title above the text (e.g. city or campaign heading).',
-    }),
-    defineField({
-      name: 'videoUrl',
-      title: 'Video URL (optional)',
-      type: 'string',
-      group: 'extras',
-      description: 'Optional YouTube/Vimeo URL shown with this block when the layout supports it.',
+      group: 'content',
+      description: 'Optional title above the text.',
     }),
     defineField({
       name: 'content',
       title: 'Body',
       type: 'localizedBlockContent',
-      group: 'main',
+      group: 'content',
       description: 'Main rich text. Supports internal links and rich blocks per locale.',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'cta',
-      title: 'CTA (optional)',
+      title: 'Call to action (optional)',
       type: 'localizedCtaLink',
-      group: 'extras',
-      description: 'Optional button or text link below the content.',
+      group: 'content',
+      description: 'Optional button or link below the content.',
+    }),
+    defineField({
+      name: 'videoUrl',
+      title: 'Video URL (optional)',
+      type: 'string',
+      group: 'media',
+      description: 'Optional YouTube/Vimeo URL when the layout supports video.',
     }),
   ],
 
@@ -71,7 +66,7 @@ export const seoTextSection = defineType({
       const base = String(title || '').trim() || 'Rich text / SEO'
       const truncated = base.length > 48 ? `${base.slice(0, 47)}…` : base
       const videoHint = String(videoUrl || '').trim() ? ' · Video' : ''
-      return {title: `${truncated}${status}`, subtitle: `SEO / rich text${videoHint}`}
+      return {title: `${truncated}${status}`, subtitle: `SEO block${videoHint}`}
     },
   },
 })

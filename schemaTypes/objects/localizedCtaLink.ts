@@ -2,7 +2,7 @@ import {defineType, defineField} from 'sanity'
 
 export const localizedCtaLink = defineType({
   name: 'localizedCtaLink',
-  title: 'Localized CTA Link',
+  title: 'Call to action',
   type: 'object',
 
   fields: [
@@ -37,7 +37,7 @@ export const localizedCtaLink = defineType({
           const en = (value as {en?: string} | undefined)?.en
           return String(en || '').trim() ? true : 'Add at least the English button text.'
         }),
-      description: 'Button/link text per language. English is required for the frontend.',
+      description: 'Button or link label per language. English is required.',
     }),
   ],
 

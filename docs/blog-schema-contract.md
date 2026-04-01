@@ -118,8 +118,6 @@ Note: This is a JSON-like shape describing the frontend-facing data returned by 
   keywords?: { en?: string, uk?: string, ru?: string, sq?: string, it?: string },
   ogTitle?: { en?: string, uk?: string, ru?: string, sq?: string, it?: string },
   ogDescription?: { en?: string, uk?: string, ru?: string, sq?: string, it?: string },
-  twitterTitle?: { en?: string, uk?: string, ru?: string, sq?: string, it?: string },
-  twitterDescription?: { en?: string, uk?: string, ru?: string, sq?: string, it?: string },
   ogImage?: { alt?: string, asset?: { url?: string } }, // shared image (not per-locale)
   canonicalUrl?: string,
   noIndex?: boolean,

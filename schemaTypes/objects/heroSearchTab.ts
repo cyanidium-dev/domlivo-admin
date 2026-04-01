@@ -17,13 +17,13 @@ export const heroSearchTab = defineType({
         ],
       },
       validation: (Rule) => Rule.required(),
-      description: 'Stable identifier used by the frontend to map to search behavior.',
+      description: 'Search category key (sale, rent, etc.). Maps to how this tab filters listings.',
     }),
     defineField({
       name: 'label',
       title: 'Label (optional override)',
       type: 'localizedString',
-      description: 'Optional per-locale label override. If empty, frontend may use default translations.',
+      description: 'Optional label per language. If empty, default labels are used.',
     }),
     defineField({
       name: 'enabled',

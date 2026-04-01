@@ -91,7 +91,7 @@ export const landingPage = defineType({
           return true
         }),
       of: [
-        // Canonical reusable sections (generic names; not homepage-specific).
+        // Reusable page sections (same blocks for home and other landings).
         defineArrayMember({type: 'heroSection'}),
         defineArrayMember({type: 'propertyCarouselSection'}),
         defineArrayMember({type: 'locationCarouselSection'}),

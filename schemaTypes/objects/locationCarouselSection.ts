@@ -1,24 +1,48 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
+import {PAGE_BUILDER_GROUPS} from '../constants/pageBuilderGroups'
 
 export const locationCarouselSection = defineType({
   name: 'locationCarouselSection',
-  title: 'Locations Carousel (Cities & Districts)',
+  title: 'Locations carousel',
   type: 'object',
+  groups: [...PAGE_BUILDER_GROUPS],
   fields: [
     defineField({
       name: 'enabled',
       title: 'Enabled / Visible',
       type: 'boolean',
+      group: 'settings',
       initialValue: true,
-      description: 'If disabled, the frontend should hide this block.',
+      description: 'If disabled, this block is hidden on the site.',
     }),
-    defineField({name: 'title', title: 'Section Title', type: 'localizedString'}),
-    defineField({name: 'subtitle', title: 'Subtitle', type: 'localizedText'}),
-    defineField({name: 'cta', title: 'CTA', type: 'localizedCtaLink'}),
+    defineField({name: 'title', title: 'Section title', type: 'localizedString', group: 'content'}),
+    defineField({name: 'subtitle', title: 'Subtitle', type: 'localizedText', group: 'content'}),
+    defineField({
+      name: 'cta',
+      title: 'Call to action (optional)',
+      type: 'localizedCtaLink',
+      group: 'content',
+    }),
+    defineField({
+      name: 'linkTargetType',
+      title: 'Link target',
+      type: 'string',
+      group: 'layout',
+      initialValue: 'landing',
+      options: {
+        list: [
+          {title: 'Catalog', value: 'catalog'},
+          {title: 'Landing', value: 'landing'},
+        ],
+        layout: 'radio',
+      },
+      description: 'Whether cards link to catalog or landing routes.',
+    }),
     defineField({
       name: 'mode',
-      title: 'Cards Source Mode',
+      title: 'Content mode',
       type: 'string',
+      group: 'data',
       options: {
         list: [
           {title: 'Auto (from city/district flags)', value: 'auto'},
@@ -28,26 +52,13 @@ export const locationCarouselSection = defineType({
       },
       initialValue: 'auto',
       description:
-        'Auto: frontend selects cities/districts based on their own fields (e.g. popular/published and order). Manual: use the selected list below.',
-    }),
-    defineField({
-      name: 'linkTargetType',
-      title: 'Link Target Type',
-      type: 'string',
-      initialValue: 'landing',
-      options: {
-        list: [
-          {title: 'Catalog', value: 'catalog'},
-          {title: 'Landing', value: 'landing'},
-        ],
-        layout: 'radio',
-      },
-      description: 'Defines whether location cards should link to catalog routes or landing routes.',
+        'Auto: cities and districts from catalog flags. Manual: use the ordered list below.',
     }),
     defineField({
       name: 'auto',
-      title: 'Auto Settings',
+      title: 'Auto settings',
       type: 'object',
+      group: 'data',
       hidden: ({parent}) => parent?.mode !== 'auto',
       fields: [
         defineField({name: 'includeCities', title: 'Include cities', type: 'boolean', initialValue: true}),
@@ -77,22 +88,23 @@ export const locationCarouselSection = defineType({
           name: 'maxCities',
           title: 'Max cities',
           type: 'number',
-          description: 'Optional limit for number of city cards.',
+          description: 'Optional limit for city cards.',
           validation: (Rule) => Rule.min(1).max(50),
         }),
         defineField({
           name: 'maxDistricts',
           title: 'Max districts',
           type: 'number',
-          description: 'Optional limit for number of district cards.',
+          description: 'Optional limit for district cards.',
           validation: (Rule) => Rule.min(1).max(100),
         }),
       ],
     }),
     defineField({
       name: 'manualItems',
-      title: 'Manual Items (Ordered)',
+      title: 'Manual items (ordered)',
       type: 'array',
+      group: 'data',
       of: [
         defineArrayMember({
           type: 'reference',
@@ -100,27 +112,36 @@ export const locationCarouselSection = defineType({
         }),
       ],
       hidden: ({parent}) => parent?.mode !== 'manual',
-      description:
-        'Manual mode only. Single ordered list that can mix cities and districts. Frontend should render this exact order.',
+      description: 'Ordered cities and districts.',
       validation: (Rule) =>
         Rule.custom((value, context) => {
           const parent = context.parent as {mode?: string} | undefined
           if (parent?.mode !== 'manual') return true
           const items = Array.isArray(value) ? value : []
           if (items.length === 0) {
-            return 'In Manual mode, add at least one item (city or district).'
+            return 'In manual mode, add at least one city or district.'
           }
           return true
         }),
     }),
   ],
   preview: {
-    select: {title: 'title.en', enabled: 'enabled', mode: 'mode'},
-    prepare({title, enabled, mode}: {title?: string; enabled?: boolean; mode?: string}) {
+    select: {title: 'title.en', enabled: 'enabled', mode: 'mode', manualItems: 'manualItems'},
+    prepare({
+      title,
+      enabled,
+      mode,
+      manualItems,
+    }: {
+      title?: string
+      enabled?: boolean
+      mode?: string
+      manualItems?: unknown[]
+    }) {
       const status = enabled === false ? ' (hidden)' : ''
-      const source = mode === 'manual' ? 'Manual' : 'Auto'
-      return {title: (title || 'Locations') + status, subtitle: `Location carousel • ${source}`}
+      const n = Array.isArray(manualItems) ? manualItems.length : 0
+      const sub = mode === 'manual' ? `Manual · ${n} items` : 'Auto'
+      return {title: (title || 'Locations') + status, subtitle: sub}
     },
   },
 })
-
