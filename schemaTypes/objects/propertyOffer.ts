@@ -34,13 +34,13 @@ export const propertyOffer = defineType({
     }),
     defineField({
       name: 'customIcon',
-      title: 'Custom icon (upload)',
+      title: 'Custom icon (monochrome SVG)',
       type: 'image',
       options: {
         hotspot: true,
       },
       description:
-        'Optional. Upload your own icon if the preset list does not suit. If set, this overrides the selected icon above.',
+        'Optional. Upload a black monochrome SVG with a transparent background. The frontend inverts icons in dark theme—avoid colored or multi-tone icons and solid white backgrounds. If set, this overrides the preset icon above.',
     }),
   ],
   preview: {

@@ -102,8 +102,6 @@ export const landingPage = defineType({
         defineArrayMember({type: 'seoTextSection'}),
         defineArrayMember({type: 'ctaSection'}),
         defineArrayMember({type: 'faqSection'}),
-        // Canonical landing blocks for SEO/editorial pages (still generic enough)
-        defineArrayMember({type: 'cityRichDescriptionSection'}),
         defineArrayMember({type: 'districtsComparisonSection'}),
         defineArrayMember({type: 'linkedGallerySection'}),
         defineArrayMember({type: 'landingGridSection'}),

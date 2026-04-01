@@ -10,6 +10,7 @@ export const landingCarouselSection = defineType({
       title: 'Enabled / Visible',
       type: 'boolean',
       initialValue: true,
+      description: 'If disabled, the frontend should hide this section.',
     }),
     defineField({name: 'title', title: 'Section Title', type: 'localizedString'}),
     defineField({name: 'subtitle', title: 'Subtitle / Description', type: 'localizedText'}),

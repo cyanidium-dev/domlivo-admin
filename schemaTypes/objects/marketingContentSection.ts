@@ -464,26 +464,45 @@ export const marketingContentSection = defineType({
   ],
 
   preview: {
-    select: {title: 'title.en', variant: 'variant'},
+    select: {
+      title: 'title.en',
+      variant: 'variant',
+      highlightsDisplay: 'highlightsDisplay',
+      contentGroups: 'contentGroups',
+      enabled: 'enabled',
+    },
     prepare({
       title,
       variant,
+      highlightsDisplay,
+      contentGroups,
+      enabled,
     }: {
       title?: string
       variant?: string
+      highlightsDisplay?: string
+      contentGroups?: unknown[]
+      enabled?: boolean
     }) {
-      const MAX_TITLE_CHARS = 60
+      const MAX_TITLE_CHARS = 52
       const raw = String(title || '').trim()
       const body = raw.length > 0 ? raw : 'Untitled'
       const truncated =
         body.length > MAX_TITLE_CHARS ? `${body.slice(0, MAX_TITLE_CHARS - 1)}…` : body
-      const previewTitle = `Marketing: ${truncated}`
-      const subtitle =
-        variant === 'splitDark'
-          ? 'Dark promo'
-          : variant === 'grouped'
-            ? 'Grouped highlights'
-            : 'Text + media'
+      const hidden = enabled === false ? ' (hidden)' : ''
+      const previewTitle = `Marketing: ${truncated}${hidden}`
+
+      let subtitle: string
+      if (variant === 'splitDark') {
+        subtitle = 'Dark promo'
+      } else if (variant === 'grouped') {
+        const n = Array.isArray(contentGroups) ? contentGroups.length : 0
+        subtitle = n > 0 ? `Grouped · ${n} group${n === 1 ? '' : 's'}` : 'Grouped'
+      } else {
+        const hl = highlightsDisplay === 'cards' ? 'Cards' : 'Bullets'
+        subtitle = `Split · ${hl}`
+      }
+
       return {title: previewTitle, subtitle}
     },
   },

@@ -10,6 +10,8 @@
     "seed:cities-landing": "tsx scripts/seedCitiesLanding.ts",
     "verify:landing-translations": "tsx scripts/verifyLandingTranslations.ts",
     "migrate:landing-sections": "tsx scripts/migrateLandingSectionTypes.ts",
+    "migrate:city-description-to-seo:dry": "tsx scripts/migrateCityDescriptionToSeoTextSection.ts --dry",
+    "migrate:city-description-to-seo": "tsx scripts/migrateCityDescriptionToSeoTextSection.ts --execute",
     "fix:landing-seo": "tsx scripts/fixMissingLandingSeo.ts",
     "dev": "sanity dev",
     "start": "sanity start",
