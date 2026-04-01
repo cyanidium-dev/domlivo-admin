@@ -10,8 +10,8 @@
  *   - heroSection.subtitle <- linkedCity.heroSubtitle
  *   - heroSection.shortLine <- linkedCity.heroShortLine
  *   - heroSection.cta <- linkedCity.heroCta (href + label)
- *   - cityRichDescriptionSection.content <- linkedCity.description
- *   - cityRichDescriptionSection.videoUrl <- linkedCity.cityVideoUrl
+ *   - seoTextSection.content (portable text) <- linkedCity.description (plain text per locale)
+ *   - seoTextSection.videoUrl <- linkedCity.cityVideoUrl
  *   - faqSection.title <- linkedCity.faqTitle
  *   - faqSection.items <- linkedCity.faqItems (only if target items empty)
  *   - landingPage.seo <- linkedCity.seo (only if target seo fields empty)
@@ -107,6 +107,75 @@ function pickSingleSectionByType(sections: any[], type: string) {
   if (matches.length === 1) return {section: matches[0], ambiguous: false}
   if (matches.length === 0) return {section: null, ambiguous: false}
   return {section: null, ambiguous: true, count: matches.length}
+}
+
+/** City intro is usually the titled seoTextSection; if none titled, fall back to a single seoTextSection. */
+function pickCityIntroSeoSection(sections: any[]) {
+  const seo = sections.filter((s) => s && typeof s === 'object' && s._type === 'seoTextSection')
+  const titled = seo.filter((s) => {
+    const t = s?.title
+    if (!isRecord(t)) return false
+    return REQUIRED_LOCALES.some((l) => String((t as Record<string, unknown>)[l] || '').trim())
+  })
+  if (titled.length === 1) return {section: titled[0], ambiguous: false}
+  if (titled.length > 1) return {section: null, ambiguous: true, count: titled.length}
+  if (seo.length === 1) return {section: seo[0], ambiguous: false}
+  if (seo.length === 0) return {section: null, ambiguous: false}
+  return {section: null, ambiguous: true, count: seo.length}
+}
+
+function blocksFromPlainText(text: string) {
+  const paras = String(text || '')
+    .split(/\n\s*\n/g)
+    .map((p) => p.trim())
+    .filter(Boolean)
+  return paras.map((p, idx) => ({
+    _type: 'block',
+    _key: `m${idx}-${Math.random().toString(16).slice(2, 8)}`,
+    style: 'normal',
+    markDefs: [],
+    children: [
+      {
+        _type: 'span',
+        _key: `s${idx}-${Math.random().toString(16).slice(2, 8)}`,
+        text: p,
+        marks: [],
+      },
+    ],
+  }))
+}
+
+function addLocalizedBlockContentFromPlainText(
+  patchSets: PatchSet[],
+  decisions: Decision[],
+  docId: string,
+  targetContent: unknown,
+  sourcePlainLocalized: unknown,
+  basePath: string,
+  sourcePath: string,
+) {
+  if (!isRecord(sourcePlainLocalized)) {
+    decisions.push({docId, code: 'SKIP_SOURCE_EMPTY', targetPath: basePath, sourcePath})
+    return
+  }
+  const tgt = isRecord(targetContent) ? targetContent : {}
+  const copied: Locale[] = []
+  for (const l of REQUIRED_LOCALES) {
+    const srcVal = sourcePlainLocalized[l]
+    const tgtVal = tgt[l]
+    const tgtEmpty = !Array.isArray(tgtVal) || tgtVal.length === 0
+    if (!isEmptyScalar(srcVal) && tgtEmpty && typeof srcVal === 'string') {
+      patchSets.push({path: `${basePath}.${l}`, value: blocksFromPlainText(srcVal)})
+      copied.push(l)
+    }
+  }
+  if (copied.length) {
+    decisions.push({docId, code: 'COPY_FROM_SOURCE', targetPath: basePath, sourcePath, locales: copied})
+  } else if (!isRecord(sourcePlainLocalized) || isEmptyLocalized(sourcePlainLocalized)) {
+    decisions.push({docId, code: 'SKIP_SOURCE_EMPTY', targetPath: basePath, sourcePath})
+  } else {
+    decisions.push({docId, code: 'SKIP_TARGET_FILLED', targetPath: basePath, sourcePath})
+  }
 }
 
 function ensureFaqItemsHaveTypeAndKey(items: any[]): any[] {
@@ -445,15 +514,15 @@ async function migrateCityLandings(decisions: Decision[]) {
       })
     }
 
-    // --- cityRichDescriptionSection ---
-    const cityDescPick = pickSingleSectionByType(sections, 'cityRichDescriptionSection')
+    // --- seoTextSection (city intro / rich text; migrated from cityRichDescriptionSection) ---
+    const cityDescPick = pickCityIntroSeoSection(sections)
     if (cityDescPick.ambiguous) {
       decisions.push({
         docId,
         code: 'SKIP_AMBIGUOUS',
-        targetPath: 'pageSections[_type=="cityRichDescriptionSection"]',
+        targetPath: 'pageSections[_type=="seoTextSection"]',
         sourcePath: 'linkedCity.description / linkedCity.cityVideoUrl',
-        note: `Found ${cityDescPick.count} cityRichDescriptionSection items`,
+        note: `Found ${'count' in cityDescPick ? cityDescPick.count : '?'} city-intro seoTextSection candidates`,
       })
     } else if (cityDescPick.section) {
       const s = cityDescPick.section
@@ -462,19 +531,19 @@ async function migrateCityLandings(decisions: Decision[]) {
         decisions.push({
           docId,
           code: 'SKIP_INCOMPATIBLE',
-          targetPath: 'pageSections[_type=="cityRichDescriptionSection"]._key',
+          targetPath: 'pageSections[_type=="seoTextSection"]._key',
           sourcePath: 'pageSections._key',
-          note: 'cityRichDescriptionSection missing _key',
+          note: 'seoTextSection missing _key',
         })
       } else {
         const base = `pageSections[_key=="${key}"]`
-        addLocalizedPatchSets(
+        addLocalizedBlockContentFromPlainText(
           patchSets,
           decisions,
           docId,
-          `${base}.content`,
           s.content,
           srcCity?.description,
+          `${base}.content`,
           'linkedCity.description',
         )
         const tgtVideo = s.videoUrl

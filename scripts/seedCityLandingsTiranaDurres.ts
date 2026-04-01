@@ -71,6 +71,16 @@ function blocksFromText(text: string): any[] {
   }))
 }
 
+function blocksFromLocalizedLi(li: Li): Record<string, any[]> {
+  return {
+    en: blocksFromText(li.en),
+    ru: blocksFromText(li.ru),
+    uk: blocksFromText(li.uk),
+    sq: blocksFromText(li.sq),
+    it: blocksFromText(li.it),
+  }
+}
+
 async function ensureCityBySlug(citySlug: string) {
   const city = await client.fetch<{_id: string; title: any; slug: {current: string}} | null>(
     `*[_type=="city" && slug.current == $slug][0]{_id, title, slug}`,
@@ -231,10 +241,10 @@ Kjo e bën Tiranën një zgjedhje tërheqëse për familjet, profesionistët dhe
       tabs: [{_type: 'homePropertyCarouselTab', key: 'popular', enabled: true}],
     },
     {
-      _type: 'cityRichDescriptionSection',
+      _type: 'seoTextSection',
       enabled: true,
       title: cityDescTitle,
-      content: cityDescContent,
+      content: blocksFromLocalizedLi(cityDescContent),
       cta: {href: '/catalog?city=tirana', label: Li('View all properties in Tirana', 'Смотреть все в Тиране', 'Переглянути всі об’єкти в Тирані', 'Shikoni të gjitha pronat në Tiranë', 'Vedi tutti a Tirana')},
     },
     {
@@ -298,6 +308,7 @@ Kjo e bën Tiranën një zgjedhje tërheqëse për familjet, profesionistët dhe
     },
     {
       _type: 'articlesSection',
+      enabled: true,
       title: Li(
         'Useful articles for buying property in Tirana',
         'Полезные статьи о покупке в Тиране',
@@ -399,15 +410,17 @@ function buildDurresSections(): any[] {
       tabs: [{_type: 'homePropertyCarouselTab', key: 'popular', enabled: true}],
     },
     {
-      _type: 'cityRichDescriptionSection',
+      _type: 'seoTextSection',
       enabled: true,
       title: Li('Durres description', 'Описание Дурреса', 'Опис міста', 'Përshkrimi i Durrësit', 'Descrizione di Durazzo'),
-      content: Li(
-        'Durres is one of Albania’s key coastal cities, combining seaside lifestyle with strong demand for housing and investment property.',
-        'Дуррес — один из ключевых прибрежных городов Албании с высоким спросом на жильё и инвестиционные объекты.',
-        'Дуррес — один із ключових прибережних міст Албанії з високим попитом на житло та інвестиційну нерухомість.',
-        'Durrësi është një nga qytetet kryesore bregdetare në Shqipëri, me kërkesë të lartë për banim dhe investim.',
-        'Durazzo è una delle principali città costiere dell’Albania, con forte domanda di immobili residenziali e da investimento.',
+      content: blocksFromLocalizedLi(
+        Li(
+          'Durres is one of Albania’s key coastal cities, combining seaside lifestyle with strong demand for housing and investment property.',
+          'Дуррес — один из ключевых прибрежных городов Албании с высоким спросом на жильё и инвестиционные объекты.',
+          'Дуррес — один із ключових прибережних міст Албанії з високим попитом на житло та інвестиційну нерухомість.',
+          'Durrësi është një nga qytetet kryesore bregdetare në Shqipëri, me kërkesë të lartë për banim dhe investim.',
+          'Durazzo è una delle principali città costiere dell’Albania, con forte domanda di immobili residenziali e da investimento.',
+        ),
       ),
       cta: {href: '/catalog?city=durres', label: Li('View all properties in Durres', 'Смотреть все в Дурресе', 'Переглянути всі об’єкти в Дурресі', 'Shikoni të gjitha pronat në Durrës', 'Vedi tutti a Durazzo')},
     },
@@ -468,6 +481,7 @@ function buildDurresSections(): any[] {
     },
     {
       _type: 'articlesSection',
+      enabled: true,
       title: Li(
         'Useful articles for buying property in Durres',
         'Полезные статьи о покупке в Дурресе',

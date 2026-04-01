@@ -31,7 +31,6 @@ import {seoTextSection} from './seoTextSection'
 import {ctaSection} from './ctaSection'
 import {landingCarouselSection} from './landingCarouselSection'
 import {localizedFaqItemRich} from './localizedFaqItemRich'
-import {cityRichDescriptionSection} from './cityRichDescriptionSection'
 import {districtsComparisonSection} from './districtsComparisonSection'
 import {linkedGallerySection} from './linkedGallerySection'
 import {faqSection} from './faqSection'
@@ -80,7 +79,6 @@ export const objects = [
   seoTextSection,
   ctaSection,
   landingCarouselSection,
-  cityRichDescriptionSection,
   districtsComparisonSection,
   linkedGallerySection,
   faqSection,

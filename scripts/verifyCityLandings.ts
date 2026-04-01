@@ -31,15 +31,15 @@ async function run() {
     "faqCount": count(pageSections[_type=="faqSection"][0].items),
     "galleryCount": count(pageSections[_type=="linkedGallerySection"][0].items),
     "hasSeoRichText": defined(pageSections[_type=="seoTextSection"][0]),
-    "hasCityDescription": defined(pageSections[_type=="cityRichDescriptionSection"][0]),
+    "hasCityIntroRichText": defined(pageSections[_type=="seoTextSection" && defined(title.en)][0]),
     "hasGallery": defined(pageSections[_type=="linkedGallerySection"][0]),
     "ctaSummary": {
       "heroCtaHref": pageSections[_type=="heroSection"][0].cta.href,
       "heroCtaLabel": pageSections[_type=="heroSection"][0].cta.label,
       "carouselCtaHref": pageSections[_type=="propertyCarouselSection"][0].cta.href,
       "carouselCtaLabel": pageSections[_type=="propertyCarouselSection"][0].cta.label,
-      "cityDescCtaHref": pageSections[_type=="cityRichDescriptionSection"][0].cta.href,
-      "cityDescCtaLabel": pageSections[_type=="cityRichDescriptionSection"][0].cta.label
+      "cityIntroCtaHref": pageSections[_type=="seoTextSection" && defined(title.en)][0].cta.href,
+      "cityIntroCtaLabel": pageSections[_type=="seoTextSection" && defined(title.en)][0].cta.label
     }
   } | order(_id asc)`
 

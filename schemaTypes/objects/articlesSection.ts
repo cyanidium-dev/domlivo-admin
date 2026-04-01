@@ -5,6 +5,13 @@ export const articlesSection = defineType({
   title: 'Articles / Blog Preview',
   type: 'object',
   fields: [
+    defineField({
+      name: 'enabled',
+      title: 'Enabled / Visible',
+      type: 'boolean',
+      initialValue: true,
+      description: 'If disabled, the frontend should hide this section.',
+    }),
     defineField({name: 'title', title: 'Section Title', type: 'localizedString'}),
     defineField({name: 'subtitle', title: 'Subtitle / Description', type: 'localizedText'}),
     defineField({name: 'cta', title: 'CTA', type: 'localizedCtaLink'}),
@@ -48,9 +55,13 @@ export const articlesSection = defineType({
     }),
   ],
   preview: {
-    select: {title: 'title.en', mode: 'mode'},
-    prepare({title, mode}: {title?: string; mode?: string}) {
-      return {title: title || 'Articles', subtitle: mode === 'selected' ? 'Selected' : 'Latest'}
+    select: {title: 'title.en', mode: 'mode', enabled: 'enabled'},
+    prepare({title, mode, enabled}: {title?: string; mode?: string; enabled?: boolean}) {
+      const status = enabled === false ? ' (hidden)' : ''
+      return {
+        title: (title || 'Articles') + status,
+        subtitle: mode === 'selected' ? 'Selected posts' : 'Latest posts',
+      }
     },
   },
 })
