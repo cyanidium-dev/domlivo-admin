@@ -11,7 +11,8 @@ export const siteSettings = defineType({
     {
       name: 'promotionLimits',
       title: 'Promotion Limits',
-      description: 'Maximum concurrent promotions per type. Studio validation blocks properties that would exceed these numbers.',
+      description:
+        'Global default limits for Premium and Top promotions. Agent-level overrides take precedence. Sale promotions are unlimited.',
       options: {collapsible: true, collapsed: false},
     },
   ],
@@ -128,7 +129,7 @@ export const siteSettings = defineType({
     }),
     defineField({
       name: 'maxPremiumPromotions',
-      title: 'Max Premium promotions',
+      title: 'Global default: Max Premium promotions',
       type: 'number',
       group: 'content',
       fieldset: 'promotionLimits',
@@ -140,11 +141,11 @@ export const siteSettings = defineType({
           .max(50)
           .error('Enter a whole number from 1 to 50.'),
       description:
-        'Maximum number of properties that can be marked as Premium at the same time. Studio validation prevents exceeding this limit.',
+        'Default Premium cap used when an agent has no override configured.',
     }),
     defineField({
       name: 'maxTopPromotions',
-      title: 'Max Top promotions',
+      title: 'Global default: Max Top promotions',
       type: 'number',
       group: 'content',
       fieldset: 'promotionLimits',
@@ -156,15 +157,16 @@ export const siteSettings = defineType({
           .max(50)
           .error('Enter a whole number from 1 to 50.'),
       description:
-        'Maximum number of properties that can be marked as Top at the same time. Studio validation prevents exceeding this limit.',
+        'Default Top cap used when an agent has no override configured.',
     }),
     defineField({
       name: 'maxSalePromotions',
-      title: 'Max Sale promotions',
+      title: 'Max Sale promotions (deprecated)',
       type: 'number',
       group: 'content',
       fieldset: 'promotionLimits',
       initialValue: 6,
+      hidden: true,
       validation: (Rule) =>
         Rule.required()
           .integer()
@@ -172,7 +174,7 @@ export const siteSettings = defineType({
           .max(50)
           .error('Enter a whole number from 1 to 50.'),
       description:
-        'Maximum number of properties that can be marked as On Sale at the same time. Studio validation prevents exceeding this limit.',
+        'Deprecated. Sale promotions are unlimited and this value is ignored.',
     }),
     defineField({
       name: 'priceRange',

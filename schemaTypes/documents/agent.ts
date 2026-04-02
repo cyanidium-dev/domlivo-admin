@@ -1,4 +1,5 @@
 import {defineType, defineField} from 'sanity'
+import {AgentPromotionUsageInfo} from '../../components/sanity/AgentPromotionUsageInfo'
 
 function agentSlugOwnerIds(document?: {_id?: string}): string[] {
   const id = document?._id
@@ -10,6 +11,16 @@ export const agent = defineType({
   name: 'agent',
   title: 'Agent',
   type: 'document',
+
+  fieldsets: [
+    {
+      name: 'promotionOverrides',
+      title: 'Promotion Limit Overrides',
+      description:
+        'Optional per-agent override values. If left empty, Site Settings global defaults are used.',
+      options: {collapsible: true, collapsed: false},
+    },
+  ],
 
   fields: [
     defineField({
@@ -153,6 +164,34 @@ export const agent = defineType({
       title: 'Sanity User ID',
       type: 'string',
       description: 'Used to link the Sanity user account to this agent profile',
+    }),
+
+    defineField({
+      name: 'maxPremiumPromotionsOverride',
+      title: 'Override: Max Premium promotions',
+      type: 'number',
+      fieldset: 'promotionOverrides',
+      description:
+        'Optional. Overrides Site Settings default Premium cap for this agent only.',
+      components: {input: AgentPromotionUsageInfo as any},
+      validation: (Rule) =>
+        Rule.integer()
+          .min(1)
+          .max(50)
+          .error('Enter a whole number from 1 to 50, or leave empty to use global defaults.'),
+    }),
+
+    defineField({
+      name: 'maxTopPromotionsOverride',
+      title: 'Override: Max Top promotions',
+      type: 'number',
+      fieldset: 'promotionOverrides',
+      description: 'Optional. Overrides Site Settings default Top cap for this agent only.',
+      validation: (Rule) =>
+        Rule.integer()
+          .min(1)
+          .max(50)
+          .error('Enter a whole number from 1 to 50, or leave empty to use global defaults.'),
     }),
   ],
 
