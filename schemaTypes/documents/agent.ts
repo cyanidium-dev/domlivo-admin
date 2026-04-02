@@ -33,32 +33,34 @@ export const agent = defineType({
 
     defineField({
       name: 'slug',
-      title: 'Contact page URL slug',
+      title: 'Slug',
       type: 'slug',
       options: {
         source: 'name',
         maxLength: 96,
       },
       description:
-        'Used for the public URL /contact-realtor/[slug] when set. Leave empty if this agent has no dedicated contact page yet.',
+        'Used in URL: /properties/agent/[slug]. Must be unique.',
       validation: (Rule) =>
-        Rule.custom(async (value, context) => {
-          const current = (value as {current?: string} | undefined)?.current
-          if (!current || !String(current).trim()) return true
+        Rule.required()
+          .error('Slug is required for agent routing.')
+          .custom(async (value, context) => {
+            const current = (value as {current?: string} | undefined)?.current
+            if (!current || !String(current).trim()) return true
 
-          const client = context.getClient?.({apiVersion: '2024-01-01'})
-          if (!client) return true
+            const client = context.getClient?.({apiVersion: '2024-01-01'})
+            if (!client) return true
 
-          const ids = agentSlugOwnerIds(context.document as {_id?: string})
-          if (ids.length === 0) return true
+            const ids = agentSlugOwnerIds(context.document as {_id?: string})
+            if (ids.length === 0) return true
 
-          const dup = await client.fetch(
-            `count(*[_type == "agent" && slug.current == $slug && !(_id in $ids)])`,
-            {slug: current, ids},
-          )
-          if (dup === 0) return true
-          return 'Another agent already uses this slug.'
-        }),
+            const dup = await client.fetch(
+              `count(*[_type == "agent" && slug.current == $slug && !(_id in $ids)])`,
+              {slug: current, ids},
+            )
+            if (dup === 0) return true
+            return 'Another agent already uses this slug.'
+          }),
     }),
 
     defineField({
