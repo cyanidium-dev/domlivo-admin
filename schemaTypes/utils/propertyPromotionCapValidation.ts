@@ -20,8 +20,12 @@ type PromotionCheckDoc = {
 
 type SiteSettingsRow = {
   _id: string
-  maxPremiumPromotions?: number
-  maxTopPromotions?: number
+  propertySettings?: {
+    promotionDefaults?: {
+      maxPremiumPromotions?: number
+      maxTopPromotions?: number
+    }
+  }
 }
 
 type AgentRow = {
@@ -122,7 +126,15 @@ async function resolveCap(
 ): Promise<{cap: number; agentName: string; capSource: PromotionCapSource}> {
   const [settingsRows, agentRows] = await Promise.all([
     client.fetch<SiteSettingsRow[]>(
-      `*[_type == "siteSettings"]{_id, maxPremiumPromotions, maxTopPromotions}`,
+      `*[_type == "siteSettings"]{
+        _id,
+        propertySettings{
+          promotionDefaults{
+            maxPremiumPromotions,
+            maxTopPromotions
+          }
+        }
+      }`,
     ),
     client.fetch<AgentRow[]>(
       `*[_type == "agent" && _id in [$agentId, "drafts." + $agentId]]{
@@ -142,8 +154,10 @@ async function resolveCap(
     null
 
   const overrideValue = asFinitePositiveInt(agent?.[overrideFieldForType(pt)])
-  const globalValue = asFinitePositiveInt(settings?.[capFieldForType(pt)])
-  // Cap resolution order: agent override -> siteSettings global default -> hardcoded fallback.
+  const globalValue = asFinitePositiveInt(
+    settings?.propertySettings?.promotionDefaults?.[capFieldForType(pt)],
+  )
+  // Cap resolution order: agent override -> siteSettings.propertySettings defaults -> hardcoded fallback.
   const cap = overrideValue ?? globalValue ?? DEFAULT_CAP
   const agentName = agent?.name?.trim() || 'this agent'
 

@@ -5,9 +5,9 @@ import {
   type DocumentActionProps,
   useClient,
   useDocumentOperation,
-  useToast,
   useValidationStatus,
 } from 'sanity'
+import {useToast} from '@sanity/ui'
 import {checkPromotionCapForDocument} from '../../schemaTypes/utils/propertyPromotionCapValidation'
 
 type PropertyDoc = {
