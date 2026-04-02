@@ -40,6 +40,8 @@ import {propertyOffer} from './propertyOffer'
 import {priceRange} from './priceRange'
 import {areaRange} from './areaRange'
 import {currencyRate} from './currencyRate'
+import {propertyCatalogBanner} from './propertyCatalogBanner'
+import {propertySettings} from './propertySettings'
 
 /**
  * Object types (embeddable/reusable)
@@ -88,4 +90,6 @@ export const objects = [
   priceRange,
   areaRange,
   currencyRate,
+  propertyCatalogBanner,
+  propertySettings,
 ]

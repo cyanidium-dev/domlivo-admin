@@ -6,6 +6,7 @@ import {structure} from './structure'
 import {districtInCityTemplate} from './templates/districtInCity'
 import {blogSettingsTemplate} from './templates/blogSettings'
 import {registrationRequestDefaultTemplate} from './templates/registrationRequestDefault'
+import {withPropertyPromotionPublishGuard} from './components/sanity/PropertyPromotionPublishAction'
 
 export default defineConfig({
   name: 'default',
@@ -15,6 +16,18 @@ export default defineConfig({
   dataset: 'production',
 
   plugins: [structureTool({structure}), visionTool()],
+
+  document: {
+    actions: (prev, context) => {
+      if (context.schemaType !== 'property') return prev
+      return prev.map((action) => {
+        if (action.action === 'publish') {
+          return withPropertyPromotionPublishGuard(action)
+        }
+        return action
+      })
+    },
+  },
 
   schema: {
     types: schemaTypes,

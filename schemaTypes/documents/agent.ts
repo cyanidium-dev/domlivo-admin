@@ -1,4 +1,5 @@
 import {defineType, defineField} from 'sanity'
+import {AgentPromotionUsageInfo} from '../../components/sanity/AgentPromotionUsageInfo'
 
 function agentSlugOwnerIds(document?: {_id?: string}): string[] {
   const id = document?._id
@@ -11,6 +12,16 @@ export const agent = defineType({
   title: 'Agent',
   type: 'document',
 
+  fieldsets: [
+    {
+      name: 'promotionOverrides',
+      title: 'Promotion Limit Overrides',
+      description:
+        'Optional per-agent override values. If left empty, Site Settings global defaults are used.',
+      options: {collapsible: true, collapsed: false},
+    },
+  ],
+
   fields: [
     defineField({
       name: 'name',
@@ -22,32 +33,34 @@ export const agent = defineType({
 
     defineField({
       name: 'slug',
-      title: 'Contact page URL slug',
+      title: 'Slug',
       type: 'slug',
       options: {
         source: 'name',
         maxLength: 96,
       },
       description:
-        'Used for the public URL /contact-realtor/[slug] when set. Leave empty if this agent has no dedicated contact page yet.',
+        'Used in URL: /properties/agent/[slug]. Must be unique.',
       validation: (Rule) =>
-        Rule.custom(async (value, context) => {
-          const current = (value as {current?: string} | undefined)?.current
-          if (!current || !String(current).trim()) return true
+        Rule.required()
+          .error('Slug is required for agent routing.')
+          .custom(async (value, context) => {
+            const current = (value as {current?: string} | undefined)?.current
+            if (!current || !String(current).trim()) return true
 
-          const client = context.getClient?.({apiVersion: '2024-01-01'})
-          if (!client) return true
+            const client = context.getClient?.({apiVersion: '2024-01-01'})
+            if (!client) return true
 
-          const ids = agentSlugOwnerIds(context.document as {_id?: string})
-          if (ids.length === 0) return true
+            const ids = agentSlugOwnerIds(context.document as {_id?: string})
+            if (ids.length === 0) return true
 
-          const dup = await client.fetch(
-            `count(*[_type == "agent" && slug.current == $slug && !(_id in $ids)])`,
-            {slug: current, ids},
-          )
-          if (dup === 0) return true
-          return 'Another agent already uses this slug.'
-        }),
+            const dup = await client.fetch(
+              `count(*[_type == "agent" && slug.current == $slug && !(_id in $ids)])`,
+              {slug: current, ids},
+            )
+            if (dup === 0) return true
+            return 'Another agent already uses this slug.'
+          }),
     }),
 
     defineField({
@@ -153,6 +166,34 @@ export const agent = defineType({
       title: 'Sanity User ID',
       type: 'string',
       description: 'Used to link the Sanity user account to this agent profile',
+    }),
+
+    defineField({
+      name: 'maxPremiumPromotionsOverride',
+      title: 'Override: Max Premium promotions',
+      type: 'number',
+      fieldset: 'promotionOverrides',
+      description:
+        'Optional. Overrides Site Settings default Premium cap for this agent only.',
+      components: {input: AgentPromotionUsageInfo as any},
+      validation: (Rule) =>
+        Rule.integer()
+          .min(1)
+          .max(50)
+          .error('Enter a whole number from 1 to 50, or leave empty to use global defaults.'),
+    }),
+
+    defineField({
+      name: 'maxTopPromotionsOverride',
+      title: 'Override: Max Top promotions',
+      type: 'number',
+      fieldset: 'promotionOverrides',
+      description: 'Optional. Overrides Site Settings default Top cap for this agent only.',
+      validation: (Rule) =>
+        Rule.integer()
+          .min(1)
+          .max(50)
+          .error('Enter a whole number from 1 to 50, or leave empty to use global defaults.'),
     }),
   ],
 

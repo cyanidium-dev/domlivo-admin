@@ -7,21 +7,13 @@ export const siteSettings = defineType({
   title: 'Site Settings',
   type: 'document',
 
-  fieldsets: [
-    {
-      name: 'promotionLimits',
-      title: 'Promotion Limits',
-      description: 'Maximum concurrent promotions per type. Studio validation blocks properties that would exceed these numbers.',
-      options: {collapsible: true, collapsed: false},
-    },
-  ],
-
   groups: [
     {name: 'branding', title: 'Branding', default: true},
     {name: 'contact', title: 'Contact'},
     {name: 'social', title: 'Social'},
     {name: 'footer', title: 'Footer'},
     {name: 'content', title: 'Content'},
+    {name: 'properties', title: 'Properties'},
     {name: 'currency', title: 'Currency'},
     {name: 'seo', title: 'SEO'},
   ],
@@ -118,96 +110,12 @@ export const siteSettings = defineType({
 
     // CONTENT
     defineField({
-      name: 'similarPropertiesCount',
-      title: 'Similar Properties Count',
-      type: 'number',
-      group: 'content',
-      initialValue: 2,
-      validation: (Rule) => Rule.min(1).max(12),
-      description: 'Number of similar properties shown on property details page.',
-    }),
-    defineField({
-      name: 'maxPremiumPromotions',
-      title: 'Max Premium promotions',
-      type: 'number',
-      group: 'content',
-      fieldset: 'promotionLimits',
-      initialValue: 6,
-      validation: (Rule) =>
-        Rule.required()
-          .integer()
-          .min(1)
-          .max(50)
-          .error('Enter a whole number from 1 to 50.'),
+      name: 'propertySettings',
+      title: 'Property Settings',
+      type: 'propertySettings',
+      group: 'properties',
       description:
-        'Maximum number of properties that can be marked as Premium at the same time. Studio validation prevents exceeding this limit.',
-    }),
-    defineField({
-      name: 'maxTopPromotions',
-      title: 'Max Top promotions',
-      type: 'number',
-      group: 'content',
-      fieldset: 'promotionLimits',
-      initialValue: 6,
-      validation: (Rule) =>
-        Rule.required()
-          .integer()
-          .min(1)
-          .max(50)
-          .error('Enter a whole number from 1 to 50.'),
-      description:
-        'Maximum number of properties that can be marked as Top at the same time. Studio validation prevents exceeding this limit.',
-    }),
-    defineField({
-      name: 'maxSalePromotions',
-      title: 'Max Sale promotions',
-      type: 'number',
-      group: 'content',
-      fieldset: 'promotionLimits',
-      initialValue: 6,
-      validation: (Rule) =>
-        Rule.required()
-          .integer()
-          .min(1)
-          .max(50)
-          .error('Enter a whole number from 1 to 50.'),
-      description:
-        'Maximum number of properties that can be marked as On Sale at the same time. Studio validation prevents exceeding this limit.',
-    }),
-    defineField({
-      name: 'priceRange',
-      title: 'Price Range',
-      type: 'priceRange',
-      group: 'content',
-      description:
-        'Used by hero search and properties filters. Values are in EUR. Frontend falls back to defaults if missing.',
-    }),
-    defineField({
-      name: 'areaRange',
-      title: 'Area Range',
-      type: 'areaRange',
-      group: 'content',
-      description:
-        'Default area bounds for the catalog area slider. If left empty, frontend falls back to property data.',
-      validation: (Rule) =>
-        Rule.custom((value) => {
-          if (value == null || typeof value !== 'object') return true
-          const {from, to} = value as {from?: unknown; to?: unknown}
-          if (from == null && to == null) return true
-          if (from == null || to == null) {
-            return 'Set both From and To, or leave both empty.'
-          }
-          if (typeof from !== 'number' || typeof to !== 'number') {
-            return 'From and To must be numbers.'
-          }
-          if (from < 0 || to < 0) {
-            return 'Values cannot be negative.'
-          }
-          if (to < from) {
-            return 'To must be greater than or equal to From.'
-          }
-          return true
-        }),
+        'Property-specific defaults and catalog banner candidates for the /properties experience.',
     }),
     defineField({
       name: 'howToPublishVideoUrl',

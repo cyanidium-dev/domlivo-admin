@@ -5,6 +5,8 @@ import {CoordinatesLngInput} from '../../components/sanity/coordinates/Coordinat
 import {SeoFillInfoInput} from '../../components/sanity/SeoFillInfoInput'
 import {GalleryWithCopyAltInput} from '../../components/sanity/GalleryWithCopyAltInput'
 import {validatePropertyPromotionCaps} from '../utils/propertyPromotionCapValidation'
+import {PropertyPromotionSlotsInfoInput} from '../../components/sanity/PropertyPromotionSlotsInfoInput'
+import {PropertyAgentPromotionUnpromoteWarningInput} from '../../components/sanity/PropertyAgentPromotionUnpromoteWarningInput'
 
 export const property = defineType({
   name: 'property',
@@ -73,6 +75,7 @@ export const property = defineType({
       to: [{type: 'agent'}],
       group: 'basic',
       validation: (Rule) => Rule.required(),
+      components: {input: PropertyAgentPromotionUnpromoteWarningInput as any},
     }),
 
     defineField({
@@ -145,7 +148,8 @@ export const property = defineType({
       type: 'boolean',
       group: 'pricing',
       initialValue: false,
-      description: 'Highlight this listing in promotional placements (subject to site caps per type).',
+      description:
+        'Highlight this listing in promotional placements. Premium and Top are capped per agent (with global defaults). Sale promotions are unlimited.',
     }),
 
     defineField({
@@ -169,6 +173,9 @@ export const property = defineType({
           if (!value) return 'Select a promotion type when Promoted is enabled.'
           return true
         }),
+      components: {input: PropertyPromotionSlotsInfoInput as any},
+      description:
+        'Premium and Top use agent-scoped limits. Sale is unlimited and is not affected by promotion caps.',
     }),
 
     defineField({
