@@ -39,8 +39,7 @@ export const agent = defineType({
         source: 'name',
         maxLength: 96,
       },
-      description:
-        'Used in URL: /properties/agent/[slug]. Must be unique.',
+      description: 'Used for agent page URL. Must be unique.',
       validation: (Rule) =>
         Rule.required()
           .error('Slug is required for agent routing.')
@@ -159,6 +158,13 @@ export const agent = defineType({
           if (!/youtube\.com|youtu\.be\//i.test(v)) return 'Use a youtube.com or youtu.be link.'
           return true
         }),
+    }),
+
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'localizedSeo',
+      description: 'Optional meta and Open Graph for this agent profile.',
     }),
 
     defineField({

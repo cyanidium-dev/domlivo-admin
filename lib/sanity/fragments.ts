@@ -45,13 +45,16 @@ export const GALLERY_FRAGMENT = `[]{
 // SEO
 // -----------------------------------------------------------------------------
 
-/** Localized SEO object: meta, og, noIndex. Text fields raw. */
+/** Localized SEO object: meta, og, canonical, robots hints. Text fields raw. */
 export const LOCALIZED_SEO_FRAGMENT = `metaTitle,
   metaDescription,
   ogTitle,
   ogDescription,
   ogImage,
-  noIndex`
+  canonicalUrl,
+  noIndex,
+  noFollow,
+  keywords`
 
 // -----------------------------------------------------------------------------
 // CTA / LINKS

@@ -184,6 +184,26 @@ export const DISTRICT_PAGE_QUERY = groq`*[_type == "district" && slug.current ==
   }
 }`
 
+/** Params: { city: string, district: string } — city and district slug.current (disambiguates districts with same slug in different cities) */
+export const DISTRICT_BY_CITY_AND_SLUG_QUERY = groq`*[_type == "district" && slug.current == $district && city->slug.current == $city][0]{
+  title,
+  slug,
+  heroTitle,
+  heroSubtitle,
+  heroImage,
+  shortDescription,
+  description,
+  metrics,
+  gallery,
+  faqItems,
+  seo,
+  "city": city->{
+    _id,
+    title,
+    slug
+  }
+}`
+
 // -----------------------------------------------------------------------------
 // PROPERTY TYPES
 // -----------------------------------------------------------------------------
