@@ -68,7 +68,7 @@ export const propertySettings = defineType({
       title: 'Property Catalog Banners',
       type: 'array',
       description:
-        'Pool of candidate banners for /properties. The frontend may show up to 3 eligible banners for the current catalog view.',
+        'Pool of candidate banners for /catalog. The frontend may show up to 3 eligible banners for the current catalog view.',
       of: [defineArrayMember({type: 'propertyCatalogBanner'})],
     }),
   ],

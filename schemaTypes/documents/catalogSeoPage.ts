@@ -2,7 +2,8 @@ import {defineType, defineField} from 'sanity'
 
 /**
  * Catalog listing page SEO content.
- * Used for /properties, /properties/[city], /properties/[city]/[district].
+ * Used for catalog route scopes (root, city, district).
+ * Frontend canonical filter routes are handled outside manual landing creation.
  * One document per route scope (root, per city, per district).
  */
 export const catalogSeoPage = defineType({
@@ -24,14 +25,14 @@ export const catalogSeoPage = defineType({
       group: 'scope',
       options: {
         list: [
-          {title: 'Properties root (/properties)', value: 'propertiesRoot'},
-          {title: 'City catalog (/properties/[city])', value: 'city'},
-          {title: 'District catalog (/properties/[city]/[district])', value: 'district'},
+          {title: 'Catalog root (/catalog)', value: 'propertiesRoot'},
+          {title: 'City catalog scope', value: 'city'},
+          {title: 'District catalog scope', value: 'district'},
         ],
         layout: 'radio',
       },
       validation: (Rule) => Rule.required(),
-      description: 'Which catalog route this content applies to.',
+      description: 'Which catalog scope this content applies to.',
     }),
 
     defineField({
@@ -132,7 +133,7 @@ export const catalogSeoPage = defineType({
     prepare({scope, cityTitle, districtTitle, active}) {
       const scopeLabel =
         scope === 'propertiesRoot'
-          ? 'Properties'
+          ? 'Catalog'
           : scope === 'city'
             ? `City: ${cityTitle || '—'}`
             : `District: ${districtTitle || '—'}`

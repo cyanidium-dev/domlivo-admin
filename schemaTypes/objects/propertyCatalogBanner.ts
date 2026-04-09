@@ -30,7 +30,7 @@ export const propertyCatalogBanner = defineType({
       title: 'Enabled',
       type: 'boolean',
       initialValue: true,
-      description: 'Disable to keep this banner in CMS without showing it on /properties.',
+      description: 'Disable to keep this banner in CMS without showing it on /catalog.',
     }),
     defineField({
       name: 'order',

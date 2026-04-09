@@ -18,7 +18,7 @@ function validateInlineLinkHref(value: unknown): true | string {
     v.startsWith('#')
   )
     return true
-  return 'Use a relative path (e.g. /properties), full URL (https://...), mailto:, tel:, or #anchor.'
+  return 'Use a relative path (e.g. /catalog), full URL (https://...), mailto:, tel:, or #anchor.'
 }
 
 const articleBodyBlockStyles = [
@@ -52,7 +52,7 @@ const articleBodyBlockMarks = {
           type: 'string',
           validation: (Rule) => Rule.required().custom(validateInlineLinkHref),
           description:
-            'Relative path (e.g. /properties), full URL (https://...), mailto:, tel:, or #anchor. Use the CTA block for button-style links.',
+            'Relative path (e.g. /catalog), full URL (https://...), mailto:, tel:, or #anchor. Use the CTA block for button-style links.',
         }),
       ],
     },

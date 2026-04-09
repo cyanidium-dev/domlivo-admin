@@ -232,6 +232,21 @@ export const property = defineType({
     }),
 
     // LOCATION
+    // TEMPORARY (single-country phase): keep this field in schema for data-contract stability,
+    // but hide it from editors until multi-country support is implemented.
+    defineField({
+      name: 'country',
+      title: 'Country (slug)',
+      type: 'string',
+      group: 'location',
+      hidden: true,
+      validation: (Rule) =>
+        Rule.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
+          .warning('Use lowercase kebab-case, e.g. "albania" or "north-macedonia".'),
+      description:
+        'Optional country route segment for frontend shorthand/catalog URL composition. Use lowercase kebab-case (e.g. "albania").',
+    }),
+
     defineField({
       name: 'city',
       type: 'reference',
@@ -463,6 +478,7 @@ export const property = defineType({
       titleSq: 'title.sq',
       status: 'status',
       price: 'price',
+      country: 'country',
       cityTitle: 'city.title',
       media: 'gallery.0',
     },
@@ -474,13 +490,14 @@ export const property = defineType({
         titleSq,
         status,
         price,
+        country,
         cityTitle,
         media,
       } = selection
       const title = titleEn || titleRu || titleUk || titleSq || 'Untitled'
       const priceStr =
         price != null ? `€${Number(price).toLocaleString()}` : null
-      const parts = [status, priceStr, cityTitle].filter(Boolean)
+      const parts = [status, priceStr, country, cityTitle].filter(Boolean)
       const subtitle = parts.join(' • ') || 'No price set'
       return {title, subtitle, media}
     },

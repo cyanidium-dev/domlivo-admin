@@ -23,10 +23,10 @@ export const localizedCtaLink = defineType({
             v.startsWith('tel:')
           )
             return true
-          return 'Use a relative path (e.g. /properties), full URL (https://...), mailto:, or tel:.'
+          return 'Use a relative path (e.g. /catalog), full URL (https://...), mailto:, or tel:.'
         }),
       description:
-        'Relative path (e.g. /properties), full URL (https://...), mailto:, or tel:. Must start with /, http, https, mailto:, or tel:.',
+        'Relative path (e.g. /catalog), full URL (https://...), mailto:, or tel:. Must start with /, http, https, mailto:, or tel:.',
     }),
     defineField({
       name: 'label',
