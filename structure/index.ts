@@ -27,7 +27,7 @@ export const structure: StructureResolver = (S, context) =>
                 .title('City Landings')
                 .child(S.documentTypeList('landingPage').filter('_type == "landingPage" && pageType == "city"')),
               S.listItem()
-                .title('Cities Index Landing (/cities)')
+                .title('Cities Index Landing (country/city editorial)')
                 .id('landingCitiesIndex')
                 .child(S.document().schemaType('landingPage').documentId('landing-cities')),
               S.listItem()

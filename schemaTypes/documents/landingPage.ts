@@ -41,7 +41,8 @@ export const landingPage = defineType({
         layout: 'radio',
       },
       validation: (Rule) => Rule.required(),
-      description: 'Determines how this landing is routed and what it is linked to.',
+      description:
+        'Determines how this editorial landing is routed and what it is linked to. Do not use landing pages to manually model shorthand catalog/filter URL combinations.',
     }),
 
     defineField({
@@ -73,7 +74,7 @@ export const landingPage = defineType({
           return value?.current ? true : 'Slug is required for non-home landing pages.'
         }),
       description:
-        'URL path segment for this landing (non-home). For linked entity pages, keep it aligned with the linked entity slug.',
+        'URL path segment for this editorial landing (non-home). For linked entity pages, keep it aligned with the linked entity slug. Country-level editorial pages can use pageType "custom" with a country slug segment.',
     }),
 
     defineField({

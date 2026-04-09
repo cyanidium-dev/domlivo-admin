@@ -32,7 +32,7 @@ export const blogCtaBlock = defineType({
       type: 'localizedCtaLink',
       validation: (Rule: any) => Rule.required(),
       description:
-        'Set the link URL (e.g. /properties or https://...) and the button text per language. English text is required.',
+        'Set the link URL (e.g. /catalog or https://...) and the button text per language. English text is required.',
     }),
   ],
 

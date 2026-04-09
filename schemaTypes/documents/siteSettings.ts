@@ -115,7 +115,7 @@ export const siteSettings = defineType({
       type: 'propertySettings',
       group: 'properties',
       description:
-        'Property-specific defaults and catalog banner candidates for the /properties experience.',
+        'Property-specific defaults and catalog banner candidates for the /catalog experience.',
     }),
     defineField({
       name: 'howToPublishVideoUrl',
