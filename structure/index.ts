@@ -78,6 +78,8 @@ export const structure: StructureResolver = (S, context) =>
 
       S.divider(),
 
+      S.documentTypeListItem('country').title('Countries'),
+
       S.listItem()
         .title('Cities')
         .child(

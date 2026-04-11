@@ -1,4 +1,5 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
+import {docOwnerIds} from '../utils/docOwnerIds'
 
 export const landingPage = defineType({
   name: 'landingPage',
@@ -143,11 +144,31 @@ export const landingPage = defineType({
       to: [{type: 'city'}],
       group: 'relations',
       hidden: ({parent}) => parent?.pageType !== 'city',
+      description:
+        'Must reference the same canonical city document used for properties, districts, and catalog SEO for this place. One enabled city landing per city.',
       validation: (Rule) =>
-        Rule.custom((value, context) => {
-          const parent = context.parent as {pageType?: string} | undefined
+        Rule.custom(async (value, context) => {
+          const parent = context.parent as {pageType?: string; enabled?: boolean} | undefined
           if (parent?.pageType !== 'city') return true
-          return value ? true : 'linkedCity is required when pageType = city.'
+          if (!value || typeof value !== 'object' || !('_ref' in value) || !(value as {_ref?: string})._ref) {
+            return 'Linked City is required when Page Type is City.'
+          }
+          const ref = (value as {_ref: string})._ref
+          const enabled = (context.document as {enabled?: boolean} | undefined)?.enabled
+          if (enabled === false) return true
+
+          const client = context.getClient?.({apiVersion: '2024-01-01'})
+          if (!client) return true
+          const ids = docOwnerIds(context.document as {_id?: string})
+          if (ids.length === 0) return true
+
+          const count = await client.fetch<number>(
+            `count(*[_type == "landingPage" && pageType == "city" && linkedCity._ref == $ref && enabled != false && !(_id in $ids)])`,
+            {ref, ids},
+          )
+          return count === 0
+            ? true
+            : 'Another enabled city landing already references this city. Disable or delete the other landing, or disable this one.'
         }),
     }),
     defineField({

@@ -3,6 +3,9 @@
  * Requires: SANITY_API_TOKEN in .env
  *
  * Run: npx tsx scripts/validateSidebarNavCmsStructure.ts
+ *
+ * For broader geo reports (duplicate city slugs, property.country mismatch, cities
+ * without country, landing alignment hints), use: npx tsx scripts/reportGeoConsistency.ts
  */
 
 import path from 'path'

@@ -3,6 +3,8 @@
  *
  * Localized fields stay raw; frontend resolves via getLocalizedValue().
  * Do NOT resolve locale inside GROQ.
+ * City-shaped projections include `"country": country->slug.current` where a city doc is expanded.
+ * Property documents use `"country": coalesce(city->country->slug.current, country)` at the property level.
  */
 
 import {groq} from 'next-sanity'
@@ -95,6 +97,7 @@ export const AGENT_INVESTOR_LOGOS_FRAGMENT = `_id,
 export const CITY_CARD_FRAGMENT = `_id,
   title,
   slug,
+  "country": country->slug.current,
   heroImage,
   popular,
   order`
@@ -107,13 +110,15 @@ export const DISTRICT_CARD_FRAGMENT = `_id,
   "city": city->{
     _id,
     title,
-    slug
+    slug,
+    "country": country->slug.current
   }`
 
 /** City ref (minimal) */
 export const CITY_REF_FRAGMENT = `_id,
   title,
-  slug`
+  slug,
+  "country": country->slug.current`
 
 /** District ref (minimal) */
 export const DISTRICT_REF_FRAGMENT = `_id,
@@ -172,7 +177,7 @@ export const AMENITY_FRAGMENT = `_id,
 export const PROPERTY_CARD_FRAGMENT = `_id,
   title,
   slug,
-  country,
+  "country": coalesce(city->country->slug.current, country),
   price,
   promoted,
   promotionType,
@@ -184,7 +189,8 @@ export const PROPERTY_CARD_FRAGMENT = `_id,
   "city": city->{
     _id,
     title,
-    slug
+    slug,
+    "country": country->slug.current
   },
   "district": district->{
     _id,
@@ -261,7 +267,7 @@ export const PROPERTY_ARTICLES_SECTION_FRAGMENT = `enabled,
 export const PROPERTY_FULL_FRAGMENT = `_id,
   title,
   slug,
-  country,
+  "country": coalesce(city->country->slug.current, country),
   shortDescription,
   description,
   price,
@@ -275,7 +281,8 @@ export const PROPERTY_FULL_FRAGMENT = `_id,
   "city": city->{
     _id,
     title,
-    slug
+    slug,
+    "country": country->slug.current
   },
   "district": district->{
     _id,
@@ -462,8 +469,8 @@ export const LANDING_PAGE_SECTIONS_FRAGMENT = `pageSections[]{
       cardTitle,
       cardDescription,
       cardImage,
-      linkedCity->{_id, slug, title},
-      linkedDistrict->{_id, slug, title, "city": city->{_id, slug, title}},
+      linkedCity->{_id, slug, title, "country": country->slug.current},
+      linkedDistrict->{_id, slug, title, "city": city->{_id, slug, title, "country": country->slug.current}},
       linkedPropertyType->{_id, title, "slug": slug.current}
     },
     _type == "landingCollectionSection" && presentation == "grid" && mode == "auto" && auto.sort == "createdAtDesc" => *[
@@ -480,8 +487,8 @@ export const LANDING_PAGE_SECTIONS_FRAGMENT = `pageSections[]{
       cardTitle,
       cardDescription,
       cardImage,
-      linkedCity->{_id, slug, title},
-      linkedDistrict->{_id, slug, title, "city": city->{_id, slug, title}},
+      linkedCity->{_id, slug, title, "country": country->slug.current},
+      linkedDistrict->{_id, slug, title, "city": city->{_id, slug, title, "country": country->slug.current}},
       linkedPropertyType->{_id, title, "slug": slug.current}
     },
     _type == "landingCollectionSection" && presentation == "grid" && mode == "auto" && auto.sort == "createdAtAsc" => *[
@@ -498,8 +505,8 @@ export const LANDING_PAGE_SECTIONS_FRAGMENT = `pageSections[]{
       cardTitle,
       cardDescription,
       cardImage,
-      linkedCity->{_id, slug, title},
-      linkedDistrict->{_id, slug, title, "city": city->{_id, slug, title}},
+      linkedCity->{_id, slug, title, "country": country->slug.current},
+      linkedDistrict->{_id, slug, title, "city": city->{_id, slug, title, "country": country->slug.current}},
       linkedPropertyType->{_id, title, "slug": slug.current}
     },
     _type == "landingCollectionSection" && presentation == "grid" && mode == "auto" && auto.sort == "titleDesc" => *[
@@ -516,8 +523,8 @@ export const LANDING_PAGE_SECTIONS_FRAGMENT = `pageSections[]{
       cardTitle,
       cardDescription,
       cardImage,
-      linkedCity->{_id, slug, title},
-      linkedDistrict->{_id, slug, title, "city": city->{_id, slug, title}},
+      linkedCity->{_id, slug, title, "country": country->slug.current},
+      linkedDistrict->{_id, slug, title, "city": city->{_id, slug, title, "country": country->slug.current}},
       linkedPropertyType->{_id, title, "slug": slug.current}
     },
     _type == "landingCollectionSection" && presentation == "grid" && mode == "auto" => *[
@@ -534,8 +541,8 @@ export const LANDING_PAGE_SECTIONS_FRAGMENT = `pageSections[]{
       cardTitle,
       cardDescription,
       cardImage,
-      linkedCity->{_id, slug, title},
-      linkedDistrict->{_id, slug, title, "city": city->{_id, slug, title}},
+      linkedCity->{_id, slug, title, "country": country->slug.current},
+      linkedDistrict->{_id, slug, title, "city": city->{_id, slug, title, "country": country->slug.current}},
       linkedPropertyType->{_id, title, "slug": slug.current}
     }
   ),
@@ -550,11 +557,16 @@ export const LANDING_PAGE_SECTIONS_FRAGMENT = `pageSections[]{
       heroImage,
       popular,
       order,
+      "country": select(
+        _type == "city" => country->slug.current,
+        _type == "district" => city->country->slug.current
+      ),
       "city": select(
         _type == "district" => city->{
           _id,
           title,
-          "slug": slug.current
+          "slug": slug.current,
+          "country": country->slug.current
         }
       )
     }

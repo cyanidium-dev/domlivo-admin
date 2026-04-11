@@ -232,8 +232,8 @@ export const property = defineType({
     }),
 
     // LOCATION
-    // TEMPORARY (single-country phase): keep this field in schema for data-contract stability,
-    // but hide it from editors until multi-country support is implemented.
+    // Deprecated: prefer city.country (Country document). Kept for backward compatibility;
+    // GROQ resolves "country" from city first, then falls back to this field.
     defineField({
       name: 'country',
       title: 'Country (slug)',
@@ -244,7 +244,7 @@ export const property = defineType({
         Rule.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
           .warning('Use lowercase kebab-case, e.g. "albania" or "north-macedonia".'),
       description:
-        'Optional country route segment for frontend shorthand/catalog URL composition. Use lowercase kebab-case (e.g. "albania").',
+        'Legacy fallback only — do not set for new content. Canonical country is derived from city → country. Remove redundant values when it matches city.country (see cleanup script).',
     }),
 
     defineField({
