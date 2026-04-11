@@ -286,6 +286,13 @@ async function main() {
   }
   console.log('Agents:', agents.length)
 
+  await client.createOrReplace({
+    _id: 'country-albania',
+    _type: 'country',
+    title: 'Albania',
+    slug: {current: 'albania'},
+  })
+
   // --- 5. Cities (6) ---
   const citiesData = [
     {id: 'city-tirana', slug: 'tirana', order: 1, title: L('Tirana', 'Tirana', 'Тирана', 'Тірана'), heroTitle: L('Zbuloni Tiranën', 'Discover Tirana', 'Откройте Тирану', 'Відкрийте Тірану'), heroSub: L('Kryeqyteti i shndritshëm', 'The vibrant capital', 'Столица Албании', 'Столиця Албанії'), shortDesc: L('Tirana ofron mënyrë jetese urbane.', 'Tirana offers urban lifestyle.', 'Тирана сочетает городской образ жизни.', 'Тірана пропонує міський спосіб життя.'), desc: L('Tirana është kryeqyteti i Shqipërisë.', 'Tirana is Albania\'s capital.', 'Тирана — столица Албании.', 'Тірана — столиця Албанії.'), invest: L('Investimi në Tiranë ofron kthime.', 'Investment in Tirana offers solid returns.', 'Инвестиции в Тиранe.', 'Інвестиції в Тірані.')},
@@ -303,6 +310,7 @@ async function main() {
       _type: 'city',
       title: c.title,
       slug: {current: c.slug},
+      country: {_type: 'reference', _ref: 'country-albania'},
       popular: true,
       order: c.order,
       isPublished: true,

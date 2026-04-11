@@ -412,12 +412,20 @@ async function main() {
     },
   ]
 
+  await client.createOrReplace({
+    _id: 'country-albania',
+    _type: 'country',
+    title: 'Albania',
+    slug: {current: 'albania'},
+  })
+
   for (const c of cityData) {
     await client.createOrReplace({
       _id: c.id,
       _type: 'city',
       title: c.title,
       slug: {current: c.slugBase},
+      country: {_type: 'reference', _ref: 'country-albania'},
       popular: true,
       order: c.order,
       isPublished: true,

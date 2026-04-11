@@ -7,6 +7,8 @@ export const city = defineType({
   name: 'city',
   title: 'City',
   type: 'document',
+  description:
+    'Canonical geo entity for a city. Properties, city landings (linkedCity), districts, and catalog SEO pages should all reference the same city document for a given real-world city.',
 
   groups: [
     {name: 'basic', title: 'Basic', default: true},
@@ -40,6 +42,17 @@ export const city = defineType({
         },
         maxLength: 96,
       },
+      validation: (Rule) => Rule.required(),
+    }),
+
+    defineField({
+      name: 'country',
+      title: 'Country',
+      type: 'reference',
+      to: [{type: 'country'}],
+      group: 'basic',
+      description:
+        'Country for geo-based URLs (e.g. /{locale}/{country}/{city}/...). Required for routing; create a Country document first if none appear.',
       validation: (Rule) => Rule.required(),
     }),
 

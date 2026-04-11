@@ -1,4 +1,5 @@
 import {catalogSeoPage} from './catalogSeoPage'
+import {country} from './country'
 import {city} from './city'
 import {district} from './district'
 import {amenity} from './amenity'
@@ -20,6 +21,7 @@ import {registrationRequest} from './registrationRequest'
  */
 export const documents = [
   catalogSeoPage,
+  country,
   landingPage,
   city,
   district,

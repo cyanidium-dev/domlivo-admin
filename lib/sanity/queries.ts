@@ -5,6 +5,8 @@
  * - Localized fields returned as raw objects; frontend resolves with getLocalizedValue(field, locale)
  * - Media returned as full Sanity image objects for urlFor()
  * - No locale resolution inside GROQ
+ * - City-shaped projections include `"country": country->slug.current` where a city document is
+ *   dereferenced. Property-level country uses coalesce in fragments.
  *
  * Import from this file or from lib/sanity.
  */
@@ -47,7 +49,8 @@ export const LANDING_PAGE_BY_SLUG_QUERY = groq`*[_type == "landingPage" && slug.
   linkedCity->{
     _id,
     title,
-    slug
+    slug,
+    "country": country->slug.current
   },
   linkedDistrict->{
     _id,
@@ -56,7 +59,8 @@ export const LANDING_PAGE_BY_SLUG_QUERY = groq`*[_type == "landingPage" && slug.
     "city": city->{
       _id,
       title,
-      slug
+      slug,
+      "country": country->slug.current
     }
   },
   linkedPropertyType->{
@@ -80,7 +84,8 @@ export const CITY_LANDING_BY_CITY_SLUG_QUERY = groq`*[_type == "landingPage" && 
     title,
     slug,
     heroImage,
-    shortDescription
+    shortDescription,
+    "country": country->slug.current
   },
   ${LANDING_PAGE_SECTIONS_FRAGMENT},
   seo
@@ -143,6 +148,7 @@ export const CITIES_LIST_QUERY = groq`*[_type == "city" && isPublished == true] 
 export const CITY_PAGE_QUERY = groq`*[_type == "city" && slug.current == $slug][0]{
   title,
   slug,
+  "country": country->slug.current,
   heroTitle,
   heroSubtitle,
   heroShortLine,
@@ -180,7 +186,8 @@ export const DISTRICT_PAGE_QUERY = groq`*[_type == "district" && slug.current ==
   "city": city->{
     _id,
     title,
-    slug
+    slug,
+    "country": country->slug.current
   }
 }`
 
@@ -200,7 +207,8 @@ export const DISTRICT_BY_CITY_AND_SLUG_QUERY = groq`*[_type == "district" && slu
   "city": city->{
     _id,
     title,
-    slug
+    slug,
+    "country": country->slug.current
   }
 }`
 
