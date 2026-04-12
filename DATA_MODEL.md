@@ -244,7 +244,13 @@ Sections: hero, featured, cities, propertyTypes, investment, about, agents, blog
 | contactPhone     | string    |                          |
 | companyAddress   | text      |                          |
 | socialLinks      | socialLink[] | Max 10               |
-| footerQuickLinks | footerLink[] or localizedFooterLink[] | Max 20 |
+| footerIntro      | localizedString | Optional            |
+| footerTelegramUrl | string   | Optional HTTP(S) URL   |
+| footerWhatsappUrl | string   | Optional HTTP(S) URL   |
+| footerApp        | footerApp | enabled + store URLs    |
+| footerCodesiteUrl | string   | Optional HTTP(S) URL   |
+| footerWebbondUrl | string   | Optional HTTP(S) URL    |
+| policyLinks      | localizedFooterLink[] | Max 20     |
 | copyrightText    | localizedString |                          |
 | defaultSeo       | seo       | Fallback for pages       |
 

@@ -100,7 +100,7 @@ This document describes the actual Sanity CMS/admin architecture of the domlivo 
 
 **Site settings**  
 - **Role:** Global branding, contact, footer, default SEO.  
-- **Fields:** siteName, siteTagline, logo (localized where applicable), contactEmail, contactPhone, companyAddress, socialLinks[] (socialLink), footerQuickLinks[] (localizedFooterLink), copyrightText (localizedString), defaultSeo (localizedSeo).  
+- **Fields:** siteName, siteTagline, logo (localized where applicable), contactEmail, contactPhone, companyAddress, contactsManagerPhoto, socialLinks[] (socialLink), footerIntro (localizedString, optional), footerTelegramUrl, footerWhatsappUrl, footerApp (enabled, appStoreUrl, googlePlayUrl, primaryUrl), footerCodesiteUrl, footerWebbondUrl, policyLinks[] (localizedFooterLink), copyrightText (localizedString), defaultSeo (localizedSeo), plus property/currency fields as in schema.  
 - **Scaling:** Fine.
 
 **Blog**  

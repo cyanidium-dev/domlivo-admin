@@ -75,7 +75,7 @@ const ARRAY_FIELDS_BY_TYPE: Record<string, string[]> = {
   city: ['gallery', 'faqItems', 'districtStats'],
   district: ['gallery', 'faqItems', 'metrics'],
   landingPage: ['pageSections'],
-  siteSettings: ['socialLinks', 'footerQuickLinks'],
+  siteSettings: ['socialLinks', 'policyLinks'],
   property: ['gallery', 'locationTags'],
   blogPost: ['gallery'],
 }

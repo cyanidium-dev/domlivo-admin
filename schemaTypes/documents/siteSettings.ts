@@ -84,14 +84,97 @@ export const siteSettings = defineType({
       validation: (Rule) => Rule.max(10),
     }),
 
-    // FOOTER
+    // FOOTER (navigation is frontend-owned; CMS supplies data only)
     defineField({
-      name: 'footerQuickLinks',
-      title: 'Footer Quick Links',
-      type: 'array',
-      of: [defineArrayMember({type: 'localizedFooterLink'})],
+      name: 'footerIntro',
+      title: 'Footer Intro',
+      type: 'localizedString',
       group: 'footer',
-      validation: (Rule) => Rule.max(20),
+      description:
+        'Optional short supporting text in the footer (separate from the global site tagline). Labels and layout are defined in code.',
+    }),
+    defineField({
+      name: 'footerTelegramUrl',
+      title: 'Footer — Telegram URL',
+      type: 'string',
+      group: 'footer',
+      description: 'Optional public Telegram link for the footer contact area.',
+      validation: (Rule) =>
+        Rule.custom((value: string | undefined) => {
+          if (value == null || !String(value).trim()) return true
+          const v = String(value).trim()
+          if (!/^https?:\/\//i.test(v)) return 'Use a full URL starting with http:// or https://.'
+          try {
+            void new URL(v)
+            return true
+          } catch {
+            return 'Enter a valid URL.'
+          }
+        }),
+    }),
+    defineField({
+      name: 'footerWhatsappUrl',
+      title: 'Footer — WhatsApp URL',
+      type: 'string',
+      group: 'footer',
+      description: 'Optional WhatsApp link (e.g. https://wa.me/…).',
+      validation: (Rule) =>
+        Rule.custom((value: string | undefined) => {
+          if (value == null || !String(value).trim()) return true
+          const v = String(value).trim()
+          if (!/^https?:\/\//i.test(v)) return 'Use a full URL starting with http:// or https://.'
+          try {
+            void new URL(v)
+            return true
+          } catch {
+            return 'Enter a valid URL.'
+          }
+        }),
+    }),
+    defineField({
+      name: 'footerApp',
+      title: 'Footer App',
+      type: 'footerApp',
+      group: 'footer',
+      description: 'Store URLs for a future app column; visibility is controlled by enabled (UI copy lives in the frontend).',
+    }),
+    defineField({
+      name: 'footerCodesiteUrl',
+      title: 'Footer — Codesite URL',
+      type: 'string',
+      group: 'footer',
+      description: 'Optional partner/credits link (label in frontend).',
+      validation: (Rule) =>
+        Rule.custom((value: string | undefined) => {
+          if (value == null || !String(value).trim()) return true
+          const v = String(value).trim()
+          if (!/^https?:\/\//i.test(v)) return 'Use a full URL starting with http:// or https://.'
+          try {
+            void new URL(v)
+            return true
+          } catch {
+            return 'Enter a valid URL.'
+          }
+        }),
+    }),
+    defineField({
+      name: 'footerWebbondUrl',
+      title: 'Footer — Webbond URL',
+      type: 'string',
+      group: 'footer',
+      description: 'Optional partner/credits link (label in frontend).',
+      validation: (Rule) =>
+        Rule.custom((value: string | undefined) => {
+          if (value == null || !String(value).trim()) return true
+          const v = String(value).trim()
+          if (!/^https?:\/\//i.test(v)) return 'Use a full URL starting with http:// or https://.'
+          try {
+            void new URL(v)
+            return true
+          } catch {
+            return 'Enter a valid URL.'
+          }
+        }),
     }),
     defineField({
       name: 'policyLinks',

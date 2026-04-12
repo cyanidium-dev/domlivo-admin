@@ -3,6 +3,7 @@ import {faqItem} from './faqItem'
 import {ctaLink} from './ctaLink'
 import {socialLink} from './socialLink'
 import {footerLink} from './footerLink'
+import {footerApp} from './footerApp'
 import {districtStat} from './districtStat'
 import {districtMetric} from './districtMetric'
 import {localizedString} from './localizedString'
@@ -59,6 +60,7 @@ export const objects = [
   ctaLink,
   socialLink,
   footerLink,
+  footerApp,
   districtStat,
   districtMetric,
   localizedString,
