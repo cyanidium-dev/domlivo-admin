@@ -109,7 +109,17 @@ export const SITE_SETTINGS_QUERY = groq`*[_type == "siteSettings"][0]{
     alt
   },
   socialLinks,
-  footerQuickLinks,
+  footerIntro,
+  footerTelegramUrl,
+  footerWhatsappUrl,
+  footerApp{
+    enabled,
+    appStoreUrl,
+    googlePlayUrl,
+    primaryUrl
+  },
+  footerCodesiteUrl,
+  footerWebbondUrl,
   policyLinks,
   copyrightText,
   similarPropertiesCount,
@@ -141,6 +151,11 @@ export const SITE_SETTINGS_QUERY = groq`*[_type == "siteSettings"][0]{
 // -----------------------------------------------------------------------------
 
 export const CITIES_LIST_QUERY = groq`*[_type == "city" && isPublished == true] | order(order asc){
+  ${CITY_CARD_FRAGMENT}
+}`
+
+/** Params: { countrySlug: string } — country.slug.current (route segment, e.g. albania) */
+export const CITIES_BY_COUNTRY_QUERY = groq`*[_type == "city" && isPublished == true && country->slug.current == $countrySlug] | order(order asc){
   ${CITY_CARD_FRAGMENT}
 }`
 
