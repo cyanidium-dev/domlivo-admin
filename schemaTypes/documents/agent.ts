@@ -7,6 +7,19 @@ function agentSlugOwnerIds(document?: {_id?: string}): string[] {
   return id.startsWith('drafts.') ? [id, id.replace(/^drafts\./, '')] : [id, `drafts.${id}`]
 }
 
+function makeStableToken(prefix: string): string {
+  const uid =
+    typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+      ? crypto.randomUUID().replace(/-/g, '')
+      : `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 10)}`
+  return `${prefix}_${uid}`
+}
+
+function canViewServiceData({currentUser}: {currentUser?: {roles?: {name?: string}[]}}): boolean {
+  const roleNames = (currentUser?.roles ?? []).map((role) => role.name)
+  return roleNames.includes('administrator')
+}
+
 export const agent = defineType({
   name: 'agent',
   title: 'Agent',
@@ -71,6 +84,24 @@ export const agent = defineType({
     defineField({
       name: 'phone',
       type: 'string',
+    }),
+
+    defineField({
+      name: 'company',
+      title: 'Company',
+      type: 'string',
+      description: 'Optional company or agency name.',
+    }),
+
+    defineField({
+      name: 'companyLogo',
+      title: 'Company logo',
+      type: 'image',
+      description: 'Optional company logo.',
+      options: {
+        hotspot: true,
+      },
+      fields: [{name: 'alt', type: 'string', title: 'Alternative text'}],
     }),
 
     defineField({
@@ -161,6 +192,87 @@ export const agent = defineType({
     }),
 
     defineField({
+      name: 'whatsapp',
+      title: 'WhatsApp',
+      type: 'string',
+      description: 'Optional WhatsApp number or deep link.',
+    }),
+    defineField({
+      name: 'showWhatsapp',
+      title: 'Show WhatsApp publicly',
+      type: 'boolean',
+      initialValue: false,
+      readOnly: ({document}) => !document?.whatsapp,
+      hidden: ({document}) => !document?.whatsapp,
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const hasValue = Boolean((context.document as {whatsapp?: string} | undefined)?.whatsapp)
+          if (value && !hasValue) return 'Add WhatsApp value before enabling visibility.'
+          return true
+        }),
+    }),
+    defineField({
+      name: 'telegram',
+      title: 'Telegram (contact channel)',
+      type: 'string',
+      description: 'Optional Telegram username or deep link.',
+    }),
+    defineField({
+      name: 'showTelegram',
+      title: 'Show Telegram publicly',
+      type: 'boolean',
+      initialValue: false,
+      readOnly: ({document}) => !document?.telegram,
+      hidden: ({document}) => !document?.telegram,
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const hasValue = Boolean((context.document as {telegram?: string} | undefined)?.telegram)
+          if (value && !hasValue) return 'Add Telegram value before enabling visibility.'
+          return true
+        }),
+    }),
+    defineField({
+      name: 'messenger',
+      title: 'Messenger',
+      type: 'string',
+      description: 'Optional Messenger link or handle.',
+    }),
+    defineField({
+      name: 'showMessenger',
+      title: 'Show Messenger publicly',
+      type: 'boolean',
+      initialValue: false,
+      readOnly: ({document}) => !document?.messenger,
+      hidden: ({document}) => !document?.messenger,
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const hasValue = Boolean((context.document as {messenger?: string} | undefined)?.messenger)
+          if (value && !hasValue) return 'Add Messenger value before enabling visibility.'
+          return true
+        }),
+    }),
+    defineField({
+      name: 'viber',
+      title: 'Viber',
+      type: 'string',
+      description: 'Optional Viber number or deep link.',
+    }),
+    defineField({
+      name: 'showViber',
+      title: 'Show Viber publicly',
+      type: 'boolean',
+      initialValue: false,
+      readOnly: ({document}) => !document?.viber,
+      hidden: ({document}) => !document?.viber,
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const hasValue = Boolean((context.document as {viber?: string} | undefined)?.viber)
+          if (value && !hasValue) return 'Add Viber value before enabling visibility.'
+          return true
+        }),
+    }),
+
+    defineField({
       name: 'seo',
       title: 'SEO',
       type: 'localizedSeo',
@@ -172,6 +284,48 @@ export const agent = defineType({
       title: 'Sanity User ID',
       type: 'string',
       description: 'Used to link the Sanity user account to this agent profile',
+    }),
+
+    defineField({
+      name: 'agentId',
+      title: 'Agent ID',
+      type: 'string',
+      hidden: (context) => !canViewServiceData(context),
+      readOnly: true,
+      initialValue: () => makeStableToken('agent'),
+      description: 'Internal service id. Hidden for non-admin workflow.',
+    }),
+    defineField({
+      name: 'agentKey',
+      title: 'Agent Key',
+      type: 'string',
+      hidden: (context) => !canViewServiceData(context),
+      readOnly: true,
+      initialValue: () => makeStableToken('akey'),
+      description: 'Internal service key. Hidden for non-admin workflow.',
+    }),
+    defineField({
+      name: 'telegramChatId',
+      title: 'Telegram Chat ID',
+      type: 'string',
+      hidden: (context) => !canViewServiceData(context),
+      description: 'Service field for Telegram delivery integration.',
+    }),
+    defineField({
+      name: 'telegramChatLinked',
+      title: 'Telegram Chat Linked',
+      type: 'boolean',
+      hidden: (context) => !canViewServiceData(context),
+      initialValue: false,
+      description: 'Service status for Telegram integration.',
+    }),
+    defineField({
+      name: 'sendLeadsToTelegram',
+      title: 'Send Leads to Telegram',
+      type: 'boolean',
+      hidden: (context) => !canViewServiceData(context),
+      initialValue: false,
+      description: 'Operational toggle for lead delivery automation.',
     }),
 
     defineField({

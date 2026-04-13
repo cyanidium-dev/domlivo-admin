@@ -2,11 +2,9 @@ import {defineType, defineField} from 'sanity'
 import {languages} from '../../lib/languages'
 
 const STATUS_VALUES = [
-  {title: 'Unread', value: 'unread'},
-  {title: 'Read', value: 'read'},
-  {title: 'In work', value: 'inWork'},
-  {title: 'Registered', value: 'registered'},
-  {title: 'Declined', value: 'declined'},
+  {title: 'Pending', value: 'pending'},
+  {title: 'Approved', value: 'approved'},
+  {title: 'Rejected', value: 'rejected'},
 ] as const
 
 const ALLOWED_STATUS = new Set(STATUS_VALUES.map((s) => s.value))
@@ -49,7 +47,7 @@ export const registrationRequest = defineType({
 
   /** Defaults for new documents created in Studio. */
   initialValue: () => ({
-    status: 'unread',
+    status: 'pending',
   }),
 
   groups: [
@@ -151,7 +149,7 @@ export const registrationRequest = defineType({
         list: [...STATUS_VALUES],
         layout: 'radio',
       },
-      initialValue: 'unread',
+      initialValue: 'pending',
       validation: (Rule) =>
         Rule.custom((value) => {
           if (value === undefined || value === null) return 'Required'

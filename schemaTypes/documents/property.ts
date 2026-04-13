@@ -8,6 +8,31 @@ import {validatePropertyPromotionCaps} from '../utils/propertyPromotionCapValida
 import {PropertyPromotionSlotsInfoInput} from '../../components/sanity/PropertyPromotionSlotsInfoInput'
 import {PropertyAgentPromotionUnpromoteWarningInput} from '../../components/sanity/PropertyAgentPromotionUnpromoteWarningInput'
 
+type PropertyInitialValueContext = {
+  currentUser?: {id?: string}
+  getClient?: (options: {apiVersion: string}) => {fetch: (query: string, params?: Record<string, unknown>) => Promise<unknown>}
+}
+
+type LinkedAccessAgentResult = {
+  role?: string
+  linkedAgentId?: string
+}
+
+async function getLinkedAgentForCurrentUser(
+  context: PropertyInitialValueContext,
+): Promise<LinkedAccessAgentResult | null> {
+  const userId = context.currentUser?.id
+  if (!userId || !context.getClient) return null
+  const client = context.getClient({apiVersion: '2024-06-01'})
+  return client.fetch(
+    `*[_type == "studioUserAccess" && userId == $userId && active != false][0]{
+      role,
+      "linkedAgentId": linkedAgent._ref
+    }`,
+    {userId},
+  ) as Promise<LinkedAccessAgentResult | null>
+}
+
 export const property = defineType({
   name: 'property',
   title: 'Property',
@@ -74,6 +99,11 @@ export const property = defineType({
       type: 'reference',
       to: [{type: 'agent'}],
       group: 'basic',
+      initialValue: async (_, context) => {
+        const access = await getLinkedAgentForCurrentUser(context as PropertyInitialValueContext)
+        if (!access || access.role !== 'agent' || !access.linkedAgentId) return undefined
+        return {_type: 'reference', _ref: access.linkedAgentId}
+      },
       validation: (Rule) => Rule.required(),
       components: {input: PropertyAgentPromotionUnpromoteWarningInput as any},
     }),
@@ -465,8 +495,12 @@ export const property = defineType({
       readOnly: true,
       hidden: true,
       group: 'analytics',
-      initialValue: (_, context) =>
-        (context as {currentUser?: {id?: string}}).currentUser?.id ?? '',
+      initialValue: async (_, context) => {
+        const typedContext = context as PropertyInitialValueContext
+        const access = await getLinkedAgentForCurrentUser(typedContext)
+        if (!access || access.role !== 'agent' || !access.linkedAgentId) return ''
+        return typedContext.currentUser?.id ?? ''
+      },
     }),
   ],
 

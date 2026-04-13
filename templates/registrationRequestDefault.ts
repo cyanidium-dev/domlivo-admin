@@ -9,6 +9,6 @@ export const registrationRequestDefaultTemplate: Template = {
   title: 'Registration request',
   schemaType: 'registrationRequest',
   value: () => ({
-    status: 'unread',
+    status: 'pending',
   }),
 }

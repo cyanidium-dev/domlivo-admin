@@ -14,6 +14,8 @@ import {locationTag} from './locationTag'
 import {siteSettings} from './siteSettings'
 import {landingPage} from './landingPage'
 import {registrationRequest} from './registrationRequest'
+import {studioUserAccess} from './studioUserAccess'
+import {propertyLead} from './propertyLead'
 
 /**
  * Document types (standalone content)
@@ -36,4 +38,6 @@ export const documents = [
   locationTag,
   siteSettings,
   registrationRequest,
+  studioUserAccess,
+  propertyLead,
 ]
