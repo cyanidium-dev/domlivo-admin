@@ -18,6 +18,12 @@ export const localizedFaqItem = defineType({
       type: 'localizedText',
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      name: 'tag',
+      title: 'Tag',
+      type: 'localizedString',
+      description: 'Optional short category chip shown next to the open answer (e.g. "Taxes", "Residency").',
+    }),
   ],
 
   preview: {

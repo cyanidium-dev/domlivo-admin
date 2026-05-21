@@ -18,6 +18,21 @@ export const faqSection = defineType({
     }),
     defineField({name: 'title', title: 'Section title', type: 'localizedString', group: 'content'}),
     defineField({
+      name: 'subtitle',
+      title: 'Section subtitle',
+      type: 'localizedText',
+      group: 'content',
+      description: 'Optional intro line under the title.',
+    }),
+    defineField({
+      name: 'callout',
+      title: 'Sticky callout card',
+      type: 'faqCallout',
+      group: 'content',
+      description:
+        'Optional "Still have questions?" card shown next to the accordion. Hidden if both CTAs are empty.',
+    }),
+    defineField({
       name: 'imageMode',
       title: 'Image',
       type: 'string',

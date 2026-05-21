@@ -102,14 +102,34 @@ export const marketingContentSection = defineType({
     }),
     defineField({
       name: 'benefits',
-      title: 'Bullet points',
+      title: 'Bullet points (legacy)',
       type: 'array',
       group: 'content',
       of: [defineArrayMember({type: 'localizedString'})],
       hidden: ({parent}) =>
         parent?.variant === 'grouped' || parent?.highlightsDisplay === 'cards',
-      description: 'Short points for the Text + media or Dark promo layouts.',
+      description:
+        'Legacy bullet list (text only). Prefer "Benefits with icons" below for new content — when filled, it takes precedence.',
       validation: (Rule) => Rule.max(12),
+    }),
+    defineField({
+      name: 'benefitItems',
+      title: 'Benefits with icons',
+      type: 'array',
+      group: 'content',
+      of: [defineArrayMember({type: 'marketingBenefit'})],
+      hidden: ({parent}) =>
+        parent?.variant === 'grouped' || parent?.highlightsDisplay === 'cards',
+      description: 'Benefit lines with a chosen Phosphor icon (Text + media / Dark promo). Overrides "Bullet points (legacy)" if filled.',
+      validation: (Rule) => Rule.max(12),
+    }),
+    defineField({
+      name: 'trustStripText',
+      title: 'Trust strip text (optional)',
+      type: 'localizedString',
+      group: 'content',
+      description:
+        'Optional small line shown next to the avatar trust strip below the CTAs (Text + media layout). E.g. "10 240 realtors already on the platform".',
     }),
     defineField({
       name: 'highlightsCards',
@@ -295,10 +315,17 @@ export const marketingContentSection = defineType({
 
     defineField({
       name: 'cta',
-      title: 'Call to action (optional)',
+      title: 'Primary CTA (optional)',
       type: 'localizedCtaLink',
       group: 'content',
-      description: 'Optional button or text link.',
+      description: 'Optional primary button.',
+    }),
+    defineField({
+      name: 'secondaryCta',
+      title: 'Secondary CTA (optional)',
+      type: 'localizedCtaLink',
+      group: 'content',
+      description: 'Optional ghost / text link shown next to the primary CTA.',
     }),
 
     defineField({

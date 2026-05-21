@@ -27,15 +27,20 @@ import {homePropertyCarouselTab} from './homePropertyCarouselTab'
 import {locationCarouselSection} from './locationCarouselSection'
 import {propertyTypesSection} from './propertyTypesSection'
 import {marketingContentSection} from './marketingContentSection'
+import {marketingBenefit} from './marketingBenefit'
 import {articlesSection} from './articlesSection'
 import {propertyArticlesSection} from './propertyArticlesSection'
 import {seoTextSection} from './seoTextSection'
+import {seoStat} from './seoStat'
+import {seoAuthor} from './seoAuthor'
+import {seoPullQuote} from './seoPullQuote'
 import {ctaSection} from './ctaSection'
 import {landingCollectionSection} from './landingCollectionSection'
 import {localizedFaqItemRich} from './localizedFaqItemRich'
 import {districtsComparisonSection} from './districtsComparisonSection'
 import {linkedGallerySection} from './linkedGallerySection'
 import {faqSection} from './faqSection'
+import {faqCallout} from './faqCallout'
 import {investorLogosSection} from './investorLogosSection'
 import {propertyOffer} from './propertyOffer'
 import {priceRange} from './priceRange'
@@ -79,14 +84,19 @@ export const objects = [
   locationCarouselSection,
   propertyTypesSection,
   marketingContentSection,
+  marketingBenefit,
   articlesSection,
   propertyArticlesSection,
   seoTextSection,
+  seoStat,
+  seoAuthor,
+  seoPullQuote,
   ctaSection,
   landingCollectionSection,
   districtsComparisonSection,
   linkedGallerySection,
   faqSection,
+  faqCallout,
   investorLogosSection,
   propertyOffer,
   priceRange,

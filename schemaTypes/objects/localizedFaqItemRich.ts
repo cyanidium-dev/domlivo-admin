@@ -24,6 +24,12 @@ export const localizedFaqItemRich = defineType({
       type: 'localizedCtaLink',
       description: 'Optional button/link shown under the answer.',
     }),
+    defineField({
+      name: 'tag',
+      title: 'Tag',
+      type: 'localizedString',
+      description: 'Optional short category chip shown next to the open answer (e.g. "Taxes", "Residency").',
+    }),
   ],
   preview: {
     select: {qEn: 'question.en', qSq: 'question.sq', qUk: 'question.uk', qRu: 'question.ru', qIt: 'question.it'},

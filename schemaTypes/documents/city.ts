@@ -65,6 +65,15 @@ export const city = defineType({
     }),
 
     defineField({
+      name: 'vibe',
+      title: 'Vibe / Tag',
+      type: 'localizedString',
+      group: 'basic',
+      description:
+        'Short categorical tag shown as a chip on the city card. E.g. "Sea", "Business", "Mountains", "Old town". Keep it 1-2 words per language.',
+    }),
+
+    defineField({
       name: 'order',
       title: 'Order',
       type: 'number',
