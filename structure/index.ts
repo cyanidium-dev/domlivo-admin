@@ -46,9 +46,11 @@ export const structure: StructureResolver = (S, context) =>
                   S.documentTypeList('landingPage').filter('_type == "landingPage" && pageType == "investment"'),
                 ),
               S.listItem()
-                .title('Custom Landings')
+                .title('Guides (custom landings)')
                 .child(
-                  S.documentTypeList('landingPage').filter('_type == "landingPage" && pageType == "custom"'),
+                  S.documentTypeList('landingPage')
+                    .title('Guides')
+                    .filter('_type == "landingPage" && pageType == "custom"'),
                 ),
             ]),
         ),

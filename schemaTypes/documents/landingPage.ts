@@ -107,6 +107,12 @@ export const landingPage = defineType({
         defineArrayMember({type: 'linkedGallerySection'}),
         defineArrayMember({type: 'landingCollectionSection'}),
         defineArrayMember({type: 'investorLogosSection'}),
+        defineArrayMember({type: 'priceTableSection'}),
+        defineArrayMember({type: 'statsBandSection'}),
+        defineArrayMember({type: 'sourcesSection'}),
+        defineArrayMember({type: 'mortgageCalcSection'}),
+        defineArrayMember({type: 'roiCalcSection'}),
+        defineArrayMember({type: 'purchaseCostCalcSection'}),
       ],
     }),
 
@@ -198,6 +204,15 @@ export const landingPage = defineType({
           if (parent?.pageType !== 'propertyType') return true
           return value ? true : 'linkedPropertyType is required when pageType = propertyType.'
         }),
+    }),
+
+    defineField({
+      name: 'contentUpdatedAt',
+      title: 'Content updated at',
+      type: 'date',
+      group: 'basic',
+      description:
+        'Optional editorial freshness date. When set, the frontend shows an "Updated: {date}" badge and emits article:modified_time metadata.',
     }),
 
     defineField({

@@ -42,6 +42,12 @@ import {linkedGallerySection} from './linkedGallerySection'
 import {faqSection} from './faqSection'
 import {faqCallout} from './faqCallout'
 import {investorLogosSection} from './investorLogosSection'
+import {priceTableSection} from './priceTableSection'
+import {statsBandSection} from './statsBandSection'
+import {sourcesSection} from './sourcesSection'
+import {mortgageCalcSection} from './mortgageCalcSection'
+import {roiCalcSection} from './roiCalcSection'
+import {purchaseCostCalcSection} from './purchaseCostCalcSection'
 import {propertyOffer} from './propertyOffer'
 import {priceRange} from './priceRange'
 import {areaRange} from './areaRange'
@@ -98,6 +104,12 @@ export const objects = [
   faqSection,
   faqCallout,
   investorLogosSection,
+  priceTableSection,
+  statsBandSection,
+  sourcesSection,
+  mortgageCalcSection,
+  roiCalcSection,
+  purchaseCostCalcSection,
   propertyOffer,
   priceRange,
   areaRange,

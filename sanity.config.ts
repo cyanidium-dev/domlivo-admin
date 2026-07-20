@@ -7,6 +7,7 @@ import {districtInCityTemplate} from './templates/districtInCity'
 import {blogSettingsTemplate} from './templates/blogSettings'
 import {registrationRequestDefaultTemplate} from './templates/registrationRequestDefault'
 import {withPropertyPromotionPublishGuard} from './components/sanity/PropertyPromotionPublishAction'
+import {OpenInLandingEditorAction} from './components/sanity/OpenInLandingEditorAction'
 
 export default defineConfig({
   name: 'default',
@@ -19,13 +20,21 @@ export default defineConfig({
 
   document: {
     actions: (prev, context) => {
-      if (context.schemaType !== 'property') return prev
-      return prev.map((action) => {
-        if (action.action === 'publish') {
-          return withPropertyPromotionPublishGuard(action)
-        }
-        return action
-      })
+      // Property promotion publish guard (existing behavior).
+      let actions = prev
+      if (context.schemaType === 'property') {
+        actions = actions.map((action) => {
+          if (action.action === 'publish') {
+            return withPropertyPromotionPublishGuard(action)
+          }
+          return action
+        })
+      }
+      // Expose "Open in landing editor" on landing documents.
+      if (context.schemaType === 'landingPage') {
+        actions = [...actions, OpenInLandingEditorAction]
+      }
+      return actions
     },
   },
 
