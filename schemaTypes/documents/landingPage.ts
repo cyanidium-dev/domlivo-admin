@@ -113,6 +113,9 @@ export const landingPage = defineType({
         defineArrayMember({type: 'mortgageCalcSection'}),
         defineArrayMember({type: 'roiCalcSection'}),
         defineArrayMember({type: 'purchaseCostCalcSection'}),
+        defineArrayMember({type: 'trackerSection'}),
+        defineArrayMember({type: 'developersRatingSection'}),
+        defineArrayMember({type: 'developerCardSection'}),
       ],
     }),
 

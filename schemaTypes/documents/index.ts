@@ -14,6 +14,8 @@ import {locationTag} from './locationTag'
 import {siteSettings} from './siteSettings'
 import {landingPage} from './landingPage'
 import {registrationRequest} from './registrationRequest'
+import {tracker} from './tracker'
+import {developer} from './developer'
 
 /**
  * Document types (standalone content)
@@ -36,4 +38,6 @@ export const documents = [
   locationTag,
   siteSettings,
   registrationRequest,
+  tracker,
+  developer,
 ]

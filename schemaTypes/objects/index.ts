@@ -48,6 +48,10 @@ import {sourcesSection} from './sourcesSection'
 import {mortgageCalcSection} from './mortgageCalcSection'
 import {roiCalcSection} from './roiCalcSection'
 import {purchaseCostCalcSection} from './purchaseCostCalcSection'
+import {sourceItem} from './sourceItem'
+import {trackerSection} from './trackerSection'
+import {developersRatingSection} from './developersRatingSection'
+import {developerCardSection} from './developerCardSection'
 import {propertyOffer} from './propertyOffer'
 import {priceRange} from './priceRange'
 import {areaRange} from './areaRange'
@@ -110,6 +114,10 @@ export const objects = [
   mortgageCalcSection,
   roiCalcSection,
   purchaseCostCalcSection,
+  sourceItem,
+  trackerSection,
+  developersRatingSection,
+  developerCardSection,
   propertyOffer,
   priceRange,
   areaRange,

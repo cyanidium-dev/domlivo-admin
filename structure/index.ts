@@ -162,6 +162,58 @@ export const structure: StructureResolver = (S, context) =>
 
       S.divider(),
 
+      // Reference data: developers feed property badges + rating blocks; trackers feed status blocks.
+      S.listItem()
+        .title('Developers')
+        .child(
+          S.list()
+            .title('Developers')
+            .items([
+              S.listItem()
+                .title('All Developers')
+                .child(
+                  S.documentTypeList('developer')
+                    .title('All Developers')
+                    .defaultOrdering([{field: 'lastReviewedAt', direction: 'desc'}]),
+                ),
+              S.divider(),
+              S.listItem()
+                .title('🟢 Green tier')
+                .child(
+                  S.documentTypeList('developer')
+                    .title('Green tier')
+                    .filter('_type == "developer" && tier == "green"')
+                    .defaultOrdering([{field: 'lastReviewedAt', direction: 'desc'}]),
+                ),
+              S.listItem()
+                .title('🟡 Yellow tier')
+                .child(
+                  S.documentTypeList('developer')
+                    .title('Yellow tier')
+                    .filter('_type == "developer" && tier == "yellow"')
+                    .defaultOrdering([{field: 'lastReviewedAt', direction: 'desc'}]),
+                ),
+              S.listItem()
+                .title('🔴 Red tier')
+                .child(
+                  S.documentTypeList('developer')
+                    .title('Red tier')
+                    .filter('_type == "developer" && tier == "red"')
+                    .defaultOrdering([{field: 'lastReviewedAt', direction: 'desc'}]),
+                ),
+            ]),
+        ),
+
+      S.listItem()
+        .title('Trackers')
+        .child(
+          S.documentTypeList('tracker')
+            .title('Trackers')
+            .defaultOrdering([{field: 'lastCheckedAt', direction: 'desc'}]),
+        ),
+
+      S.divider(),
+
       S.documentTypeListItem('propertyType').title('Property Types'),
 
       S.documentTypeListItem('locationTag').title('Location Tags'),

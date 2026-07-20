@@ -31,43 +31,8 @@ export const sourcesSection = defineType({
       title: 'Sources',
       type: 'array',
       group: 'data',
-      of: [
-        defineArrayMember({
-          type: 'object',
-          fields: [
-            defineField({
-              name: 'label',
-              title: 'Label',
-              type: 'string',
-              description: 'Source name as displayed, e.g. "Bank of Albania HPI H2 2025".',
-              validation: (Rule) => Rule.required(),
-            }),
-            defineField({
-              name: 'url',
-              title: 'URL',
-              type: 'url',
-              validation: (Rule) =>
-                Rule.required().uri({scheme: ['http', 'https']}),
-            }),
-            defineField({
-              name: 'publisher',
-              title: 'Publisher (optional)',
-              type: 'string',
-            }),
-            defineField({
-              name: 'date',
-              title: 'Date (optional)',
-              type: 'date',
-            }),
-          ],
-          preview: {
-            select: {label: 'label', publisher: 'publisher'},
-            prepare({label, publisher}: {label?: string; publisher?: string}) {
-              return {title: label || 'Source', subtitle: publisher || ''}
-            },
-          },
-        }),
-      ],
+      // Reusable `sourceItem` object shared with `tracker` and `developer` documents.
+      of: [defineArrayMember({type: 'sourceItem'})],
       validation: (Rule) => Rule.required().min(1).max(30),
     }),
     defineField({

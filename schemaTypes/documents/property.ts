@@ -79,6 +79,16 @@ export const property = defineType({
     }),
 
     defineField({
+      name: 'developer',
+      title: 'Developer (optional)',
+      type: 'reference',
+      to: [{type: 'developer'}],
+      group: 'basic',
+      options: {filter: 'isPublished != false'},
+      description: 'Developer of this property; shown as a tier badge on the detail page.',
+    }),
+
+    defineField({
       name: 'type',
       title: 'Property Type',
       type: 'reference',
