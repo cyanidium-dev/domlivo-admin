@@ -37,6 +37,7 @@
     "fix:keys": "tsx scripts/fixMissingKeys.ts",
     "verify:canonical-home": "tsx scripts/verifyCanonicalHomepageLanding.ts",
     "report:geo": "tsx scripts/reportGeoConsistency.ts",
+    "report:canggu": "tsx scripts/reportCangguDocs.ts",
     "cleanup:property-country:dry": "tsx scripts/cleanupPropertyCountryRedundant.ts",
     "cleanup:property-country:execute": "tsx scripts/cleanupPropertyCountryRedundant.ts --execute",
     "migrate:city-district-slug": "tsx scripts/migrateCityDistrictSlug.ts",
