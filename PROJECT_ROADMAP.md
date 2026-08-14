@@ -1,14 +1,16 @@
 # Domlivo Project Roadmap
 
+> **Status (2026-08-14):** Historical roadmap from 2026-03. Kept for reference; some items have since shipped (marked below). The live backlog is maintained in the workspace at `docs/engineering/BACKLOG.md`.
+
 Possible future improvements for the Domlivo platform.
 
-**Current architecture (as of this doc):** Field-level i18n only. One document per city, district, home page, site settings, property, and blog post; localized fields (en, ru, uk, sq) hold text; media, URLs, numbers, and references are shared. No document-level translations or per-language singleton documents. See ARCHITECTURE.md and DATA_MODEL.md.
+**Current architecture (as of this doc):** Field-level i18n only. One document per city, district, home page, site settings, property, and blog post; localized fields (en, uk, ru, sq, it) hold text; media, URLs, numbers, and references are shared. No document-level translations or per-language singleton documents. See ARCHITECTURE.md and DATA_MODEL.md.
 
 ---
 
 ## Content & Taxonomy
 
-### Property amenities taxonomy
+### Property amenities taxonomy — ✅ Done
 
 - Replace free-text amenities with a reference to an `amenity` document type.
 - Define standard amenities (Parking, Pool, Balcony, etc.) with slug and icon.
@@ -119,5 +121,5 @@ Possible future improvements for the Domlivo platform.
 - **Virtual tours** — 360° or video embedding.
 - **Document scheduling** — Publish/unpublish at a specific time.
 - **Workflow / approvals** — Draft → review → publish.
-- **Multi-currency display** — Show prices in user’s currency.
+- **Multi-currency display** — Show prices in user’s currency. ✅ Done (cron-synced `currencyRates` + `displayCurrencies` in Site Settings).
 - **Booking / availability** — For short-term rentals.

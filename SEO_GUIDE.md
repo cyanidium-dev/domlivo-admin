@@ -1,3 +1,5 @@
+> ⚠️ Historical snapshot (2026-03). Schema reference: DATA_MODEL.md (regenerated 2026-08). Live backlog: workspace docs/engineering/BACKLOG.md.
+
 # SEO Guide for Domlivo
 
 Guide for SEO specialists and editors managing search visibility on the Domlivo platform.

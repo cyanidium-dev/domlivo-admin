@@ -1,3 +1,5 @@
+> ⚠️ Historical snapshot (2026-03). Schema reference: DATA_MODEL.md (regenerated 2026-08). Live backlog: workspace docs/engineering/BACKLOG.md.
+
 # Domlivo Architecture
 
 This document describes the architecture of the Domlivo real estate platform: the Sanity CMS, frontend, and how they interact.

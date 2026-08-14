@@ -1,3 +1,5 @@
+> ⚠️ Historical snapshot (2026-03). Schema reference: DATA_MODEL.md (regenerated 2026-08). Live backlog: workspace docs/engineering/BACKLOG.md.
+
 # Domlivo CMS Guide
 
 Guide for content editors and real estate agents using the Domlivo CMS.
