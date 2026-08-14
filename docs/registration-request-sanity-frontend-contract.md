@@ -31,10 +31,10 @@ Send **only** user-submitted fields. Use **server-side** or **token-scoped** San
 
 | Field | Reason |
 |-------|--------|
-| `status` | Omit so schema **`initialValue: 'unread'`** applies. Editors change status in Studio. |
+| `status` | Omit so schema **`initialValue: 'pending'`** applies. Editors change status in Studio. |
 | `internalComment` | Studio-only; staff notes. |
 
-If you **must** send `status` explicitly (e.g. integration tests), use only: `unread` | `read` | `inWork` | `registered` | `declined`.
+If you **must** send `status` explicitly (e.g. integration tests), use only: `pending` | `approved` | `rejected`.
 
 ---
 
@@ -65,9 +65,9 @@ Omit the field or send only when the user selected an option.
 
 | Value | Default for new |
 |-------|-----------------|
-| `unread` | **Yes** when `status` is omitted |
+| `pending` | **Yes** when `status` is omitted |
 
-If `status` is omitted on create, Sanity applies the schema default **`unread`**.
+If `status` is omitted on create, Sanity applies the schema default **`pending`**.
 
 ---
 
@@ -113,5 +113,5 @@ If `status` is omitted on create, Sanity applies the schema default **`unread`**
 
 ## Studio vs API
 
-- **Studio:** Editors can set `status` and `internalComment` on any document.  
-- **Website API:** Should only create documents with the submission fields above and rely on default **`unread`** for `status`.
+- **Studio:** Editors/admins can set `status` and `internalComment` on any document.  
+- **Website API:** Should only create documents with the submission fields above and rely on default **`pending`** for `status`.
