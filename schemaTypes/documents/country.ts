@@ -1,4 +1,10 @@
 import {defineType, defineField} from 'sanity'
+import {
+  findUniqueLandingOwningSlug,
+  isReservedForGeoEntity,
+  landingOwnsSlugMessage,
+  reservedSlugMessage,
+} from '../constants/reservedRouteSlugs'
 
 /**
  * Country: canonical geo route segment for city-aware URLs.
@@ -26,7 +32,18 @@ export const country = defineType({
         source: 'title',
         maxLength: 96,
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) =>
+        Rule.required().custom(async (value, context) => {
+          const current = (value as {current?: string} | undefined)?.current
+          if (!current) return true
+          if (isReservedForGeoEntity(current)) return reservedSlugMessage(current)
+          // Entity routes eclipse Unique Landings at /<slug> — block a country
+          // slug that would silently take over an existing landing's URL.
+          const client = context.getClient({apiVersion: '2024-06-01'})
+          const landing = await findUniqueLandingOwningSlug(client, current)
+          if (landing) return landingOwnsSlugMessage(current)
+          return true
+        }),
       description: 'Kebab-case segment for routes (e.g. albania).',
     }),
 

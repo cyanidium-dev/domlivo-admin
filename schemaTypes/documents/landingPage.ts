@@ -1,6 +1,11 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
 import {docOwnerIds} from '../utils/docOwnerIds'
-import {isReservedForCustomLanding, reservedSlugMessage} from '../constants/reservedRouteSlugs'
+import {
+  entityOwnsSlugMessage,
+  findTopLevelEntityOwningSlug,
+  isReservedForCustomLanding,
+  reservedSlugMessage,
+} from '../constants/reservedRouteSlugs'
 
 export const landingPage = defineType({
   name: 'landingPage',
@@ -27,24 +32,26 @@ export const landingPage = defineType({
 
     defineField({
       name: 'pageType',
-      title: 'Page Type',
+      title: 'Route family',
       type: 'string',
       group: 'basic',
       options: {
         list: [
-          {title: 'Home', value: 'home'},
-          {title: 'City', value: 'city'},
-          {title: 'City Index', value: 'cityIndex'},
-          {title: 'District', value: 'district'},
-          {title: 'Property type', value: 'propertyType'},
-          {title: 'Investment', value: 'investment'},
-          {title: 'Custom', value: 'custom'},
+          // Editorial families (pick these when creating content):
+          {title: 'Guide — renders at /guides/<slug>', value: 'custom'},
+          {title: 'City landing — renders at /<country>/<city>/info (link a city)', value: 'city'},
+          {title: 'District landing — overlays /…/districts/<district> (link a district)', value: 'district'},
+          {title: 'Unique landing — renders at top-level /<slug> (no index page — add navigation manually)', value: 'unique'},
+          // System families (singletons / slug-addressed, do not create ad hoc):
+          {title: 'Home (singleton landing-home)', value: 'home'},
+          {title: 'City Index (singleton landing-cities → /cities)', value: 'cityIndex'},
+          {title: 'Investment / deal landing (slug-addressed: sale, long-term-rent, short-term-rent)', value: 'investment'},
         ],
         layout: 'radio',
       },
       validation: (Rule) => Rule.required(),
       description:
-        'Determines how this editorial landing is routed and what it is linked to. Do not use landing pages to manually model shorthand catalog/filter URL combinations.',
+        'The route family decides where this landing renders (see domlivo-workspace docs/engineering/ROUTING.md). Guides are listed under /guides; unique landings have NO index page — wire them into header/footer/siteSettings navigation yourself. Do not use landing pages to model shorthand catalog/filter URL combinations.',
     }),
 
     defineField({
@@ -70,15 +77,26 @@ export const landingPage = defineType({
         maxLength: 96,
       },
       validation: (Rule) =>
-        Rule.custom((value, context) => {
+        Rule.custom(async (value, context) => {
           const parent = context.parent as {pageType?: string} | undefined
           if (parent?.pageType === 'home') return true
           if (!value?.current) return 'Slug is required for non-home landing pages.'
-          // Custom landings surface at /guides/<slug> AND may shadow static
-          // routes (the 2026-08 "for-realtors" duplicate). Deal-type landings
-          // (pageType "investment") legitimately use deal slugs like "sale".
-          if (parent?.pageType === 'custom' && isReservedForCustomLanding(value.current)) {
+          // Guides surface at /guides/<slug>; unique landings at top-level
+          // /<slug> — both may shadow static routes (the 2026-08 "for-realtors"
+          // duplicate). Deal-type landings (pageType "investment") legitimately
+          // use deal slugs like "sale".
+          if (
+            (parent?.pageType === 'custom' || parent?.pageType === 'unique') &&
+            isReservedForCustomLanding(value.current)
+          ) {
             return reservedSlugMessage(value.current)
+          }
+          // Unique landings render LAST in the top-level resolver — an existing
+          // country/city/propertyType slug would eclipse this landing forever.
+          if (parent?.pageType === 'unique') {
+            const client = context.getClient({apiVersion: '2024-06-01'})
+            const owner = await findTopLevelEntityOwningSlug(client, value.current)
+            if (owner) return entityOwnsSlugMessage(value.current, owner)
           }
           return true
         }),

@@ -63,7 +63,8 @@
     "delete:legacy-homePage": "tsx scripts/deleteLegacyHomePageDoc.ts",
     "inspect:dato": "tsx scripts/inspectDato.ts",
     "import:dato:dry": "tsx scripts/importFromDato.ts --dry-run",
-    "import:dato": "tsx scripts/importFromDato.ts --execute"
+    "import:dato": "tsx scripts/importFromDato.ts --execute",
+    "report:route-collisions": "sanity exec scripts/reportRouteCollisions.ts --with-user-token"
   },
   "keywords": [
     "sanity"

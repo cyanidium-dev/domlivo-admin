@@ -34,13 +34,6 @@ export const structure: StructureResolver = (S, context) =>
                 .title('District Landings')
                 .child(S.documentTypeList('landingPage').filter('_type == "landingPage" && pageType == "district"')),
               S.listItem()
-                .title('Property Type Landings')
-                .child(
-                  S.documentTypeList('landingPage').filter(
-                    '_type == "landingPage" && pageType == "propertyType"',
-                  ),
-                ),
-              S.listItem()
                 .title('Investment Landings')
                 .child(
                   S.documentTypeList('landingPage').filter('_type == "landingPage" && pageType == "investment"'),
@@ -51,6 +44,13 @@ export const structure: StructureResolver = (S, context) =>
                   S.documentTypeList('landingPage')
                     .title('Guides')
                     .filter('_type == "landingPage" && pageType == "custom"'),
+                ),
+              S.listItem()
+                .title('Unique Landings (top-level /slug)')
+                .child(
+                  S.documentTypeList('landingPage')
+                    .title('Unique Landings')
+                    .filter('_type == "landingPage" && pageType == "unique"'),
                 ),
             ]),
         ),

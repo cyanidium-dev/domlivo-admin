@@ -1,5 +1,10 @@
 import {defineType, defineField} from 'sanity'
-import {isReservedForPropertyType, reservedSlugMessage} from '../constants/reservedRouteSlugs'
+import {
+  findUniqueLandingOwningSlug,
+  isReservedForPropertyType,
+  landingOwnsSlugMessage,
+  reservedSlugMessage,
+} from '../constants/reservedRouteSlugs'
 
 /**
  * Property type (Apartment, House, Villa, etc.).
@@ -32,9 +37,15 @@ export const propertyType = defineType({
         maxLength: 96,
       },
       validation: (Rule) =>
-        Rule.required().custom((value) => {
+        Rule.required().custom(async (value, context) => {
           const current = (value as {current?: string} | undefined)?.current
-          if (current && isReservedForPropertyType(current)) return reservedSlugMessage(current)
+          if (!current) return true
+          if (isReservedForPropertyType(current)) return reservedSlugMessage(current)
+          // Entity routes eclipse Unique Landings at /<slug> — block a type
+          // slug that would silently take over an existing landing's URL.
+          const client = context.getClient({apiVersion: '2024-06-01'})
+          const landing = await findUniqueLandingOwningSlug(client, current)
+          if (landing) return landingOwnsSlugMessage(current)
           return true
         }),
     }),

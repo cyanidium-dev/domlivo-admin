@@ -110,3 +110,49 @@ export function isReservedForBlogPost(slug: string | undefined | null): boolean 
 export function reservedSlugMessage(slug: string): string {
   return `"${slug}" is a reserved route segment (see docs/engineering/ROUTING.md in domlivo-workspace). Pick a different slug — this one is owned by an app route, deal segment, locale, or system namespace.`
 }
+
+// ─── Async cross-document collision checks (dataset-driven slugs) ────────────
+// The top-level /<slug> resolver gives entity routes (country, city,
+// propertyType, deal) precedence over Unique Landings. These checks close both
+// eclipse directions at save time; scripts/reportRouteCollisions.ts is the
+// backstop for writes that bypass Studio validation.
+
+type ValidationClient = {
+  fetch: <T>(query: string, params?: Record<string, unknown>) => Promise<T>
+}
+
+/** Doc types whose slugs occupy the top-level segment ahead of unique landings. */
+const TOP_LEVEL_ENTITY_TYPES = ['country', 'city', 'propertyType'] as const
+
+/** Returns the entity type owning this slug, or null when the slug is free. */
+export async function findTopLevelEntityOwningSlug(
+  client: ValidationClient,
+  slug: string,
+): Promise<string | null> {
+  const hit = await client.fetch<{_type?: string} | null>(
+    `*[_type in $types && slug.current == $slug][0]{_type}`,
+    {types: [...TOP_LEVEL_ENTITY_TYPES], slug: slug.trim().toLowerCase()},
+  )
+  return hit?._type ?? null
+}
+
+/** Returns the title/slug of a Unique Landing already using this slug, or null. */
+export async function findUniqueLandingOwningSlug(
+  client: ValidationClient,
+  slug: string,
+  excludeDocId?: string,
+): Promise<string | null> {
+  const hit = await client.fetch<{slug?: string} | null>(
+    `*[_type == "landingPage" && pageType == "unique" && slug.current == $slug && !(_id in [$id, "drafts." + $id])][0]{"slug": slug.current}`,
+    {slug: slug.trim().toLowerCase(), id: excludeDocId ?? '-'},
+  )
+  return hit?.slug ?? null
+}
+
+export function entityOwnsSlugMessage(slug: string, entityType: string): string {
+  return `"${slug}" is already a ${entityType} slug — entity routes take precedence at /<slug>, so this Unique Landing would never render. Pick another slug.`
+}
+
+export function landingOwnsSlugMessage(slug: string): string {
+  return `"${slug}" is used by a Unique Landing (top-level /${slug}). Creating this entity would take over that URL and the landing would silently stop rendering. Rename one of them (see ROUTING.md).`
+}

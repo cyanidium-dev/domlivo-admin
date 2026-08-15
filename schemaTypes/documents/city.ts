@@ -1,6 +1,11 @@
 import React from 'react'
 import {defineType, defineField, defineArrayMember} from 'sanity'
-import {isReservedForGeoEntity, reservedSlugMessage} from '../constants/reservedRouteSlugs'
+import {
+  findUniqueLandingOwningSlug,
+  isReservedForGeoEntity,
+  landingOwnsSlugMessage,
+  reservedSlugMessage,
+} from '../constants/reservedRouteSlugs'
 import {SeoFillInfoInput} from '../../components/sanity/SeoFillInfoInput'
 import {GalleryWithCopyAltInput} from '../../components/sanity/GalleryWithCopyAltInput'
 
@@ -44,9 +49,15 @@ export const city = defineType({
         maxLength: 96,
       },
       validation: (Rule) =>
-        Rule.required().custom((value) => {
+        Rule.required().custom(async (value, context) => {
           const current = (value as {current?: string} | undefined)?.current
-          if (current && isReservedForGeoEntity(current)) return reservedSlugMessage(current)
+          if (!current) return true
+          if (isReservedForGeoEntity(current)) return reservedSlugMessage(current)
+          // Entity routes eclipse Unique Landings at /<slug> — block a city
+          // slug that would silently take over an existing landing's URL.
+          const client = context.getClient({apiVersion: '2024-06-01'})
+          const landing = await findUniqueLandingOwningSlug(client, current)
+          if (landing) return landingOwnsSlugMessage(current)
           return true
         }),
     }),
