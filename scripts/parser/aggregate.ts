@@ -17,6 +17,14 @@ const MIN_PER_M2 = 300
 const MAX_PER_M2 = 7000
 
 /**
+ * Sanity bounds for monthly rent in EUR. Without these a sale price that the
+ * title heuristic misreads as a rental lands in the band: the first full scan
+ * produced a "EUR 122,449/month" for Shkoder centre, which is 12M lek.
+ */
+const MIN_RENT = 50
+const MAX_RENT = 3000
+
+/**
  * Albanian sellers routinely quote "old lek" — ten times the official
  * denomination. A 57 m2 Shkoder flat listed at 30,000,000 LEK is 3,000,000 new
  * lek (~EUR 30.6k, ~EUR 537/m2), not EUR 306k. Left unhandled this inflates a
@@ -82,12 +90,16 @@ export type ZoneResult = {
   basis: 'asking'
   sale: {new: Band; resale: Band; all: Band}
   rent: Band
-  dropped: {outOfRange: number; unjoined: number}
+  dropped: {outOfRange: number; rentOutOfRange: number; unjoined: number}
 }
 
 export function aggregate(rows: JoinedRow[], zone: string, unjoined = 0): ZoneResult {
   const sales = rows.filter((r) => !r.isRent)
   const inRange = sales.filter((r) => r.perM2 >= MIN_PER_M2 && r.perM2 <= MAX_PER_M2)
+
+  const rents = rows.filter((r) => r.isRent)
+  const rentsInRange = rents.filter((r) => r.priceEur >= MIN_RENT && r.priceEur <= MAX_RENT)
+
   return {
     zone,
     basis: 'asking',
@@ -96,7 +108,11 @@ export function aggregate(rows: JoinedRow[], zone: string, unjoined = 0): ZoneRe
       resale: band(inRange.filter((r) => !r.isNew).map((r) => r.perM2)),
       all: band(inRange.map((r) => r.perM2)),
     },
-    rent: band(rows.filter((r) => r.isRent).map((r) => r.priceEur)),
-    dropped: {outOfRange: sales.length - inRange.length, unjoined},
+    rent: band(rentsInRange.map((r) => r.priceEur)),
+    dropped: {
+      outOfRange: sales.length - inRange.length,
+      rentOutOfRange: rents.length - rentsInRange.length,
+      unjoined,
+    },
   }
 }

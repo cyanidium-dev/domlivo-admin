@@ -11,16 +11,16 @@
         "confidence": "yellow"
       },
       "resale": {
-        "n": 18,
-        "min": 508,
-        "median": 847,
+        "n": 13,
+        "min": 563,
+        "median": 870,
         "max": 2647,
         "confidence": "yellow"
       },
       "all": {
-        "n": 28,
-        "min": 508,
-        "median": 900,
+        "n": 23,
+        "min": 563,
+        "median": 909,
         "max": 3205,
         "confidence": "yellow"
       }
@@ -34,7 +34,164 @@
     },
     "dropped": {
       "outOfRange": 7,
+      "rentOutOfRange": 0,
       "unjoined": 6
+    }
+  },
+  {
+    "zone": "gjuhadol",
+    "basis": "asking",
+    "sale": {
+      "new": {
+        "n": 10,
+        "min": 851,
+        "median": 1205,
+        "max": 3464,
+        "confidence": "yellow"
+      },
+      "resale": {
+        "n": 9,
+        "min": 821,
+        "median": 1000,
+        "max": 3464,
+        "confidence": "yellow"
+      },
+      "all": {
+        "n": 19,
+        "min": 821,
+        "median": 1200,
+        "max": 3464,
+        "confidence": "yellow"
+      }
+    },
+    "rent": {
+      "n": 4,
+      "min": 400,
+      "median": 1000,
+      "max": 1531,
+      "confidence": "red"
+    },
+    "dropped": {
+      "outOfRange": 0,
+      "rentOutOfRange": 1,
+      "unjoined": 1
+    }
+  },
+  {
+    "zone": "qender-shkoder",
+    "basis": "asking",
+    "sale": {
+      "new": {
+        "n": 17,
+        "min": 877,
+        "median": 1457,
+        "max": 3956,
+        "confidence": "yellow"
+      },
+      "resale": {
+        "n": 7,
+        "min": 797,
+        "median": 1132,
+        "max": 1429,
+        "confidence": "yellow"
+      },
+      "all": {
+        "n": 24,
+        "min": 797,
+        "median": 1377,
+        "max": 3956,
+        "confidence": "yellow"
+      }
+    },
+    "rent": {
+      "n": 3,
+      "min": 459,
+      "median": 1300,
+      "max": 1400,
+      "confidence": "red"
+    },
+    "dropped": {
+      "outOfRange": 5,
+      "rentOutOfRange": 1,
+      "unjoined": 5
+    }
+  },
+  {
+    "zone": "livadh",
+    "basis": "asking",
+    "sale": {
+      "new": {
+        "n": 2,
+        "min": 3333,
+        "median": 3333,
+        "max": 3333,
+        "confidence": "red"
+      },
+      "resale": {
+        "n": 0,
+        "min": null,
+        "median": null,
+        "max": null,
+        "confidence": "red"
+      },
+      "all": {
+        "n": 2,
+        "min": 3333,
+        "median": 3333,
+        "max": 3333,
+        "confidence": "red"
+      }
+    },
+    "rent": {
+      "n": 0,
+      "min": null,
+      "median": null,
+      "max": null,
+      "confidence": "red"
+    },
+    "dropped": {
+      "outOfRange": 0,
+      "rentOutOfRange": 0,
+      "unjoined": 3
+    }
+  },
+  {
+    "zone": "center-himare",
+    "basis": "asking",
+    "sale": {
+      "new": {
+        "n": 17,
+        "min": 1538,
+        "median": 2701,
+        "max": 3935,
+        "confidence": "yellow"
+      },
+      "resale": {
+        "n": 4,
+        "min": 2295,
+        "median": 2333,
+        "max": 3403,
+        "confidence": "red"
+      },
+      "all": {
+        "n": 21,
+        "min": 1538,
+        "median": 2701,
+        "max": 3935,
+        "confidence": "yellow"
+      }
+    },
+    "rent": {
+      "n": 0,
+      "min": null,
+      "median": null,
+      "max": null,
+      "confidence": "red"
+    },
+    "dropped": {
+      "outOfRange": 1,
+      "rentOutOfRange": 0,
+      "unjoined": 5
     }
   }
 ]

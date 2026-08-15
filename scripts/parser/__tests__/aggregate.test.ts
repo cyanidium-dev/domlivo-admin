@@ -89,6 +89,19 @@ describe('aggregate', () => {
     expect(out.sale.new.median).toBe(5368)
   })
 
+  it('discards a rent value that is really a sale price', () => {
+    // The first full scan produced "EUR 122,449/month" for Shkoder centre —
+    // a 12M lek sale price that the title heuristic read as a rental.
+    const out = aggregate(joinRows([s('8', 122449, null, true)], [d('8', 80, 'I ri')]), 'z')
+    expect(out.rent.n).toBe(0)
+    expect(out.dropped.rentOutOfRange).toBe(1)
+  })
+
+  it('discards a zero rent', () => {
+    const out = aggregate(joinRows([s('9', 0, null, true)], [d('9', 60, 'I ri')]), 'z')
+    expect(out.rent.n).toBe(0)
+  })
+
   it('rescues an old-lek listing that would otherwise be dropped', () => {
     // 30,000,000 old lek / 57 m2 -> EUR 537/m2, inside range, not EUR 5,371.
     const out = aggregate(joinRows([s('6', null, 30_000_000)], [d('6', 57, 'I perdorur')], 98), 'z')
