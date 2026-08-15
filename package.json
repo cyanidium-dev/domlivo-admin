@@ -9,6 +9,8 @@
     "audit:district-taxonomy": "sanity exec scripts/auditDistrictTaxonomy.ts --with-user-token",
     "align:district-taxonomy:dry": "sanity exec scripts/alignDistrictTaxonomy.ts --with-user-token",
     "align:district-taxonomy": "sanity exec scripts/alignDistrictTaxonomy.ts --with-user-token -- --apply",
+    "purge:seed-placeholders:dry": "sanity exec scripts/purgeSeedPlaceholders.ts --with-user-token",
+    "purge:seed-placeholders": "sanity exec scripts/purgeSeedPlaceholders.ts --with-user-token -- --apply",
     "seed:city-landings": "tsx scripts/seedCityLandingsTiranaDurres.ts",
     "seed:cities-landing": "tsx scripts/seedCitiesLanding.ts",
     "verify:landing-translations": "tsx scripts/verifyLandingTranslations.ts",
