@@ -6,6 +6,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "postinstall": "node scripts/postinstall-fix-sanity-cli-worker.cjs",
+    "audit:district-taxonomy": "sanity exec scripts/auditDistrictTaxonomy.ts --with-user-token",
     "seed:city-landings": "tsx scripts/seedCityLandingsTiranaDurres.ts",
     "seed:cities-landing": "tsx scripts/seedCitiesLanding.ts",
     "verify:landing-translations": "tsx scripts/verifyLandingTranslations.ts",
