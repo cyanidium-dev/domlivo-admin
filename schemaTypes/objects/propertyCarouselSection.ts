@@ -84,6 +84,47 @@ export const propertyCarouselSection = defineType({
       description: 'Optional sort when using auto mode (top-level).',
     }),
     defineField({
+      name: 'filters',
+      title: 'Auto mode filters',
+      type: 'object',
+      group: 'data',
+      hidden: ({parent}) => parent?.mode === 'selected',
+      description:
+        'Narrow what auto mode pulls from the catalog. Leave empty and the carousel follows the page: a district landing shows that district, a city landing shows that city.',
+      options: {collapsible: true, collapsed: true},
+      fields: [
+        defineField({name: 'city', title: 'City', type: 'reference', to: [{type: 'city'}]}),
+        defineField({
+          name: 'district',
+          title: 'District',
+          type: 'reference',
+          to: [{type: 'district'}],
+          description:
+            "Wins over City. Without it, a district page's carousel shows the whole city — other districts' properties included.",
+        }),
+        defineField({
+          name: 'propertyType',
+          title: 'Property type',
+          type: 'reference',
+          to: [{type: 'propertyType'}],
+        }),
+        defineField({
+          name: 'deal',
+          title: 'Deal',
+          type: 'string',
+          options: {
+            list: [
+              {title: 'Sale', value: 'sale'},
+              {title: 'Long-term rent', value: 'rent'},
+              {title: 'Short-term rent', value: 'short-term'},
+            ],
+            layout: 'radio',
+            direction: 'horizontal',
+          },
+        }),
+      ],
+    }),
+    defineField({
       name: 'autoMode',
       title: 'Auto mode settings',
       type: 'object',
