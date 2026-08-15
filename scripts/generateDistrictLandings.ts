@@ -37,6 +37,8 @@ const cityArg = (args.find((a) => a.startsWith('--city='))?.split('=')[1] ??
 const isDry = args.includes('--dry')
 const isExecute = args.includes('--execute')
 const isForce = args.includes('--force')
+/** Rebuild every landing in memory and diff it against the dataset. Writes nothing. */
+const isVerify = args.includes('--verify')
 
 if (!token || !projectId) {
   console.error('Error: SANITY_PROJECT_ID and SANITY_API_TOKEN required. Add them to .env')
@@ -46,8 +48,8 @@ if (!cityArg) {
   console.error('Error: pass --city <slug>, e.g. --city tirana')
   process.exit(1)
 }
-if (!isDry && !isExecute) {
-  console.error('Use --dry to preview or --execute to write.')
+if (!isDry && !isExecute && !isVerify) {
+  console.error('Use --dry to preview, --execute to write, or --verify to diff against the dataset.')
   process.exit(1)
 }
 
@@ -151,6 +153,43 @@ function nearestByPrice(self: DistrictRow, all: DistrictRow[], count = 3): Distr
     .slice(0, count)
 }
 
+/** Sanity's own bookkeeping, plus the one field that legitimately moves with the clock. */
+const IGNORED_KEYS = new Set(['_rev', '_createdAt', '_updatedAt', 'contentUpdatedAt'])
+
+/** Field-by-field comparison, reporting paths rather than a wall of JSON. */
+function diffDoc(built: unknown, live: unknown, path = ''): string[] {
+  if (built === live) return []
+  const bothObjects =
+    built && live && typeof built === 'object' && typeof live === 'object' &&
+    !Array.isArray(built) && !Array.isArray(live)
+
+  if (bothObjects) {
+    const b = built as Record<string, unknown>
+    const l = live as Record<string, unknown>
+    const keys = new Set([...Object.keys(b), ...Object.keys(l)])
+    const out: string[] = []
+    for (const key of keys) {
+      if (IGNORED_KEYS.has(key)) continue
+      if (b[key] === undefined && l[key] === undefined) continue
+      out.push(...diffDoc(b[key], l[key], path ? `${path}.${key}` : key))
+    }
+    return out
+  }
+
+  if (Array.isArray(built) && Array.isArray(live)) {
+    if (built.length !== live.length) {
+      return [`${path}: ${built.length} item(s) built vs ${live.length} live`]
+    }
+    return built.flatMap((item, i) => diffDoc(item, live[i], `${path}[${i}]`))
+  }
+
+  const show = (v: unknown) => {
+    const text = typeof v === 'string' ? v : JSON.stringify(v)
+    return text === undefined ? 'undefined' : String(text).slice(0, 60)
+  }
+  return [`${path}: built ${show(built)} / live ${show(live)}`]
+}
+
 async function main() {
   const districts: DistrictRow[] = await client.fetch(
     `*[_type == "district" && city->slug.current == $city && isPublished == true]{
@@ -184,7 +223,7 @@ async function main() {
   const noData: string[] = []
 
   for (const d of districts) {
-    if (has.has(d._id) && !isForce) { skipped.push(d.slug); continue }
+    if (has.has(d._id) && !isForce && !isVerify) { skipped.push(d.slug); continue }
     // Without metrics the data blocks render nothing, and a landing would be
     // thinner than the fallback template it replaces. Leave those alone.
     if (typeof d.price !== 'number' && !d.hasMetrics) {
@@ -263,6 +302,40 @@ async function main() {
       seo: d.seo ?? undefined,
       pageSections: sections,
     })
+  }
+
+  if (isVerify) {
+    const live: Record<string, unknown>[] = await client.fetch(
+      `*[_id in $ids]`,
+      {ids: docs.map((d) => d._id)},
+    )
+    const liveById = new Map(live.map((d) => [d._id as string, d]))
+    let same = 0
+    const drifted: string[] = []
+    const absent: string[] = []
+
+    for (const built of docs) {
+      const id = built._id as string
+      const current = liveById.get(id)
+      if (!current) { absent.push(id); continue }
+      const diffs = diffDoc(built, current)
+      if (diffs.length === 0) { same++; continue }
+      drifted.push(id)
+      console.log(`DIFFERS  ${id}`)
+      for (const line of diffs.slice(0, 6)) console.log(`           ${line}`)
+      if (diffs.length > 6) console.log(`           …and ${diffs.length - 6} more`)
+    }
+
+    for (const s of noData) console.log(`no-data  ${s} (no zoneMetrics — fallback template kept)`)
+    console.log(
+      `
+Verify: ${same}/${docs.length} reproduce exactly` +
+      (drifted.length ? `, ${drifted.length} differ` : '') +
+      (absent.length ? `, ${absent.length} missing from the dataset` : ''),
+    )
+    for (const id of absent) console.log(`  missing: ${id}`)
+    if (drifted.length || absent.length) process.exitCode = 1
+    return
   }
 
   for (const s of skipped) console.log(`skip     ${s} (landing exists)`)
