@@ -17,6 +17,7 @@
     "backfill:district-title-it:dry": "sanity exec scripts/backfillDistrictTitleIt.ts --with-user-token",
     "backfill:district-title-it": "sanity exec scripts/backfillDistrictTitleIt.ts --with-user-token -- --apply",
     "create:tirana-shells": "tsx scripts/createTiranaDistrictShells.ts",
+    "generate:district-landings": "tsx scripts/generateDistrictLandings.ts",
     "seed:zone-metrics": "tsx scripts/seedZoneMetrics.ts",
     "seed:city-landings": "tsx scripts/seedCityLandingsTiranaDurres.ts",
     "seed:cities-landing": "tsx scripts/seedCitiesLanding.ts",

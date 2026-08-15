@@ -1,0 +1,293 @@
+/**
+ * ТЗ-11: turn district pages from the flat fallback template into constructor
+ * landings — see docs/engineering/PAGE-STRUCTURE-REVIEW-2026-08-15.md §2, which
+ * concluded that every element the research prescribes is section-level, so the
+ * `district` document can never express it on its own.
+ *
+ * Composition per page:
+ *   heroSection            H1 + subtitle + the district's own photo + catalog CTA
+ *   zoneStatsAutoSection   figures from the newest zoneMetrics record
+ *   seoTextSection         the district's editorial description
+ *   propertyCarouselSection  filtered to this district (needs the filters field)
+ *   zonePriceTableAutoSection  this district against its three nearest by price
+ *   ctaSection
+ *
+ * Idempotent: a landing that already exists is skipped, so editorial changes
+ * made in Studio are never flattened. `--force` replaces them deliberately.
+ *
+ * Run:
+ * - npm run generate:district-landings -- --city tirana --dry
+ * - npm run generate:district-landings -- --city tirana --execute
+ */
+
+import path from 'path'
+import {config as loadDotenv} from 'dotenv'
+import {createClient} from '@sanity/client'
+
+loadDotenv({path: path.resolve(process.cwd(), '.env')})
+
+const projectId = (process.env.SANITY_PROJECT_ID || '').trim()
+const dataset = (process.env.SANITY_DATASET || 'production').trim()
+const apiVersion = (process.env.SANITY_API_VERSION || '2024-01-01').trim()
+const token = process.env.SANITY_API_TOKEN?.trim()
+
+const args = process.argv.slice(2)
+const cityArg = (args.find((a) => a.startsWith('--city='))?.split('=')[1] ??
+  (args.includes('--city') ? args[args.indexOf('--city') + 1] : '')) as string
+const isDry = args.includes('--dry')
+const isExecute = args.includes('--execute')
+const isForce = args.includes('--force')
+
+if (!token || !projectId) {
+  console.error('Error: SANITY_PROJECT_ID and SANITY_API_TOKEN required. Add them to .env')
+  process.exit(1)
+}
+if (!cityArg) {
+  console.error('Error: pass --city <slug>, e.g. --city tirana')
+  process.exit(1)
+}
+if (!isDry && !isExecute) {
+  console.error('Use --dry to preview or --execute to write.')
+  process.exit(1)
+}
+
+const client = createClient({projectId, dataset, apiVersion, useCdn: false, token})
+
+const LOCALES = ['en', 'uk', 'ru', 'sq', 'it'] as const
+type Locale = (typeof LOCALES)[number]
+type Localized = Partial<Record<Locale, string>>
+
+/** Section headings are templated per locale; the prose comes from the documents. */
+const T = {
+  stats: {en: '{n} in figures', uk: '{n} у цифрах', ru: '{n} в цифрах', sq: '{n} në shifra', it: '{n} in cifre'},
+  about: {en: 'About {n}', uk: 'Про {n}', ru: 'О районе {n}', sq: 'Rreth {n}', it: 'Informazioni su {n}'},
+  listings: {
+    en: 'Properties in {n}', uk: 'Об’єкти в {n}', ru: 'Объекты в {n}',
+    sq: 'Prona në {n}', it: 'Immobili a {n}',
+  },
+  compare: {
+    en: '{n} against nearby districts',
+    uk: '{n} у порівнянні із сусідніми районами',
+    ru: '{n} в сравнении с соседними районами',
+    sq: '{n} krahasuar me lagjet fqinje',
+    it: '{n} a confronto con i quartieri vicini',
+  },
+  compareSub: {
+    en: 'The districts closest to it in price, so the number above has something to sit against.',
+    uk: 'Найближчі за ціною райони — щоб цифру вище було з чим порівняти.',
+    ru: 'Ближайшие по цене районы — чтобы цифру выше было с чем сравнить.',
+    sq: 'Lagjet më të afërta për nga çmimi, që shifra më sipër të ketë me çfarë të krahasohet.',
+    it: 'I quartieri più vicini per prezzo, così la cifra qui sopra ha un termine di paragone.',
+  },
+  ctaTitle: {
+    en: 'Looking for something in {n}?', uk: 'Шукаєте щось у {n}?', ru: 'Ищете что-то в {n}?',
+    sq: 'Po kërkoni diçka në {n}?', it: 'Cerchi qualcosa a {n}?',
+  },
+  ctaText: {
+    en: 'Tell us the budget and the format, and we will come back with what is actually on the market.',
+    uk: 'Назвіть бюджет і формат — ми повернемося з тим, що справді є на ринку.',
+    ru: 'Назовите бюджет и формат — мы вернёмся с тем, что действительно есть на рынке.',
+    sq: 'Na tregoni buxhetin dhe formatin, dhe do t’ju kthehemi me atë që ka vërtet në treg.',
+    it: 'Diteci budget e formato e vi rispondiamo con ciò che c’è davvero sul mercato.',
+  },
+  ctaBtn: {en: 'See listings', uk: 'Дивитися об’єкти', ru: 'Смотреть объекты', sq: 'Shiko pronat', it: 'Vedi gli annunci'},
+  contact: {en: 'Contact us', uk: 'Звʼязатися', ru: 'Связаться', sq: 'Na kontaktoni', it: 'Contattaci'},
+} as const
+
+type DistrictRow = {
+  _id: string
+  slug: string
+  citySlug: string
+  countrySlug: string
+  title?: Localized
+  heroTitle?: Localized
+  heroSubtitle?: Localized
+  description?: Localized
+  seo?: {metaTitle?: Localized; metaDescription?: Localized}
+  heroImageRef?: string
+  price?: number
+  hasMetrics?: boolean
+}
+
+/** Below this, an "About" section reads as a stub rather than an article. */
+const MIN_DESCRIPTION = 150
+
+function fill(template: Record<Locale, string>, names: Localized): Localized {
+  const out: Localized = {}
+  for (const l of LOCALES) {
+    const name = names[l] ?? names.en ?? ''
+    out[l] = template[l].replace('{n}', name)
+  }
+  return out
+}
+
+/** One block of portable text per locale from a plain paragraph. */
+function toBlocks(text: Localized, keyPrefix: string) {
+  const out: Record<string, unknown[]> = {}
+  for (const l of LOCALES) {
+    const value = text[l]
+    if (!value) continue
+    out[l] = [
+      {
+        _key: `${keyPrefix}-${l}`,
+        _type: 'block',
+        style: 'normal',
+        markDefs: [],
+        children: [{_key: `${keyPrefix}-${l}-s`, _type: 'span', marks: [], text: value}],
+      },
+    ]
+  }
+  return out
+}
+
+/** Nearest by price, so the comparison table answers "what else costs this much". */
+function nearestByPrice(self: DistrictRow, all: DistrictRow[], count = 3): DistrictRow[] {
+  if (typeof self.price !== 'number') {
+    return all.filter((d) => d._id !== self._id && typeof d.price === 'number').slice(0, count)
+  }
+  return all
+    .filter((d) => d._id !== self._id && typeof d.price === 'number')
+    .sort((a, b) => Math.abs((a.price as number) - (self.price as number)) - Math.abs((b.price as number) - (self.price as number)))
+    .slice(0, count)
+}
+
+async function main() {
+  const districts: DistrictRow[] = await client.fetch(
+    `*[_type == "district" && city->slug.current == $city && isPublished == true]{
+      _id,
+      "slug": slug.current,
+      "citySlug": city->slug.current,
+      "countrySlug": city->country->slug.current,
+      title, heroTitle, heroSubtitle, description, seo,
+      "heroImageRef": heroImage.asset._ref,
+      "hasMetrics": count(*[_type == "zoneMetrics" && zone._ref == ^._id]) > 0,
+      "price": *[_type == "zoneMetrics" && zone._ref == ^._id] | order(periodDate desc)[0]{
+        "p": coalesce(priceNewMedian, priceAllMedian, (priceNewMin + priceNewMax) / 2, (priceAllMin + priceAllMax) / 2)
+      }.p
+    } | order(slug asc)`,
+    {city: cityArg},
+  )
+
+  if (districts.length === 0) {
+    console.error(`No published districts found for city "${cityArg}".`)
+    process.exit(1)
+  }
+
+  const existing: string[] = await client.fetch(
+    `*[_type == "landingPage" && pageType == "district" && linkedDistrict->city->slug.current == $city].linkedDistrict._ref`,
+    {city: cityArg},
+  )
+  const has = new Set(existing)
+
+  const docs: Record<string, unknown>[] = []
+  const skipped: string[] = []
+  const noData: string[] = []
+
+  for (const d of districts) {
+    if (has.has(d._id) && !isForce) { skipped.push(d.slug); continue }
+    // Without metrics the data blocks render nothing, and a landing would be
+    // thinner than the fallback template it replaces. Leave those alone.
+    if (typeof d.price !== 'number' && !d.hasMetrics) {
+      noData.push(d.slug)
+      continue
+    }
+
+    const names: Localized = d.title ?? {}
+    const catalogHref = `/${d.countrySlug ?? 'albania'}/${d.citySlug}/sale?district=${d.slug}`
+    const neighbours = nearestByPrice(d, districts)
+
+    const sections: Record<string, unknown>[] = [
+      {
+        _key: 'hero', _type: 'heroSection', enabled: true,
+        title: d.seo?.metaTitle ?? d.heroTitle ?? names,
+        subtitle: d.heroSubtitle,
+        shortLine: names,
+        cta: {href: catalogHref, label: T.ctaBtn},
+        ...(d.heroImageRef
+          ? {backgroundImage: {_type: 'image', asset: {_type: 'reference', _ref: d.heroImageRef}}}
+          : {}),
+      },
+      {
+        _key: 'stats', _type: 'zoneStatsAutoSection', enabled: true,
+        zoneMode: 'auto', showSources: true,
+        title: fill(T.stats, names),
+      },
+      ...((d.description?.en?.length ?? 0) >= MIN_DESCRIPTION
+        ? [{
+            _key: 'about', _type: 'seoTextSection', enabled: true,
+            title: fill(T.about, names),
+            content: toBlocks(d.description ?? {}, `about-${d.slug}`),
+          }]
+        : []),
+      {
+        _key: 'listings', _type: 'propertyCarouselSection', enabled: true,
+        mode: 'auto',
+        title: fill(T.listings, names),
+        filters: {
+          city: {_type: 'reference', _ref: `city-${d.citySlug}`},
+          district: {_type: 'reference', _ref: d._id},
+        },
+        autoMode: {limit: 12, sort: 'newest'},
+      },
+      {
+        _key: 'compare', _type: 'zonePriceTableAutoSection', enabled: true,
+        mode: 'compare',
+        title: fill(T.compare, names),
+        subtitle: T.compareSub,
+        zones: [d, ...neighbours].map((z, i) => ({
+          _key: `z${i}`, _type: 'reference', _ref: z._id,
+        })),
+        columns: ['priceNew', 'priceResale', 'referencePrice'],
+        sortBy: 'price', linkRows: true, showSources: true,
+      },
+      {
+        _key: 'cta', _type: 'ctaSection', enabled: true,
+        eyebrow: names,
+        title: fill(T.ctaTitle, names),
+        description: T.ctaText,
+        cta: {href: catalogHref, label: T.ctaBtn},
+        secondaryCta: {href: '/contact', label: T.contact},
+      },
+    ]
+
+    docs.push({
+      _id: `landing-district-${d.slug}`,
+      _type: 'landingPage',
+      enabled: true,
+      pageType: 'district',
+      slug: {_type: 'slug', current: `${d.citySlug}-${d.slug}`},
+      linkedDistrict: {_type: 'reference', _ref: d._id},
+      title: d.seo?.metaTitle ?? names,
+      cardDescription: d.heroSubtitle,
+      contentUpdatedAt: new Date().toISOString().slice(0, 10),
+      seo: d.seo ?? undefined,
+      pageSections: sections,
+    })
+  }
+
+  for (const s of skipped) console.log(`skip     ${s} (landing exists)`)
+  for (const s of noData) console.log(`no-data  ${s} (no zoneMetrics — fallback template kept)`)
+  for (const doc of docs) {
+    const id = doc._id as string
+    const sectionTypes = (doc.pageSections as Record<string, unknown>[]).map((s) => s._type).join(' > ')
+    console.log(`${isForce && has.size ? 'replace ' : 'create  '} ${id}\n           ${sectionTypes}`)
+  }
+
+  if (isDry) {
+    console.log(`\nDry run. ${docs.length} to write, ${skipped.length} skipped.`)
+    return
+  }
+  if (docs.length === 0) { console.log('\nNothing to write.'); return }
+
+  const tx = docs.reduce(
+    (t, doc) => (isForce ? t.createOrReplace(doc as never) : t.createIfNotExists(doc as never)),
+    client.transaction(),
+  )
+  await tx.commit()
+  console.log(`\nWrote ${docs.length} district landings, skipped ${skipped.length}.`)
+}
+
+main().catch((err) => {
+  console.error(err instanceof Error ? err.message : err)
+  process.exit(1)
+})
