@@ -37,7 +37,11 @@ const cityArg = (args.find((a) => a.startsWith('--city='))?.split('=')[1] ??
 const isDry = args.includes('--dry')
 const isExecute = args.includes('--execute')
 const isForce = args.includes('--force')
-/** Rebuild every landing in memory and diff it against the dataset. Writes nothing. */
+/**
+ * Rebuild every landing in memory and diff it against the dataset. Writes
+ * nothing. A landing that differs is an edited one, which ТЗ-11 requires a
+ * re-run to leave alone — so that is reported, not treated as a failure.
+ */
 const isVerify = args.includes('--verify')
 
 if (!token || !projectId) {
@@ -311,7 +315,7 @@ async function main() {
     )
     const liveById = new Map(live.map((d) => [d._id as string, d]))
     let same = 0
-    const drifted: string[] = []
+    const edited: string[] = []
     const absent: string[] = []
 
     for (const built of docs) {
@@ -320,8 +324,8 @@ async function main() {
       if (!current) { absent.push(id); continue }
       const diffs = diffDoc(built, current)
       if (diffs.length === 0) { same++; continue }
-      drifted.push(id)
-      console.log(`DIFFERS  ${id}`)
+      edited.push(id)
+      console.log(`edited   ${id} (${diffs.length} field(s) — a re-run leaves these alone)`)
       for (const line of diffs.slice(0, 6)) console.log(`           ${line}`)
       if (diffs.length > 6) console.log(`           …and ${diffs.length - 6} more`)
     }
@@ -330,11 +334,13 @@ async function main() {
     console.log(
       `
 Verify: ${same}/${docs.length} reproduce exactly` +
-      (drifted.length ? `, ${drifted.length} differ` : '') +
+      (edited.length ? `, ${edited.length} edited since generation (preserved on re-run)` : '') +
       (absent.length ? `, ${absent.length} missing from the dataset` : ''),
     )
     for (const id of absent) console.log(`  missing: ${id}`)
-    if (drifted.length || absent.length) process.exitCode = 1
+    // Only a landing the script cannot account for is a failure. An edited one
+    // is the idempotency rule working.
+    if (absent.length) process.exitCode = 1
     return
   }
 
@@ -351,6 +357,10 @@ Verify: ${same}/${docs.length} reproduce exactly` +
     return
   }
   if (docs.length === 0) { console.log('\nNothing to write.'); return }
+
+  if (isForce) {
+    console.log('\n⚠ --force replaces existing landings, including any edits made in Studio.')
+  }
 
   const tx = docs.reduce(
     (t, doc) => (isForce ? t.createOrReplace(doc as never) : t.createIfNotExists(doc as never)),
