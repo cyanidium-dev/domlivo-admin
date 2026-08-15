@@ -1,5 +1,6 @@
 import React from 'react'
 import {defineType, defineField, defineArrayMember} from 'sanity'
+import {isReservedForGeoEntity, reservedSlugMessage} from '../constants/reservedRouteSlugs'
 import {SeoFillInfoInput} from '../../components/sanity/SeoFillInfoInput'
 import {GalleryWithCopyAltInput} from '../../components/sanity/GalleryWithCopyAltInput'
 
@@ -42,7 +43,12 @@ export const city = defineType({
         },
         maxLength: 96,
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) =>
+        Rule.required().custom((value) => {
+          const current = (value as {current?: string} | undefined)?.current
+          if (current && isReservedForGeoEntity(current)) return reservedSlugMessage(current)
+          return true
+        }),
     }),
 
     defineField({

@@ -1,4 +1,5 @@
 import {defineType, defineField} from 'sanity'
+import {isReservedForPropertyType, reservedSlugMessage} from '../constants/reservedRouteSlugs'
 
 /**
  * Property type (Apartment, House, Villa, etc.).
@@ -30,7 +31,12 @@ export const propertyType = defineType({
         },
         maxLength: 96,
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) =>
+        Rule.required().custom((value) => {
+          const current = (value as {current?: string} | undefined)?.current
+          if (current && isReservedForPropertyType(current)) return reservedSlugMessage(current)
+          return true
+        }),
     }),
 
     defineField({

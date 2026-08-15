@@ -1,5 +1,6 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
 import {docOwnerIds} from '../utils/docOwnerIds'
+import {isReservedForCustomLanding, reservedSlugMessage} from '../constants/reservedRouteSlugs'
 
 export const landingPage = defineType({
   name: 'landingPage',
@@ -72,10 +73,17 @@ export const landingPage = defineType({
         Rule.custom((value, context) => {
           const parent = context.parent as {pageType?: string} | undefined
           if (parent?.pageType === 'home') return true
-          return value?.current ? true : 'Slug is required for non-home landing pages.'
+          if (!value?.current) return 'Slug is required for non-home landing pages.'
+          // Custom landings surface at /guides/<slug> AND may shadow static
+          // routes (the 2026-08 "for-realtors" duplicate). Deal-type landings
+          // (pageType "investment") legitimately use deal slugs like "sale".
+          if (parent?.pageType === 'custom' && isReservedForCustomLanding(value.current)) {
+            return reservedSlugMessage(value.current)
+          }
+          return true
         }),
       description:
-        'URL path segment for this editorial landing (non-home). For linked entity pages, keep it aligned with the linked entity slug. Country-level editorial pages can use pageType "custom" with a country slug segment.',
+        'URL path segment for this editorial landing (non-home). For linked entity pages, keep it aligned with the linked entity slug. Country-level editorial pages can use pageType "custom" with a country slug segment. Reserved route segments (see ROUTING.md) are rejected for custom landings.',
     }),
 
     defineField({

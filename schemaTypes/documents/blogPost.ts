@@ -1,4 +1,5 @@
 import {defineType, defineField} from 'sanity'
+import {isReservedForBlogPost, reservedSlugMessage} from '../constants/reservedRouteSlugs'
 
 /**
  * Blog post: full-featured SEO article.
@@ -32,7 +33,12 @@ export const blogPost = defineType({
         },
         maxLength: 96,
       },
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule) =>
+        Rule.required().custom((value) => {
+          const current = (value as {current?: string} | undefined)?.current
+          if (current && isReservedForBlogPost(current)) return reservedSlugMessage(current)
+          return true
+        }),
       description: 'Used in the article URL (generated from the English title).',
     }),
     defineField({

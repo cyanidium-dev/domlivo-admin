@@ -1,4 +1,5 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
+import {isReservedForGeoEntity, reservedSlugMessage} from '../constants/reservedRouteSlugs'
 import {GalleryWithCopyAltInput} from '../../components/sanity/GalleryWithCopyAltInput'
 
 export const district = defineType({
@@ -37,7 +38,12 @@ export const district = defineType({
         },
         maxLength: 96,
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) =>
+        Rule.required().custom((value) => {
+          const current = (value as {current?: string} | undefined)?.current
+          if (current && isReservedForGeoEntity(current)) return reservedSlugMessage(current)
+          return true
+        }),
     }),
 
     defineField({
