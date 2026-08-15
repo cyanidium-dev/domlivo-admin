@@ -33,9 +33,14 @@ export class RateLimiter {
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36'
 
+/** Hard per-request timeout. Without it a stalled socket hangs the whole run. */
+const TIMEOUT_MS = 25_000
+
 export async function fetchPage(url: string, limiter: RateLimiter, attempt = 1): Promise<string> {
   await limiter.wait()
   const res = await fetch(url, {
+    redirect: 'follow',
+    signal: AbortSignal.timeout(TIMEOUT_MS),
     headers: {
       'User-Agent': UA,
       Accept: 'text/html,application/xhtml+xml',
