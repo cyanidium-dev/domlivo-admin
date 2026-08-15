@@ -51,7 +51,11 @@ export const METRIC_FIELDS = [
   'strAdr',
   'strOccupancyPct',
   'grossYieldLtrPct',
+  'grossYieldLtrPctMin',
+  'grossYieldLtrPctMax',
   'grossYieldStrPct',
+  'grossYieldStrPctMin',
+  'grossYieldStrPctMax',
   'referencePrice',
   'referencePriceMin',
   'referencePriceMax',
@@ -135,6 +139,8 @@ export function assertRangesOrdered(record: SeedRecord): void {
     ['priceAllMin', 'priceAllMax'],
     ['rentLtr1brMin', 'rentLtr1brMax'],
     ['rentLtr2brMin', 'rentLtr2brMax'],
+    ['grossYieldLtrPctMin', 'grossYieldLtrPctMax'],
+    ['grossYieldStrPctMin', 'grossYieldStrPctMax'],
     ['referencePriceMin', 'referencePriceMax'],
   ]
   for (const [minKey, maxKey] of pairs) {

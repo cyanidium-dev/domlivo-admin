@@ -94,6 +94,27 @@ describe('assertRangesOrdered', () => {
   it('rejects an inverted range', () => {
     expect(() => assertRangesOrdered({...base, priceAllMin: 1900, priceAllMax: 800})).toThrow(/greater than/)
   })
+
+  it('checks yield ranges too', () => {
+    expect(() =>
+      assertRangesOrdered({...base, grossYieldLtrPctMin: 4.7, grossYieldLtrPctMax: 3.2}),
+    ).toThrow(/greater than/)
+    expect(() =>
+      assertRangesOrdered({...base, grossYieldLtrPctMin: 3.2, grossYieldLtrPctMax: 4.7}),
+    ).not.toThrow()
+  })
+})
+
+describe('yield ranges', () => {
+  it('carries both ends through to the document', () => {
+    const doc = buildZoneMetricsDoc(
+      {...base, grossYieldLtrPctMin: 3.2, grossYieldLtrPctMax: 4.7},
+      'district-parruce',
+      file,
+    )
+    expect(doc.grossYieldLtrPctMin).toBe(3.2)
+    expect(doc.grossYieldLtrPctMax).toBe(4.7)
+  })
 })
 
 describe('the shipped seed file', () => {

@@ -719,11 +719,13 @@
       "priceAllMax": 3205,
       "rentLtr1brMin": 163,
       "rentLtr1brMax": 255,
+      "grossYieldLtrPctMin": 3.2,
+      "grossYieldLtrPctMax": 4.7,
       "sampleSize": 23,
       "sources": ["merrjep"],
       "notes": {
-        "en": "The deepest supply in the city, 228 listings, and the widest new-to-old gap at 36%. Rent is from a separate sample of 31 lek-denominated listings; euro-priced furnished units ask far more. Gross long-term yield works out at roughly 3.2–4.7% against peripheral purchase prices, before costs and vacancy.",
-        "ru": "Самое глубокое предложение в городе — 228 объявлений — и самый широкий разрыв нового и старого фонда, 36%. Аренда — отдельная выборка из 31 объявления в леках; меблированные объекты с ценой в евро просят заметно больше. Валовая доходность долгосрочной аренды — около 3.2–4.7% к периферийным ценам покупки, до расходов и простоя."
+        "en": "The deepest supply in the city, 228 listings, and the widest new-to-old gap at 36%. Rent is from a separate sample of 31 lek-denominated listings; euro-priced furnished units ask far more. The yield is calculated, not observed: a 55 m² 1+1 at peripheral prices of €944–1,408/m² against €204 a month, gross, before costs and vacancy.",
+        "ru": "Самое глубокое предложение в городе — 228 объявлений — и самый широкий разрыв нового и старого фонда, 36%. Аренда — отдельная выборка из 31 объявления в леках; меблированные объекты с ценой в евро просят заметно больше. Доходность рассчитана, а не измерена: 1+1 ~55 м² по периферийной цене €944–1 408/м² против €204 в месяц, брутто, до расходов и простоя."
       },
       "kbSource": "02-cities/shkoder.md §2b, §2c"
     },

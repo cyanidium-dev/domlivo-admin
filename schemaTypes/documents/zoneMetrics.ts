@@ -226,7 +226,32 @@ export const zoneMetrics = defineType({
       title: 'Gross yield, long-term (%)',
       type: 'number',
       group: 'rent',
+      description: 'A single figure. Where the calculation gives a span instead, use the min/max pair below.',
       validation: (Rule) => Rule.min(0).max(100),
+    }),
+    defineField({
+      name: 'grossYieldLtrPctMin',
+      title: 'Gross yield, long-term — min (%)',
+      type: 'number',
+      group: 'rent',
+      description:
+        'Yields fall out of a price band and a rent band, so they are usually a span. Rounding one to a midpoint would invent precision the inputs never had.',
+      validation: (Rule) => Rule.min(0).max(100),
+    }),
+    defineField({
+      name: 'grossYieldLtrPctMax',
+      title: 'Gross yield, long-term — max (%)',
+      type: 'number',
+      group: 'rent',
+      validation: (Rule) =>
+        Rule.min(0)
+          .max(100)
+          .custom((value, context) => {
+            const min = (context.document as {grossYieldLtrPctMin?: number} | undefined)
+              ?.grossYieldLtrPctMin
+            if (typeof value !== 'number' || typeof min !== 'number') return true
+            return value >= min ? true : 'Max must be greater than or equal to min.'
+          }),
     }),
     defineField({
       name: 'grossYieldStrPct',
@@ -234,6 +259,28 @@ export const zoneMetrics = defineType({
       type: 'number',
       group: 'rent',
       validation: (Rule) => Rule.min(0).max(100),
+    }),
+    defineField({
+      name: 'grossYieldStrPctMin',
+      title: 'Gross yield, short-term — min (%)',
+      type: 'number',
+      group: 'rent',
+      validation: (Rule) => Rule.min(0).max(100),
+    }),
+    defineField({
+      name: 'grossYieldStrPctMax',
+      title: 'Gross yield, short-term — max (%)',
+      type: 'number',
+      group: 'rent',
+      validation: (Rule) =>
+        Rule.min(0)
+          .max(100)
+          .custom((value, context) => {
+            const min = (context.document as {grossYieldStrPctMin?: number} | undefined)
+              ?.grossYieldStrPctMin
+            if (typeof value !== 'number' || typeof min !== 'number') return true
+            return value >= min ? true : 'Max must be greater than or equal to min.'
+          }),
     }),
 
     // --- State reference price ---------------------------------------------
