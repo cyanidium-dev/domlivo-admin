@@ -11,6 +11,8 @@
     "align:district-taxonomy": "sanity exec scripts/alignDistrictTaxonomy.ts --with-user-token -- --apply",
     "purge:seed-placeholders:dry": "sanity exec scripts/purgeSeedPlaceholders.ts --with-user-token",
     "purge:seed-placeholders": "sanity exec scripts/purgeSeedPlaceholders.ts --with-user-token -- --apply",
+    "backfill:district-title-it:dry": "sanity exec scripts/backfillDistrictTitleIt.ts --with-user-token",
+    "backfill:district-title-it": "sanity exec scripts/backfillDistrictTitleIt.ts --with-user-token -- --apply",
     "seed:city-landings": "tsx scripts/seedCityLandingsTiranaDurres.ts",
     "seed:cities-landing": "tsx scripts/seedCitiesLanding.ts",
     "verify:landing-translations": "tsx scripts/verifyLandingTranslations.ts",
