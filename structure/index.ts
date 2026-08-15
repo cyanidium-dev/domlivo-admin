@@ -127,6 +127,38 @@ export const structure: StructureResolver = (S, context) =>
             ]),
         ),
 
+      S.listItem()
+        .title('Zone Metrics')
+        .child(
+          S.list()
+            .title('Zone Metrics')
+            .items([
+              S.listItem()
+                .title('By City')
+                .child(
+                  S.documentTypeList('city')
+                    .title('Zone Metrics by City')
+                    .child((cityId) =>
+                      S.documentTypeList('zoneMetrics')
+                        .title('Zone Metrics')
+                        // The city's own record plus every record of its districts.
+                        .filter(
+                          '_type == "zoneMetrics" && (zone._ref == $cityId || zone->city._ref == $cityId)',
+                        )
+                        .params({cityId})
+                        .defaultOrdering([{field: 'periodDate', direction: 'desc'}]),
+                    ),
+                ),
+              S.listItem()
+                .title('All Records')
+                .child(
+                  S.documentTypeList('zoneMetrics')
+                    .title('All Zone Metrics')
+                    .defaultOrdering([{field: 'periodDate', direction: 'desc'}]),
+                ),
+            ]),
+        ),
+
       S.divider(),
 
       S.listItem()

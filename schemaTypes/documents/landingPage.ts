@@ -136,6 +136,8 @@ export const landingPage = defineType({
         defineArrayMember({type: 'priceTableSection'}),
         defineArrayMember({type: 'statsBandSection'}),
         defineArrayMember({type: 'sourcesSection'}),
+        defineArrayMember({type: 'zoneStatsAutoSection'}),
+        defineArrayMember({type: 'zonePriceTableAutoSection'}),
         defineArrayMember({type: 'mortgageCalcSection'}),
         defineArrayMember({type: 'roiCalcSection'}),
         defineArrayMember({type: 'purchaseCostCalcSection'}),

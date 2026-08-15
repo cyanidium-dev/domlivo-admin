@@ -1,0 +1,860 @@
+{
+  "$comment": [
+    "Seed data for zoneMetrics — docs/engineering/PLAN-zone-metrics-2026-08-15.md Task 3.",
+    "Every figure traces to a knowledge-base section named in `kbSource`. Prices are €/m², rent €/month, referencePrice lek/m².",
+    "periodLabel is the vintage of the data, not the date of the seed.",
+    "Deliberately absent: STR figures for Vlorë (2023 and self-contradicted, see DATA-GATHERING-STATUS §3.2), STR ADR anywhere the KB quotes USD, Himarë microzones (market too thin, OPEN-QUESTIONS #37), gross yields (the KB gives ranges, the schema holds one number — ranges live in notes), Astir reference price (unmapped, reference-prices §5a)."
+  ],
+  "sourceLibrary": {
+    "troja": {
+      "label": "Troja.al — apartment prices in Tirana by neighbourhood, 2026",
+      "url": "https://troja.al/sa-kushton-nje-apartament-ne-tirane-ne-2026-cmimet-e-verteta-lagje-per-lagje/",
+      "publisher": "Troja.al"
+    },
+    "shqiptarja": {
+      "label": "Shqiptarja — sales-department field prices, Tirana",
+      "url": "https://shqiptarja.com/lajm/rritja-e-cmimeve-te-apartamenteve-nuk-ndalet-ne-tirane-nga-1500-3-000-euro-ja-si-variojne-nga-periferia-ne-zonat-afer-qendres",
+      "publisher": "Shqiptarja"
+    },
+    "referencePrices": {
+      "label": "Çmimet e Referencës — state reference price schedule",
+      "url": "https://homezone.al/en/report/reference-prices",
+      "publisher": "Homezone, citing Udhëzim nr. 34, 29.12.2023"
+    },
+    "monitorCoast": {
+      "label": "Monitor.al — coastal apartment prices, agency survey",
+      "url": "https://monitor.al/sa-i-ka-shtrenjtuar-cmimet-e-apartamenteve-ne-bregdet-kerkesa-nga-te-huajt-2/",
+      "publisher": "Monitor.al"
+    },
+    "monitorDurres": {
+      "label": "Monitor.al — foreigners on the coast, prices by zone",
+      "url": "https://monitor.al/te-huajt-pushtojne-bregdetin-apartamentet-arrijne-6-mije-euro-m2-vilat-deri-ne-3-mln-euro/",
+      "publisher": "Monitor.al"
+    },
+    "monitorReference2026": {
+      "label": "Monitor.al — new reference price schedule effective 01.01.2026",
+      "url": "https://monitor.al/tabela-cmimet-e-reja-te-references-deri-ne-2-mije-euro-m2-trefishim-per-durres-vollga-e-sazan/",
+      "publisher": "Monitor.al"
+    },
+    "merrjep": {
+      "label": "MerrJep listings, analysed by DomLivo",
+      "url": "https://www.merrjep.al",
+      "publisher": "MerrJep",
+      "date": "2026-08-15"
+    },
+    "keydata": {
+      "label": "Keydata via Monitor.al — Tirana transaction prices Q2 2025",
+      "url": "https://monitor.al/keydata-cmimet-e-apartamenteve-ne-3-mujorin-e-dyte-2025-jane-trefishuar-krahasuar-me-2005/",
+      "publisher": "Keydata"
+    },
+    "investropa": {
+      "label": "Investropa — Durrës, which area to buy in",
+      "url": "https://investropa.com/blogs/news/durres-which-area",
+      "publisher": "Investropa"
+    },
+    "globihome": {
+      "label": "Globihome — Vlora and Saranda market guides",
+      "url": "https://globihome.com/en/blog/vlora-real-estate-guide",
+      "publisher": "Globihome"
+    },
+    "rivierahomes": {
+      "label": "Riviera Homes — Himara listings",
+      "url": "https://rivierahomes.al/himara/",
+      "publisher": "Riviera Homes"
+    },
+    "homezoneShengjin": {
+      "label": "Homezone — Shëngjin sale listings",
+      "url": "https://homezone.al/properties/sale/Shengjin",
+      "publisher": "Homezone"
+    },
+    "rtsh": {
+      "label": "RTSH — apartment prices in Shkodër doubled over five years",
+      "url": "https://rtsh.al/dyfishohen-cmimet-e-apartamenteve-ne-shkoder-rritja-ne-pese-vitet-e-fundit-per-apartamentet-e-reja-bie-fuqia-blerese/",
+      "publisher": "RTSH"
+    },
+    "deloitte": {
+      "label": "Deloitte Property Index 2025 via Monitor.al — Vlora average",
+      "url": "https://monitor.al/sa-i-ka-shtrenjtuar-cmimet-e-apartamenteve-ne-bregdet-kerkesa-nga-te-huajt-2/",
+      "publisher": "Deloitte"
+    }
+  },
+  "editions": {
+    "u34": "Udhëzim 34/2023 (in force 01.01.2024)",
+    "e2026": "Edition effective 01.01.2026",
+    "south": "Southern map, collected 2026-08-15 (edition unverified — OPEN-QUESTIONS #39)"
+  },
+  "records": [
+    {
+      "zone": "blloku",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "high",
+      "priceNewMin": 3000,
+      "priceNewMax": 5500,
+      "priceResaleMin": 2500,
+      "priceResaleMax": 3500,
+      "rentLtr1brMin": 500,
+      "rentLtr1brMax": 700,
+      "rentLtr2brMin": 700,
+      "rentLtr2brMax": 1000,
+      "ratingOverall": 8.5,
+      "referencePrice": 228400,
+      "referencePriceEdition": "u34",
+      "sources": ["troja", "shqiptarja", "referencePrices"],
+      "kbSource": "03-districts/tirana-districts.md §1, §2; 12-reference-prices §5a"
+    },
+    {
+      "zone": "liqeni-artificial",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "high",
+      "priceNewMin": 2400,
+      "priceNewMax": 3000,
+      "priceResaleMin": 2000,
+      "priceResaleMax": 2700,
+      "ratingOverall": 8.5,
+      "referencePriceMin": 164800,
+      "referencePriceMax": 175800,
+      "referencePriceEdition": "u34",
+      "sources": ["troja", "referencePrices"],
+      "notes": {
+        "en": "The zone spans cadastral subzones 5/2 and 5/3, so the reference price is a range rather than one rate. A luxury tower here set the country record at €10,000/m², far outside the band above.",
+        "ru": "Зона охватывает подзоны 5/2 и 5/3, поэтому референс-цена — диапазон, а не одна ставка. Люкс-башня здесь установила рекорд страны €10 000/м², далеко за пределами диапазона выше."
+      },
+      "kbSource": "03-districts/tirana-districts.md §1, §2; 12-reference-prices §5a"
+    },
+    {
+      "zone": "komuna-e-parisit",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "high",
+      "priceNewMin": 2000,
+      "priceNewMax": 3000,
+      "priceResaleMin": 1700,
+      "priceResaleMax": 2200,
+      "rentLtr1brMin": 350,
+      "rentLtr1brMax": 500,
+      "rentLtr2brMin": 550,
+      "rentLtr2brMax": 850,
+      "ratingOverall": 8,
+      "referencePrice": 164800,
+      "referencePriceEdition": "u34",
+      "sources": ["troja", "shqiptarja", "referencePrices"],
+      "kbSource": "03-districts/tirana-districts.md §1, §2; 12-reference-prices §5a"
+    },
+    {
+      "zone": "myslym-shyri",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "high",
+      "priceNewMin": 2000,
+      "priceNewMax": 2500,
+      "priceResaleMin": 1500,
+      "priceResaleMax": 2000,
+      "rentLtr1brMin": 350,
+      "rentLtr1brMax": 450,
+      "rentLtr2brMin": 500,
+      "rentLtr2brMax": 750,
+      "ratingOverall": 8,
+      "referencePriceMin": 114300,
+      "referencePriceMax": 192800,
+      "referencePriceEdition": "u34",
+      "sources": ["troja", "shqiptarja", "referencePrices"],
+      "notes": {
+        "en": "The street divides administrative units 7 and 10, so the reference figure is the span of both units and cannot be given as a single rate.",
+        "ru": "Улица делит административные единицы 7 и 10, поэтому референс — диапазон двух единиц, а не одна ставка."
+      },
+      "kbSource": "03-districts/tirana-districts.md §1; 12-reference-prices §5a"
+    },
+    {
+      "zone": "qender-tirana",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "medium",
+      "priceNewMin": 2300,
+      "priceNewMax": 3500,
+      "priceResaleMin": 1500,
+      "priceResaleMax": 2500,
+      "ratingOverall": 7.5,
+      "referencePriceMin": 121200,
+      "referencePriceMax": 192800,
+      "referencePriceEdition": "u34",
+      "sources": ["troja", "shqiptarja", "referencePrices"],
+      "kbSource": "03-districts/tirana-districts.md §1, §2"
+    },
+    {
+      "zone": "pazari-i-ri",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "medium",
+      "priceNewMin": 2300,
+      "priceNewMax": 3500,
+      "priceResaleMin": 1500,
+      "priceResaleMax": 2500,
+      "ratingOverall": 7.5,
+      "referencePrice": 148400,
+      "referencePriceEdition": "u34",
+      "sources": ["troja", "referencePrices"],
+      "notes": {
+        "en": "Prices are the Qendra band: the market quotes the New Bazaar together with the central area. The reference price is specific to the zone (2/2). Best short-stay location in the city.",
+        "ru": "Цены — диапазон Qendra: рынок котирует Новый базар вместе с центром. Референс-цена относится именно к зоне (2/2). Лучшая локация города под краткосрочную аренду."
+      },
+      "kbSource": "03-districts/tirana-districts.md §1, §2; 12-reference-prices §5a"
+    },
+    {
+      "zone": "21-dhjetori",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "high",
+      "priceNewMin": 1800,
+      "priceNewMax": 2200,
+      "priceResaleMin": 1400,
+      "priceResaleMax": 1800,
+      "ratingOverall": 6.5,
+      "referencePriceMin": 114300,
+      "referencePriceMax": 159100,
+      "referencePriceEdition": "u34",
+      "sources": ["troja", "referencePrices"],
+      "kbSource": "03-districts/tirana-districts.md §1, §2; 12-reference-prices §5a"
+    },
+    {
+      "zone": "bulevardi-i-ri",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "high",
+      "priceNewMin": 1900,
+      "priceNewMax": 2700,
+      "ratingOverall": 7.5,
+      "referencePriceMin": 93600,
+      "referencePriceMax": 163600,
+      "referencePriceEdition": "u34",
+      "sources": ["troja", "referencePrices"],
+      "notes": {
+        "en": "Second line rose 36% in a year, the fastest in the city, and the price already carries the master plan rather than what is built. The reference range spans two administrative units (9 and 11).",
+        "ru": "Вторая линия выросла на 36% за год — быстрее всех в городе; цена уже закладывает мастер-план, а не построенное. Референс-диапазон охватывает две единицы (9 и 11)."
+      },
+      "kbSource": "03-districts/tirana-districts.md §1, §2; 12-reference-prices §5a"
+    },
+    {
+      "zone": "don-bosko",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "high",
+      "priceNewMin": 1500,
+      "priceNewMax": 2000,
+      "priceResaleMin": 1200,
+      "priceResaleMax": 1600,
+      "rentLtr1brMin": 250,
+      "rentLtr1brMax": 400,
+      "rentLtr2brMin": 400,
+      "rentLtr2brMax": 600,
+      "ratingOverall": 7,
+      "referencePriceMin": 113850,
+      "referencePriceMax": 163600,
+      "referencePriceEdition": "u34",
+      "sources": ["troja", "shqiptarja", "referencePrices"],
+      "kbSource": "03-districts/tirana-districts.md §1, §2; 12-reference-prices §5a"
+    },
+    {
+      "zone": "ali-demi",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "medium",
+      "priceNewMin": 1400,
+      "priceNewMax": 1800,
+      "priceResaleMin": 1100,
+      "priceResaleMax": 1500,
+      "ratingOverall": 6.5,
+      "referencePriceMin": 97200,
+      "referencePriceMax": 102800,
+      "referencePriceEdition": "u34",
+      "sources": ["troja", "referencePrices"],
+      "kbSource": "03-districts/tirana-districts.md §1, §2; 12-reference-prices §5a"
+    },
+    {
+      "zone": "fresku",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "high",
+      "priceNewMin": 1400,
+      "priceNewMax": 1500,
+      "ratingOverall": 6,
+      "referencePrice": 75500,
+      "referencePriceEdition": "u34",
+      "sources": ["troja", "referencePrices"],
+      "notes": {
+        "en": "Up 16–27% from €1,100–1,200 in 2024, driven by the new road to the Grand Ring. The zone depends on that single road.",
+        "ru": "Рост на 16–27% с €1 100–1 200 в 2024 году благодаря новой дороге на Большое кольцо. Зона зависит от одной этой дороги."
+      },
+      "kbSource": "03-districts/tirana-districts.md §1, §2; 12-reference-prices §5a"
+    },
+    {
+      "zone": "astir-unaza-e-re",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "high",
+      "priceNewMin": 1200,
+      "priceNewMax": 1500,
+      "priceResaleMin": 900,
+      "priceResaleMax": 1200,
+      "rentLtr1brMin": 200,
+      "rentLtr1brMax": 350,
+      "rentLtr2brMin": 300,
+      "rentLtr2brMax": 500,
+      "ratingOverall": 6,
+      "sources": ["troja", "shqiptarja"],
+      "notes": {
+        "en": "No reference price: the street directory does not resolve Astir to an administrative unit, and guessing one would fabricate an official figure. The largest new-build front in the south-west, and the city's main oversupply risk — downside scenarios carry 10–15% discounts.",
+        "ru": "Референс-цены нет: справочник улиц не определяет единицу для Astir, а догадка сфабриковала бы официальную цифру. Крупнейший фронт новой застройки юго-запада и главный риск переизбытка предложения в городе — в даунсайде дисконты 10–15%."
+      },
+      "kbSource": "03-districts/tirana-districts.md §1, §2; 12-reference-prices §5a (unmapped)"
+    },
+    {
+      "zone": "shkoze",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "medium",
+      "priceNewMedian": 1400,
+      "ratingOverall": 5.5,
+      "referencePriceMin": 97200,
+      "referencePriceMax": 102800,
+      "referencePriceEdition": "u34",
+      "sources": ["troja", "referencePrices"],
+      "kbSource": "03-districts/tirana-districts.md §1, §2; 12-reference-prices §5a"
+    },
+    {
+      "zone": "kashar",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "medium",
+      "priceNewMin": 1000,
+      "priceNewMax": 1400,
+      "priceResaleMin": 800,
+      "priceResaleMax": 1100,
+      "ratingOverall": 6,
+      "referencePrice": 69000,
+      "referencePriceEdition": "u34",
+      "sources": ["troja", "referencePrices"],
+      "kbSource": "03-districts/tirana-districts.md §1, §2; 12-reference-prices §5a"
+    },
+    {
+      "zone": "kombinat",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "high",
+      "priceNewMin": 1000,
+      "priceNewMax": 1300,
+      "priceResaleMin": 700,
+      "priceResaleMax": 1000,
+      "rentLtr1brMin": 150,
+      "rentLtr1brMax": 200,
+      "ratingOverall": 5.5,
+      "referencePrice": 81700,
+      "referencePriceEdition": "u34",
+      "sources": ["troja", "referencePrices"],
+      "notes": {
+        "en": "The lowest reference price in Tirana and the largest seven-year rise against it (+151%). A 1950s factory town, six kilometres from the centre, gentrifying early.",
+        "ru": "Самая низкая референс-цена в Тиране и максимальный рост рынка к ней за семь лет (+151%). Соцгород 1950-х в 6 км от центра, ранняя стадия джентрификации."
+      },
+      "kbSource": "03-districts/tirana-districts.md §1, §2; 12-reference-prices §2a, §5a"
+    },
+    {
+      "zone": "paskuqan",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "high",
+      "priceNewMin": 800,
+      "priceNewMax": 1200,
+      "priceResaleMin": 600,
+      "priceResaleMax": 900,
+      "ratingOverall": 4,
+      "referencePrice": 62500,
+      "referencePriceEdition": "u34",
+      "sources": ["troja", "referencePrices"],
+      "notes": {
+        "en": "The largest area of 1990s informal building in the agglomeration; legalisation through ALUIZNI/AShK is slow, and title risk is the reason the entry price is this low.",
+        "ru": "Крупнейшая зона неформальной застройки 1990-х в агломерации; легализация через ALUIZNI/AShK идёт медленно, и риск титулов — причина низкой цены входа."
+      },
+      "kbSource": "03-districts/tirana-districts.md §1, §2; 12-reference-prices §5a"
+    },
+    {
+      "zone": "kamez",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "medium",
+      "priceNewMin": 750,
+      "priceNewMax": 900,
+      "ratingOverall": 3.5,
+      "referencePrice": 62500,
+      "referencePriceEdition": "u34",
+      "sources": ["troja", "referencePrices"],
+      "notes": {
+        "en": "The cheapest entry into greater Tirana and the highest risk profile: titles, transport, reputation. Formally its own municipality.",
+        "ru": "Самый дешёвый вход в «большую Тирану» и максимальный риск: титулы, транспорт, репутация. Формально — отдельная башкия."
+      },
+      "kbSource": "03-districts/tirana-districts.md §1, §2; 12-reference-prices §5a"
+    },
+
+    {
+      "zone": "city-center-durres",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "medium",
+      "priceAllMin": 1900,
+      "priceAllMax": 2800,
+      "sources": ["investropa", "monitorDurres"],
+      "notes": {
+        "en": "Covers the Currila, Vollga and Taulantia premium strip; penthouses ask above €3,000/m². Currila is up 70–90% since 2019.",
+        "ru": "Охватывает премиальную полосу Currila, Vollga, Taulantia; пентхаусы — свыше €3 000/м². Currila +70–90% с 2019 года."
+      },
+      "kbSource": "02-cities/durres.md §2"
+    },
+    {
+      "zone": "plazh",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "high",
+      "priceAllMin": 1200,
+      "priceAllMax": 1700,
+      "sources": ["monitorDurres"],
+      "notes": {
+        "en": "Up to +21% year on year, from €1,000–1,300. The mass beach segment of the city.",
+        "ru": "Рост до +21% г/г с €1 000–1 300. Массовый пляжный сегмент города."
+      },
+      "kbSource": "02-cities/durres.md §2"
+    },
+    {
+      "zone": "shkembi-durres",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "high",
+      "priceNewMin": 1200,
+      "priceNewMax": 2000,
+      "priceResaleMin": 450,
+      "priceResaleMax": 800,
+      "priceAllMedian": 1110,
+      "sources": ["monitorDurres"],
+      "notes": {
+        "en": "The widest new-to-old spread in Durrës: older stock trades from €450/m² while new builds ask up to €2,000/m².",
+        "ru": "Самый широкий разрыв нового и старого фонда в Дурресе: старый фонд от €450/м², новостройки до €2 000/м²."
+      },
+      "kbSource": "02-cities/durres.md §2"
+    },
+    {
+      "zone": "golem-durres",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "high",
+      "priceAllMin": 1100,
+      "priceAllMax": 1500,
+      "referencePrice": 56500,
+      "referencePriceEdition": "u34",
+      "sources": ["monitorDurres", "referencePrices"],
+      "notes": {
+        "en": "Second and third line. Up 8–15% year on year. The zone's standing risk is sewerage discharging onto the beach.",
+        "ru": "Вторая и третья линия. Рост 8–15% г/г. Постоянный риск зоны — сток канализации на пляж."
+      },
+      "kbSource": "02-cities/durres.md §1, §2; 12-reference-prices §3"
+    },
+    {
+      "zone": "golem-1st-line",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "high",
+      "priceAllMin": 2000,
+      "priceAllMax": 2500,
+      "sources": ["monitorDurres"],
+      "notes": {
+        "en": "Up 10–25% year on year against no new construction — the premium is scarcity, not product.",
+        "ru": "Рост 10–25% г/г при отсутствии новых строек — премия за дефицит, а не за качество продукта."
+      },
+      "kbSource": "02-cities/durres.md §2"
+    },
+    {
+      "zone": "plepa-durres",
+      "periodLabel": "2026-H2",
+      "periodDate": "2026-07-01",
+      "basis": "asking",
+      "confidence": "medium",
+      "priceAllMin": 1000,
+      "priceAllMax": 2160,
+      "sampleSize": 159,
+      "sources": ["monitorDurres"],
+      "notes": {
+        "en": "Two segments inside one zone: mass stock at €1,000–1,270/m² and sea-view at €1,800–2,160/m². The band above spans both, so read it with that split in mind.",
+        "ru": "Два сегмента в одной зоне: массовый €1 000–1 270/м² и с видом на море €1 800–2 160/м². Диапазон выше охватывает оба."
+      },
+      "kbSource": "02-cities/durres.md §2 (added 2026-08-15)"
+    },
+    {
+      "zone": "shkozet",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "medium",
+      "priceAllMin": 1100,
+      "priceAllMax": 1600,
+      "sources": ["investropa"],
+      "notes": {
+        "en": "Inland Durrës. One local source puts the band lower, at €800–1,200; the truth sits between the two.",
+        "ru": "Внутренний Дуррес. Один локальный источник даёт €800–1 200; истина между двумя оценками."
+      },
+      "kbSource": "02-cities/durres.md §2"
+    },
+
+    {
+      "zone": "lungomare",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "high",
+      "priceAllMin": 2500,
+      "priceAllMax": 3500,
+      "sources": ["monitorCoast"],
+      "notes": {
+        "en": "Doubled in three years from €1,700–1,800 in 2022.",
+        "ru": "Удвоение за три года с €1 700–1 800 в 2022 году."
+      },
+      "kbSource": "02-cities/vlora-riviera.md §2"
+    },
+    {
+      "zone": "lungomare-2nd-line",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "high",
+      "priceAllMin": 2000,
+      "priceAllMax": 2500,
+      "sources": ["monitorCoast"],
+      "notes": {
+        "en": "Up 33–67% year on year from €1,500 in 2024 — the second line is closing on the first.",
+        "ru": "Рост 33–67% г/г с €1 500 в 2024 году — вторая линия догоняет первую."
+      },
+      "kbSource": "02-cities/vlora-riviera.md §2"
+    },
+    {
+      "zone": "city-center-vlore",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "medium",
+      "priceAllMin": 800,
+      "priceAllMax": 1800,
+      "sources": ["monitorCoast"],
+      "notes": {
+        "en": "Vlora runs at two speeds: the boulevard and centre serve local buyers at €800–1,000/m² while the seafront serves foreign ones at three times that.",
+        "ru": "Влёра — двухскоростной рынок: бульвар и центр обслуживают локальных покупателей по €800–1 000/м², набережная — иностранных втрое дороже."
+      },
+      "kbSource": "02-cities/vlora-riviera.md §1, §2"
+    },
+    {
+      "zone": "uji-i-ftohte",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "calculated",
+      "confidence": "low",
+      "priceAllMin": 1875,
+      "priceAllMax": 2800,
+      "sources": ["globihome"],
+      "notes": {
+        "en": "Derived, not observed: the source states only that the zone runs 20–25% below Lungomare, and the band above applies that discount to the Lungomare range. Replace with measured figures when the parser covers Vlora.",
+        "ru": "Расчёт, а не наблюдение: источник даёт только «на 20–25% дешевле Lungomare», и диапазон выше применяет эту скидку к диапазону Lungomare. Заменить измеренными цифрами, когда парсер дойдёт до Влёры."
+      },
+      "kbSource": "02-cities/vlora-riviera.md §2"
+    },
+    {
+      "zone": "orikum",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "official",
+      "confidence": "high",
+      "referencePrice": 61400,
+      "referencePriceEdition": "u34",
+      "sources": ["referencePrices"],
+      "notes": {
+        "en": "Reference price only. No market band has been gathered for Orikum yet — the marina project dominates local coverage and no source prices the existing stock.",
+        "ru": "Только референс-цена. Рыночный диапазон по Оррикуму не собран — местные публикации заняты проектом марины, существующий фонд никто не оценивает."
+      },
+      "kbSource": "12-reference-prices §3"
+    },
+
+    {
+      "zone": "city-center-sarande",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "medium",
+      "priceAllMin": 1600,
+      "priceAllMax": 1800,
+      "sources": ["globihome"],
+      "notes": {
+        "en": "Turnkey stock, up from €1,200/m² in 2022–23. Foreign demand has fallen two years running — 50% in 2024 and a further 30% in 2025 — while prices kept rising.",
+        "ru": "Готовое жильё, рост с €1 200/м² в 2022–23. Иностранный спрос падает второй год подряд — −50% в 2024 и ещё −30% в 2025 — при продолжающемся росте цен."
+      },
+      "kbSource": "02-cities/saranda-ksamil.md §1, §2"
+    },
+    {
+      "zone": "ksamil",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "medium",
+      "priceAllMin": 1800,
+      "priceAllMax": 3000,
+      "strOccupancyPct": 38.3,
+      "referencePriceMin": 60000,
+      "referencePriceMax": 100000,
+      "referencePriceEdition": "south",
+      "sources": ["monitorCoast", "referencePrices"],
+      "notes": {
+        "en": "More expensive per square metre than Sarandë while earning less from short-term rental: 522 listings, up 86% year on year, at 38.3% occupancy. Buying here on rental income alone does not work.",
+        "ru": "Дороже Саранды за метр при меньшем доходе от краткосрочной аренды: 522 листинга (+86% г/г) при загрузке 38.3%. Покупка здесь под арендный доход не окупается."
+      },
+      "kbSource": "02-cities/saranda-ksamil.md §1, §2; 12-reference-prices §4"
+    },
+    {
+      "zone": "buze-shetitores",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "high",
+      "priceAllMin": 3000,
+      "priceAllMax": 3500,
+      "sources": ["monitorCoast"],
+      "notes": {
+        "en": "First line. Resort apartments reach €4,000/m², and up to €4,500/m² elsewhere on the coast.",
+        "ru": "Первая линия. Апартаменты в резортах доходят до €4 000/м², по стране — до €4 500/м²."
+      },
+      "kbSource": "02-cities/saranda-ksamil.md §2"
+    },
+
+    {
+      "zone": "center-shengjin",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "medium",
+      "priceAllMin": 1100,
+      "priceAllMax": 2000,
+      "referencePrice": 49200,
+      "referencePriceEdition": "u34",
+      "sources": ["homezoneShengjin", "referencePrices"],
+      "notes": {
+        "en": "The mass segment sits at €1,100–1,500/m²; the band's upper end is premium residences. The seaside zone is effectively the whole Shëngjin market.",
+        "ru": "Массовый сегмент — €1 100–1 500/м²; верх диапазона — премиальные резиденции. Приморская зона фактически и есть весь рынок Шенджина."
+      },
+      "kbSource": "02-cities/shengjin-velipoja.md §1, §2; 12-reference-prices §3"
+    },
+
+    {
+      "zone": "qender-shkoder",
+      "periodLabel": "2026-H2",
+      "periodDate": "2026-07-01",
+      "basis": "asking",
+      "confidence": "medium",
+      "priceNewMedian": 1457,
+      "priceResaleMedian": 1132,
+      "priceAllMedian": 1377,
+      "priceAllMin": 797,
+      "priceAllMax": 3956,
+      "sampleSize": 24,
+      "sources": ["merrjep"],
+      "notes": {
+        "en": "Medians of asking prices, price matched to floor area by listing ID. New-build premium 29%, the narrowest of the three quarters. Homezone's independently gathered €1,500–1,729/m² brackets the new-build median, which is the convergence check.",
+        "ru": "Медианы цен предложения, площадь соединена с ценой по ID объявления. Премия новостройки 29% — самая узкая из трёх кварталов. Независимо собранные Homezone €1 500–1 729/м² охватывают медиану новостроек — проверка сходимости."
+      },
+      "kbSource": "02-cities/shkoder.md §2c"
+    },
+    {
+      "zone": "gjuhadol",
+      "periodLabel": "2026-H2",
+      "periodDate": "2026-07-01",
+      "basis": "asking",
+      "confidence": "medium",
+      "priceNewMedian": 1205,
+      "priceResaleMedian": 1000,
+      "priceAllMedian": 1200,
+      "priceAllMin": 821,
+      "priceAllMax": 3464,
+      "sampleSize": 19,
+      "sources": ["merrjep"],
+      "notes": {
+        "en": "Mid-point of the Shkodra gradient, with a 21% new-build premium. Supply is thin: 79 apartment listings against 228 in Parrucë.",
+        "ru": "Середина градиента Шкодера, премия новостройки 21%. Предложение тонкое: 79 объявлений против 228 в Parrucë."
+      },
+      "kbSource": "02-cities/shkoder.md §2a, §2c"
+    },
+    {
+      "zone": "parruce",
+      "periodLabel": "2026-H2",
+      "periodDate": "2026-07-01",
+      "basis": "asking",
+      "confidence": "medium",
+      "priceNewMedian": 1182,
+      "priceResaleMedian": 870,
+      "priceAllMedian": 909,
+      "priceAllMin": 563,
+      "priceAllMax": 3205,
+      "rentLtr1brMin": 163,
+      "rentLtr1brMax": 255,
+      "sampleSize": 23,
+      "sources": ["merrjep"],
+      "notes": {
+        "en": "The deepest supply in the city, 228 listings, and the widest new-to-old gap at 36%. Rent is from a separate sample of 31 lek-denominated listings; euro-priced furnished units ask far more. Gross long-term yield works out at roughly 3.2–4.7% against peripheral purchase prices, before costs and vacancy.",
+        "ru": "Самое глубокое предложение в городе — 228 объявлений — и самый широкий разрыв нового и старого фонда, 36%. Аренда — отдельная выборка из 31 объявления в леках; меблированные объекты с ценой в евро просят заметно больше. Валовая доходность долгосрочной аренды — около 3.2–4.7% к периферийным ценам покупки, до расходов и простоя."
+      },
+      "kbSource": "02-cities/shkoder.md §2b, §2c"
+    },
+
+    {
+      "zone": "tirana",
+      "zoneType": "city",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "transaction",
+      "confidence": "high",
+      "priceAllMedian": 1863,
+      "referencePrice": 124300,
+      "referencePriceEdition": "u34",
+      "sources": ["keydata", "referencePrices"],
+      "notes": {
+        "en": "Keydata transaction average for Q2 2025: €2,054/m² inside the Small Ring, €2,660/m² in Blloku, €1,768/m² outside the ring. The Bank of Albania index shows the market flat half on half in H2 2025 after +56% a year earlier, so treat listing-based growth claims with care.",
+        "ru": "Транзакционная средняя Keydata за Q2 2025: €2 054/м² внутри Малого кольца, €2 660/м² в Блоку, €1 768/м² вне кольца. Индекс Банка Албании показывает 0% п/п во втором полугодии 2025 после +56% годом ранее — к листинговым оценкам роста относиться осторожно."
+      },
+      "kbSource": "02-cities/tirana.md §1, §3; 12-reference-prices §3"
+    },
+    {
+      "zone": "durres",
+      "zoneType": "city",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "mixed",
+      "confidence": "medium",
+      "priceAllMedian": 1450,
+      "referencePrice": 71200,
+      "referencePriceEdition": "u34",
+      "sources": ["monitorDurres", "referencePrices"],
+      "notes": {
+        "en": "City average, up about 18% year on year. The 01.01.2026 schedule tripled the port zone reference to 200,000 lek/m², which the city-level figure above does not reflect.",
+        "ru": "Средняя по городу, рост около 18% г/г. Редакция от 01.01.2026 утроила референс портовой зоны до 200 000 лек/м², что городская цифра выше не отражает."
+      },
+      "kbSource": "02-cities/durres.md §1; 12-reference-prices §3, §3a"
+    },
+    {
+      "zone": "vlore",
+      "zoneType": "city",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "mixed",
+      "confidence": "high",
+      "priceAllMedian": 2400,
+      "referencePrice": 66700,
+      "referencePriceEdition": "u34",
+      "sources": ["deloitte", "referencePrices"],
+      "notes": {
+        "en": "Deloitte's 2025 average, up 25% year on year, top of Europe alongside Tirana. Short-term rental figures are deliberately absent: the only reading is from 2023 and contradicts a later one. Vlora airport still has no flights as of summer 2026, and the expectation is already in the price.",
+        "ru": "Средняя Deloitte за 2025 год, +25% г/г — топ Европы вместе с Тираной. Данные по краткосрочной аренде намеренно отсутствуют: единственное значение относится к 2023 году и противоречит более позднему. Аэропорт Влёры к лету 2026 года рейсов не выполняет, ожидание уже в цене."
+      },
+      "kbSource": "02-cities/vlora-riviera.md §1; 12-reference-prices §3"
+    },
+    {
+      "zone": "sarande",
+      "zoneType": "city",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "high",
+      "priceAllMin": 2000,
+      "priceAllMax": 2500,
+      "strOccupancyPct": 40.9,
+      "referencePriceMax": 100000,
+      "referencePriceEdition": "south",
+      "sources": ["monitorCoast", "referencePrices"],
+      "notes": {
+        "en": "New builds within a kilometre of the sea. 430 short-term listings at 40.9% occupancy. Nightly rate is not stored because the source quotes it in dollars and converting it would invent precision.",
+        "ru": "Новостройки в пределах километра от моря. 430 листингов краткосрочной аренды при загрузке 40.9%. Ставка за ночь не сохранена: источник даёт её в долларах, конвертация создала бы ложную точность."
+      },
+      "kbSource": "02-cities/saranda-ksamil.md §1, §2; 12-reference-prices §4"
+    },
+    {
+      "zone": "shengjin",
+      "zoneType": "city",
+      "periodLabel": "2026-H1",
+      "periodDate": "2026-01-01",
+      "basis": "asking",
+      "confidence": "medium",
+      "priceAllMin": 1100,
+      "priceAllMax": 2000,
+      "referencePrice": 49200,
+      "referencePriceEdition": "u34",
+      "sources": ["homezoneShengjin", "referencePrices"],
+      "notes": {
+        "en": "The Shëngjin–Velipoja road opened in 2025, cutting 66 km to under 15. Buyers are largely Kosovar and diaspora; typical time to sell is three to three and a half months.",
+        "ru": "Дорога Шенджин–Велипоя открыта в 2025 году: 66 км сократились до 15. Покупатели — преимущественно косовары и диаспора; типичный срок продажи 3–3.5 месяца."
+      },
+      "kbSource": "02-cities/shengjin-velipoja.md §1, §2; 12-reference-prices §3"
+    },
+    {
+      "zone": "himare",
+      "zoneType": "city",
+      "periodLabel": "2026-H2",
+      "periodDate": "2026-07-01",
+      "basis": "asking",
+      "confidence": "medium",
+      "priceAllMedian": 2701,
+      "priceAllMin": 1600,
+      "priceAllMax": 3200,
+      "sampleSize": 21,
+      "referencePrice": 140000,
+      "referencePriceEdition": "south",
+      "sources": ["merrjep", "rivierahomes", "referencePrices"],
+      "notes": {
+        "en": "City-level only: microzone samples are too thin to price separately, which is a property of this market rather than a gap in collection. First line with a view reaches €3,500/m² and drops to about €2,200/m² two or three streets back. The reference price rose 141%, from 58,000 to 140,000 lek/m².",
+        "ru": "Только городской уровень: выборки по микрозонам слишком тонкие, и это свойство рынка, а не пробел сбора. Первая линия с видом доходит до €3 500/м², в двух-трёх улицах от моря — около €2 200/м². Референс-цена выросла на 141%, с 58 000 до 140 000 лек/м²."
+      },
+      "kbSource": "02-cities/himara.md §1, §2a, §3; 12-reference-prices §4"
+    },
+    {
+      "zone": "shkoder",
+      "zoneType": "city",
+      "periodLabel": "2026-H2",
+      "periodDate": "2026-07-01",
+      "basis": "mixed",
+      "confidence": "medium",
+      "priceNewMin": 1700,
+      "priceNewMax": 1900,
+      "priceAllMin": 800,
+      "priceAllMax": 1900,
+      "referencePrice": 62300,
+      "referencePriceEdition": "u34",
+      "sources": ["rtsh", "merrjep", "referencePrices"],
+      "notes": {
+        "en": "No single city average is published, deliberately. The agency figure of €1,700–1,900/m² describes prime, mostly central new builds; peripheral and older stock runs €800–1,200/m². New-build prices roughly doubled in four to five years, driven by a shortage of building permits rather than by foreign demand.",
+        "ru": "Единая средняя по городу намеренно не публикуется. Агентская цифра €1 700–1 900/м² описывает премиальный, преимущественно центральный новый фонд; периферия и старый фонд — €800–1 200/м². Новый фонд подорожал примерно вдвое за 4–5 лет из-за дефицита разрешений на строительство, а не иностранного спроса."
+      },
+      "kbSource": "02-cities/shkoder.md §1, §2, §4; 12-reference-prices §3"
+    }
+  ]
+}

@@ -45,6 +45,8 @@ import {investorLogosSection} from './investorLogosSection'
 import {priceTableSection} from './priceTableSection'
 import {statsBandSection} from './statsBandSection'
 import {sourcesSection} from './sourcesSection'
+import {zoneStatsAutoSection} from './zoneStatsAutoSection'
+import {zonePriceTableAutoSection} from './zonePriceTableAutoSection'
 import {mortgageCalcSection} from './mortgageCalcSection'
 import {roiCalcSection} from './roiCalcSection'
 import {purchaseCostCalcSection} from './purchaseCostCalcSection'
@@ -111,6 +113,8 @@ export const objects = [
   priceTableSection,
   statsBandSection,
   sourcesSection,
+  zoneStatsAutoSection,
+  zonePriceTableAutoSection,
   mortgageCalcSection,
   roiCalcSection,
   purchaseCostCalcSection,
