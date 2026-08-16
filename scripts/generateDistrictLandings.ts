@@ -23,7 +23,9 @@
 import path from 'path'
 import {config as loadDotenv} from 'dotenv'
 import {createClient} from '@sanity/client'
+import fs from 'node:fs'
 import {resolveZoneSeo, type ZoneMetricsForSeo} from './lib/zoneSeoCopy'
+import {parseRegistry, flattenDistricts, roleOf} from './lib/zoneRegistry'
 
 loadDotenv({path: path.resolve(process.cwd(), '.env')})
 
@@ -104,6 +106,7 @@ const T = {
 type DistrictRow = {
   _id: string
   slug: string
+  isPublished?: boolean
   cityId: string
   citySlug: string
   countrySlug: string
@@ -150,13 +153,18 @@ function toBlocks(text: Localized, keyPrefix: string) {
   return out
 }
 
-/** Nearest by price, so the comparison table answers "what else costs this much". */
+/**
+ * Nearest by price, so the comparison table answers "what else costs this much".
+ * Only published neighbours are eligible: the frontend filters unpublished zones
+ * out of comparison tables, so an unpublished row would silently disappear at
+ * render and leave a shorter table than the one generated here.
+ */
 function nearestByPrice(self: DistrictRow, all: DistrictRow[], count = 3): DistrictRow[] {
-  if (typeof self.price !== 'number') {
-    return all.filter((d) => d._id !== self._id && typeof d.price === 'number').slice(0, count)
-  }
-  return all
-    .filter((d) => d._id !== self._id && typeof d.price === 'number')
+  const eligible = all.filter(
+    (d) => d._id !== self._id && typeof d.price === 'number' && d.isPublished !== false,
+  )
+  if (typeof self.price !== 'number') return eligible.slice(0, count)
+  return eligible
     .sort((a, b) => Math.abs((a.price as number) - (self.price as number)) - Math.abs((b.price as number) - (self.price as number)))
     .slice(0, count)
 }
@@ -199,10 +207,18 @@ function diffDoc(built: unknown, live: unknown, path = ''): string[] {
 }
 
 async function main() {
+  // Unpublished districts are included on purpose. The readiness gate
+  // (`npm run audit:zone-readiness`) requires a landing before a zone may be
+  // published, so restricting this to published zones made the two mutually
+  // blocking — nothing could ever satisfy both. A landing attached to an
+  // unpublished district renders nowhere (the frontend district query filters
+  // `isPublished != false`), so building it early is safe and means the page is
+  // reviewable before it goes live rather than after.
   const districts: DistrictRow[] = await client.fetch(
-    `*[_type == "district" && city->slug.current == $city && isPublished == true]{
+    `*[_type == "district" && city->slug.current == $city]{
       _id,
       "slug": slug.current,
+      isPublished,
       "cityId": city->_id,
       "citySlug": city->slug.current,
       "countrySlug": city->country->slug.current,
@@ -224,9 +240,21 @@ async function main() {
   )
 
   if (districts.length === 0) {
-    console.error(`No published districts found for city "${cityArg}".`)
+    console.error(`No districts found for city "${cityArg}".`)
     process.exit(1)
   }
+
+  // `metric-only` zones carry figures but must never become pages — they are
+  // price lines within a district, not places. See scripts/lib/zoneRegistry.ts.
+  const registry = parseRegistry(
+    JSON.parse(fs.readFileSync(path.resolve(process.cwd(), 'scripts/data/zones.json'), 'utf8')),
+  )
+  const metricOnly = new Set(
+    flattenDistricts(registry).filter((d) => roleOf(d) === 'metric-only').map((d) => d.slug),
+  )
+  const excluded = districts.filter((d) => metricOnly.has(d.slug)).map((d) => d.slug)
+  for (const s of excluded) console.log(`metric   ${s} (metric-only — no page by design)`)
+  const pageZones = districts.filter((d) => !metricOnly.has(d.slug))
 
   const existing: string[] = await client.fetch(
     `*[_type == "landingPage" && pageType == "district" && linkedDistrict->city->slug.current == $city].linkedDistrict._ref`,
@@ -238,7 +266,7 @@ async function main() {
   const skipped: string[] = []
   const noData: string[] = []
 
-  for (const d of districts) {
+  for (const d of pageZones) {
     if (has.has(d._id) && !isForce && !isVerify) { skipped.push(d.slug); continue }
     // Without metrics the data blocks render nothing, and a landing would be
     // thinner than the fallback template it replaces. Leave those alone.
@@ -281,7 +309,7 @@ async function main() {
       )
     }
     const catalogHref = `/${d.countrySlug}/${d.citySlug}/sale?district=${d.slug}`
-    const neighbours = nearestByPrice(d, districts)
+    const neighbours = nearestByPrice(d, pageZones)
 
     const sections: Record<string, unknown>[] = [
       {
