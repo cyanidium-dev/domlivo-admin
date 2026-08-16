@@ -706,18 +706,21 @@
       "zone": "orikum",
       "periodLabel": "2026-H1",
       "periodDate": "2026-01-01",
-      "basis": "official",
+      "basis": "asking",
       "confidence": "high",
       "referencePrice": 61400,
       "referencePriceEdition": "u34",
       "sources": [
+        "monitorCoast",
         "referencePrices"
       ],
       "notes": {
-        "en": "Reference price only. No market band has been gathered for Orikum yet — the marina project dominates local coverage and no source prices the existing stock.",
-        "ru": "Только референс-цена. Рыночный диапазон по Оррикуму не собран — местные публикации заняты проектом марины, существующий фонд никто не оценивает."
+        "en": "The lower segment moved from €800/m² to €1,300 — up 63% — with the ceiling around €1,500. Orikum is the cheap end of the Vlora bay: the marina rebrand dominates local coverage, but the existing stock still prices well below Lungomare. The state reference is 61,400 lek/m² (~€625).",
+        "ru": "Нижний сегмент прошёл путь от €800/м² до €1 300 — рост 63%, потолок около €1 500. Оррикум — дешёвый край Влёрского залива: местные публикации заняты ребрендингом марины, но существующий фонд по-прежнему заметно дешевле Лунгомаре. Государственный референс — 61 400 лек/м² (~€625)."
       },
-      "kbSource": "12-reference-prices §3"
+      "kbSource": "02-cities/vlora-riviera.md §7; 12-reference-prices §3",
+      "priceAllMin": 1300,
+      "priceAllMax": 1500
     },
     {
       "zone": "city-center-sarande",
