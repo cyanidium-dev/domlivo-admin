@@ -14,6 +14,7 @@ import {locationTag} from './locationTag'
 import {siteSettings} from './siteSettings'
 import {landingPage} from './landingPage'
 import {registrationRequest} from './registrationRequest'
+import {botAccessRequest} from './botAccessRequest'
 import {tracker} from './tracker'
 import {developer} from './developer'
 import {zoneMetrics} from './zoneMetrics'
@@ -40,6 +41,7 @@ export const documents = [
   locationTag,
   siteSettings,
   registrationRequest,
+  botAccessRequest,
   tracker,
   developer,
   zoneMetrics,

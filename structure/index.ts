@@ -78,6 +78,15 @@ export const structure: StructureResolver = (S, context) =>
             .defaultOrdering([{field: '_createdAt', direction: 'desc'}]),
         ),
 
+      S.listItem()
+        .title('Bot Access Requests')
+        .id('botAccessRequests')
+        .child(
+          S.documentTypeList('botAccessRequest')
+            .title('Bot Access Requests')
+            .defaultOrdering([{field: 'requestedAt', direction: 'desc'}]),
+        ),
+
       S.divider(),
 
       S.documentTypeListItem('country').title('Countries'),
