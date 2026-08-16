@@ -63,6 +63,7 @@ type Doc = {
   metrics?: ZoneMetricsForSeo | null
   landing?: {
     _id: string
+    pageType?: string
     title?: SeoLocalized
     metaTitle?: SeoLocalized
     metaDescription?: SeoLocalized
@@ -87,8 +88,12 @@ async function main() {
         priceAllMin, priceAllMax, priceAllMedian,
         rentLtr1brMin, rentLtr1brMax, referencePrice, periodLabel
       },
-      "landing": *[_type == "landingPage" && linkedDistrict._ref == ^._id][0]{
+      "landing": *[
+        _type == "landingPage" &&
+        (linkedDistrict._ref == ^._id || linkedCity._ref == ^._id)
+      ][0]{
         _id,
+        pageType,
         title,
         "metaTitle": seo.metaTitle,
         "metaDescription": seo.metaDescription,
@@ -134,7 +139,9 @@ async function main() {
         (differs(metaTitle, landing.metaTitle) ||
           differs(metaDescription, landing.metaDescription) ||
           differs(metaTitle, landing.title) ||
-          differs(metaTitle, landing.heroTitle)),
+          // A district landing's H1 was generated from the same string; a city
+          // landing's was written by hand, so it is left alone.
+          (landing.pageType === 'district' && differs(metaTitle, landing.heroTitle))),
     )
     if (!docNeedsWrite && !landingNeedsWrite) { skipped.push(doc.slug); continue }
 
@@ -153,9 +160,12 @@ async function main() {
           set: {
             ...set,
             title: metaTitle,
-            // The hero H1 is the same string; leaving it behind would show one
-            // title on the page and another in the tab.
-            'pageSections[_key=="hero"].title': metaTitle,
+            // A district landing's H1 is the same generated string, so it moves
+            // with it. A city landing's headline is editorial copy — the tab
+            // and the H1 are allowed to differ there.
+            ...(landing.pageType === 'district'
+              ? {'pageSections[_key=="hero"].title': metaTitle}
+              : {}),
           },
         },
       })

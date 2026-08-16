@@ -161,7 +161,7 @@ function nearestByPrice(self: DistrictRow, all: DistrictRow[], count = 3): Distr
 }
 
 /** Sanity's own bookkeeping, plus the one field that legitimately moves with the clock. */
-const IGNORED_KEYS = new Set(['_rev', '_createdAt', '_updatedAt', 'contentUpdatedAt'])
+const IGNORED_KEYS = new Set(['_rev', '_createdAt', '_updatedAt', '_system', 'contentUpdatedAt'])
 
 /** Field-by-field comparison, reporting paths rather than a wall of JSON. */
 function diffDoc(built: unknown, live: unknown, path = ''): string[] {
