@@ -1256,11 +1256,11 @@
         }
       },
       "angle": {
-        "en": "The neighbour comparison every investor asks about — and the one place this site does not hold its own price data, so the figures below are stated as sourced claims rather than measurements.",
-        "uk": "Порівняння із сусідом, про яке питає кожен інвестор — і єдине місце, де цей сайт не має власних цінових даних, тож цифри нижче подано як заявлені джерелами, а не як виміри.",
-        "ru": "Сравнение с соседом, о котором спрашивает каждый инвестор — и единственное место, где у этого сайта нет собственных ценовых данных, поэтому цифры ниже даны как заявленные источниками, а не как измерения.",
-        "sq": "Krahasimi me fqinjin që pyet çdo investitor — dhe i vetmi vend ku kjo faqe nuk ka të dhëna çmimi të vetat, ndaj shifrat më poshtë jepen si pretendime burimesh, jo si matje.",
-        "it": "Il confronto con il vicino che ogni investitore chiede, e l’unico caso in cui questo sito non ha dati propri: le cifre sotto sono affermazioni di fonti, non misurazioni."
+        "en": "Albania is genuinely a discount to Montenegro — Budva asks 1.5 to 2 times Tirana. What the discount story does not survive is a comparison with mainland Greece.",
+        "uk": "Албанія справді дешевша за Чорногорію — Будва просить у 1,5–2 рази більше за Тирану. Чого наратив про дисконт не витримує, так це порівняння з материковою Грецією.",
+        "ru": "Албания действительно дешевле Черногории — Будва просит в 1,5–2 раза больше Тираны. Чего нарратив о дисконте не выдерживает, так это сравнения с материковой Грецией.",
+        "sq": "Shqipëria është vërtet me zbritje ndaj Malit të Zi — Budva kërkon 1.5 deri 2 herë Tiranën. Ajo që narrativa e zbritjes nuk e mban është krahasimi me Greqinë kontinentale.",
+        "it": "L’Albania è davvero scontata rispetto al Montenegro: Budva chiede 1,5–2 volte Tirana. Ciò che la narrativa dello sconto non regge è il confronto con la Grecia continentale."
       },
       "scenarios": [
         {
@@ -1272,27 +1272,43 @@
             "it": "Investitore che confronta il prezzo d’ingresso"
           },
           "verdict": {
-            "en": "TODO-CONTENT: state the Montenegrin band with its source before publishing.",
-            "uk": "TODO-CONTENT: навести чорногорський діапазон із джерелом перед публікацією.",
-            "ru": "TODO-CONTENT: привести черногорский диапазон с источником перед публикацией.",
-            "sq": "TODO-CONTENT: jepni intervalin malazez me burim para publikimit.",
-            "it": "TODO-CONTENT: indicare la fascia montenegrina con la fonte prima di pubblicare."
+            "en": "Albania, clearly. Budva sits at 2,500–4,200 euro per square metre against Tirana around 1,900–2,000 — that gap is the whole investment thesis.",
+            "uk": "Албанія, очевидно. Будва — 2 500–4 200 євро за квадратний метр проти приблизно 1 900–2 000 у Тирані; цей розрив і є вся інвестиційна теза.",
+            "ru": "Албания, очевидно. Будва — 2 500–4 200 евро за квадратный метр против примерно 1 900–2 000 в Тиране; этот разрыв и есть вся инвестиционная теза.",
+            "sq": "Shqipëria, qartë. Budva është 2,500–4,200 euro për metër katror kundrejt rreth 1,900–2,000 në Tiranë — ai hendek është vetë teza e investimit.",
+            "it": "L’Albania, chiaramente. Budva sta a 2.500–4.200 euro al metro quadro contro i circa 1.900–2.000 di Tirana: quel divario è l’intera tesi d’investimento."
           }
         },
         {
           "audience": {
-            "en": "Buyer weighing EU accession",
-            "uk": "Покупець, що зважує вступ до ЄС",
-            "ru": "Покупатель, взвешивающий вступление в ЕС",
-            "sq": "Blerës që peshon anëtarësimin në BE",
-            "it": "Chi valuta l’adesione all’UE"
+            "en": "Buyer near the border",
+            "uk": "Покупець біля кордону",
+            "ru": "Покупатель у границы",
+            "sq": "Blerës pranë kufirit",
+            "it": "Acquirente vicino al confine"
           },
           "verdict": {
-            "en": "TODO-CONTENT: both are candidates on different timelines; cite the current status.",
-            "uk": "TODO-CONTENT: обидві — кандидати з різними термінами; навести поточний статус.",
-            "ru": "TODO-CONTENT: обе — кандидаты с разными сроками; привести текущий статус.",
-            "sq": "TODO-CONTENT: të dyja janë kandidate me afate të ndryshme; citoni statusin aktual.",
-            "it": "TODO-CONTENT: entrambe candidate con tempi diversi; citare lo stato attuale."
+            "en": "The real trade is Ulcinj against Velipoja and Shëngjin. Ulcinj asks 1,800–2,800 euro per square metre; the Albanian side of the same coast asks under half that.",
+            "uk": "Справжній вибір — Ульцинь проти Веліпої та Шенджина. Ульцинь просить 1 800–2 800 євро за квадратний метр; албанський бік того самого узбережжя — менш ніж половину.",
+            "ru": "Настоящий выбор — Ульцинь против Велипои и Шенджина. Ульцинь просит 1 800–2 800 евро за квадратный метр; албанская сторона того же побережья — меньше половины.",
+            "sq": "Zgjedhja e vërtetë është Ulqini kundrejt Velipojës dhe Shëngjinit. Ulqini kërkon 1,800–2,800 euro për metër katror; ana shqiptare e të njëjtit bregdet nën gjysmën.",
+            "it": "Il vero confronto è Ulcinj contro Velipoja e Shëngjin. Ulcinj chiede 1.800–2.800 euro al metro quadro; il lato albanese della stessa costa meno della metà."
+          }
+        },
+        {
+          "audience": {
+            "en": "Buyer testing the discount story",
+            "uk": "Покупець, що перевіряє історію про дисконт",
+            "ru": "Покупатель, проверяющий историю о дисконте",
+            "sq": "Blerës që teston historinë e zbritjes",
+            "it": "Chi verifica la storia dello sconto"
+          },
+          "verdict": {
+            "en": "Half true. Albania is twice as cheap as Split and well under Budva, but Thessaloniki is comparable — \"cheaper than every neighbour\" is no longer accurate.",
+            "uk": "Наполовину. Албанія вдвічі дешевша за Спліт і помітно нижча за Будву, але Салоніки зіставні — «дешевше за всіх сусідів» уже неправда.",
+            "ru": "Наполовину. Албания вдвое дешевле Сплита и заметно ниже Будвы, но Салоники сопоставимы — «дешевле всех соседей» уже неправда.",
+            "sq": "Gjysmë e vërtetë. Shqipëria është dy herë më lirë se Spliti dhe nën Budvën, por Selaniku është i krahasueshëm — \"më lirë se çdo fqinj\" nuk qëndron më.",
+            "it": "Vero a metà. L’Albania costa metà di Spalato e ben meno di Budva, ma Salonicco è paragonabile: \"più economica di ogni vicino\" non regge più."
           }
         }
       ],
@@ -1306,71 +1322,94 @@
             "it": "Prezzo d’ingresso"
           },
           "left": {
-            "en": "Sourced per zone across this site, with confidence levels",
-            "uk": "З джерелами по кожній зоні на цьому сайті, з рівнями впевненості",
-            "ru": "С источниками по каждой зоне на этом сайте, с уровнями уверенности",
-            "sq": "Me burime për çdo zonë në këtë faqe, me nivele besimi",
-            "it": "Con fonti per ogni zona su questo sito, con livelli di confidenza"
+            "en": "Sourced zone by zone across this site, each band carrying its period and confidence level",
+            "uk": "З джерелами по кожній зоні на цьому сайті — кожен діапазон із періодом і рівнем впевненості",
+            "ru": "С источниками по каждой зоне на этом сайте — каждый диапазон с периодом и уровнем уверенности",
+            "sq": "Me burime zonë për zonë në këtë faqe, çdo interval me periudhë dhe nivel besimi",
+            "it": "Con fonti zona per zona su questo sito, ogni fascia con periodo e livello di confidenza"
           },
           "right": {
-            "en": "TODO-CONTENT — Ulcinj is quoted at €1,800–2,800/m² in our northern file; the rest needs sourcing",
-            "uk": "TODO-CONTENT — Ульцинь у нашому північному файлі — €1 800–2 800/м²; решта потребує джерел",
-            "ru": "TODO-CONTENT — Ульцинь в нашем северном файле — €1 800–2 800/м²; остальное требует источников",
-            "sq": "TODO-CONTENT — Ulqini citohet €1,800–2,800/m² në dosjen tonë veriore; pjesa tjetër kërkon burime",
-            "it": "TODO-CONTENT — Ulcinj è quotata €1.800–2.800/m² nel nostro file settentrionale; il resto va documentato"
+            "en": "Budva 2,500–4,200 and Ulcinj 1,800–2,800 euro per square metre, from third-party reporting rather than our own dataset",
+            "uk": "Будва 2 500–4 200 і Ульцинь 1 800–2 800 євро за квадратний метр — за сторонніми публікаціями, а не з нашого набору даних",
+            "ru": "Будва 2 500–4 200 и Ульцинь 1 800–2 800 евро за квадратный метр — по сторонним публикациям, а не из нашего набора данных",
+            "sq": "Budva 2,500–4,200 dhe Ulqini 1,800–2,800 euro për metër katror, nga raportime të palëve të treta e jo nga të dhënat tona",
+            "it": "Budva 2.500–4.200 e Ulcinj 1.800–2.800 euro al metro quadro, da fonti terze e non dal nostro dataset"
           }
         },
         {
           "label": {
-            "en": "Season length",
-            "uk": "Тривалість сезону",
-            "ru": "Длина сезона",
-            "sq": "Gjatësia e sezonit",
-            "it": "Durata della stagione"
+            "en": "Where the discount stops",
+            "uk": "Де закінчується дисконт",
+            "ru": "Где заканчивается дисконт",
+            "sq": "Ku mbaron zbritja",
+            "it": "Dove finisce lo sconto"
           },
           "left": {
-            "en": "Three to six months depending on the coast",
-            "uk": "Від трьох до шести місяців залежно від узбережжя",
-            "ru": "От трёх до шести месяцев в зависимости от побережья",
-            "sq": "Tre deri gjashtë muaj sipas bregdetit",
-            "it": "Da tre a sei mesi a seconda della costa"
+            "en": "Twice as cheap as Split and clearly under Budva, but only comparable with Thessaloniki — so \"cheapest on the Adriatic\" does not hold",
+            "uk": "Удвічі дешевше за Спліт і явно нижче за Будву, але лише зіставно з Салоніками — тож «найдешевше на Адріатиці» не тримається",
+            "ru": "Вдвое дешевле Сплита и явно ниже Будвы, но лишь сопоставимо с Салониками — так что «самое дешёвое на Адриатике» не держится",
+            "sq": "Dy herë më lirë se Spliti dhe qartë nën Budvën, por vetëm i krahasueshëm me Selanikun — \"më i liri në Adriatik\" nuk qëndron",
+            "it": "Metà di Spalato e nettamente sotto Budva, ma solo paragonabile a Salonicco: \"la più economica dell’Adriatico\" non regge"
           },
           "right": {
-            "en": "TODO-CONTENT",
-            "uk": "TODO-CONTENT",
-            "ru": "TODO-CONTENT",
-            "sq": "TODO-CONTENT",
-            "it": "TODO-CONTENT"
+            "en": "The premium is real and long-standing; our macro file records it as a 1.5–2x multiple of Tirana",
+            "uk": "Премія реальна й давня; наш макрофайл фіксує її як 1,5–2-кратний множник до Тирани",
+            "ru": "Премия реальна и давняя; наш макрофайл фиксирует её как 1,5–2-кратный множитель к Тиране",
+            "sq": "Premiumi është real dhe i hershëm; dosja jonë makro e regjistron si shumëfish 1.5–2 i Tiranës",
+            "it": "Il premio è reale e consolidato; il nostro file macro lo registra come 1,5–2 volte Tirana"
           }
         },
         {
           "label": {
-            "en": "Buying process",
-            "uk": "Процес купівлі",
-            "ru": "Процесс покупки",
-            "sq": "Procesi i blerjes",
-            "it": "Processo d’acquisto"
+            "en": "Cross-border effect",
+            "uk": "Транскордонний ефект",
+            "ru": "Трансграничный эффект",
+            "sq": "Efekti ndërkufitar",
+            "it": "Effetto transfrontaliero"
           },
           "left": {
-            "en": "See our legal guide — cadastre checks are the pinch point",
-            "uk": "Дивіться наш юридичний гайд — перевірка кадастру є вузьким місцем",
-            "ru": "См. наш юридический гайд — проверка кадастра узкое место",
-            "sq": "Shihni udhëzuesin tonë ligjor — kontrollet e kadastrës janë pika e ngushtë",
-            "it": "Vedi la nostra guida legale: i controlli catastali sono il collo di bottiglia"
+            "en": "Velipoja and Shëngjin sit within an hour of Ulcinj, so demand could flow either way — our research rates this low confidence",
+            "uk": "Веліпоя і Шенджин — у межах години від Ульциня, тож попит може перетікати в обидва боки; наше дослідження оцінює це як низьку впевненість",
+            "ru": "Велипоя и Шенджин — в пределах часа от Ульциня, так что спрос может перетекать в обе стороны; наше исследование оценивает это как низкую уверенность",
+            "sq": "Velipoja dhe Shëngjini janë brenda një ore nga Ulqini, ndaj kërkesa mund të rrjedhë në të dyja drejtimet — me besim të ulët",
+            "it": "Velipoja e Shëngjin sono a un’ora da Ulcinj, quindi la domanda può fluire in entrambe le direzioni: bassa confidenza"
           },
           "right": {
-            "en": "TODO-CONTENT",
-            "uk": "TODO-CONTENT",
-            "ru": "TODO-CONTENT",
-            "sq": "TODO-CONTENT",
-            "it": "TODO-CONTENT"
+            "en": "Announced mega-investments around Ulcinj are the stated reason the flow might reverse",
+            "uk": "Анонсовані мегаінвестиції довкола Ульциня — заявлена причина, чому потік може розвернутися",
+            "ru": "Анонсированные мегаинвестиции вокруг Ульциня — заявленная причина, почему поток может развернуться",
+            "sq": "Mega-investimet e shpallura rreth Ulqinit janë arsyeja e deklaruar pse rrjedha mund të kthehet",
+            "it": "I mega-investimenti annunciati attorno a Ulcinj sono il motivo dichiarato di un possibile ribaltamento"
+          }
+        },
+        {
+          "label": {
+            "en": "What we can tell you",
+            "uk": "Що ми можемо сказати",
+            "ru": "Что мы можем сказать",
+            "sq": "Çfarë mund t’ju themi",
+            "it": "Cosa possiamo dirvi"
+          },
+          "left": {
+            "en": "Zone-by-zone bands, rents, state reference rates and the risk each place carries, all sourced and dated",
+            "uk": "Діапазони по зонах, оренду, державні референсні ставки й ризик кожного місця — з джерелами й датами",
+            "ru": "Диапазоны по зонам, аренду, государственные референсные ставки и риск каждого места — с источниками и датами",
+            "sq": "Intervale zonë për zonë, qira, tarifa referencë shtetërore dhe rreziku i çdo vendi, me burime e data",
+            "it": "Fasce per zona, affitti, tariffe di riferimento statali e rischi, con fonti e date"
+          },
+          "right": {
+            "en": "City-level figures only. We do not model Montenegro and this page does not pretend to — treat the numbers as cited claims",
+            "uk": "Тільки цифри рівня міста. Ми не моделюємо Чорногорію, і ця сторінка цього не вдає — сприймайте цифри як цитовані твердження",
+            "ru": "Только цифры уровня города. Мы не моделируем Черногорию, и эта страница этого не изображает — воспринимайте цифры как цитируемые утверждения",
+            "sq": "Vetëm shifra në nivel qyteti. Nuk e modelojmë Malin e Zi dhe kjo faqe nuk pretendon — merrini si pretendime të cituara",
+            "it": "Solo cifre a livello di città. Non modelliamo il Montenegro e questa pagina non finge: sono affermazioni citate"
           }
         }
       ],
       "related": [
         "tirana-vs-durres"
       ],
-      "kbSource": "01-macro §11; 04-investments; 02-cities/shengjin-velipoja.md §5 (Ulcinj)"
+      "kbSource": "01-macro/albania-macro.md §11; 02-cities/shengjin-velipoja.md §5; 02-cities/shkoder.md §5"
     }
   ]
 }

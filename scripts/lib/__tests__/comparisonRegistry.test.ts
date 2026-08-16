@@ -130,12 +130,37 @@ describe('the shipped comparisons.json', () => {
     }
   })
 
-  it('never stores a price — figures come from zoneMetrics at build time', () => {
-    // A euro-per-square-metre figure in the config is a number that goes stale
-    // silently, which is exactly what the hand-typed city comparison tables did.
-    const raw = fs.readFileSync(path.resolve(__dirname, '../../data/comparisons.json'), 'utf8')
-    const perSquareMetre = raw.match(/€[\d,. ]+\s*\/\s*m²/g) ?? []
-    expect(perSquareMetre, `found hardcoded €/m²: ${perSquareMetre.join(', ')}`).toEqual([])
+  /**
+   * A price for a zone we hold metrics for must come from `zoneMetrics`, not
+   * from this file — a hand-typed number goes stale silently, which is exactly
+   * what the old city comparison tables did.
+   *
+   * An `external` comparison is the deliberate exception: there is no
+   * `zoneMetrics` record for Budva or Ulcinj, so a sourced figure in the config
+   * is the only way to state one. The rule is scoped rather than absolute so
+   * that it is enforced by intent instead of by how a number happens to be
+   * punctuated.
+   */
+  it('stores no price for any zone that has zoneMetrics', () => {
+    const PRICE = /€\s?[\d][\d,. ]*\s*\/\s*m²|\bEUR\s?[\d][\d,. ]*\s*\/\s*m²/g
+    const offenders: string[] = []
+    for (const c of file.comparisons) {
+      if (c.kind === 'external') continue
+      const blob = JSON.stringify({angle: c.angle, scenarios: c.scenarios, criteria: c.criteria})
+      for (const hit of blob.match(PRICE) ?? []) offenders.push(`${c.slug}: ${hit}`)
+    }
+    expect(offenders, `hardcoded prices: ${offenders.join(' · ')}`).toEqual([])
+  })
+
+  it('states external figures in prose, so they read as cited claims', () => {
+    // The one page whose numbers cannot be verified against our own dataset
+    // should not present them with the same typography as the sourced ones.
+    const external = file.comparisons.filter((c) => c.kind === 'external')
+    expect(external.length).toBeGreaterThan(0)
+    for (const c of external) {
+      const blob = JSON.stringify(c)
+      expect(blob, `${c.slug} still has TODO-CONTENT`).not.toMatch(/TODO-CONTENT/)
+    }
   })
 
   it('cross-links form a connected set — every comparison is reachable', () => {
