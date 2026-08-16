@@ -1,0 +1,526 @@
+{
+  "$comment": "Zone identity registry. Market figures live in zone-metrics-seed.json and are cross-checked against this file by scripts/lib/__tests__/zoneRegistry.test.ts. See docs/engineering/SPEC-zone-generation-2026-08-16.md section 4.",
+  "countries": {
+    "albania": {
+      "cities": {
+        "durres": {
+          "title": {
+            "en": "Durres",
+            "uk": "Дуррес",
+            "ru": "Дуррес",
+            "sq": "Durrësi",
+            "it": "Durazzo"
+          },
+          "districts": [
+            {
+              "slug": "plazh",
+              "title": {
+                "en": "Plazh",
+                "uk": "Плаж",
+                "ru": "Плаж",
+                "sq": "Plazhi",
+                "it": "Plazh"
+              }
+            },
+            {
+              "slug": "city-center-durres",
+              "title": {
+                "en": "City Center",
+                "uk": "Центр",
+                "ru": "Центр",
+                "sq": "Qendra",
+                "it": "Centro città"
+              }
+            },
+            {
+              "slug": "porto-romano",
+              "title": {
+                "en": "Porto Romano",
+                "uk": "Порто Романо",
+                "ru": "Порто Романо",
+                "sq": "Porto Romano",
+                "it": "Porto Romano"
+              }
+            },
+            {
+              "slug": "shkozet",
+              "title": {
+                "en": "Shkozet",
+                "uk": "Шкозет",
+                "ru": "Шкозет",
+                "sq": "Shkozeti",
+                "it": "Shkozet"
+              }
+            },
+            {
+              "slug": "golem-1st-line",
+              "title": {
+                "en": "Golem 1st Line",
+                "uk": "Голем, перша лінія",
+                "ru": "Голем, первая линия",
+                "sq": "Golemi, vija e parë",
+                "it": "Golem, prima linea"
+              },
+              "role": "metric-only",
+              "note": "Price line within Golem, not a toponym — no listing carries \"1st line\" as an address. Kept for the seafront premium. ZONE-TAXONOMY.md, \"Descriptor vs toponym\"."
+            },
+            {
+              "slug": "golem-durres",
+              "title": {
+                "en": "Golem",
+                "uk": "Голем",
+                "ru": "Голем",
+                "sq": "Golemi",
+                "it": "Golem"
+              },
+              "note": "Administratively Bashkia Kavaje, kept under Durres because market convention is loud and consistent. ZONE-TAXONOMY.md, \"Administrative attachment\"."
+            },
+            {
+              "slug": "plepa-durres",
+              "title": {
+                "en": "Plepa",
+                "uk": "Плепа",
+                "ru": "Плепа",
+                "sq": "Plepa",
+                "it": "Plepa"
+              }
+            },
+            {
+              "slug": "shkembi-durres",
+              "title": {
+                "en": "Shkëmbi",
+                "uk": "Шкембі",
+                "ru": "Шкемби",
+                "sq": "Shkëmbi",
+                "it": "Shkëmbi"
+              }
+            }
+          ]
+        },
+        "himare": {
+          "title": {
+            "en": "Himare",
+            "uk": "Хімара",
+            "ru": "Химара",
+            "sq": "Himara",
+            "it": "Himara"
+          },
+          "districts": [
+            {
+              "slug": "lukove",
+              "title": {
+                "en": "Lukove",
+                "uk": "Лукове",
+                "ru": "Лукове",
+                "sq": "Lukova",
+                "it": "Lukove"
+              },
+              "note": "Moved to Himare: administration and the state reference map agree, and the market is silent."
+            },
+            {
+              "slug": "center-himare",
+              "title": {
+                "en": "Center",
+                "uk": "Центр",
+                "ru": "Центр",
+                "sq": "Qendra",
+                "it": "Centro"
+              }
+            },
+            {
+              "slug": "old-town-himare",
+              "title": {
+                "en": "Old Town",
+                "uk": "Старе місто",
+                "ru": "Старый город",
+                "sq": "Qyteti i Vjetër",
+                "it": "Città vecchia"
+              }
+            },
+            {
+              "slug": "livadh",
+              "title": {
+                "en": "Livadh",
+                "uk": "Ліваді",
+                "ru": "Ливади",
+                "sq": "Livadhi",
+                "it": "Livadh"
+              },
+              "note": "Absorbed `seaside-himare`, which carried the same seed description for the same beach."
+            }
+          ]
+        },
+        "sarande": {
+          "title": {
+            "en": "Sarande",
+            "uk": "Саранда",
+            "ru": "Саранда",
+            "sq": "Saranda",
+            "it": "Saranda"
+          },
+          "districts": [
+            {
+              "slug": "buze-shetitores",
+              "title": {
+                "en": "Promenade",
+                "uk": "Набережна",
+                "ru": "Набережная",
+                "sq": "Buzë Shetitores",
+                "it": "Lungomare"
+              },
+              "note": "Renamed from `seafront-sarande`: \"Bregdeti\" was a descriptor; the market names this strip Buze Shetitores."
+            },
+            {
+              "slug": "ksamil",
+              "title": {
+                "en": "Ksamil",
+                "uk": "Ксаміл",
+                "ru": "Ксамил",
+                "sq": "Ksamil",
+                "it": "Ksamil"
+              }
+            },
+            {
+              "slug": "city-center-sarande",
+              "title": {
+                "en": "City Center",
+                "uk": "Центр",
+                "ru": "Центр",
+                "sq": "Qendra",
+                "it": "Centro città"
+              }
+            },
+            {
+              "slug": "zona-e-portit",
+              "title": {
+                "en": "Port Zone",
+                "uk": "Портова зона",
+                "ru": "Портовая зона",
+                "sq": "Zona e Portit",
+                "it": "Zona del porto"
+              }
+            }
+          ]
+        },
+        "shengjin": {
+          "title": {
+            "en": "Shëngjin",
+            "uk": "Шенджін",
+            "ru": "Шенджин",
+            "sq": "Shëngjini",
+            "it": "Shëngjin"
+          },
+          "districts": [
+            {
+              "slug": "center-shengjin",
+              "title": {
+                "en": "City Center",
+                "uk": "Центр",
+                "ru": "Центр",
+                "sq": "Qendra",
+                "it": "Centro città"
+              }
+            }
+          ]
+        },
+        "shkoder": {
+          "title": {
+            "en": "Shkoder",
+            "uk": "Шкодер",
+            "ru": "Шкодер",
+            "sq": "Shkodra",
+            "it": "Scutari"
+          },
+          "districts": [
+            {
+              "slug": "gjuhadol",
+              "title": {
+                "en": "Gjuhadol",
+                "uk": "Гьюхадол",
+                "ru": "Гьюхадол",
+                "sq": "Gjuhadoli",
+                "it": "Gjuhadol"
+              }
+            },
+            {
+              "slug": "qender-shkoder",
+              "title": {
+                "en": "City Center",
+                "uk": "Центр",
+                "ru": "Центр",
+                "sq": "Qendra",
+                "it": "Centro città"
+              }
+            },
+            {
+              "slug": "dobrac",
+              "title": {
+                "en": "Dobraç",
+                "uk": "Добрач",
+                "ru": "Добрач",
+                "sq": "Dobraç",
+                "it": "Dobraç"
+              }
+            },
+            {
+              "slug": "parruce",
+              "title": {
+                "en": "Parrucë",
+                "uk": "Парруче",
+                "ru": "Парруче",
+                "sq": "Parruca",
+                "it": "Parrucë"
+              }
+            }
+          ]
+        },
+        "tirana": {
+          "title": {
+            "en": "Tirana",
+            "uk": "Тірана",
+            "ru": "Тирана",
+            "sq": "Tirana",
+            "it": "Tirana"
+          },
+          "districts": [
+            {
+              "slug": "blloku",
+              "title": {
+                "en": "Blloku",
+                "uk": "Блоку",
+                "ru": "Блоку",
+                "sq": "Blloku",
+                "it": "Blloku"
+              }
+            },
+            {
+              "slug": "komuna-e-parisit",
+              "title": {
+                "en": "Komuna e Parisit",
+                "uk": "Комуна Паризит",
+                "ru": "Коммуна Паризит",
+                "sq": "Komuna e Parisit",
+                "it": "Komuna e Parisit"
+              }
+            },
+            {
+              "slug": "pazari-i-ri",
+              "title": {
+                "en": "Pazari i Ri",
+                "uk": "Пазарі і Рі",
+                "ru": "Пазари и Ри",
+                "sq": "Pazari i Ri",
+                "it": "Pazari i Ri"
+              }
+            },
+            {
+              "slug": "qender-tirana",
+              "title": {
+                "en": "City Center",
+                "uk": "Центр",
+                "ru": "Центр",
+                "sq": "Qendra",
+                "it": "Centro città"
+              }
+            },
+            {
+              "slug": "fresku",
+              "title": {
+                "en": "Fresku",
+                "uk": "Фреску",
+                "ru": "Фреску",
+                "sq": "Fresku",
+                "it": "Fresku"
+              }
+            },
+            {
+              "slug": "liqeni-artificial",
+              "title": {
+                "en": "Artificial Lake",
+                "uk": "Штучне озеро",
+                "ru": "Искусственное озеро",
+                "sq": "Liqeni Artificial",
+                "it": "Lago Artificiale"
+              }
+            },
+            {
+              "slug": "myslym-shyri",
+              "title": {
+                "en": "Myslym Shyri",
+                "uk": "Мюслім Шюрі",
+                "ru": "Мюслим Шюри",
+                "sq": "Myslym Shyri",
+                "it": "Myslym Shyri"
+              }
+            },
+            {
+              "slug": "bulevardi-i-ri",
+              "title": {
+                "en": "New Boulevard",
+                "uk": "Новий бульвар",
+                "ru": "Новый бульвар",
+                "sq": "Bulevardi i Ri",
+                "it": "Nuovo Boulevard"
+              }
+            },
+            {
+              "slug": "don-bosko",
+              "title": {
+                "en": "Don Bosko",
+                "uk": "Дон Боско",
+                "ru": "Дон Боско",
+                "sq": "Don Bosko",
+                "it": "Don Bosko"
+              }
+            },
+            {
+              "slug": "ali-demi",
+              "title": {
+                "en": "Ali Demi",
+                "uk": "Алі Демі",
+                "ru": "Али Деми",
+                "sq": "Ali Demi",
+                "it": "Ali Demi"
+              }
+            },
+            {
+              "slug": "21-dhjetori",
+              "title": {
+                "en": "21 Dhjetori",
+                "uk": "21 Дьєтори",
+                "ru": "21 Дьетори",
+                "sq": "21 Dhjetori",
+                "it": "21 Dhjetori"
+              }
+            },
+            {
+              "slug": "astir-unaza-e-re",
+              "title": {
+                "en": "Astir / Unaza e Re",
+                "uk": "Астір / Нове кільце",
+                "ru": "Астир / Новое кольцо",
+                "sq": "Astir / Unaza e Re",
+                "it": "Astir / Unaza e Re"
+              }
+            },
+            {
+              "slug": "shkoze",
+              "title": {
+                "en": "Shkozë",
+                "uk": "Шкоза",
+                "ru": "Шкоза",
+                "sq": "Shkozë",
+                "it": "Shkozë"
+              }
+            },
+            {
+              "slug": "kashar",
+              "title": {
+                "en": "Kashar",
+                "uk": "Кашар",
+                "ru": "Кашар",
+                "sq": "Kashar",
+                "it": "Kashar"
+              }
+            },
+            {
+              "slug": "kombinat",
+              "title": {
+                "en": "Kombinat",
+                "uk": "Комбінат",
+                "ru": "Комбинат",
+                "sq": "Kombinat",
+                "it": "Kombinat"
+              }
+            },
+            {
+              "slug": "paskuqan",
+              "title": {
+                "en": "Paskuqan",
+                "uk": "Паскукан",
+                "ru": "Паскукан",
+                "sq": "Paskuqan",
+                "it": "Paskuqan"
+              },
+              "note": "Formally its own municipality inside Tirana county; the KB prices it in the Tirana table and the market treats it as Tirana’s cheap edge."
+            },
+            {
+              "slug": "kamez",
+              "title": {
+                "en": "Kamëz",
+                "uk": "Камза",
+                "ru": "Камза",
+                "sq": "Kamëz",
+                "it": "Kamëz"
+              },
+              "note": "Formally its own municipality inside Tirana county; modelled as a Tirana district for the same reason as Paskuqan."
+            }
+          ]
+        },
+        "vlore": {
+          "title": {
+            "en": "Vlore",
+            "uk": "Вльора",
+            "ru": "Влёра",
+            "sq": "Vlora",
+            "it": "Valona"
+          },
+          "districts": [
+            {
+              "slug": "lungomare",
+              "title": {
+                "en": "Lungomare",
+                "uk": "Лунгомаре",
+                "ru": "Лунгомаре",
+                "sq": "Lungomare",
+                "it": "Lungomare"
+              }
+            },
+            {
+              "slug": "uji-i-ftohte",
+              "title": {
+                "en": "Uji i Ftohtë",
+                "uk": "Уйи і Фтохте",
+                "ru": "Уйи и Фтохте",
+                "sq": "Uji i Ftohtë",
+                "it": "Uji i Ftohtë"
+              }
+            },
+            {
+              "slug": "city-center-vlore",
+              "title": {
+                "en": "City Center",
+                "uk": "Центр",
+                "ru": "Центр",
+                "sq": "Qendra",
+                "it": "Centro città"
+              }
+            },
+            {
+              "slug": "orikum",
+              "title": {
+                "en": "Orikum",
+                "uk": "Орикум",
+                "ru": "Орикум",
+                "sq": "Orikumi",
+                "it": "Orikum"
+              }
+            },
+            {
+              "slug": "lungomare-2nd-line",
+              "title": {
+                "en": "Lungomare 2nd Line",
+                "uk": "Лунгомаре, друга лінія",
+                "ru": "Лунгомаре, вторая линия",
+                "sq": "Lungomare, vija e dytë",
+                "it": "Lungomare, seconda linea"
+              },
+              "role": "metric-only",
+              "note": "Price line within Lungomare, not a toponym. Kept because the 2nd line is the +33-67% y/y story on the Vlore coast (RESEARCH-DATA-MAP 1.2)."
+            }
+          ]
+        }
+      }
+    }
+  }
+}
