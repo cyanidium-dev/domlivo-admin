@@ -83,7 +83,9 @@
     "import:dato": "tsx scripts/importFromDato.ts --execute",
     "report:route-collisions": "sanity exec scripts/reportRouteCollisions.ts --with-user-token",
     "backfill:image-credits": "tsx scripts/backfillImageCredits.ts",
-    "audit:image-provenance": "tsx scripts/auditImageProvenance.ts"
+    "audit:image-provenance": "tsx scripts/auditImageProvenance.ts",
+    "source:zone-images": "tsx scripts/sourceZoneImages.ts",
+    "apply:zone-images": "tsx scripts/applyZoneImages.ts"
   },
   "keywords": [
     "sanity"
