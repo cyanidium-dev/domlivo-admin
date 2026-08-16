@@ -296,4 +296,37 @@ export const structure: StructureResolver = (S, context) =>
                 ),
             ]),
         ),
+
+      S.listItem()
+        .title('Image Credits')
+        .child(
+          S.list()
+            .title('Image Credits')
+            .items([
+              S.listItem()
+                .title('Needs attribution on the page')
+                .child(
+                  S.documentTypeList('imageCredit')
+                    .title('Attribution-licensed images')
+                    .filter('_type == "imageCredit" && licence match "cc-by*"')
+                    .defaultOrdering([{field: 'title', direction: 'asc'}]),
+                ),
+              S.listItem()
+                .title('Stand-ins to replace')
+                .child(
+                  S.documentTypeList('imageCredit')
+                    .title('Stand-ins')
+                    .filter('_type == "imageCredit" && isStandIn == true')
+                    .defaultOrdering([{field: 'title', direction: 'asc'}]),
+                ),
+              S.divider(),
+              S.listItem()
+                .title('All credits')
+                .child(
+                  S.documentTypeList('imageCredit')
+                    .title('All image credits')
+                    .defaultOrdering([{field: 'title', direction: 'asc'}]),
+                ),
+            ]),
+        ),
     ])

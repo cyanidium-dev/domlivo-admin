@@ -17,6 +17,7 @@ import {registrationRequest} from './registrationRequest'
 import {tracker} from './tracker'
 import {developer} from './developer'
 import {zoneMetrics} from './zoneMetrics'
+import {imageCredit} from './imageCredit'
 
 /**
  * Document types (standalone content)
@@ -42,4 +43,5 @@ export const documents = [
   tracker,
   developer,
   zoneMetrics,
+  imageCredit,
 ]

@@ -81,7 +81,9 @@
     "inspect:dato": "tsx scripts/inspectDato.ts",
     "import:dato:dry": "tsx scripts/importFromDato.ts --dry-run",
     "import:dato": "tsx scripts/importFromDato.ts --execute",
-    "report:route-collisions": "sanity exec scripts/reportRouteCollisions.ts --with-user-token"
+    "report:route-collisions": "sanity exec scripts/reportRouteCollisions.ts --with-user-token",
+    "backfill:image-credits": "tsx scripts/backfillImageCredits.ts",
+    "audit:image-provenance": "tsx scripts/auditImageProvenance.ts"
   },
   "keywords": [
     "sanity"
