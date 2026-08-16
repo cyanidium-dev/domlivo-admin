@@ -305,7 +305,9 @@ async function main() {
         },
         autoMode: {limit: 12, sort: 'newest'},
       },
-      {
+      // A comparison of one is not a comparison: Shëngjin has a single district,
+      // so the table would have rendered with only the page's own row.
+      ...(neighbours.length === 0 ? [] : [{
         _key: 'compare', _type: 'zonePriceTableAutoSection', enabled: true,
         mode: 'compare',
         title: fill(T.compare, names),
@@ -315,7 +317,7 @@ async function main() {
         })),
         columns: ['priceNew', 'priceResale', 'referencePrice'],
         sortBy: 'price', linkRows: true, showSources: true,
-      },
+      }]),
       {
         _key: 'cta', _type: 'ctaSection', enabled: true,
         eyebrow: names,

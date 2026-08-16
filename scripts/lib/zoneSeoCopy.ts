@@ -92,6 +92,19 @@ const T = {
   },
 } as const
 
+/**
+ * The year the figures are from, not the year it happens to be.
+ *
+ * Using the wall clock would rewrite every title on 1 January — churning the
+ * dataset and making the landing generator's `--verify` report all 34 pages as
+ * edited — while claiming a freshness the data does not have.
+ */
+export function seoYearFor(metrics: ZoneMetricsForSeo | null | undefined, fallbackYear: string): string {
+  const period = metrics?.periodLabel?.trim()
+  const match = period?.match(/(19|20)\d{2}/)
+  return match ? match[0] : fallbackYear
+}
+
 const nf = (locale: SeoLocale) => new Intl.NumberFormat(locale === 'sq' ? 'sq' : locale)
 
 /** "3,000–5,500" or "1,457"; null when the metric is absent. */
@@ -151,7 +164,8 @@ export function buildZoneMetaDescription(
   return first.length > 200 ? `${first.slice(0, 197)}…` : first
 }
 
-export function buildZoneMetaTitle(zone: ZoneSeoInput, locale: SeoLocale, year: string): string {
+export function buildZoneMetaTitle(zone: ZoneSeoInput, locale: SeoLocale, fallbackYear: string): string {
+  const year = seoYearFor(zone.metrics, fallbackYear)
   const name = zone.title?.[locale] ?? zone.title?.en ?? zone.slug
   if (zone.kind === 'city') return fill(T.cityTitle[locale], {n: name, y: year})
   const cityName = zone.cityTitle?.[locale] ?? zone.cityTitle?.en ?? ''
