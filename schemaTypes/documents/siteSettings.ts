@@ -16,6 +16,7 @@ export const siteSettings = defineType({
     {name: 'properties', title: 'Properties'},
     {name: 'currency', title: 'Currency'},
     {name: 'seo', title: 'SEO'},
+    {name: 'bot', title: 'Telegram Bot'},
   ],
 
   fields: [
@@ -293,6 +294,33 @@ export const siteSettings = defineType({
       type: 'localizedSeo',
       group: 'seo',
       description: 'Default meta and Open Graph values used when page-specific SEO is not set',
+    }),
+
+    // TELEGRAM INTAKE BOT
+    defineField({
+      name: 'botEnabled',
+      title: 'Intake Bot Enabled',
+      type: 'boolean',
+      group: 'bot',
+      initialValue: false,
+      description:
+        'Kill-switch for the Telegram property-intake bot. When off (or unset), the bot refuses every message. The bot checks this on each message.',
+    }),
+    defineField({
+      name: 'botOwnerTelegramUserId',
+      title: 'Owner Telegram User ID',
+      type: 'number',
+      group: 'bot',
+      description:
+        'Your own Telegram account id. Messages from this id are attributed to the Default Agent below.',
+    }),
+    defineField({
+      name: 'botDefaultAgent',
+      title: 'Default Agent for Owner Submissions',
+      type: 'reference',
+      to: [{type: 'agent'}],
+      group: 'bot',
+      description: 'Drafts submitted by the owner id above are assigned to this agent.',
     }),
   ],
 
