@@ -349,7 +349,13 @@ async function main() {
       },
       // A comparison of one is not a comparison: Shëngjin has a single district,
       // so the table would have rendered with only the page's own row.
-      ...(neighbours.length === 0 ? [] : [{
+      //
+      // A zone with no price of its own cannot have "nearest by price" either.
+      // Farkë/Lundër and Laprakë are reference-only — the market quotes them in
+      // whole lots, not €/m² — and without a price to sort against, the table
+      // silently listed whichever three districts came first alphabetically
+      // under a heading promising the closest in price.
+      ...(neighbours.length === 0 || typeof d.price !== 'number' ? [] : [{
         _key: 'compare', _type: 'zonePriceTableAutoSection', enabled: true,
         mode: 'compare',
         title: fill(T.compare, names),
