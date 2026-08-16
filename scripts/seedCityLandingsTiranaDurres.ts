@@ -16,6 +16,7 @@
 import path from 'path'
 import {config as loadDotenv} from 'dotenv'
 import {createClient} from '@sanity/client'
+import {resolveZoneSeo, type ZoneMetricsForSeo} from './lib/zoneSeoCopy'
 
 loadDotenv({path: path.resolve(process.cwd(), '.env')})
 
@@ -26,6 +27,14 @@ const token = process.env.SANITY_API_TOKEN?.trim()
 
 const isDry = process.argv.includes('--dry')
 const isExecute = process.argv.includes('--execute')
+/**
+ * This script `createOrReplace`d its two landings, which meant a re-run silently
+ * discarded anything added since — on 2026-08-15 that would have removed the
+ * zoneStats and zonePriceTable blocks from Tirana and Durrës and re-enabled the
+ * hand-typed comparison table whose figures contradict them. Replacing is now
+ * opt-in, matching generateCityLandings and generateDistrictLandings.
+ */
+const isForce = process.argv.includes('--force')
 
 if (!token) {
   console.error('Error: SANITY_API_TOKEN required. Add to .env')
@@ -81,13 +90,60 @@ function blocksFromLocalizedLi(li: Li): Record<string, any[]> {
   }
 }
 
-async function ensureCityBySlug(citySlug: string) {
-  const city = await client.fetch<{_id: string; title: any; slug: {current: string}} | null>(
-    `*[_type=="city" && slug.current == $slug][0]{_id, title, slug}`,
+type SeededCity = {
+  _id: string
+  title: any
+  slug: {current: string}
+  description?: any
+  seo?: any
+  metrics?: ZoneMetricsForSeo | null
+}
+
+async function ensureCityBySlug(citySlug: string): Promise<SeededCity> {
+  const city = await client.fetch<SeededCity | null>(
+    `*[_type=="city" && slug.current == $slug][0]{
+      _id, title, slug, description, seo,
+      "metrics": *[_type == "zoneMetrics" && zone._ref == ^._id] | order(periodDate desc)[0]{
+        priceNewMin, priceNewMax, priceNewMedian,
+        priceResaleMin, priceResaleMax, priceResaleMedian,
+        priceAllMin, priceAllMax, priceAllMedian,
+        rentLtr1brMin, rentLtr1brMax, referencePrice, periodLabel
+      }
+    }`,
     {slug: citySlug},
   )
   if (!city) throw new Error(`City not found by slug: ${citySlug}`)
   return city
+}
+
+/**
+ * SEO comes from the shared composer rather than being hardcoded here.
+ * This script used to carry its own copy ("Buy property in Tirana | Domlivo",
+ * "Top offers updated daily."), so re-running it would have undone the figures
+ * that `generate:zone-seo` writes. `resolveZoneSeo` keeps anything a person has
+ * written since, per field.
+ */
+function seoForCity(city: SeededCity) {
+  const composed = resolveZoneSeo(
+    {
+      kind: 'city',
+      slug: city.slug?.current ?? '',
+      title: city.title,
+      description: city.description,
+      metrics: city.metrics,
+    },
+    String(new Date().getFullYear()),
+    city.seo,
+  )
+  if (!composed) return city.seo ?? {noIndex: false}
+  return {
+    ...(city.seo ?? {}),
+    metaTitle: composed.metaTitle,
+    ogTitle: composed.metaTitle,
+    metaDescription: composed.metaDescription,
+    ogDescription: composed.metaDescription,
+    noIndex: false,
+  }
 }
 
 async function ensureBlogPost(id: string, title: Li) {
@@ -1113,17 +1169,11 @@ async function run() {
     _type: 'landingPage',
     pageType: 'city',
     enabled: true,
-    title: Li('Tirana', 'Тирана', 'Тирана', 'Tiranë', 'Tirana'),
+    title: seoForCity(tirana).metaTitle ?? Li('Tirana', 'Тирана', 'Тирана', 'Tiranë', 'Tirana'),
     slug: {current: 'tirana'},
     linkedCity: {_type: 'reference', _ref: tirana._id},
     pageSections: tiranaSections,
-    seo: {
-      metaTitle: Li('Buy property in Tirana | Domlivo', 'Купить в Тиране | Domlivo', 'Купівля в Тирані | Domlivo', 'Blerje prona në Tiranë | Domlivo', 'Acquisto a Tirana | Domlivo'),
-      metaDescription: Li('Verified apartments, houses and villas for sale in Tirana.', 'Проверенные квартиры, дома и виллы в Тиране.', 'Перевірені квартири, будинки та вілли в Тирані.', 'Apartamente, shtëpi dhe vila të verifikuara në Tiranë.', 'Appartamenti, case e ville verificati a Tirana.'),
-      ogTitle: Li('Buy property in Tirana | Domlivo', 'Купить в Тиране | Domlivo', 'Купівля в Тирані | Domlivo', 'Blerje prona në Tiranë | Domlivo', 'Acquisto a Tirana | Domlivo'),
-      ogDescription: Li('Top offers updated daily.', 'Топ предложения каждый день.', 'Топ пропозиції щодня.', 'Ofertat më të mira çdo ditë.', 'Migliori offerte ogni giorno.'),
-      noIndex: false,
-    },
+    seo: seoForCity(tirana),
   }
 
   const durresDoc = {
@@ -1131,17 +1181,11 @@ async function run() {
     _type: 'landingPage',
     pageType: 'city',
     enabled: true,
-    title: Li('Durres', 'Дуррес', 'Дуррес', 'Durrës', 'Durazzo'),
+    title: seoForCity(durres).metaTitle ?? Li('Durres', 'Дуррес', 'Дуррес', 'Durrës', 'Durazzo'),
     slug: {current: 'durres'},
     linkedCity: {_type: 'reference', _ref: durres._id},
     pageSections: durresSections,
-    seo: {
-      metaTitle: Li('Buy property in Durres | Domlivo', 'Купить в Дурресе | Domlivo', 'Купівля в Дурресі | Domlivo', 'Blerje prona në Durrës | Domlivo', 'Acquisto a Durazzo | Domlivo'),
-      metaDescription: Li('Verified seaside apartments, houses and villas for sale in Durres.', 'Проверенная недвижимость у моря в Дурресе.', 'Перевірена нерухомість біля моря в Дурресі.', 'Prona të verifikuara pranë detit në Durrës.', 'Immobili verificati vicino al mare a Durazzo.'),
-      ogTitle: Li('Buy property in Durres | Domlivo', 'Купить в Дурресе | Domlivo', 'Купівля в Дурресі | Domlivo', 'Blerje prona në Durrës | Domlivo', 'Acquisto a Durazzo | Domlivo'),
-      ogDescription: Li('Popular coastal offers updated daily.', 'Популярные предложения у моря.', 'Популярні пропозиції біля моря.', 'Ofertat bregdetare më të njohura.', 'Offerte costiere più popolari.'),
-      noIndex: false,
-    },
+    seo: seoForCity(durres),
   }
 
   console.log('Will upsert landing docs:')
@@ -1154,8 +1198,22 @@ async function run() {
     return
   }
 
-  await client.createOrReplace(tiranaDoc)
-  await client.createOrReplace(durresDoc)
+  const existingIds: string[] = await client.fetch(`*[_id in $ids]._id`, {
+    ids: [tiranaDoc._id, durresDoc._id],
+  })
+
+  for (const id of existingIds) {
+    if (!isForce) console.log(`skip     ${id} (exists — pass --force to replace)`)
+  }
+  if (isForce && existingIds.length > 0) {
+    console.log('\n⚠ --force replaces these landings wholesale, including sections added since.')
+  }
+
+  for (const doc of [tiranaDoc, durresDoc]) {
+    if (existingIds.includes(doc._id) && !isForce) continue
+    if (isForce) await client.createOrReplace(doc)
+    else await client.createIfNotExists(doc)
+  }
 
   console.log('\nSeeded successfully. ✅')
 }
