@@ -85,7 +85,8 @@
     "backfill:image-credits": "tsx scripts/backfillImageCredits.ts",
     "audit:image-provenance": "tsx scripts/auditImageProvenance.ts",
     "source:zone-images": "tsx scripts/sourceZoneImages.ts",
-    "apply:zone-images": "tsx scripts/applyZoneImages.ts"
+    "apply:zone-images": "tsx scripts/applyZoneImages.ts",
+    "generate:comparisons": "tsx scripts/generateComparisonLandings.ts"
   },
   "keywords": [
     "sanity"
