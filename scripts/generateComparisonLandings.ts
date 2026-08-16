@@ -87,6 +87,17 @@ const T = {
     en: 'The verdict, by who you are', uk: 'Вердикт залежно від того, хто ви', ru: 'Вердикт в зависимости от того, кто вы',
     sq: 'Vendimi, sipas kush jeni', it: 'Il verdetto, secondo chi siete',
   },
+  galleryTitle: {
+    en: '{a} and {b}, side by side', uk: '{a} і {b} поруч', ru: '{a} и {b} рядом',
+    sq: '{a} dhe {b}, krah për krah', it: '{a} e {b}, a confronto',
+  },
+  gallerySub: {
+    en: 'Each photograph links through to that place’s own page, with its prices and sources.',
+    uk: 'Кожне фото веде на сторінку відповідного місця — з цінами й джерелами.',
+    ru: 'Каждое фото ведёт на страницу соответствующего места — с ценами и источниками.',
+    sq: 'Çdo fotografi të çon te faqja e vendit përkatës, me çmimet dhe burimet.',
+    it: 'Ogni fotografia porta alla pagina del luogo, con prezzi e fonti.',
+  },
   faqTitle: {en: 'Common questions', uk: 'Часті запитання', ru: 'Частые вопросы', sq: 'Pyetje të shpeshta', it: 'Domande frequenti'},
   sourcesTitle: {en: 'Sources', uk: 'Джерела', ru: 'Источники', sq: 'Burimet', it: 'Fonti'},
   relatedTitle: {
@@ -130,6 +141,15 @@ const T = {
   },
 } as const
 
+/** One usable photograph, with the caption the zone already carries. */
+type ZoneImage = {
+  ref: string
+  /** The zone's own alt text. Already honest: a stand-in describes the photo. */
+  alt?: string
+  /** True when the asset description is stamped STAND-IN. */
+  isStandIn?: boolean
+}
+
 type ZoneRow = {
   _id: string
   slug: string
@@ -139,6 +159,52 @@ type ZoneRow = {
   title?: Partial<Localized>
   price?: number
   periodLabel?: string
+  hero?: ZoneImage | null
+  gallery?: ZoneImage[]
+}
+
+/**
+ * The caption for a slide. A zone-level photo may be titled with the zone's
+ * name; a stand-in must be described as what it is, which is the same rule the
+ * zone pages follow. Reusing the zone's own alt text is what keeps the two in
+ * step — it was corrected once already and must not be re-derived here.
+ */
+function slideTitle(zone: ZoneRow, image: ZoneImage, name: Partial<Localized>): Localized {
+  const out = {} as Localized
+  for (const l of LOCALES) {
+    out[l] = image.isStandIn ? (image.alt ?? name[l] ?? '') : (name[l] ?? name.en ?? image.alt ?? '')
+  }
+  return out
+}
+
+/**
+ * Hero, then gallery, deduplicated by asset — the two usually share one photo.
+ *
+ * **An image without alt text is skipped.** That is not a nicety: the images
+ * that lack alt are the seed placeholders, and they lack it because nobody ever
+ * recorded what they show. There is no honest caption to write for a photograph
+ * of unknown subject and unknown origin, and emitting `alt=""` on a hero
+ * backdrop would be worse than showing no image. It also stops the comparison
+ * pages spreading exactly the provenance problem the image audit is closing.
+ */
+function imagesOf(zone: ZoneRow | undefined): ZoneImage[] {
+  if (!zone) return []
+  const seen = new Set<string>()
+  const out: ZoneImage[] = []
+  for (const img of [zone.hero, ...(zone.gallery ?? [])]) {
+    if (!img?.ref || seen.has(img.ref)) continue
+    if (!img.alt?.trim()) continue
+    seen.add(img.ref)
+    out.push(img)
+  }
+  return out
+}
+
+function zonePath(z: ZoneRow): string {
+  const country = z.countrySlug ?? 'albania'
+  return z.type === 'city'
+    ? `/${country}/${z.slug}/info`
+    : `/${country}/${z.citySlug}/districts/${z.slug}`
 }
 
 function fill(template: Record<Locale, string>, vars: Record<string, Partial<Localized>>): Localized {
@@ -203,6 +269,39 @@ function buildLanding(c: Comparison, zones: Map<string, ZoneRow>, year: string):
   const right = zones.get(c.right.slug)
   const names = {a: c.left.title, b: c.right.title}
   const title = comparisonTitle(c, year)
+  const leftImages = imagesOf(left)
+  const rightImages = imagesOf(right)
+
+  /**
+   * Slides alternate between the two zones so the page shows both sides rather
+   * than leading with four photos of one. Each links back to its zone page,
+   * which makes the gallery internal linking as well as imagery.
+   */
+  const slides: Record<string, unknown>[] = []
+  const usedRefs = new Set<string>()
+  for (let i = 0; i < Math.max(leftImages.length, rightImages.length) && slides.length < 4; i += 1) {
+    for (const [zone, images] of [[left, leftImages], [right, rightImages]] as const) {
+      const image = images[i]
+      if (!zone || !image || slides.length >= 4) continue
+      const name = zone === left ? c.left.title : c.right.title
+      slides.push({
+        _key: `slide-${slides.length}`,
+        title: slideTitle(zone, image, name),
+        image: {_type: 'image', asset: {_type: 'reference', _ref: image.ref}, alt: image.alt ?? ''},
+        href: zonePath(zone),
+      })
+      usedRefs.add(image.ref)
+    }
+  }
+  /**
+   * The hero prefers the left zone, but falls back to the right one. Without
+   * the fallback a pair where only the right side has a usable photograph —
+   * Blloku vs Myslym Shyri, where Blloku is still on a seed placeholder —
+   * rendered with no imagery at all while holding an image it could have shown.
+   */
+  const heroImage = leftImages[0] ?? rightImages[0]
+  if (heroImage) usedRefs.add(heroImage.ref)
+  const faqImage = [...rightImages, ...leftImages].find((img) => !usedRefs.has(img.ref))
 
   // Headline figures come from the zones themselves, never from the config.
   const statItems = [left, right]
@@ -226,6 +325,17 @@ function buildLanding(c: Comparison, zones: Map<string, ZoneRow>, year: string):
       subtitle: c.angle,
       shortLine: fill({en: '{a} vs {b}', uk: '{a} проти {b}', ru: '{a} против {b}', sq: '{a} kundrejt {b}', it: '{a} contro {b}'}, names),
       cta: {href: catalogHref(left), label: fill(T.seeIn, {n: c.left.title})},
+      // The zone's own photo, with the alt text it already carries so a
+      // stand-in is not silently re-captioned as the place.
+      ...(heroImage
+        ? {
+            backgroundImage: {
+              _type: 'image',
+              asset: {_type: 'reference', _ref: heroImage.ref},
+              alt: heroImage.alt ?? '',
+            },
+          }
+        : {}),
     },
     ...(statItems.length === 2
       ? [{
@@ -272,9 +382,34 @@ function buildLanding(c: Comparison, zones: Map<string, ZoneRow>, year: string):
         `verdict-${c.slug}`,
       ),
     },
+    // Both places, pictured, between the verdict and the questions. Each slide
+    // links to its own zone page, so this carries the internal linking the SEO
+    // map asks comparisons to provide (10-seo §6) as well as the imagery.
+    ...(slides.length >= 2
+      ? [{
+          _key: 'gallery', _type: 'linkedGallerySection', enabled: true,
+          title: fill(T.galleryTitle, names),
+          description: T.gallerySub as unknown as Localized,
+          items: slides,
+        }]
+      : []),
     {
       _key: 'faq', _type: 'faqSection', enabled: true,
       title: T.faqTitle as unknown as Localized,
+      // Only a photograph the page has not already shown. Most zones currently
+      // hold a single image — their gallery duplicates their hero — so without
+      // this check the FAQ would repeat the slide directly above it, which
+      // reads as padding rather than illustration.
+      ...(faqImage
+        ? {
+            imageMode: 'withImage',
+            image: {
+              _type: 'image',
+              asset: {_type: 'reference', _ref: faqImage.ref},
+              alt: faqImage.alt ?? '',
+            },
+          }
+        : {imageMode: 'withoutImage'}),
       items: [
         {_key: 'q1', _type: 'localizedFaqItem', question: fill(T.q1, names), answer: T.aPrices as unknown as Localized},
         {_key: 'q2', _type: 'localizedFaqItem', question: fill(T.q2, names), answer: T.aInvest as unknown as Localized},
@@ -323,6 +458,11 @@ function buildLanding(c: Comparison, zones: Map<string, ZoneRow>, year: string):
     slug: {_type: 'slug', current: c.slug},
     title,
     cardDescription: c.angle,
+    // Without this the /guides hub and the related-comparison cards render as
+    // text tiles, because both read `cardImage` from the landing.
+    ...(heroImage
+      ? {cardImage: {_type: 'image', asset: {_type: 'reference', _ref: heroImage.ref}, alt: heroImage.alt ?? ''}}
+      : {}),
     contentUpdatedAt: new Date().toISOString().slice(0, 10),
     seo: {metaTitle: title, metaDescription: c.angle, ogTitle: title, ogDescription: c.angle},
     pageSections: sections,
@@ -344,7 +484,15 @@ async function main() {
       "price": *[_type == "zoneMetrics" && zone._ref == ^._id] | order(periodDate desc)[0]{
         "p": coalesce(priceNewMedian, priceAllMedian, (priceNewMin + priceNewMax) / 2, (priceAllMin + priceAllMax) / 2)
       }.p,
-      "periodLabel": *[_type == "zoneMetrics" && zone._ref == ^._id] | order(periodDate desc)[0].periodLabel
+      "periodLabel": *[_type == "zoneMetrics" && zone._ref == ^._id] | order(periodDate desc)[0].periodLabel,
+      "hero": heroImage{
+        "ref": asset._ref, alt,
+        "isStandIn": asset->description match "*STAND-IN*"
+      },
+      "gallery": gallery[]{
+        "ref": asset._ref, alt,
+        "isStandIn": asset->description match "*STAND-IN*"
+      }
     }`,
     {slugs},
   )
@@ -392,11 +540,27 @@ async function main() {
     return
   }
 
+  // `--print <slug>` dumps one built document. A section-type list says nothing
+  // about whether the images actually landed, and that is the thing worth
+  // checking before writing.
+  const printArg = args.find((a) => a.startsWith('--print='))?.split('=')[1] ??
+    (args.includes('--print') ? args[args.indexOf('--print') + 1] : '')
+  if (printArg) {
+    const doc = docs.find((d) => d._id === `landing-comparison-${printArg}`)
+    if (!doc) { console.error(`No comparison "${printArg}".`); process.exit(1) }
+    console.log(JSON.stringify(doc, null, 2))
+    return
+  }
+
   for (const d of docs) {
     const skip = existing.has(d._id as string) && !isForce
-    const types = (d.pageSections as any[]).map((s) => s._type).join(' > ')
-    console.log(`${skip ? 'skip    ' : isForce && existing.has(d._id as string) ? 'replace ' : 'create  '} ${d._id}`)
-    if (!skip) console.log(`           ${types}`)
+    const sections = d.pageSections as any[]
+    const images =
+      (d.cardImage ? 1 : 0) +
+      sections.filter((s) => s.backgroundImage || (s.image && s.imageMode !== 'withoutImage')).length +
+      (sections.find((s) => s._type === 'linkedGallerySection')?.items?.length ?? 0)
+    console.log(`${skip ? 'skip    ' : isForce && existing.has(d._id as string) ? 'replace ' : 'create  '} ${d._id}  (${images} image slot(s))`)
+    if (!skip) console.log(`           ${sections.map((s) => s._type).join(' > ')}`)
   }
 
   const toWrite = docs.filter((d) => isForce || !existing.has(d._id as string))
