@@ -23,6 +23,7 @@
 import path from 'path'
 import {config as loadDotenv} from 'dotenv'
 import {createClient} from '@sanity/client'
+import {resolveZoneSeo, type ZoneMetricsForSeo} from './lib/zoneSeoCopy'
 
 loadDotenv({path: path.resolve(process.cwd(), '.env')})
 
@@ -113,6 +114,8 @@ type DistrictRow = {
   heroImageRef?: string
   price?: number
   hasMetrics?: boolean
+  cityTitle?: Localized
+  metrics?: ZoneMetricsForSeo | null
 }
 
 /** Below this, an "About" section reads as a stub rather than an article. */
@@ -204,6 +207,13 @@ async function main() {
       title, heroTitle, heroSubtitle, description, seo,
       "heroImageRef": heroImage.asset._ref,
       "hasMetrics": count(*[_type == "zoneMetrics" && zone._ref == ^._id]) > 0,
+      "cityTitle": city->title,
+      "metrics": *[_type == "zoneMetrics" && zone._ref == ^._id] | order(periodDate desc)[0]{
+        priceNewMin, priceNewMax, priceNewMedian,
+        priceResaleMin, priceResaleMax, priceResaleMedian,
+        priceAllMin, priceAllMax, priceAllMedian,
+        rentLtr1brMin, rentLtr1brMax, referencePrice, periodLabel
+      },
       "price": *[_type == "zoneMetrics" && zone._ref == ^._id] | order(periodDate desc)[0]{
         "p": coalesce(priceNewMedian, priceAllMedian, (priceNewMin + priceNewMax) / 2, (priceAllMin + priceAllMax) / 2)
       }.p
@@ -236,13 +246,36 @@ async function main() {
     }
 
     const names: Localized = d.title ?? {}
+    // Compose SEO from the zone's own figures. Inheriting `d.seo` used to carry
+    // seed text like "Most vibrant district" straight onto the share card.
+    const composedSeo = resolveZoneSeo(
+      {
+        kind: 'district',
+        slug: d.slug,
+        title: d.title,
+        cityTitle: d.cityTitle,
+        description: d.description,
+        metrics: d.metrics,
+      },
+      String(new Date().getFullYear()),
+      d.seo,
+    )
+    const seo = composedSeo
+      ? {
+          ...(d.seo ?? {}),
+          metaTitle: composedSeo.metaTitle,
+          ogTitle: composedSeo.metaTitle,
+          metaDescription: composedSeo.metaDescription,
+          ogDescription: composedSeo.metaDescription,
+        }
+      : d.seo
     const catalogHref = `/${d.countrySlug ?? 'albania'}/${d.citySlug}/sale?district=${d.slug}`
     const neighbours = nearestByPrice(d, districts)
 
     const sections: Record<string, unknown>[] = [
       {
         _key: 'hero', _type: 'heroSection', enabled: true,
-        title: d.seo?.metaTitle ?? d.heroTitle ?? names,
+        title: composedSeo?.metaTitle ?? d.seo?.metaTitle ?? d.heroTitle ?? names,
         subtitle: d.heroSubtitle,
         shortLine: names,
         cta: {href: catalogHref, label: T.ctaBtn},
@@ -300,10 +333,10 @@ async function main() {
       pageType: 'district',
       slug: {_type: 'slug', current: `${d.citySlug}-${d.slug}`},
       linkedDistrict: {_type: 'reference', _ref: d._id},
-      title: d.seo?.metaTitle ?? names,
+      title: composedSeo?.metaTitle ?? d.seo?.metaTitle ?? names,
       cardDescription: d.heroSubtitle,
       contentUpdatedAt: new Date().toISOString().slice(0, 10),
-      seo: d.seo ?? undefined,
+      seo: seo ?? undefined,
       pageSections: sections,
     })
   }
