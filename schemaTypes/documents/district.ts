@@ -198,8 +198,15 @@ export const district = defineType({
           ],
         }),
       ],
+      // A warning, not an error: districts are created as unpublished shells
+      // before anyone sources an image, and an error would mark every shell —
+      // and the nineteen existing gallery-less districts — as broken documents.
+      // Publication is gated by `npm run audit:zone-readiness` instead.
       validation: (Rule) =>
-        Rule.min(1).error('Add at least one image').max(20).error('Maximum 20 images allowed'),
+        Rule.min(1)
+          .warning('Add at least one image before publishing this district')
+          .max(20)
+          .error('Maximum 20 images allowed'),
       components: {input: GalleryWithCopyAltInput},
     }),
 

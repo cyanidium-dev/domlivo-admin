@@ -104,6 +104,7 @@ const T = {
 type DistrictRow = {
   _id: string
   slug: string
+  cityId: string
   citySlug: string
   countrySlug: string
   title?: Localized
@@ -202,6 +203,7 @@ async function main() {
     `*[_type == "district" && city->slug.current == $city && isPublished == true]{
       _id,
       "slug": slug.current,
+      "cityId": city->_id,
       "citySlug": city->slug.current,
       "countrySlug": city->country->slug.current,
       title, heroTitle, heroSubtitle, description, seo,
@@ -269,7 +271,16 @@ async function main() {
           ogDescription: composedSeo.metaDescription,
         }
       : d.seo
-    const catalogHref = `/${d.countrySlug ?? 'albania'}/${d.citySlug}/sale?district=${d.slug}`
+    // `country` is required on the city schema, so a missing slug means the
+    // reference dangles or the country document has none — a data fault, not a
+    // case to paper over. Defaulting it would silently emit Albanian catalog
+    // links for a district in some other country.
+    if (!d.countrySlug) {
+      throw new Error(
+        `District "${d.slug}" resolves to no country slug via city "${d.citySlug}". Set an explicit country on the city document before generating landings.`,
+      )
+    }
+    const catalogHref = `/${d.countrySlug}/${d.citySlug}/sale?district=${d.slug}`
     const neighbours = nearestByPrice(d, districts)
 
     const sections: Record<string, unknown>[] = [
@@ -300,7 +311,10 @@ async function main() {
         mode: 'auto',
         title: fill(T.listings, names),
         filters: {
-          city: {_type: 'reference', _ref: `city-${d.citySlug}`},
+          // The city's real `_id`, never `city-${slug}`: nine district documents
+          // already have an id that no longer follows their slug (renamed in the
+          // August taxonomy pass), and a constructed id would point at nothing.
+          city: {_type: 'reference', _ref: d.cityId},
           district: {_type: 'reference', _ref: d._id},
         },
         autoMode: {limit: 12, sort: 'newest'},

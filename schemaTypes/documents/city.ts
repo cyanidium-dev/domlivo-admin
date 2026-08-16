@@ -264,8 +264,14 @@ export const city = defineType({
           ],
         }),
       ],
+      // A warning, not an error: a city can be created before anyone sources
+      // its images, and publication is gated by `npm run audit:zone-readiness`
+      // rather than by Studio validation.
       validation: (Rule) =>
-        Rule.min(1).error('Add at least one image').max(20).error('Maximum 20 images allowed'),
+        Rule.min(1)
+          .warning('Add at least one image before publishing this city')
+          .max(20)
+          .error('Maximum 20 images allowed'),
       components: {input: GalleryWithCopyAltInput},
     }),
 

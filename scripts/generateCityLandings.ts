@@ -165,7 +165,16 @@ function diffDoc(built: unknown, live: unknown, path = ''): string[] {
 
 function buildLanding(city: CityRow, year: string): Record<string, unknown> {
   const names: Localized = city.title ?? {}
-  const catalogHref = `/${city.countrySlug ?? 'albania'}/${city.slug}/sale`
+  // `country` is required on the city schema, so a missing slug means the
+  // reference dangles or the country document has none — a data fault, not a
+  // case to paper over. Defaulting it would silently emit Albanian catalog
+  // links for a city in some other country.
+  if (!city.countrySlug) {
+    throw new Error(
+      `City "${city.slug}" has no country slug. Set an explicit country on the city document before generating landings.`,
+    )
+  }
+  const catalogHref = `/${city.countrySlug}/${city.slug}/sale`
 
   const seo = resolveZoneSeo(
     {
