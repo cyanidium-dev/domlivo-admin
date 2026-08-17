@@ -6,6 +6,7 @@
  */
 import type {TranslateRequestItem, TranslatedLocales} from './applyTranslations'
 import type {ParseResponse} from './applyParse'
+import {PROJECT_LOCALE_IDS} from '../sanity/localizedPaste/projectLocales'
 
 const BASE = (process.env.SANITY_STUDIO_AI_API_URL ?? '').trim().replace(/\/+$/, '')
 const SECRET = (process.env.SANITY_STUDIO_AI_API_SECRET ?? '').trim()
@@ -25,13 +26,15 @@ async function post<T>(path: string, body: unknown): Promise<T> {
   return json as T
 }
 
+// The locale list always travels with the request (derived from languages.ts),
+// so adding a site language needs no backend change.
 export function aiTranslate(
   sourceLang: string,
   items: TranslateRequestItem[],
 ): Promise<{items: Array<{key: string; locales: TranslatedLocales}>}> {
-  return post('/api/studio-translate', {sourceLang, items})
+  return post('/api/studio-translate', {sourceLang, items, locales: [...PROJECT_LOCALE_IDS]})
 }
 
 export function aiParse(text: string): Promise<ParseResponse> {
-  return post('/api/studio-parse', {text})
+  return post('/api/studio-parse', {text, locales: [...PROJECT_LOCALE_IDS]})
 }
