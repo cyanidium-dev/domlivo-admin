@@ -1,0 +1,37 @@
+/**
+ * Thin client for the AI endpoints hosted on the domlivo-bot deployment.
+ * Config via Vite-convention Studio envs (baked into the bundle — the secret
+ * is therefore extractable; the endpoints are compute-only and rate-limited,
+ * see SPEC-studio-ai-actions-2026-08-17.md §2).
+ */
+import type {TranslateRequestItem, TranslatedLocales} from './applyTranslations'
+import type {ParseResponse} from './applyParse'
+
+const BASE = (process.env.SANITY_STUDIO_AI_API_URL ?? '').trim().replace(/\/+$/, '')
+const SECRET = (process.env.SANITY_STUDIO_AI_API_SECRET ?? '').trim()
+
+export function aiConfigured(): boolean {
+  return Boolean(BASE && SECRET)
+}
+
+async function post<T>(path: string, body: unknown): Promise<T> {
+  const res = await fetch(`${BASE}${path}`, {
+    method: 'POST',
+    headers: {'content-type': 'application/json', 'x-studio-secret': SECRET},
+    body: JSON.stringify(body),
+  })
+  const json = (await res.json().catch(() => ({}))) as {error?: string}
+  if (!res.ok) throw new Error(json.error ?? `request failed (${res.status})`)
+  return json as T
+}
+
+export function aiTranslate(
+  sourceLang: string,
+  items: TranslateRequestItem[],
+): Promise<{items: Array<{key: string; locales: TranslatedLocales}>}> {
+  return post('/api/studio-translate', {sourceLang, items})
+}
+
+export function aiParse(text: string): Promise<ParseResponse> {
+  return post('/api/studio-parse', {text})
+}
