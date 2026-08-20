@@ -322,6 +322,23 @@ export const siteSettings = defineType({
       group: 'bot',
       description: 'Drafts submitted by the owner id above are assigned to this agent.',
     }),
+    defineField({
+      name: 'siteBaseUrl',
+      title: 'Site Base URL',
+      type: 'url',
+      group: 'bot',
+      description:
+        'Public site origin, e.g. https://www.domlivo.com. The intake bot uses it to link freshly published listings back to the live site.',
+    }),
+    defineField({
+      name: 'botAllowPublish',
+      title: 'Bot Can Publish (🚀 Post button)',
+      type: 'boolean',
+      group: 'bot',
+      initialValue: false,
+      description:
+        'Kill-switch for publishing from the Telegram bot. When off (or unset), the bot shows draft previews without the 🚀 Post button and publishing stays Studio-only.',
+    }),
   ],
 
   preview: {
