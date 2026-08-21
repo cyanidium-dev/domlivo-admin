@@ -21,6 +21,36 @@ describe('discoverLocalized', () => {
     expect(entries.find((e) => e.path === 'description')?.kind).toBe('text')
     expect(skippedInArrays).toBe(1)
   })
+
+  it('recognizes _type-less locale-shaped objects (bot-written drafts)', () => {
+    const botDoc = {
+      _id: 'drafts.property-tg-1',
+      _type: 'property',
+      title: {en: '1-bedroom apartment in Orikum', uk: 'Квартира з 1 спальнею', ru: '', sq: '', it: ''},
+      description: {
+        en: 'This 1-bedroom apartment (52.5 m² total) is located on the 3rd floor of a modern building with an elevator in Orikum, Albania. Fully furnished, sea view.',
+        uk: '', ru: '', sq: '', it: '',
+      },
+      address: {_type: 'localizedString', en: 'Rruga X'},
+      price: 100000,
+      slug: {_type: 'slug', current: 'x'},
+      agent: {_type: 'reference', _ref: 'a1'},
+    }
+    const {entries} = discoverLocalized(botDoc)
+    expect(entries.map((e) => e.path).sort()).toEqual(['address', 'description', 'title'])
+    expect(entries.find((e) => e.path === 'title')?.kind).toBe('string')
+    expect(entries.find((e) => e.path === 'description')?.kind).toBe('text')
+  })
+
+  it('does not misread non-localized objects or all-empty locale shapes', () => {
+    const {entries} = discoverLocalized({
+      _type: 'property',
+      slug: {current: 'x'},
+      empty: {en: '', uk: ''},
+      coords: {lat: 1, lng: 2},
+    })
+    expect(entries).toEqual([])
+  })
 })
 
 describe('buildTranslateItems', () => {
