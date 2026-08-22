@@ -3,17 +3,21 @@
  * listing in any language; the bot deployment's /api/studio-parse returns
  * 5-locale editorial fields, validated facts and resolved references, which
  * are patched onto the draft. Overwrite OFF fills only empty fields.
- * Never touched: agent, gallery, isPublished, lifecycleStatus, slug.
+ * Never touched: agent, gallery, isPublished, lifecycleStatus, and an existing
+ * slug — a missing one is minted from the English title and made unique here,
+ * since `slug` is required and the draft cannot be published without it.
  */
 import React, {useState} from 'react'
 import {SparklesIcon} from '@sanity/icons'
 import {Box, Button, Checkbox, Flex, Stack, Text, TextArea} from '@sanity/ui'
-import {useDocumentOperation, type DocumentActionComponent} from 'sanity'
-import {decideParseSets} from '../../../lib/studioAi/applyParse'
+import {useClient, useDocumentOperation, type DocumentActionComponent} from 'sanity'
+import {applySetOps, decideParseSets, missingForPublish} from '../../../lib/studioAi/applyParse'
+import {pickFreeSlug} from '../../../lib/studioAi/slug'
 import {aiConfigured, aiParse} from '../../../lib/studioAi/client'
 
 export const ParseFromTextAction: DocumentActionComponent = (props) => {
   const {patch} = useDocumentOperation(props.id, props.type)
+  const client = useClient({apiVersion: '2024-01-01'})
   const [open, setOpen] = useState(false)
   const [text, setText] = useState('')
   const [overwrite, setOverwrite] = useState(false)
@@ -37,8 +41,20 @@ export const ParseFromTextAction: DocumentActionComponent = (props) => {
         setDone(['Nothing to write — every parsed field already has a value. Use Overwrite to replace them.'])
         return
       }
+      // A minted slug has to be unique before it is written. The endpoints stay
+      // compute-only, so the lookup runs here, under the editor's own session.
+      const minted = setOps.slug as {current?: string} | undefined
+      if (minted?.current) {
+        const taken: string[] = await client.fetch(
+          `*[_type == "property" && defined(slug.current) && (slug.current == $base || slug.current match $pattern)].slug.current`,
+          {base: minted.current, pattern: `${minted.current}-*`},
+        )
+        setOps.slug = {_type: 'slug', current: pickFreeSlug(minted.current, taken)}
+      }
       patch.execute([{set: setOps}])
+      const stillNeeded = missingForPublish(applySetOps(doc, setOps))
       const lines = [`Filled ${fieldCount} value(s). Review and save.`]
+      if (stillNeeded.length) lines.push(`Still needed before publishing: ${stillNeeded.join(', ')}.`)
       if (skipped.length) lines.push(`Kept existing: ${skipped.join(', ')}.`)
       if (resp.refs.unmatched.length) lines.push(`Not matched (left empty): ${resp.refs.unmatched.join('; ')}.`)
       lines.push(...resp.validation.warnings.map((w) => `⚠ ${w}`))
