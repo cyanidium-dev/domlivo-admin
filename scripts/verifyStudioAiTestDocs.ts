@@ -53,7 +53,7 @@ async function main(): Promise<void> {
       const fields = new Set(Object.keys(setOps).map((p) => p.slice(0, p.lastIndexOf('.'))))
       console.log(
         `${id} base=${base} overwrite=${overwrite ? 'ON ' : 'OFF'} → ` +
-          `${discovery.entries.length} field(s) found, ${discovery.skippedInArrays} in arrays, ` +
+          `${discovery.entries.length} field(s) found, ${discovery.skippedNoKey} unpatchable in lists, ` +
           `${skippedNoBase.length} without ${base.toUpperCase()} text, ` +
           `writes ${written} value(s) across ${fields.size} field(s)`,
       )

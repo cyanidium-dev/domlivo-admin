@@ -26,7 +26,7 @@ export const TranslateDocumentAction: DocumentActionComponent = (props) => {
   const [done, setDone] = useState<string | null>(null)
 
   const doc = (props.draft ?? props.published) as Record<string, unknown> | null
-  const discovery = useMemo(() => (doc ? discoverLocalized(doc) : {entries: [], skippedInArrays: 0}), [doc])
+  const discovery = useMemo(() => (doc ? discoverLocalized(doc) : {entries: [], skippedNoKey: 0}), [doc])
 
   if (!TRANSLATE_ACTION_TYPES.has(props.type)) return null
 
@@ -44,13 +44,27 @@ export const TranslateDocumentAction: DocumentActionComponent = (props) => {
       const resp = await aiTranslate(base, items)
       const translated = new Map<string, TranslatedLocales>(resp.items.map((i) => [i.key, i.locales]))
       const {setOps, written} = decideTranslationSets(discovery.entries, translated, {base, overwrite})
+      const notes: string[] = []
+      if (skippedNoBase.length) {
+        notes.push(`${skippedNoBase.length} field(s) had no ${base.toUpperCase()} text and were skipped.`)
+      }
+      if (resp.oversized.length) {
+        notes.push(`Too long to translate in one request: ${resp.oversized.join(', ')}.`)
+      }
       if (written === 0) {
-        setDone('Nothing to write — all locales are already filled. Use Overwrite to re-translate.')
+        setDone(
+          ['Nothing to write — all locales are already filled. Use Overwrite to re-translate.', ...notes].join(' '),
+        )
         return
       }
       patch.execute([{set: setOps}])
-      const skippedNote = skippedNoBase.length ? ` ${skippedNoBase.length} field(s) had no ${base.toUpperCase()} text and were skipped.` : ''
-      setDone(`Wrote ${written} locale value(s) across ${resp.items.length} field(s).${skippedNote} Review and publish when ready.`)
+      setDone(
+        [
+          `Wrote ${written} locale value(s) across ${resp.items.length} field(s).`,
+          ...notes,
+          'Review and publish when ready.',
+        ].join(' '),
+      )
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e))
     } finally {
@@ -78,7 +92,7 @@ export const TranslateDocumentAction: DocumentActionComponent = (props) => {
         <Stack space={4} padding={2}>
           <Text size={1}>
             {discovery.entries.length} localized field(s) found
-            {discovery.skippedInArrays > 0 ? ` (${discovery.skippedInArrays} inside lists are not supported yet)` : ''}.
+            {discovery.skippedNoKey > 0 ? ` (${discovery.skippedNoKey} inside lists have no key and cannot be patched)` : ''}.
           </Text>
           <Stack space={2}>
             <Text size={1} weight="semibold">
