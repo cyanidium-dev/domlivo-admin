@@ -13,6 +13,11 @@ import {Box, Button, Checkbox, Flex, Stack, Text, TextArea} from '@sanity/ui'
 import {useClient, useDocumentOperation, type DocumentActionComponent} from 'sanity'
 import {applySetOps, decideParseSets, missingForPublish} from '../../../lib/studioAi/applyParse'
 import {pickFreeSlug} from '../../../lib/studioAi/slug'
+import {
+  buildSuggestionDrafts,
+  planSuggestionWrites,
+  unmatchedAmenityNames,
+} from '../../../lib/studioAi/amenitySuggestions'
 import {aiConfigured, aiParse} from '../../../lib/studioAi/client'
 
 export const ParseFromTextAction: DocumentActionComponent = (props) => {
@@ -28,6 +33,54 @@ export const ParseFromTextAction: DocumentActionComponent = (props) => {
   if (props.type !== 'property') return null
 
   const doc = (props.draft ?? props.published ?? {}) as Record<string, unknown>
+
+  /**
+   * An amenity the matcher could not place is knowledge that would otherwise
+   * die in this dialog. It queues for review instead — never entering the
+   * taxonomy on its own. Failing to queue must not fail the parse, so this
+   * reports rather than throws.
+   */
+  const queueAmenitySuggestions = async (unmatched: string[], listingTitle: string): Promise<string[]> => {
+    const names = unmatchedAmenityNames(unmatched)
+    if (names.length === 0) return []
+    try {
+      // Everything the matcher already answers to — slug, every title locale,
+      // every approved alias. Flattened here rather than in GROQ, where the
+      // shape would be harder to read than the loop that replaces it.
+      const rows: Array<{slug?: string; aliases?: string[]; title?: Record<string, string>}> = await client.fetch(
+        `*[_type == "amenity"]{"slug": slug.current, aliases, title}`,
+      )
+      const known = rows.flatMap((r) => [
+        ...(r.slug ? [r.slug] : []),
+        ...(r.aliases ?? []),
+        ...Object.values(r.title ?? {}).filter((v): v is string => typeof v === 'string'),
+      ])
+      const now = new Date().toISOString()
+      const {drafts, dropped} = buildSuggestionDrafts(names, known, {now, example: listingTitle})
+      const lines: string[] = []
+      if (dropped.length) lines.push(`Not queued — does not look like an amenity name: ${dropped.join(', ')}.`)
+      if (drafts.length === 0) return lines
+
+      const existingRows: Array<{_id: string; examples?: string[]}> = await client.fetch(
+        `*[_id in $ids]{_id, examples}`,
+        {ids: drafts.map((d) => d._id)},
+      )
+      const existing = new Map(existingRows.map((r) => [r._id, r]))
+      let tx = client.transaction()
+      for (const write of planSuggestionWrites(drafts, existing, {now, example: listingTitle})) {
+        tx = tx.createIfNotExists(write.create)
+        tx = tx.patch(write.create._id, (p) => {
+          const base = p.inc({count: write.incCount}).set({lastSeen: write.lastSeen}).setIfMissing({examples: []})
+          return write.appendExample ? base.append('examples', [write.appendExample]) : base
+        })
+      }
+      await tx.commit()
+      lines.push(`Queued ${drafts.length} amenity name(s) for review under Amenity suggestions.`)
+      return lines
+    } catch (e) {
+      return [`Could not queue the unmatched amenities: ${e instanceof Error ? e.message : String(e)}`]
+    }
+  }
 
   const run = async () => {
     setBusy(true)
@@ -57,6 +110,7 @@ export const ParseFromTextAction: DocumentActionComponent = (props) => {
       if (stillNeeded.length) lines.push(`Still needed before publishing: ${stillNeeded.join(', ')}.`)
       if (skipped.length) lines.push(`Kept existing: ${skipped.join(', ')}.`)
       if (resp.refs.unmatched.length) lines.push(`Not matched (left empty): ${resp.refs.unmatched.join('; ')}.`)
+      lines.push(...await queueAmenitySuggestions(resp.refs.unmatched, resp.parsed.editorial.title.en))
       lines.push(...resp.validation.warnings.map((w) => `⚠ ${w}`))
       if (resp.parsed.parserNotes) lines.push(resp.parsed.parserNotes)
       setDone(lines)

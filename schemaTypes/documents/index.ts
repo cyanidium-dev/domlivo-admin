@@ -3,6 +3,7 @@ import {country} from './country'
 import {city} from './city'
 import {district} from './district'
 import {amenity} from './amenity'
+import {amenitySuggestion} from './amenitySuggestion'
 import {blogCategory} from './blogCategory'
 import {blogAuthor} from './blogAuthor'
 import {blogPost} from './blogPost'
@@ -30,6 +31,7 @@ export const documents = [
   city,
   district,
   amenity,
+  amenitySuggestion,
   blogAuthor,
   blogCategory,
   blogPost,
