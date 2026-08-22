@@ -257,31 +257,18 @@ export const structure: StructureResolver = (S, context) =>
 
       S.documentTypeListItem('propertyType').title('Property Types'),
 
-      S.documentTypeListItem('amenity').title('Amenities'),
-
-      // Amenity names the listing intake could not place. Open ones first; the
-      // full list keeps the record of what was mapped, created or rejected.
+      // One list, flagged first: intake creates amenities on sight and marks
+      // them, so review happens where amenities already live rather than in a
+      // separate queue an editor has to remember.
       S.listItem()
-        .title('Amenity suggestions')
+        .title('Amenities')
         .child(
-          S.list()
-            .title('Amenity suggestions')
-            .items([
-              S.listItem()
-                .title('Needs review')
-                .child(
-                  S.documentList()
-                    .title('Needs review')
-                    .filter('_type == "amenitySuggestion" && status == "new"')
-                    .defaultOrdering([{field: 'count', direction: 'desc'}]),
-                ),
-              S.listItem()
-                .title('All suggestions')
-                .child(
-                  S.documentTypeList('amenitySuggestion')
-                    .title('All suggestions')
-                    .defaultOrdering([{field: 'count', direction: 'desc'}]),
-                ),
+          S.documentTypeList('amenity')
+            .title('Amenities')
+            .defaultOrdering([
+              {field: 'needsReview', direction: 'desc'},
+              {field: 'order', direction: 'asc'},
+              {field: 'title.en', direction: 'asc'},
             ]),
         ),
 

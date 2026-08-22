@@ -22,11 +22,7 @@ import {config as loadDotenv} from 'dotenv'
 import {createClient} from '@sanity/client'
 import {applySetOps, decideParseSets, missingForPublish, type ParseResponse} from '../lib/studioAi/applyParse'
 import {pickFreeSlug} from '../lib/studioAi/slug'
-import {
-  buildSuggestionDrafts,
-  planSuggestionWrites,
-  unmatchedAmenityNames,
-} from '../lib/studioAi/amenitySuggestions'
+import {planNewAmenities} from '../lib/studioAi/createAmenities'
 
 loadDotenv({path: path.resolve(process.cwd(), '.env')})
 
@@ -56,41 +52,6 @@ async function parse(text: string): Promise<ParseResponse> {
   return (await res.json()) as ParseResponse
 }
 
-/** The same queue write the Parse action performs, so a replay exercises it too. */
-async function queueSuggestions(unmatched: string[], listingTitle: string): Promise<string[]> {
-  const names = unmatchedAmenityNames(unmatched)
-  if (names.length === 0) return []
-  const rows: Array<{slug?: string; aliases?: string[]; title?: Record<string, string>}> = await client.fetch(
-    `*[_type == "amenity"]{"slug": slug.current, aliases, title}`,
-  )
-  const known = rows.flatMap((r) => [
-    ...(r.slug ? [r.slug] : []),
-    ...(r.aliases ?? []),
-    ...Object.values(r.title ?? {}).filter((v): v is string => typeof v === 'string'),
-  ])
-  const now = new Date().toISOString()
-  const {drafts, dropped} = buildSuggestionDrafts(names, known, {now, example: listingTitle})
-  const lines: string[] = []
-  if (dropped.length) lines.push(`Not queued (shape): ${dropped.join(', ')}.`)
-  if (drafts.length === 0) return lines
-
-  const existingRows: Array<{_id: string; examples?: string[]}> = await client.fetch(`*[_id in $ids]{_id, examples}`, {
-    ids: drafts.map((d) => d._id),
-  })
-  const existing = new Map(existingRows.map((r) => [r._id, r]))
-  let tx = client.transaction()
-  for (const write of planSuggestionWrites(drafts, existing, {now, example: listingTitle})) {
-    tx = tx.createIfNotExists(write.create)
-    tx = tx.patch(write.create._id, (p) => {
-      const b = p.inc({count: write.incCount}).set({lastSeen: write.lastSeen}).setIfMissing({examples: []})
-      return write.appendExample ? b.append('examples', [write.appendExample]) : b
-    })
-  }
-  await tx.commit()
-  lines.push(`Queued for review: ${drafts.map((d) => d.name).join(', ')}.`)
-  return lines
-}
-
 async function main(): Promise<void> {
   if (!base || !secret) {
     console.error('SANITY_STUDIO_AI_API_URL / _SECRET missing from cms/.env')
@@ -111,6 +72,15 @@ async function main(): Promise<void> {
     }
 
     const resp = await parse(text)
+    // Same create-then-attach step the Parse action performs, so a replay
+    // exercises it too: an amenity the catalogue lacks is created flagged and
+    // referenced immediately.
+    const {docs: newAmenities, stillUnmatched} = planNewAmenities(resp.refs.unmatched)
+    if (execute && newAmenities.length > 0) {
+      await newAmenities.reduce((tx, d) => tx.createIfNotExists(d), client.transaction()).commit()
+      resp.refs.amenityIds = [...resp.refs.amenityIds, ...newAmenities.map((d) => d._id)]
+      resp.refs.unmatched = stillUnmatched
+    }
     const {setOps, skipped} = decideParseSets(doc, resp, overwrite)
 
     // Same slug uniqueness step the action performs under the editor's session.
@@ -129,6 +99,12 @@ async function main(): Promise<void> {
     if (stillNeeded.length) lines.push(`Still needed before publishing: ${stillNeeded.join(', ')}.`)
     if (skipped.length) lines.push(`Kept existing: ${skipped.join(', ')}.`)
     if (resp.refs.unmatched.length) lines.push(`Not matched (left empty): ${resp.refs.unmatched.join('; ')}.`)
+    if (newAmenities.length) {
+      lines.push(`Added as new amenities, hidden until reviewed: ${newAmenities.map((d) => d.title.en).join(', ')}.`)
+    }
+    if (resp.refs.looseAmenities?.length) {
+      lines.push(`Matched by similarity — please check: ${resp.refs.looseAmenities.map((l) => l.name).join(', ')}.`)
+    }
     lines.push(...resp.validation.warnings.map((w) => `⚠ ${w}`))
     if (resp.parsed.parserNotes) lines.push(resp.parsed.parserNotes)
 
@@ -137,12 +113,7 @@ async function main(): Promise<void> {
     console.log(`  title  ${resp.parsed.editorial.title.en}`)
     for (const line of lines) console.log(`  ${line}`)
 
-    if (execute) {
-      await client.patch(id).set(setOps as Record<string, unknown>).commit({autoGenerateArrayKeys: false})
-      for (const line of await queueSuggestions(resp.refs.unmatched, resp.parsed.editorial.title.en)) {
-        console.log(`  ${line}`)
-      }
-    }
+    if (execute) await client.patch(id).set(setOps as Record<string, unknown>).commit({autoGenerateArrayKeys: false})
     console.log()
   }
 

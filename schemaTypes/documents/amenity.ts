@@ -89,6 +89,15 @@ export const amenity = defineType({
     }),
 
     defineField({
+      name: 'needsReview',
+      title: 'Needs review',
+      type: 'boolean',
+      initialValue: false,
+      description:
+        'Set by the listing intake the first time it met this wording. The amenity is attached to listings straight away but stays off the site — catalog filters and property pages both skip it — until someone confirms the name, translates it and picks an icon. Clear it with the Approve action.',
+    }),
+
+    defineField({
       name: 'aliases',
       title: 'Also known as',
       type: 'array',
@@ -107,10 +116,21 @@ export const amenity = defineType({
     select: {
       titleEn: 'title.en',
       titleSq: 'title.sq',
+      needsReview: 'needsReview',
+      active: 'active',
     },
     prepare(selection) {
       const title = selection.titleEn || selection.titleSq || 'Untitled'
-      return {title}
+      // The flag has to show in the list, not only inside the document: review
+      // happens by scanning Amenities, there is no separate queue any more.
+      const notes = [
+        selection.needsReview ? 'needs review — hidden on the site' : null,
+        selection.active === false ? 'inactive' : null,
+      ].filter(Boolean)
+      return {
+        title: selection.needsReview ? `⚠ ${title}` : title,
+        subtitle: notes.join(' · ') || undefined,
+      }
     },
   },
 })
