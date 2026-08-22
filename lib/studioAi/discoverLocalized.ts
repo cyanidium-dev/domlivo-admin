@@ -1,8 +1,10 @@
 /**
  * Schema-independent discovery of localized fields on a document value: walks
  * the object tree looking for `_type: localizedString | localizedText`.
- * Array-nested fields are skipped in v1 (patch paths with _key selectors are
- * a later step) and reported so the dialog can say what was left out.
+ * Array items are addressed by `_key` — `propertyOffers[_key=="a1"].title` —
+ * which is a patch path Sanity accepts directly; an item without a `_key`
+ * cannot be addressed safely, so its localized fields are counted and reported
+ * instead of written.
  */
 import {PROJECT_LOCALE_IDS, type ProjectLocaleId} from '../sanity/localizedPaste/projectLocales'
 
@@ -40,15 +42,26 @@ function inferLocalizedKind(obj: Record<string, unknown>): 'string' | 'text' | u
 
 export function discoverLocalized(doc: Record<string, unknown>): {
   entries: LocalizedEntry[]
-  skippedInArrays: number
+  /** Localized fields inside array items that carry no `_key` — see below. */
+  skippedNoKey: number
 } {
   const entries: LocalizedEntry[] = []
-  let skippedInArrays = 0
+  let skippedNoKey = 0
 
-  const walk = (node: unknown, path: string, depth: number, insideArray: boolean): void => {
+  /**
+   * `unpatchable` marks a subtree reached through an array item with no `_key`.
+   * Studio always writes one; a missing key means an API writer got there
+   * first, and that is exactly the case where addressing the item by index
+   * would patch the wrong one. Such fields are counted, never written.
+   */
+  const walk = (node: unknown, path: string, depth: number, unpatchable: boolean): void => {
     if (depth > MAX_DEPTH || node === null || typeof node !== 'object') return
     if (Array.isArray(node)) {
-      for (const item of node) walk(item, path, depth + 1, true)
+      for (const item of node) {
+        const key = (item as Record<string, unknown> | null)?._key
+        if (typeof key === 'string' && key) walk(item, `${path}[_key=="${key}"]`, depth + 1, unpatchable)
+        else walk(item, path, depth + 1, true)
+      }
       return
     }
     const obj = node as Record<string, unknown>
@@ -56,8 +69,8 @@ export function discoverLocalized(doc: Record<string, unknown>): {
       (typeof obj._type === 'string' ? KIND_BY_TYPE[obj._type] : undefined) ??
       (obj._type === undefined ? inferLocalizedKind(obj) : undefined)
     if (kind) {
-      if (insideArray) {
-        skippedInArrays += 1
+      if (unpatchable) {
+        skippedNoKey += 1
         return
       }
       entries.push({path, kind, value: obj as LocalizedEntry['value']})
@@ -65,12 +78,12 @@ export function discoverLocalized(doc: Record<string, unknown>): {
     }
     for (const [key, v] of Object.entries(obj)) {
       if (key.startsWith('_')) continue
-      walk(v, path ? `${path}.${key}` : key, depth + 1, insideArray)
+      walk(v, path ? `${path}.${key}` : key, depth + 1, unpatchable)
     }
   }
 
   walk(doc, '', 0, false)
-  return {entries, skippedInArrays}
+  return {entries, skippedNoKey}
 }
 
 export function filledLocale(value: LocalizedEntry['value'], locale: ProjectLocaleId): string | null {

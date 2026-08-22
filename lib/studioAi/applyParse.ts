@@ -5,6 +5,7 @@
  * already set, promotion/analytics fields.
  */
 import {PROJECT_LOCALE_IDS, type ProjectLocaleId} from '../sanity/localizedPaste/projectLocales'
+import {slugify} from './slug'
 
 type LocaleMap = Record<ProjectLocaleId, string>
 
@@ -26,10 +27,73 @@ export type ParseResponse = {
   coords: {lat: number; lng: number} | null
 }
 
-const isEmpty = (v: unknown): boolean =>
-  v === undefined || v === null || (typeof v === 'string' && !v.trim()) || (Array.isArray(v) && v.length === 0)
+const isEmpty = (v: unknown): boolean => {
+  if (v === undefined || v === null) return true
+  if (typeof v === 'string') return !v.trim()
+  if (Array.isArray(v)) return v.length === 0
+  if (typeof v === 'object') {
+    const o = v as Record<string, unknown>
+    if (typeof o._ref === 'string' && o._ref) return false // a reference is a value
+    // A locale map or a slug with nothing in it reads as empty to an editor.
+    const own = Object.entries(o).filter(([k]) => !k.startsWith('_'))
+    if (own.length === 0) return true
+    if (own.every(([, val]) => typeof val === 'string')) return own.every(([, val]) => !(val as string).trim())
+  }
+  return false
+}
 
 const ref = (id: string) => ({_type: 'reference', _ref: id})
+
+/**
+ * Required on `property` (see schemaTypes/documents/property.ts), each with the
+ * label an editor sees. Declared here rather than read from the schema so that
+ * adding a required field without updating this list fails a test, instead of
+ * quietly dropping out of the "still needed" line.
+ */
+const REQUIRED_FOR_PUBLISH: Array<{field: string; label: string}> = [
+  {field: 'title', label: 'Title'},
+  {field: 'slug', label: 'URL slug'},
+  {field: 'agent', label: 'Agent'},
+  {field: 'type', label: 'Property type'},
+  {field: 'status', label: 'Status'},
+  {field: 'price', label: 'Price'},
+  {field: 'city', label: 'City'},
+  {field: 'gallery', label: 'Photos'},
+]
+
+/**
+ * What still blocks publishing, given the document as it will be AFTER the
+ * patch. Parse never touches `agent` or `gallery`, so a freshly parsed draft
+ * always has something outstanding — closing with "review and save" without
+ * naming it is what F6 was about.
+ */
+/**
+ * The document as the patch will leave it. Set operations address either a
+ * whole field (`price`) or one locale of it (`title.en`); a single level of
+ * merging covers both, which is all the publish check needs.
+ */
+export function applySetOps(
+  doc: Record<string, unknown>,
+  setOps: Record<string, unknown>,
+): Record<string, unknown> {
+  const out: Record<string, unknown> = {...doc}
+  for (const [path, value] of Object.entries(setOps)) {
+    const dot = path.indexOf('.')
+    if (dot === -1) {
+      out[path] = value
+      continue
+    }
+    const root = path.slice(0, dot)
+    const rest = path.slice(dot + 1)
+    const existing = (out[root] ?? {}) as Record<string, unknown>
+    out[root] = {...existing, [rest]: value}
+  }
+  return out
+}
+
+export function missingForPublish(docAfterPatch: Record<string, unknown>): string[] {
+  return REQUIRED_FOR_PUBLISH.filter(({field}) => isEmpty(docAfterPatch[field])).map(({label}) => label)
+}
 
 export function decideParseSets(
   current: Record<string, unknown>,
@@ -66,6 +130,15 @@ export function decideParseSets(
   }
 
   localized('title', 'localizedString', r.parsed.editorial.title)
+
+  // The slug is minted only when there is none — a published URL is not
+  // editorial content, so overwrite never applies to it. Uniqueness is settled
+  // by the caller, which can query the dataset under the editor's session.
+  const titleEn = (r.parsed.editorial.title.en ?? '').trim()
+  if (titleEn && isEmpty(current.slug)) {
+    setOps.slug = {_type: 'slug', current: slugify(titleEn)}
+  }
+
   localized('shortDescription', 'localizedText', r.parsed.editorial.shortDescription)
   localized('description', 'localizedText', r.parsed.editorial.description)
 

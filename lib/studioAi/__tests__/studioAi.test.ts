@@ -1,7 +1,8 @@
 import {describe, it, expect} from 'vitest'
 import {discoverLocalized, filledLocale} from '../discoverLocalized'
-import {buildTranslateItems, decideTranslationSets} from '../applyTranslations'
-import {decideParseSets, type ParseResponse} from '../applyParse'
+import {buildTranslateItems, chunkTranslateItems, decideTranslationSets} from '../applyTranslations'
+import {applySetOps, decideParseSets, missingForPublish, type ParseResponse} from '../applyParse'
+import {pickFreeSlug, slugify} from '../slug'
 
 const doc = {
   _id: 'district-x',
@@ -15,11 +16,46 @@ const doc = {
 }
 
 describe('discoverLocalized', () => {
-  it('finds nested localized objects, skips array-nested ones and counts them', () => {
-    const {entries, skippedInArrays} = discoverLocalized(doc)
+  it('finds nested localized objects, and skips array items that carry no _key', () => {
+    const {entries, skippedNoKey} = discoverLocalized(doc)
     expect(entries.map((e) => e.path).sort()).toEqual(['description', 'heroSubtitle', 'seo.metaTitle', 'title'])
     expect(entries.find((e) => e.path === 'description')?.kind).toBe('text')
-    expect(skippedInArrays).toBe(1)
+    expect(skippedNoKey).toBe(1) // the faq item in the fixture has no _key
+  })
+
+  it('addresses array items by _key, which is what makes them patchable', () => {
+    const {entries, skippedNoKey} = discoverLocalized({
+      _type: 'property',
+      propertyOffers: [
+        {_key: 'a1', _type: 'propertyOffer', title: {_type: 'localizedString', en: 'Sea view'}},
+        {_key: 'b2', _type: 'propertyOffer', title: {_type: 'localizedString', en: 'Parking'}},
+      ],
+    })
+    expect(entries.map((e) => e.path)).toEqual([
+      'propertyOffers[_key=="a1"].title',
+      'propertyOffers[_key=="b2"].title',
+    ])
+    expect(skippedNoKey).toBe(0)
+  })
+
+  it('reaches localized fields nested deeper inside a keyed item', () => {
+    const {entries} = discoverLocalized({
+      _type: 'district',
+      faqItems: [{_key: 'f1', question: {_type: 'localizedString', en: 'Q?'}, meta: {tag: {_type: 'localizedString', en: 'Tax'}}}],
+    })
+    expect(entries.map((e) => e.path).sort()).toEqual([
+      'faqItems[_key=="f1"].meta.tag',
+      'faqItems[_key=="f1"].question',
+    ])
+  })
+
+  it('counts a keyless item once per localized field it hides, and writes nothing for it', () => {
+    const {entries, skippedNoKey} = discoverLocalized({
+      _type: 'district',
+      faqItems: [{question: {_type: 'localizedString', en: 'Q?'}, answer: {_type: 'localizedText', en: 'A.'}}],
+    })
+    expect(entries).toEqual([])
+    expect(skippedNoKey).toBe(2)
   })
 
   it('recognizes _type-less locale-shaped objects (bot-written drafts)', () => {
@@ -88,6 +124,88 @@ describe('decideTranslationSets', () => {
   })
 })
 
+describe('chunkTranslateItems', () => {
+  const item = (key: string, len: number) => ({key, kind: 'text' as const, text: 'x'.repeat(len)})
+
+  it('packs items within both the item and the character cap', () => {
+    const items = Array.from({length: 9}, (_, i) => item(`f${i}`, 100))
+    const {batches, oversized} = chunkTranslateItems(items, {maxItems: 4, maxChars: 1000})
+    expect(batches.map((b) => b.length)).toEqual([4, 4, 1])
+    expect(oversized).toEqual([])
+  })
+
+  it('starts a new batch when the character cap would be exceeded', () => {
+    const items = [item('a', 600), item('b', 600), item('c', 100)]
+    const {batches} = chunkTranslateItems(items, {maxItems: 40, maxChars: 1000})
+    expect(batches.map((b) => b.map((i) => i.key))).toEqual([['a'], ['b', 'c']])
+  })
+
+  it('drops an item that cannot fit in any request and reports it', () => {
+    const {batches, oversized} = chunkTranslateItems([item('huge', 2000), item('ok', 10)], {maxItems: 40, maxChars: 1000})
+    expect(oversized).toEqual(['huge'])
+    expect(batches.map((b) => b.map((i) => i.key))).toEqual([['ok']])
+  })
+
+  it('returns no batches for no items', () => {
+    expect(chunkTranslateItems([], {maxItems: 40, maxChars: 1000}).batches).toEqual([])
+  })
+})
+
+describe('slug', () => {
+  it('matches the bot slugify on the inputs both repos see', () => {
+    expect(slugify('2-bedroom apartment in Currila, Durrës')).toBe('2-bedroom-apartment-in-currila-durres')
+    expect(slugify('Vilë me 4 dhoma gjumi në Gjirin e Lalzit')).toBe('vile-me-4-dhoma-gjumi-ne-gjirin-e-lalzit')
+    expect(slugify('  Trailing --- dashes --- ')).toBe('trailing-dashes')
+  })
+
+  it('picks the first free suffix and leaves an uncontested slug alone', () => {
+    expect(pickFreeSlug('flat-in-durres', [])).toBe('flat-in-durres')
+    expect(pickFreeSlug('flat-in-durres', ['flat-in-durres'])).toBe('flat-in-durres-2')
+    expect(pickFreeSlug('flat-in-durres', ['flat-in-durres', 'flat-in-durres-2'])).toBe('flat-in-durres-3')
+  })
+})
+
+describe('applySetOps', () => {
+  it('merges a locale path into the field it belongs to and replaces whole fields', () => {
+    const after = applySetOps({title: {en: 'Old', ru: 'Старое'}, price: 1}, {'title.en': 'New', price: 2})
+    expect(after.title).toEqual({en: 'New', ru: 'Старое'})
+    expect(after.price).toBe(2)
+  })
+
+  it('creates the parent when the field was absent', () => {
+    expect(applySetOps({}, {'title.en': 'New'}).title).toEqual({en: 'New'})
+  })
+})
+
+describe('missingForPublish', () => {
+  it('names every required field still empty, by its Studio label', () => {
+    expect(missingForPublish({title: {en: 'T'}, status: 'sale', price: 1, city: {_ref: 'c'}, type: {_ref: 't'}})).toEqual([
+      'URL slug',
+      'Agent',
+      'Photos',
+    ])
+  })
+
+  it('is empty when the draft is complete', () => {
+    expect(
+      missingForPublish({
+        title: {en: 'T'},
+        slug: {current: 's'},
+        agent: {_ref: 'a'},
+        type: {_ref: 't'},
+        status: 'sale',
+        price: 1,
+        city: {_ref: 'c'},
+        gallery: [{_key: 'g'}],
+      }),
+    ).toEqual([])
+  })
+
+  it('treats an all-empty locale object as missing', () => {
+    expect(missingForPublish({title: {en: '', ru: ''}})).toContain('Title')
+  })
+})
+
 describe('decideParseSets', () => {
   const resp: ParseResponse = {
     parsed: {
@@ -116,6 +234,17 @@ describe('decideParseSets', () => {
     expect(setOps['coordinatesLat']).toBe(40.5)
     expect('agent' in setOps).toBe(false)
     expect('gallery' in setOps).toBe(false)
+  })
+
+  it('derives a slug when the document has none, from the English title', () => {
+    const {setOps} = decideParseSets({}, resp, false)
+    expect(setOps['slug']).toEqual({_type: 'slug', current: 't-en'})
+  })
+
+  it('never touches an existing slug, overwrite or not — a published URL is not editorial', () => {
+    const current = {slug: {_type: 'slug', current: 'keep-me'}}
+    expect('slug' in decideParseSets(current, resp, false).setOps).toBe(false)
+    expect('slug' in decideParseSets(current, resp, true).setOps).toBe(false)
   })
 
   it('overwrite ON replaces parsed fields but never invents empty values', () => {
