@@ -259,6 +259,32 @@ export const structure: StructureResolver = (S, context) =>
 
       S.documentTypeListItem('amenity').title('Amenities'),
 
+      // Amenity names the listing intake could not place. Open ones first; the
+      // full list keeps the record of what was mapped, created or rejected.
+      S.listItem()
+        .title('Amenity suggestions')
+        .child(
+          S.list()
+            .title('Amenity suggestions')
+            .items([
+              S.listItem()
+                .title('Needs review')
+                .child(
+                  S.documentList()
+                    .title('Needs review')
+                    .filter('_type == "amenitySuggestion" && status == "new"')
+                    .defaultOrdering([{field: 'count', direction: 'desc'}]),
+                ),
+              S.listItem()
+                .title('All suggestions')
+                .child(
+                  S.documentTypeList('amenitySuggestion')
+                    .title('All suggestions')
+                    .defaultOrdering([{field: 'count', direction: 'desc'}]),
+                ),
+            ]),
+        ),
+
       S.divider(),
 
       S.documentTypeListItem('agent').title('Agents'),

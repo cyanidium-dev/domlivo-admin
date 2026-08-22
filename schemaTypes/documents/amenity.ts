@@ -87,6 +87,20 @@ export const amenity = defineType({
       title: 'Active',
       initialValue: true,
     }),
+
+    defineField({
+      name: 'aliases',
+      title: 'Also known as',
+      type: 'array',
+      of: [{type: 'string'}],
+      description:
+        'Alternative wordings the listing intake resolves to this amenity — e.g. "Private pool" for Swimming Pool. Used only when matching parsed listings, never shown on the site. Normally filled by approving an entry in Amenity suggestions.',
+      validation: (Rule) =>
+        Rule.unique().custom((value) => {
+          const short = ((value as string[]) ?? []).filter((v) => typeof v !== 'string' || v.trim().length < 3)
+          return short.length === 0 ? true : 'Each alias needs at least 3 characters — shorter ones match too much.'
+        }),
+    }),
   ],
 
   preview: {
