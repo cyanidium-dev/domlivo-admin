@@ -19,9 +19,10 @@ export const country = defineType({
     defineField({
       name: 'title',
       title: 'Title',
-      type: 'string',
+      type: 'localizedString',
       validation: (Rule) => Rule.required(),
-      description: 'Display name (e.g. Albania).',
+      description:
+        'Display name per language (e.g. Albania / Shqipëri). Used for the country breadcrumb; when a locale is empty the frontend falls back to the URL slug.',
     }),
 
     defineField({
@@ -29,7 +30,7 @@ export const country = defineType({
       title: 'URL slug',
       type: 'slug',
       options: {
-        source: 'title',
+        source: 'title.en',
         maxLength: 96,
       },
       validation: (Rule) =>
@@ -56,9 +57,9 @@ export const country = defineType({
   ],
 
   preview: {
-    select: {title: 'title', slug: 'slug.current'},
-    prepare({title, slug}: {title?: string; slug?: string}) {
-      return {title: title || 'Country', subtitle: slug || ''}
+    select: {titleEn: 'title.en', titleSq: 'title.sq', slug: 'slug.current'},
+    prepare({titleEn, titleSq, slug}: {titleEn?: string; titleSq?: string; slug?: string}) {
+      return {title: titleEn || titleSq || 'Country', subtitle: slug || ''}
     },
   },
 })

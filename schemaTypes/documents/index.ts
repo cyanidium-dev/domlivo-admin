@@ -10,7 +10,6 @@ import {blogSettings} from './blogSettings'
 import {agent} from './agent'
 import {property} from './property'
 import {propertyType} from './propertyType'
-import {locationTag} from './locationTag'
 import {siteSettings} from './siteSettings'
 import {landingPage} from './landingPage'
 import {registrationRequest} from './registrationRequest'
@@ -38,7 +37,6 @@ export const documents = [
   agent,
   property,
   propertyType,
-  locationTag,
   siteSettings,
   registrationRequest,
   botAccessRequest,

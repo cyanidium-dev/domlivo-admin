@@ -140,24 +140,7 @@ export const district = defineType({
       description: 'Main content for the district landing page.',
     }),
 
-    defineField({
-      name: 'metricsTitle',
-      title: 'Metrics Title',
-      type: 'localizedString',
-      group: 'content',
-      description: 'Title shown above the metrics section.',
-    }),
 
-    defineField({
-      name: 'metrics',
-      title: 'Metrics',
-      type: 'array',
-      of: [defineArrayMember({type: 'districtMetric'})],
-      group: 'content',
-      description:
-        'Key metrics displayed on the district page (e.g. average price, properties count).',
-      validation: (Rule) => Rule.max(10),
-    }),
 
     defineField({
       name: 'allPropertiesCta',

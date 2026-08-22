@@ -1,11 +1,6 @@
-import {seo} from './seo'
-import {faqItem} from './faqItem'
-import {ctaLink} from './ctaLink'
 import {socialLink} from './socialLink'
-import {footerLink} from './footerLink'
 import {footerApp} from './footerApp'
 import {districtStat} from './districtStat'
-import {districtMetric} from './districtMetric'
 import {localizedString} from './localizedString'
 import {localizedText} from './localizedText'
 import {localizedSlug} from './localizedSlug'
@@ -23,7 +18,6 @@ import {blogPropertyEmbedBlock} from './blogPropertyEmbedBlock'
 import {heroSearchTab} from './heroSearchTab'
 import {heroSection} from './heroSection'
 import {propertyCarouselSection} from './propertyCarouselSection'
-import {homePropertyCarouselTab} from './homePropertyCarouselTab'
 import {locationCarouselSection} from './locationCarouselSection'
 import {propertyTypesSection} from './propertyTypesSection'
 import {marketingContentSection} from './marketingContentSection'
@@ -66,20 +60,15 @@ import {propertySettings} from './propertySettings'
  * Add new object schemas here.
  */
 export const objects = [
-  seo,
-  faqItem,
   blogTable,
   blogCallout,
   blogFaqBlock,
   blogCtaBlock,
   blogRelatedPostsBlock,
   blogPropertyEmbedBlock,
-  ctaLink,
   socialLink,
-  footerLink,
   footerApp,
   districtStat,
-  districtMetric,
   localizedString,
   localizedText,
   localizedBlockContent,
@@ -92,7 +81,6 @@ export const objects = [
   heroSearchTab,
   heroSection,
   propertyCarouselSection,
-  homePropertyCarouselTab,
   locationCarouselSection,
   propertyTypesSection,
   marketingContentSection,

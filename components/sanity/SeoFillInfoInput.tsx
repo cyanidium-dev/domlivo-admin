@@ -75,7 +75,6 @@ export const SeoFillInfoInput = React.forwardRef(function SeoFillInfoInput(
   const cityRef = useFormValue(['city']) as Ref | undefined
   const districtRef = useFormValue(['district']) as Ref | undefined
   const typeRef = useFormValue(['type']) as Ref | undefined
-  const locationTags = useFormValue(['locationTags']) as Ref[] | undefined
 
   const description = useFormValue(['description']) as LocalizedValue | undefined
   const heroSubtitle = useFormValue(['heroSubtitle']) as LocalizedValue | undefined
@@ -112,8 +111,7 @@ export const SeoFillInfoInput = React.forwardRef(function SeoFillInfoInput(
       }
 
       if (sourceType === 'property') {
-        const tagRefs = Array.isArray(locationTags) ? locationTags : []
-        const refList = [cityRef, districtRef, typeRef, ...tagRefs].filter(Boolean) as Ref[]
+        const refList = [cityRef, districtRef, typeRef].filter(Boolean) as Ref[]
         const byId = await fetchTitleDocs(client, refList)
 
         for (const locale of LOCALE_IDS) {
@@ -121,13 +119,8 @@ export const SeoFillInfoInput = React.forwardRef(function SeoFillInfoInput(
           const cityT = cityRef?._ref ? pickLocalized(byId.get(cityRef._ref), loc) : ''
           const districtT = districtRef?._ref ? pickLocalized(byId.get(districtRef._ref), loc) : ''
           const typeT = typeRef?._ref ? pickLocalized(byId.get(typeRef._ref), loc) : ''
+          // locationTags was removed from the property schema (unused, 0 populated).
           const tagTitles: string[] = []
-          for (const tr of tagRefs) {
-            if (tr?._ref) {
-              const nm = pickLocalized(byId.get(tr._ref), loc)
-              if (nm) tagTitles.push(nm)
-            }
-          }
 
           const ctx: PropertyOgContext = {
             status: status || 'sale',
@@ -259,7 +252,6 @@ export const SeoFillInfoInput = React.forwardRef(function SeoFillInfoInput(
     cityRef,
     districtRef,
     typeRef,
-    locationTags,
     description,
     heroSubtitle,
     heroShortLine,

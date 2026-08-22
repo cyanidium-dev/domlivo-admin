@@ -39,13 +39,6 @@ export const heroSection = defineType({
       description: 'Optional second button next to the primary.',
     }),
     defineField({
-      name: 'seoTextUnderCta',
-      title: 'Line under CTAs (optional)',
-      type: 'localizedString',
-      group: 'content',
-      description: 'Small line under the buttons (e.g. for SEO).',
-    }),
-    defineField({
       name: 'search',
       title: 'Hero search',
       type: 'object',

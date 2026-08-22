@@ -7,6 +7,8 @@
   "scripts": {
     "postinstall": "node scripts/postinstall-fix-sanity-cli-worker.cjs",
     "test": "vitest run",
+    "migrate:audit1": "tsx scripts/migrateAuditRound1.ts",
+    "migrate:audit1:apply": "tsx scripts/migrateAuditRound1.ts --execute",
     "test:watch": "vitest",
     "parse:listings": "tsx scripts/parser/run.ts",
     "audit:zone-localization": "tsx scripts/auditZoneLocalization.ts",

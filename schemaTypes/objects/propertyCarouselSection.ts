@@ -26,25 +26,6 @@ export const propertyCarouselSection = defineType({
       description: 'Optional button or link below the header.',
     }),
     defineField({
-      name: 'tabs',
-      title: 'Tabs / groups',
-      type: 'array',
-      group: 'layout',
-      of: [defineArrayMember({type: 'homePropertyCarouselTab'})],
-      description:
-        'Which tab groups are enabled and in what order. If empty, default groups (e.g. popular / new) may be used.',
-      validation: (Rule) =>
-        Rule.custom((value) => {
-          if (!value || !Array.isArray(value) || value.length === 0) return true
-          const enabledTabs = value.filter((t: {enabled?: boolean}) => t?.enabled !== false)
-          if (enabledTabs.length === 0) return 'Enable at least one tab (or leave this list empty).'
-          const keys = value.map((t: {key?: string}) => t?.key).filter(Boolean) as string[]
-          const uniq = new Set(keys)
-          if (uniq.size !== keys.length) return 'Tab keys must be unique.'
-          return true
-        }),
-    }),
-    defineField({
       name: 'mode',
       title: 'Content mode',
       type: 'string',

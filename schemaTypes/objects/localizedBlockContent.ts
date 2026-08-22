@@ -83,8 +83,12 @@ const imageBlockDefinition = () =>
 
 /**
  * Allowed block types for article/rich content body.
- * Related posts and property embeds are managed via dedicated blogPost fields
- * (relatedPosts, relatedProperties), not inline blocks.
+ *
+ * `blogRelatedPostsBlock` and `blogPropertyEmbedBlock` are *inline* blocks placed
+ * mid-article; `blogPost.relatedPosts` / `relatedProperties` remain the
+ * page-level lists. Both inline blocks are queried and fully rendered by the
+ * frontend (`BlogArticleContent.tsx:158,181`), so they must be offered here —
+ * otherwise no editor can ever produce the data those renderers expect.
  */
 const richContentArrayOf = [
   articleBodyBlockMember(),
@@ -93,6 +97,8 @@ const richContentArrayOf = [
   defineArrayMember({type: 'blogFaqBlock'}),
   defineArrayMember({type: 'blogCallout'}),
   defineArrayMember({type: 'blogCtaBlock'}),
+  defineArrayMember({type: 'blogRelatedPostsBlock'}),
+  defineArrayMember({type: 'blogPropertyEmbedBlock'}),
 ]
 
 export const localizedBlockContent = defineType({
