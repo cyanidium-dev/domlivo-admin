@@ -22,6 +22,7 @@
     "create:zone-shells": "tsx scripts/createZoneShells.ts",
     "seed:studio-ai-tests": "tsx scripts/createStudioAiTestDocs.ts",
     "verify:studio-ai-tests": "tsx scripts/verifyStudioAiTestDocs.ts",
+    "verify:studio-ai-parse-flow": "tsx scripts/verifyStudioAiParseFlow.ts",
     "audit:zone-readiness": "tsx scripts/auditZoneReadiness.ts",
     "zones:verify": "tsx scripts/verifyZones.ts",
     "generate:zone-seo": "tsx scripts/generateZoneSeoCopy.ts",
