@@ -31,6 +31,19 @@ const token = process.env.SANITY_API_TOKEN?.trim()
 const args = process.argv.slice(2)
 const execute = args.includes('--execute')
 const remove = args.includes('--delete')
+/**
+ * `--only parse` / `--only translate` limits the run to one action's fixtures,
+ * so re-seeding the property drafts for a fresh parse does not wipe the
+ * translations someone just produced in the district ones.
+ */
+const only =
+  args.find((a) => a.startsWith('--only='))?.split('=')[1] ??
+  (args.includes('--only') ? args[args.indexOf('--only') + 1] : '')
+
+if (only && only !== 'parse' && only !== 'translate') {
+  console.error(`--only takes "parse" or "translate", got "${only}"`)
+  process.exit(1)
+}
 
 if (!projectId || !token) {
   console.error('Missing SANITY_PROJECT_ID / SANITY_API_TOKEN in cms/.env')
@@ -178,12 +191,10 @@ const parseDocs = PARSE_CASES.map((c) => ({
   lifecycleStatus: 'draft',
 }))
 
-const docs: Array<Record<string, unknown> & {_id: string; _type: string}> = [
-  EN_ONLY,
-  UK_ONLY,
-  PARTIAL,
-  ...parseDocs,
-]
+const translateDocs = [EN_ONLY, UK_ONLY, PARTIAL]
+
+const docs: Array<Record<string, unknown> & {_id: string; _type: string}> =
+  only === 'parse' ? parseDocs : only === 'translate' ? translateDocs : [...translateDocs, ...parseDocs]
 
 async function main(): Promise<void> {
   const ids = docs.map((d) => d._id)
