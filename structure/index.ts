@@ -257,8 +257,6 @@ export const structure: StructureResolver = (S, context) =>
 
       S.documentTypeListItem('propertyType').title('Property Types'),
 
-      S.documentTypeListItem('locationTag').title('Location Tags'),
-
       S.documentTypeListItem('amenity').title('Amenities'),
 
       S.divider(),

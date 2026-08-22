@@ -242,20 +242,6 @@ export const property = defineType({
     }),
 
     // LOCATION
-    // Deprecated: prefer city.country (Country document). Kept for backward compatibility;
-    // GROQ resolves "country" from city first, then falls back to this field.
-    defineField({
-      name: 'country',
-      title: 'Country (slug)',
-      type: 'string',
-      group: 'location',
-      hidden: true,
-      validation: (Rule) =>
-        Rule.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
-          .warning('Use lowercase kebab-case, e.g. "albania" or "north-macedonia".'),
-      description:
-        'Legacy fallback only — do not set for new content. Canonical country is derived from city → country. Remove redundant values when it matches city.country (see cleanup script).',
-    }),
 
     defineField({
       name: 'city',
@@ -313,14 +299,6 @@ export const property = defineType({
         Rule.min(-180).max(180).error('Longitude must be between -180 and 180'),
     }),
 
-    defineField({
-      name: 'locationTags',
-      title: 'Location Tags',
-      type: 'array',
-      of: [defineArrayMember({type: 'reference', to: [{type: 'locationTag'}]})],
-      group: 'location',
-      description: 'Tags for filtering and discovery (e.g. near beach, central).',
-    }),
 
     // DETAILS
     defineField({
@@ -468,7 +446,6 @@ export const property = defineType({
       initialValue: 0,
       readOnly: true,
     }),
-
     // TODO: migrate existing properties to populate ownerUserId
     defineField({
       name: 'ownerUserId',
@@ -480,6 +457,7 @@ export const property = defineType({
       initialValue: (_, context) =>
         (context as {currentUser?: {id?: string}}).currentUser?.id ?? '',
     }),
+
   ],
 
   preview: {
