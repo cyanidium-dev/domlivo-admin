@@ -96,24 +96,6 @@ export const siteSettings = defineType({
         'Optional short supporting text in the footer (separate from the global site tagline). Labels and layout are defined in code.',
     }),
     defineField({
-      name: 'footerTelegramUrl',
-      title: 'Footer — Telegram URL',
-      type: 'string',
-      group: 'footer',
-      description:
-        'DEPRECATED — add a Social Link with channel “Contacts” instead. Kept only until the existing value is migrated; the footer prefers Social Links and falls back to this.',
-      validation: optionalHttpUrl,
-    }),
-    defineField({
-      name: 'footerWhatsappUrl',
-      title: 'Footer — WhatsApp URL',
-      type: 'string',
-      group: 'footer',
-      description:
-        'DEPRECATED — add a Social Link with channel “Contacts” instead. Kept only until the existing value is migrated; the footer prefers Social Links and falls back to this.',
-      validation: optionalHttpUrl,
-    }),
-    defineField({
       name: 'footerApp',
       title: 'Footer App',
       type: 'footerApp',
