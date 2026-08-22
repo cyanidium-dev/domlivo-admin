@@ -28,7 +28,8 @@ export const propertyType = defineType({
       name: 'slug',
       type: 'slug',
       title: 'URL slug',
-      description: 'Used in /property-types/[slug]. Same style as city/property.',
+      description:
+        'Used as the catalog filter value for this type (there is no /property-types/[slug] route). Same slug style as city/property.',
       options: {
         source: (doc: Record<string, unknown>) => {
           const t = doc?.title as {en?: string} | undefined

@@ -1,6 +1,7 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
 import {CurrencyRatesInput} from '../../components/sanity/CurrencyRatesInput'
 import {DisplayCurrenciesInput} from '../../components/sanity/DisplayCurrenciesInput'
+import {optionalHttpUrl} from '../objects/footerApp'
 
 export const siteSettings = defineType({
   name: 'siteSettings',
@@ -99,83 +100,26 @@ export const siteSettings = defineType({
       title: 'Footer — Telegram URL',
       type: 'string',
       group: 'footer',
-      description: 'Optional public Telegram link for the footer contact area.',
-      validation: (Rule) =>
-        Rule.custom((value: string | undefined) => {
-          if (value == null || !String(value).trim()) return true
-          const v = String(value).trim()
-          if (!/^https?:\/\//i.test(v)) return 'Use a full URL starting with http:// or https://.'
-          try {
-            void new URL(v)
-            return true
-          } catch {
-            return 'Enter a valid URL.'
-          }
-        }),
+      description:
+        'DEPRECATED — add a Social Link with channel “Contacts” instead. Kept only until the existing value is migrated; the footer prefers Social Links and falls back to this.',
+      validation: optionalHttpUrl,
     }),
     defineField({
       name: 'footerWhatsappUrl',
       title: 'Footer — WhatsApp URL',
       type: 'string',
       group: 'footer',
-      description: 'Optional WhatsApp link (e.g. https://wa.me/…).',
-      validation: (Rule) =>
-        Rule.custom((value: string | undefined) => {
-          if (value == null || !String(value).trim()) return true
-          const v = String(value).trim()
-          if (!/^https?:\/\//i.test(v)) return 'Use a full URL starting with http:// or https://.'
-          try {
-            void new URL(v)
-            return true
-          } catch {
-            return 'Enter a valid URL.'
-          }
-        }),
+      description:
+        'DEPRECATED — add a Social Link with channel “Contacts” instead. Kept only until the existing value is migrated; the footer prefers Social Links and falls back to this.',
+      validation: optionalHttpUrl,
     }),
     defineField({
       name: 'footerApp',
       title: 'Footer App',
       type: 'footerApp',
       group: 'footer',
-      description: 'Store URLs for a future app column; visibility is controlled by enabled (UI copy lives in the frontend).',
-    }),
-    defineField({
-      name: 'footerCodesiteUrl',
-      title: 'Footer — Codesite URL',
-      type: 'string',
-      group: 'footer',
-      description: 'Optional partner/credits link (label in frontend).',
-      validation: (Rule) =>
-        Rule.custom((value: string | undefined) => {
-          if (value == null || !String(value).trim()) return true
-          const v = String(value).trim()
-          if (!/^https?:\/\//i.test(v)) return 'Use a full URL starting with http:// or https://.'
-          try {
-            void new URL(v)
-            return true
-          } catch {
-            return 'Enter a valid URL.'
-          }
-        }),
-    }),
-    defineField({
-      name: 'footerWebbondUrl',
-      title: 'Footer — Webbond URL',
-      type: 'string',
-      group: 'footer',
-      description: 'Optional partner/credits link (label in frontend).',
-      validation: (Rule) =>
-        Rule.custom((value: string | undefined) => {
-          if (value == null || !String(value).trim()) return true
-          const v = String(value).trim()
-          if (!/^https?:\/\//i.test(v)) return 'Use a full URL starting with http:// or https://.'
-          try {
-            void new URL(v)
-            return true
-          } catch {
-            return 'Enter a valid URL.'
-          }
-        }),
+      description:
+        'App Store / Google Play URLs for the footer app column. The column renders only when Enabled is on and at least one URL is set; labels and layout live in the frontend.',
     }),
     defineField({
       name: 'policyLinks',
@@ -184,12 +128,6 @@ export const siteSettings = defineType({
       of: [defineArrayMember({type: 'localizedFooterLink'})],
       group: 'footer',
       validation: (Rule) => Rule.max(20),
-    }),
-    defineField({
-      name: 'copyrightText',
-      title: 'Copyright Text',
-      type: 'localizedString',
-      group: 'footer',
     }),
 
     // CONTENT
@@ -208,18 +146,7 @@ export const siteSettings = defineType({
       group: 'content',
       description:
         'Optional embed URL for the hero video on `/how-to-publish` (and localized routes such as `/[locale]/how-to-publish`). Paste a YouTube, Vimeo, or other URL the frontend supports for embedding. Leave empty to hide the video or until a link is ready.',
-      validation: (Rule) =>
-        Rule.custom((value: string | undefined) => {
-          if (value == null || !String(value).trim()) return true
-          const v = String(value).trim()
-          if (!/^https?:\/\//i.test(v)) return 'Use a full URL starting with http:// or https://.'
-          try {
-            void new URL(v)
-            return true
-          } catch {
-            return 'Enter a valid URL.'
-          }
-        }),
+      validation: optionalHttpUrl,
     }),
 
     // CURRENCY
@@ -328,7 +255,7 @@ export const siteSettings = defineType({
       type: 'url',
       group: 'bot',
       description:
-        'Public site origin, e.g. https://www.domlivo.com. The intake bot uses it to link freshly published listings back to the live site.',
+        'Public site origin, e.g. https://www.domlivo.com. The intake bot is a separate deployment and cannot read the frontend env, so it needs this copy. Keep it identical to the frontend NEXT_PUBLIC_SITE_URL.',
     }),
     defineField({
       name: 'botAllowPublish',

@@ -289,7 +289,8 @@ export const property = defineType({
       title: 'Address',
       type: 'localizedString',
       group: 'location',
-      description: 'Street address per language.',
+      description:
+        'Street address per language. Kept for internal reference and agent handover only — deliberately NOT rendered on the public listing page.',
     }),
 
     defineField({
@@ -381,7 +382,8 @@ export const property = defineType({
       title: 'Property Code',
       type: 'string',
       group: 'details',
-      description: 'Internal reference code for this property.',
+      description:
+        'Internal reference code for this property. Studio-only — deliberately not shown on the public listing page.',
     }),
 
     defineField({

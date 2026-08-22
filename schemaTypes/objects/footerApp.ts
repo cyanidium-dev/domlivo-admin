@@ -1,6 +1,7 @@
 import {defineType, defineField} from 'sanity'
 
-const optionalHttpUrl = (Rule: any) =>
+/** Shared optional-URL validator: blank is fine, otherwise must be a full http(s) URL. */
+export const optionalHttpUrl = (Rule: any) =>
   Rule.custom((value: string | undefined) => {
     if (value == null || !String(value).trim()) return true
     const v = String(value).trim()
