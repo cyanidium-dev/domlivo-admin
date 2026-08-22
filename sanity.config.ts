@@ -10,7 +10,7 @@ import {withPropertyPromotionPublishGuard} from './components/sanity/PropertyPro
 import {OpenInLandingEditorAction} from './components/sanity/OpenInLandingEditorAction'
 import {TranslateDocumentAction, TRANSLATE_ACTION_TYPES} from './components/sanity/ai/TranslateDocumentAction'
 import {ParseFromTextAction} from './components/sanity/ai/ParseFromTextAction'
-import {AMENITY_SUGGESTION_ACTIONS} from './components/sanity/ai/AmenitySuggestionActions'
+import {ApproveAmenityAction} from './components/sanity/ai/ApproveAmenityAction'
 
 export default defineConfig({
   name: 'default',
@@ -44,10 +44,9 @@ export default defineConfig({
       if (TRANSLATE_ACTION_TYPES.has(context.schemaType)) {
         actions = [...actions, TranslateDocumentAction]
       }
-      // Amenity review queue: map a wording onto an existing amenity, create a
-      // new amenity as a draft, or reject it.
-      if (context.schemaType === 'amenitySuggestion') {
-        actions = [...actions, ...AMENITY_SUGGESTION_ACTIONS]
+      // Intake creates amenities flagged; Approve is what lets one reach the site.
+      if (context.schemaType === 'amenity') {
+        actions = [...actions, ApproveAmenityAction]
       }
       return actions
     },

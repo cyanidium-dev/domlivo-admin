@@ -22,7 +22,15 @@ export type ParseResponse = {
     editorial: {title: LocaleMap; shortDescription: LocaleMap; description: LocaleMap}
     parserNotes: string
   }
-  refs: {propertyTypeId: string | null; cityId: string | null; districtId: string | null; amenityIds: string[]; unmatched: string[]}
+  refs: {
+    propertyTypeId: string | null
+    cityId: string | null
+    districtId: string | null
+    amenityIds: string[]
+    /** Guessed by the endpoint's last-resort pass — the dialog asks a human to confirm these. */
+    looseAmenities?: Array<{name: string; id: string}>
+    unmatched: string[]
+  }
   validation: {priceEur: number | null; warnings: string[]}
   coords: {lat: number; lng: number} | null
 }
