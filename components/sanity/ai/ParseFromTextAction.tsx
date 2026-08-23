@@ -89,11 +89,11 @@ export const ParseFromTextAction: DocumentActionComponent = (props) => {
             source: 'studio',
             firstSeen: now,
             lastSeen: now,
-            examples: [],
+            // Only the first listing is kept: the count carries frequency, and
+            // appending on every hit would grow the array without bound.
+            examples: [listingTitle],
           })
-          .patch(plan.id, (p) =>
-            p.inc({count: 1}).set({lastSeen: now}).setIfMissing({examples: []}).append('examples', [listingTitle]),
-          )
+          .patch(plan.id, (p) => p.inc({count: 1}).set({lastSeen: now}))
       }
       await tx.commit()
       return [advice, 'Staff have been notified — see Location requests.']
