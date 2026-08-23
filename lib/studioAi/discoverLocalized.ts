@@ -94,3 +94,68 @@ export function filledLocale(value: LocalizedEntry['value'], locale: ProjectLoca
 export function emptyLocaleCount(entry: LocalizedEntry): number {
   return PROJECT_LOCALE_IDS.filter((l) => !filledLocale(entry.value, l)).length
 }
+
+export type PortableTextEntry = {path: string; text: string; key: string}
+
+/**
+ * Portable Text is not a localized object — it is `{en: [blocks], …}` with the
+ * text down in `children[].text` spans — so `discoverLocalized` above cannot
+ * see it, and a blogPost translated without this arm keeps its body in one
+ * language.
+ *
+ * Deliberately conservative: a block is translatable only when every child is
+ * a plain span with no marks. Splitting a sentence at a bold word hands the
+ * translator fragments, and reassembling marks by character offset does not
+ * survive the word-order changes that are the whole point of translating.
+ * Marked blocks are counted and reported so an editor knows the body is partly
+ * done rather than assuming it is finished.
+ */
+export function discoverPortableText(
+  value: unknown,
+  fieldPath: string,
+  baseLocale = 'en',
+): {entries: PortableTextEntry[]; skippedMarked: number} {
+  const entries: PortableTextEntry[] = []
+  let skippedMarked = 0
+  const blocks = (value as Record<string, unknown> | null | undefined)?.[baseLocale]
+  if (!Array.isArray(blocks)) return {entries, skippedMarked}
+
+  for (const raw of blocks) {
+    const b = raw as Record<string, unknown>
+    if (b?._type !== 'block') continue
+    // No `_key` means the item cannot be addressed in a patch — the same rule
+    // `discoverLocalized` applies to array items.
+    const key = typeof b._key === 'string' ? b._key : ''
+    if (!key) continue
+    const children = Array.isArray(b.children) ? (b.children as Array<Record<string, unknown>>) : []
+    const spans = children.filter((c) => c?._type === 'span')
+    if (spans.length === 0 || spans.length !== children.length) continue
+    if (spans.some((s) => Array.isArray(s.marks) && (s.marks as unknown[]).length > 0)) {
+      skippedMarked += 1
+      continue
+    }
+    const text = spans.map((s) => (typeof s.text === 'string' ? s.text : '')).join('')
+    if (!text.trim()) continue
+    entries.push({path: `${fieldPath}.${baseLocale}[_key=="${key}"]`, text, key})
+  }
+  return {entries, skippedMarked}
+}
+
+/**
+ * Rebuilds a block array for a target locale. Every block keeps its `_key`,
+ * `style`, `listItem`, `level` and `markDefs`; a translated one has its
+ * children replaced by a single unmarked span. A block with no translation is
+ * returned untouched, which is what keeps images, CTAs and embeds intact.
+ */
+export function portableTextPatch(
+  blocks: unknown[],
+  translationsByKey: Record<string, string>,
+): unknown[] {
+  return (blocks ?? []).map((raw) => {
+    const b = raw as Record<string, unknown>
+    const key = typeof b?._key === 'string' ? b._key : ''
+    const text = key ? translationsByKey[key] : undefined
+    if (text === undefined) return raw
+    return {...b, children: [{_type: 'span', _key: `${key}-t`, marks: [], text}]}
+  })
+}
