@@ -27,6 +27,7 @@
     "editorial:property": "tsx scripts/editorialPassProperty.ts",
     "prune:legacy-property-seo": "tsx scripts/pruneLegacyPropertySeo.ts",
     "seed:tz13": "tsx scripts/seedTz13Fixtures.ts",
+    "migrate:legacy-property-seo": "tsx scripts/migrateLegacyPropertySeo.ts",
     "create:zone-shells": "tsx scripts/createZoneShells.ts",
     "seed:studio-ai-tests": "tsx scripts/createStudioAiTestDocs.ts",
     "verify:studio-ai-tests": "tsx scripts/verifyStudioAiTestDocs.ts",
