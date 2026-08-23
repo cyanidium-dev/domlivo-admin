@@ -272,6 +272,33 @@ export const structure: StructureResolver = (S, context) =>
             ]),
         ),
 
+      // Cities and districts intake could not place. A zone cannot be stubbed
+      // — it needs a country, a route and the readiness gate — so these are
+      // requests for staff, not documents waiting to be published.
+      S.listItem()
+        .title('Location requests')
+        .child(
+          S.list()
+            .title('Location requests')
+            .items([
+              S.listItem()
+                .title('Needs a decision')
+                .child(
+                  S.documentList()
+                    .title('Needs a decision')
+                    .filter('_type == "locationRequest" && status == "new"')
+                    .defaultOrdering([{field: 'count', direction: 'desc'}]),
+                ),
+              S.listItem()
+                .title('All requests')
+                .child(
+                  S.documentTypeList('locationRequest')
+                    .title('All requests')
+                    .defaultOrdering([{field: 'count', direction: 'desc'}]),
+                ),
+            ]),
+        ),
+
       S.divider(),
 
       S.documentTypeListItem('agent').title('Agents'),
