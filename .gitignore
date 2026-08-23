@@ -32,7 +32,10 @@
 *.local
 /nbyg
 
-# Listing-copy normalization snapshots hold the pre-run public copy, which
-# includes the seller contact details the run strips. Keep them on disk for
-# --restore; do not put them in version control.
+# Pre-run snapshots from the copy scripts. They hold whatever the run
+# replaced - for the normalization pass that is the seller contact details it
+# strips. Keep them on disk so --restore works; do not put them in version
+# control.
 scripts/data/normalizeListingCopy-backup-*.json
+scripts/data/editorialPass-*.json
+scripts/data/legacyPropertySeo-backup-*.json
