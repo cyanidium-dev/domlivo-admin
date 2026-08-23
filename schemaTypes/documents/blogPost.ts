@@ -1,4 +1,4 @@
-import {defineType, defineField} from 'sanity'
+import {defineType, defineField, defineArrayMember} from 'sanity'
 import {isReservedForBlogPost, reservedSlugMessage} from '../constants/reservedRouteSlugs'
 
 /**
@@ -16,6 +16,7 @@ export const blogPost = defineType({
     {name: 'media', title: 'Cover image'},
     {name: 'categorization', title: 'Categories & author'},
     {name: 'related', title: 'Related content'},
+    {name: 'extras', title: 'FAQ & Sources'},
     {name: 'seo', title: 'SEO'},
   ],
 
@@ -79,6 +80,17 @@ export const blogPost = defineType({
       group: 'content',
       rows: 3,
       description: 'Short summary per language (used for cards and search snippets).',
+    }),
+
+    defineField({
+      name: 'keyFacts',
+      title: 'Key facts ("In short")',
+      type: 'array',
+      group: 'content',
+      of: [defineArrayMember({type: 'localizedString'})],
+      validation: (Rule) => Rule.max(6),
+      description:
+        '3–6 direct answers, rendered in a box under the intro. This is the block AI assistants quote, so lead with the number and the year.',
     }),
     defineField({
       name: 'content',
@@ -212,6 +224,29 @@ export const blogPost = defineType({
       options: {filter: 'isPublished == true'},
       validation: (Rule: any) => Rule.max(3).error('Choose up to 3 properties.'),
       description: 'Properties shown as recommendations under the article (max 3).',
+    }),
+
+    // --- FAQ & sources (ТЗ-13) ---
+    // Field-for-field the shape `tracker` already uses, so the two documents
+    // feel the same to an editor and share the same object types.
+    defineField({
+      name: 'faq',
+      title: 'FAQ (optional)',
+      type: 'array',
+      group: 'extras',
+      of: [defineArrayMember({type: 'localizedFaqItem'}), defineArrayMember({type: 'localizedFaqItemRich'})],
+      validation: (Rule) => Rule.max(20),
+      description:
+        'Rendered as an accordion at the end of the article and emitted as FAQPage JSON-LD. Use real questions buyers ask, not invented ones.',
+    }),
+    defineField({
+      name: 'sources',
+      title: 'Sources (optional)',
+      type: 'array',
+      group: 'extras',
+      of: [defineArrayMember({type: 'sourceItem'})],
+      validation: (Rule) => Rule.max(30),
+      description: 'Primary sources behind the figures in this article.',
     }),
 
     // --- SEO ---

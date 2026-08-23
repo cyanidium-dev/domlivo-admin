@@ -12,6 +12,8 @@ import {localizedBlockContent} from './localizedBlockContent'
 import {blogTable} from './blogTable'
 import {blogCallout} from './blogCallout'
 import {blogFaqBlock} from './blogFaqBlock'
+import {zoneStatsEmbed} from './zoneStatsEmbed'
+import {trackerEmbed} from './trackerEmbed'
 import {blogCtaBlock} from './blogCtaBlock'
 import {blogRelatedPostsBlock} from './blogRelatedPostsBlock'
 import {blogPropertyEmbedBlock} from './blogPropertyEmbedBlock'
@@ -63,6 +65,8 @@ export const objects = [
   blogTable,
   blogCallout,
   blogFaqBlock,
+  zoneStatsEmbed,
+  trackerEmbed,
   blogCtaBlock,
   blogRelatedPostsBlock,
   blogPropertyEmbedBlock,
