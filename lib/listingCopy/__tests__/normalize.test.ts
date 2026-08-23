@@ -154,6 +154,19 @@ describe('renameRetiredZones', () => {
     )
   })
 
+  // Italian writes it both ways: `a` on ten listings, `in` on three.
+  it('renames after the Italian "a" as well as "in"', () => {
+    const r = renameRetiredZones('di 138 m² a Beachfront, Durazzo, Albania.', 'it')
+    expect(r.text).toBe('di 138 m² a Plazh, Durazzo, Albania.')
+    expect(r.skipped).toEqual([])
+  })
+
+  // `a` is a common word, so the lookahead has to carry the weight here.
+  it('does not fire on a bare "a Beachfront" with no city after it', () => {
+    const s = 'Vicino a Beachfront si trova il mare.'
+    expect(renameRetiredZones(s, 'it').text).toBe(s)
+  })
+
   // `bregdeti` is the ordinary Albanian noun for "the coast". Rewriting it
   // would be a lie about the listing, so the match is positional.
   it('leaves the ordinary Albanian noun for "the coast" alone', () => {

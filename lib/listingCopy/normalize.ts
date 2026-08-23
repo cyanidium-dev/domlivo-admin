@@ -127,7 +127,7 @@ export function dropDeadLines(lines: string[], removed: boolean[]): string[] {
   })
 }
 
-type Retirement = {locale: string; from: string; to: string; preposition: string}
+type Retirement = {locale: string; from: string; to: string; prepositions: string[]}
 
 /**
  * `beachfront-durres` was renamed `plazh` on 2026-08-15. The composed copy on
@@ -139,9 +139,12 @@ type Retirement = {locale: string; from: string; to: string; preposition: string
  * between the locale's preposition and the city title is a district.
  */
 const RETIRED: Retirement[] = [
-  {locale: 'en', from: 'Beachfront', to: 'Plazh', preposition: 'in'},
-  {locale: 'it', from: 'Beachfront', to: 'Plazh', preposition: 'in'},
-  {locale: 'sq', from: 'Bregdeti', to: 'Plazhi', preposition: 'në'},
+  {locale: 'en', from: 'Beachfront', to: 'Plazh', prepositions: ['in']},
+  // Italian writes it both ways — measured across the dataset, `a` on ten
+  // listings and `in` on three. `a` is also an extremely common word, which is
+  // the whole reason the comma-and-city-title lookahead is not optional.
+  {locale: 'it', from: 'Beachfront', to: 'Plazh', prepositions: ['in', 'a']},
+  {locale: 'sq', from: 'Bregdeti', to: 'Plazhi', prepositions: ['në']},
 ]
 
 export function renameRetiredZones(
@@ -155,14 +158,16 @@ export function renameRetiredZones(
     // \p{L} lookarounds, never \b — \b is ASCII-only in JavaScript and misses
     // Cyrillic and Albanian diacritics. That mistake deleted a Russian price
     // during the F7 work; it does not get made twice.
-    const positional = new RegExp(
-      `(?<=(?<!\\p{L})${r.preposition}\\s)${r.from}(?=,\\s*\\p{Lu})`,
-      'gu',
-    )
-    out = out.replace(positional, () => {
-      renamed += 1
-      return r.to
-    })
+    for (const preposition of r.prepositions) {
+      const positional = new RegExp(
+        `(?<=(?<!\\p{L})${preposition}\\s)${r.from}(?=,\\s*\\p{Lu})`,
+        'gu',
+      )
+      out = out.replace(positional, () => {
+        renamed += 1
+        return r.to
+      })
+    }
     const leftovers = out.match(new RegExp(`(?<!\\p{L})${r.from}(?!\\p{L})`, 'gu'))
     if (leftovers) skipped.push(...leftovers)
   }
