@@ -31,3 +31,8 @@
 !.env.example
 *.local
 /nbyg
+
+# Listing-copy normalization snapshots hold the pre-run public copy, which
+# includes the seller contact details the run strips. Keep them on disk for
+# --restore; do not put them in version control.
+scripts/data/normalizeListingCopy-backup-*.json
