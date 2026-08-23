@@ -3,7 +3,7 @@ import {MAX_NEW_AMENITIES_PER_LISTING, amenityDocFor, normalizeAmenityName, plan
 
 describe('normalizeAmenityName', () => {
   it('accepts a plausible name and collapses whitespace', () => {
-    expect(normalizeAmenityName('  Sauna   room ')).toEqual({ok: true, name: 'Sauna room', key: 'saunaroom'})
+    expect(normalizeAmenityName('  Sauna   room ')).toEqual({ok: true, name: 'Sauna room', key: 'saunaroom', slug: 'sauna-room'})
   })
 
   it('folds case, diacritics and separators into one key', () => {
@@ -25,14 +25,14 @@ describe('normalizeAmenityName', () => {
   it('agrees with the bot implementation on the wordings both see', () => {
     // Pinned against domlivo-bot/src/createAmenities.ts — both intake routes
     // must mint the same id for the same wording.
-    expect(normalizeAmenityName('Private pool')).toEqual({ok: true, name: 'Private pool', key: 'privatepool'})
-    expect(normalizeAmenityName('Game room')).toEqual({ok: true, name: 'Game room', key: 'gameroom'})
+    expect(normalizeAmenityName('Private pool')).toEqual({ok: true, name: 'Private pool', key: 'privatepool', slug: 'private-pool'})
+    expect(normalizeAmenityName('Game room')).toEqual({ok: true, name: 'Game room', key: 'gameroom', slug: 'game-room'})
   })
 })
 
 describe('amenityDocFor', () => {
   it('is a published, flagged document identified by the fold key', () => {
-    expect(amenityDocFor({name: 'Sauna', key: 'sauna'})).toEqual({
+    expect(amenityDocFor({name: 'Sauna', key: 'sauna', slug: 'sauna'})).toEqual({
       _id: 'amenity-sauna',
       _type: 'amenity',
       title: {_type: 'localizedString', en: 'Sauna'},
@@ -43,7 +43,7 @@ describe('amenityDocFor', () => {
   })
 
   it('never mints a draft id — a reference to a draft is broken in published content', () => {
-    expect(amenityDocFor({name: 'Sauna', key: 'sauna'})._id.startsWith('drafts.')).toBe(false)
+    expect(amenityDocFor({name: 'Sauna', key: 'sauna', slug: 'sauna'})._id.startsWith('drafts.')).toBe(false)
   })
 })
 
@@ -69,5 +69,17 @@ describe('planNewAmenities', () => {
     const {docs, stillUnmatched} = planNewAmenities(many)
     expect(docs).toHaveLength(MAX_NEW_AMENITIES_PER_LISTING)
     expect(stillUnmatched).toHaveLength(4)
+  })
+})
+
+describe('identity vs URL', () => {
+  it('keeps the id separator-blind but gives the slug real word breaks', () => {
+    const {docs} = planNewAmenities(['amenity "Wood flooring"'])
+    expect(docs[0]!._id).toBe('amenity-woodflooring')
+    expect(docs[0]!.slug.current).toBe('wood-flooring')
+  })
+
+  it('still lands "Wi-Fi" and "wifi" on one document', () => {
+    expect(planNewAmenities(['amenity "Wi-Fi"', 'amenity "wifi"']).docs).toHaveLength(1)
   })
 })

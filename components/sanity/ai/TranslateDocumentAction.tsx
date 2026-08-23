@@ -14,7 +14,7 @@ import {discoverLocalized} from '../../../lib/studioAi/discoverLocalized'
 import {buildTranslateItems, decideTranslationSets, type TranslatedLocales} from '../../../lib/studioAi/applyTranslations'
 import {aiConfigured, aiTranslate} from '../../../lib/studioAi/client'
 
-export const TRANSLATE_ACTION_TYPES = new Set(['property', 'city', 'district'])
+export const TRANSLATE_ACTION_TYPES = new Set(['property', 'city', 'district', 'amenity'])
 
 export const TranslateDocumentAction: DocumentActionComponent = (props) => {
   const {patch} = useDocumentOperation(props.id, props.type)

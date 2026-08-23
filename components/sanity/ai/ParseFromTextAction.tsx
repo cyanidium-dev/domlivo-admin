@@ -14,6 +14,7 @@ import {useClient, useDocumentOperation, type DocumentActionComponent} from 'san
 import {applySetOps, decideParseSets, missingForPublish} from '../../../lib/studioAi/applyParse'
 import {pickFreeSlug} from '../../../lib/studioAi/slug'
 import {planNewAmenities} from '../../../lib/studioAi/createAmenities'
+import {planLocationRequests} from '../../../lib/studioAi/locationRequests'
 import {aiConfigured, aiParse} from '../../../lib/studioAi/client'
 
 export const ParseFromTextAction: DocumentActionComponent = (props) => {
@@ -61,6 +62,46 @@ export const ParseFromTextAction: DocumentActionComponent = (props) => {
     }
   }
 
+  /**
+   * A city or district cannot be stubbed the way an amenity can — a zone
+   * carries a country reference, a public route and a readiness gate. So the
+   * field stays empty, staff get a request with the listings that asked for it,
+   * and the editor is told plainly what to do.
+   */
+  const requestMissingLocations = async (unmatched: string[], listingTitle: string): Promise<string[]> => {
+    const plans = planLocationRequests(unmatched)
+    if (plans.length === 0) return []
+    const named = plans.map((p) => `${p.kind} “${p.name}”`).join(', ')
+    const advice = `Sorry, ${named} is not in the catalogue. Check the draft — if it is a typo, fix it here and pick the right one; otherwise ask staff to add the location. The listing cannot be published until it is set.`
+    try {
+      const now = new Date().toISOString()
+      let tx = client.transaction()
+      for (const plan of plans) {
+        tx = tx
+          .createIfNotExists({
+            _id: plan.id,
+            _type: 'locationRequest',
+            kind: plan.kind,
+            name: plan.name,
+            normalized: plan.key,
+            count: 0,
+            status: 'new',
+            source: 'studio',
+            firstSeen: now,
+            lastSeen: now,
+            examples: [],
+          })
+          .patch(plan.id, (p) =>
+            p.inc({count: 1}).set({lastSeen: now}).setIfMissing({examples: []}).append('examples', [listingTitle]),
+          )
+      }
+      await tx.commit()
+      return [advice, 'Staff have been notified — see Location requests.']
+    } catch (e) {
+      return [advice, `Could not record the request: ${e instanceof Error ? e.message : String(e)}`]
+    }
+  }
+
   const run = async () => {
     setBusy(true)
     setError(null)
@@ -100,6 +141,7 @@ export const ParseFromTextAction: DocumentActionComponent = (props) => {
         )
       }
       lines.push(...added.lines)
+      lines.push(...(await requestMissingLocations(resp.refs.unmatched, resp.parsed.editorial.title.en)))
       lines.push(...resp.validation.warnings.map((w) => `⚠ ${w}`))
       if (resp.parsed.parserNotes) lines.push(resp.parsed.parserNotes)
       setDone(lines)
