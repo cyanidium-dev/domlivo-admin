@@ -15,6 +15,8 @@ export type ParseResponse = {
       dealType: 'sale' | 'rent' | null
       areaM2: number | null
       bedrooms: number | null
+      /** Total habitable rooms — bedrooms plus living rooms. */
+      rooms: number | null
       bathrooms: number | null
       yearBuilt: number | null
       address: string | null
@@ -154,6 +156,7 @@ export function decideParseSets(
   want('price', r.validation.priceEur)
   want('area', r.parsed.facts.areaM2)
   want('bedrooms', r.parsed.facts.bedrooms)
+  want('rooms', r.parsed.facts.rooms)
   want('bathrooms', r.parsed.facts.bathrooms)
   want('yearBuilt', r.parsed.facts.yearBuilt)
   if (r.parsed.facts.address) {

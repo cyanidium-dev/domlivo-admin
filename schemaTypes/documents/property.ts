@@ -318,6 +318,26 @@ export const property = defineType({
     }),
 
     defineField({
+      name: 'rooms',
+      title: 'Rooms (total)',
+      type: 'number',
+      group: 'details',
+      description:
+        'Total habitable rooms — bedrooms plus living rooms, excluding kitchen and bathrooms. This is the number behind the Albanian 2+1 notation (3 rooms, 2 bedrooms) and the Russian «двухкомнатная» (2 rooms, 1 bedroom), and it is what the ru/uk listing titles count. Leave empty if the listing does not say — nothing is derived from the area.',
+      validation: (Rule) =>
+        Rule.integer()
+          .min(1)
+          .max(20)
+          .custom((value, context) => {
+            const beds = (context.document as {bedrooms?: number} | undefined)?.bedrooms
+            if (typeof value !== 'number' || typeof beds !== 'number') return true
+            return value >= beds
+              ? true
+              : 'Rooms counts bedrooms plus living rooms, so it cannot be below the bedroom count.'
+          }),
+    }),
+
+    defineField({
       name: 'bathrooms',
       title: 'Bathrooms',
       type: 'number',

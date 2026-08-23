@@ -209,7 +209,7 @@ describe('missingForPublish', () => {
 describe('decideParseSets', () => {
   const resp: ParseResponse = {
     parsed: {
-      facts: {dealType: 'sale', areaM2: 76, bedrooms: 2, bathrooms: null, yearBuilt: 2019, address: 'Rruga X'},
+      facts: {dealType: 'sale', areaM2: 76, bedrooms: 2, rooms: 3, bathrooms: null, yearBuilt: 2019, address: 'Rruga X'},
       editorial: {
         title: {en: 'T-en', uk: 'T-uk', ru: 'T-ru', sq: 'T-sq', it: 'T-it'},
         shortDescription: {en: 's', uk: 's', ru: 's', sq: 's', it: 's'},
@@ -253,5 +253,39 @@ describe('decideParseSets', () => {
     expect(setOps['price']).toBe(59000)
     expect(setOps['status']).toBe('sale')
     expect('bathrooms' in setOps).toBe(false) // parsed null -> not written even with overwrite
+  })
+})
+
+describe('rooms', () => {
+  const withRooms: ParseResponse = {
+    parsed: {
+      facts: {dealType: 'sale', areaM2: 60, bedrooms: 1, rooms: 2, bathrooms: 1, yearBuilt: null, address: null},
+      editorial: {
+        title: {en: 'T', uk: 'T', ru: 'T', sq: 'T', it: 'T'},
+        shortDescription: {en: 's', uk: 's', ru: 's', sq: 's', it: 's'},
+        description: {en: 'd', uk: 'd', ru: 'd', sq: 'd', it: 'd'},
+      },
+      parserNotes: '',
+    },
+    refs: {propertyTypeId: null, cityId: null, districtId: null, amenityIds: [], unmatched: []},
+    validation: {priceEur: null, warnings: []},
+    coords: null,
+  }
+
+  it('writes the room count alongside the bedroom count', () => {
+    const {setOps} = decideParseSets({}, withRooms, false)
+    expect(setOps.rooms).toBe(2)
+    expect(setOps.bedrooms).toBe(1)
+  })
+
+  it('keeps an editor’s own figure when overwrite is off', () => {
+    const {setOps, skipped} = decideParseSets({rooms: 4}, withRooms, false)
+    expect('rooms' in setOps).toBe(false)
+    expect(skipped).toContain('rooms')
+  })
+
+  it('writes nothing when the listing did not state a room count', () => {
+    const noRooms = {...withRooms, parsed: {...withRooms.parsed, facts: {...withRooms.parsed.facts, rooms: null}}}
+    expect('rooms' in decideParseSets({}, noRooms, true).setOps).toBe(false)
   })
 })
