@@ -1,6 +1,6 @@
 import {describe, it, expect} from 'vitest'
 import {
-  dropContactCta,
+  dropDeadLines,
   isAllCaps,
   normalizeDescription,
   renameRetiredZones,
@@ -101,29 +101,39 @@ describe('scrubLines', () => {
   })
 })
 
-describe('dropContactCta', () => {
+describe('dropDeadLines', () => {
   it('drops the invitation when the scrub emptied the lines below it', () => {
     const lines = ['Балкон.', '📞 Пишите прямо сейчас и бронируйте просмотр:', '', '']
     const removed = [false, false, true, true]
-    expect(dropContactCta(lines, removed)).toEqual(['Балкон.', '', ''])
+    expect(dropDeadLines(lines, removed)).toEqual(['Балкон.'])
   })
 
   it('keeps a heading that introduces something still there', () => {
     const lines = ['Планировка:', '• отдельная спальня']
     const removed = [false, false]
-    expect(dropContactCta(lines, removed)).toEqual(lines)
+    expect(dropDeadLines(lines, removed)).toEqual(lines)
   })
 
   it('keeps a contact-shaped line when nothing near it was removed', () => {
     const lines = ['Contact the agent through the form:', 'the button is below']
     const removed = [false, false]
-    expect(dropContactCta(lines, removed)).toEqual(lines)
+    expect(dropDeadLines(lines, removed)).toEqual(lines)
   })
 
   it('drops the invitation when the removal was on the line itself', () => {
     const lines = ['Kontakt:', 'Balkon.']
     const removed = [true, false]
-    expect(dropContactCta(lines, removed)).toEqual(['Balkon.'])
+    expect(dropDeadLines(lines, removed)).toEqual(['Balkon.'])
+  })
+
+  // What is left of "+355 69 312 2813 (Telegram), +38 093 512 8547 (WhatsApp)."
+  it('drops a line the scrub reduced to bare punctuation', () => {
+    expect(dropDeadLines(['Балкон.', ', .', ':'], [false, true, true])).toEqual(['Балкон.'])
+  })
+
+  it('keeps a punctuation-only line the scrub never touched', () => {
+    const lines = ['Балкон.', '—']
+    expect(dropDeadLines(lines, [false, false])).toEqual(lines)
   })
 })
 

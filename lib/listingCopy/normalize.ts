@@ -97,20 +97,32 @@ const CONTACT_WORD =
 
 const CTA_LOOKAHEAD = 3
 
+function isOrphanedCta(line: string, i: number, removed: boolean[]): boolean {
+  if (!/:\s*$/.test(line)) return false
+  if (!CONTACT_WORD.test(line)) return false
+  for (let j = i; j <= i + CTA_LOOKAHEAD && j < removed.length; j += 1) {
+    if (removed[j]) return true
+  }
+  return false
+}
+
 /**
- * Removes a line that existed only to introduce contacts the scrub took away —
- * "Если остались вопросы, позвоните или напишите нам:" pointing at nothing.
+ * Removes the two kinds of line the scrub leaves behind.
  *
- * The removal map is what keeps it off a legitimate "Планировка:" heading: a
- * line that introduces nothing removed is left alone.
+ * The **orphaned call to action** — "Если остались вопросы, позвоните или
+ * напишите нам:" pointing at nothing. The removal map is what keeps this off a
+ * legitimate "Планировка:" heading: a line that introduces nothing removed is
+ * left alone.
+ *
+ * The **punctuation husk** — what is left of "+355 69 312 2813 (Telegram),
+ * +38 093 512 8547 (WhatsApp)." once the numbers and their labels are gone is
+ * ", .". A line is only dropped on this rule if the scrub actually edited it,
+ * which is what keeps the no-op guarantee on clean copy exact.
  */
-export function dropContactCta(lines: string[], removed: boolean[]): string[] {
+export function dropDeadLines(lines: string[], removed: boolean[]): string[] {
   return lines.filter((line, i) => {
-    if (!/:\s*$/.test(line)) return true
-    if (!CONTACT_WORD.test(line)) return true
-    for (let j = i; j <= i + CTA_LOOKAHEAD && j < removed.length; j += 1) {
-      if (removed[j]) return false
-    }
+    if (isOrphanedCta(line, i, removed)) return false
+    if (removed[i] && !/[\p{L}\p{N}]/u.test(line)) return false
     return true
   })
 }
@@ -205,8 +217,8 @@ export function normalizeDescription(text: string, locale: string): NormalizeRes
   if (!text) return {text, changed: false, renamed: 0, skippedZoneMentions: []}
   const unwrapped = unwrapHardBreaks(stripInvisible(text))
   const scrubbed = scrubLines(unwrapped.split('\n'))
-  const withoutCta = dropContactCta(scrubbed.lines, scrubbed.removed)
-  const renamed = renameRetiredZones(withoutCta.join('\n'), locale)
+  const alive = dropDeadLines(scrubbed.lines, scrubbed.removed)
+  const renamed = renameRetiredZones(alive.join('\n'), locale)
   const out = tidy(spaceBlocks(renamed.text))
   return {
     text: out,
