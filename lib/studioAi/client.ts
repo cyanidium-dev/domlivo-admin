@@ -26,9 +26,20 @@ async function post<T>(path: string, body: unknown): Promise<T> {
   return json as T
 }
 
-/** Mirrors the caps in the endpoint (`api/studio-translate.ts`). */
-const MAX_ITEMS_PER_REQUEST = 40
-const MAX_CHARS_PER_REQUEST = 20_000
+/**
+ * Mirrors the caps in the endpoint (`api/studio-translate.ts`), both measured
+ * against it rather than reasoned about.
+ *
+ * Items — 40 across five locales is 200 strings in one tool call and 502s every
+ * time; 30, 25 and 20 all succeed, so 25 with margin. This is the one that
+ * actually bit.
+ *
+ * Characters — a translation returns the input once per locale, so the model's
+ * output ceiling divides by the number of languages asked for. Sound arithmetic
+ * and cheap insurance, but it was not the cause of the failures above.
+ */
+const MAX_ITEMS_PER_REQUEST = 25
+const maxCharsPerRequest = () => Math.max(1_000, Math.floor(24_000 / Math.max(1, PROJECT_LOCALE_IDS.length)))
 
 /**
  * The locale list always travels with the request (derived from languages.ts),
@@ -44,7 +55,7 @@ export async function aiTranslate(
 ): Promise<{items: Array<{key: string; locales: TranslatedLocales}>; oversized: string[]}> {
   const {batches, oversized} = chunkTranslateItems(items, {
     maxItems: MAX_ITEMS_PER_REQUEST,
-    maxChars: MAX_CHARS_PER_REQUEST,
+    maxChars: maxCharsPerRequest(),
   })
   const merged: Array<{key: string; locales: TranslatedLocales}> = []
   for (const batch of batches) {
