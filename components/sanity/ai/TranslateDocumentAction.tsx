@@ -10,11 +10,14 @@ import {TranslateIcon} from '@sanity/icons'
 import {Box, Button, Checkbox, Flex, Select, Stack, Text} from '@sanity/ui'
 import {useDocumentOperation, type DocumentActionComponent} from 'sanity'
 import {PROJECT_LOCALE_IDS, type ProjectLocaleId} from '../../../lib/sanity/localizedPaste/projectLocales'
-import {discoverLocalized} from '../../../lib/studioAi/discoverLocalized'
+import {discoverLocalized, discoverPortableText, portableTextPatch} from '../../../lib/studioAi/discoverLocalized'
 import {buildTranslateItems, decideTranslationSets, type TranslatedLocales} from '../../../lib/studioAi/applyTranslations'
 import {aiConfigured, aiTranslate} from '../../../lib/studioAi/client'
 
-export const TRANSLATE_ACTION_TYPES = new Set(['property', 'city', 'district', 'amenity'])
+export const TRANSLATE_ACTION_TYPES = new Set(['property', 'city', 'district', 'amenity', 'blogPost'])
+
+/** Only blogPost carries a Portable Text body worth translating. */
+const PORTABLE_TEXT_FIELD: Record<string, string> = {blogPost: 'content'}
 
 export const TranslateDocumentAction: DocumentActionComponent = (props) => {
   const {patch} = useDocumentOperation(props.id, props.type)
@@ -28,6 +31,14 @@ export const TranslateDocumentAction: DocumentActionComponent = (props) => {
   const doc = (props.draft ?? props.published) as Record<string, unknown> | null
   const discovery = useMemo(() => (doc ? discoverLocalized(doc) : {entries: [], skippedNoKey: 0}), [doc])
 
+  // The article body is Portable Text, which discoverLocalized cannot see —
+  // the text lives in children[].text spans, not in localized objects.
+  const ptField = PORTABLE_TEXT_FIELD[props.type]
+  const pt = useMemo(
+    () => (doc && ptField ? discoverPortableText(doc[ptField], ptField, base) : {entries: [], skippedMarked: 0}),
+    [doc, ptField, base],
+  )
+
   if (!TRANSLATE_ACTION_TYPES.has(props.type)) return null
 
   const run = async () => {
@@ -37,27 +48,60 @@ export const TranslateDocumentAction: DocumentActionComponent = (props) => {
     setDone(null)
     try {
       const {items, skippedNoBase} = buildTranslateItems(discovery.entries, base)
-      if (items.length === 0) {
+      // Body blocks ride in the same request, keyed by their patch path so the
+      // response can be split back apart.
+      const bodyItems = pt.entries.map((e) => ({key: e.path, kind: 'text' as const, text: e.text}))
+      if (items.length === 0 && bodyItems.length === 0) {
         setError(`No fields have text in ${base.toUpperCase()} — pick the language the document is written in.`)
         return
       }
-      const resp = await aiTranslate(base, items)
+      const resp = await aiTranslate(base, [...items, ...bodyItems])
       const translated = new Map<string, TranslatedLocales>(resp.items.map((i) => [i.key, i.locales]))
       const {setOps, written} = decideTranslationSets(discovery.entries, translated, {base, overwrite})
+      // decideTranslationSets only ever produces strings; a Portable Text body
+      // is an array, so the patch payload is widened here rather than there.
+      const ops: Record<string, unknown> = {...setOps}
       const notes: string[] = []
+
+      // Rebuild the whole block array per locale: a translated block gets one
+      // unmarked span, everything else is returned untouched.
+      let bodyWritten = 0
+      if (ptField && pt.entries.length) {
+        const sourceBlocks = ((doc?.[ptField] as Record<string, unknown>)?.[base] ?? []) as unknown[]
+        for (const locale of PROJECT_LOCALE_IDS) {
+          if (locale === base) continue
+          const existing = (doc?.[ptField] as Record<string, unknown>)?.[locale]
+          const hasContent = Array.isArray(existing) && existing.length > 0
+          if (hasContent && !overwrite) continue
+          const byKey: Record<string, string> = {}
+          for (const e of pt.entries) {
+            const value = translated.get(e.path)?.[locale]
+            if (typeof value === 'string' && value.trim()) byKey[e.key] = value
+          }
+          if (Object.keys(byKey).length === 0) continue
+          ops[`${ptField}.${locale}`] = portableTextPatch(sourceBlocks, byKey)
+          bodyWritten += 1
+        }
+      }
+      if (pt.skippedMarked > 0) {
+        notes.push(
+          `${pt.skippedMarked} body block(s) carry formatting and were left for a human — translating around a bold word would fragment the sentence.`,
+        )
+      }
+      if (bodyWritten > 0) notes.push(`Article body written for ${bodyWritten} locale(s).`)
       if (skippedNoBase.length) {
         notes.push(`${skippedNoBase.length} field(s) had no ${base.toUpperCase()} text and were skipped.`)
       }
       if (resp.oversized.length) {
         notes.push(`Too long to translate in one request: ${resp.oversized.join(', ')}.`)
       }
-      if (written === 0) {
+      if (written === 0 && bodyWritten === 0) {
         setDone(
           ['Nothing to write — all locales are already filled. Use Overwrite to re-translate.', ...notes].join(' '),
         )
         return
       }
-      patch.execute([{set: setOps}])
+      patch.execute([{set: ops}])
       setDone(
         [
           `Wrote ${written} locale value(s) across ${resp.items.length} field(s).`,
@@ -92,7 +136,9 @@ export const TranslateDocumentAction: DocumentActionComponent = (props) => {
         <Stack space={4} padding={2}>
           <Text size={1}>
             {discovery.entries.length} localized field(s) found
-            {discovery.skippedNoKey > 0 ? ` (${discovery.skippedNoKey} inside lists have no key and cannot be patched)` : ''}.
+            {discovery.skippedNoKey > 0 ? ` (${discovery.skippedNoKey} inside lists have no key and cannot be patched)` : ''}
+            {pt.entries.length > 0 ? `, plus ${pt.entries.length} article body block(s)` : ''}
+            {pt.skippedMarked > 0 ? ` (${pt.skippedMarked} block(s) carry formatting and are left for a human)` : ''}.
           </Text>
           <Stack space={2}>
             <Text size={1} weight="semibold">
