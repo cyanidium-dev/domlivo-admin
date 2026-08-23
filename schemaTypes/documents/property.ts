@@ -148,8 +148,23 @@ export const property = defineType({
       type: 'number',
       group: 'pricing',
       description: 'Listing price in EUR (base currency). All property prices are stored in EUR.',
-      validation: (Rule) =>
+      validation: (Rule) => [
         Rule.required().min(0).error('Price must be a positive value'),
+        // A Vlorë house went live at €18 421 for 109 m² — exactly 169 × 109,
+        // because a per-m² figure had been read as the total. A warning rather
+        // than an error: land, commercial space and genuinely exceptional
+        // listings all have honest reasons to sit outside a residential band,
+        // and blocking publish on a heuristic is worse than showing one.
+        Rule.custom((price, context) => {
+          const doc = context.document as {area?: number; status?: string} | undefined
+          const area = doc?.area
+          if (typeof price !== 'number' || typeof area !== 'number' || area <= 0) return true
+          if (doc?.status !== 'sale') return true
+          const perM2 = price / area
+          if (perM2 >= 300 && perM2 <= 6000) return true
+          return `€${Math.round(perM2)}/m² looks wrong for a sale — the catalogue runs €875–2 500/m². Check whether this is the total price or a per-m² figure.`
+        }).warning(),
+      ],
     }),
 
     defineField({

@@ -23,6 +23,7 @@
     "backfill:property-rooms": "tsx scripts/backfillPropertyRooms.ts",
     "backfill:property-locales": "tsx scripts/backfillPropertyLocales.ts",
     "normalize:listing-copy": "tsx scripts/normalizeListingCopy.ts",
+    "fix:vlore-price": "tsx scripts/fixVlorePrice.ts",
     "create:zone-shells": "tsx scripts/createZoneShells.ts",
     "seed:studio-ai-tests": "tsx scripts/createStudioAiTestDocs.ts",
     "verify:studio-ai-tests": "tsx scripts/verifyStudioAiTestDocs.ts",
