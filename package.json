@@ -28,6 +28,7 @@
     "prune:legacy-property-seo": "tsx scripts/pruneLegacyPropertySeo.ts",
     "seed:tz13": "tsx scripts/seedTz13Fixtures.ts",
     "load:legal-articles": "tsx scripts/loadLegalArticles.ts",
+    "load:blog-post": "tsx scripts/loadBlogPost.ts",
     "create:zone-shells": "tsx scripts/createZoneShells.ts",
     "seed:studio-ai-tests": "tsx scripts/createStudioAiTestDocs.ts",
     "verify:studio-ai-tests": "tsx scripts/verifyStudioAiTestDocs.ts",
