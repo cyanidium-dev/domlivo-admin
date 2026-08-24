@@ -13,6 +13,13 @@
  * - `publishedAt`, `coverImage`, `categories` etc. are carried forward
  *   untouched — this script only ever sets the fields the plan actually
  *   specifies (title, excerpt, content, keyFacts, faq, sources, author);
+ * - title/excerpt/content are merged one level deeper too: only their `en`
+ *   sub-field is overwritten, so an existing article's real uk/ru/sq/it
+ *   translations survive the rewrite instead of being wiped down to
+ *   English-only (the same "blind replace" mistake the whole-document merge
+ *   exists to prevent, just one level down — caught auditing these six
+ *   drafts for publish-readiness, before anything reached Studio's publish
+ *   button);
  * - every array item gets a `_key` — the bug that left keyFacts untranslated
  *   on the first legal-article run;
  * - writes to the DRAFT only, never the published document;
@@ -167,16 +174,23 @@ async function main(): Promise<void> {
     )
   }
 
+  // title/excerpt/content are single localized objects with real uk/ru/sq/it
+  // translations already sitting on the existing document. Only `en` is new
+  // here, so only `en` gets overwritten — spreading the existing object
+  // first keeps every other locale's translation intact rather than wiping
+  // it down to an English-only field. A rewrite means "the source text
+  // changed, re-translate it," not "delete the translations."
   const doc: Record<string, unknown> = {
     ...existing,
     _type: 'blogPost',
     slug: {_type: 'slug', current: plan.slug},
-    title: L(plan.title),
-    excerpt: T(plan.excerpt),
-    content: {_type: 'localizedBlockContent', en: blocks},
-    // Every array item needs a _key, or discoverLocalized's Translate action
-    // silently skips it as unpatchable (the bug that left keyFacts
-    // untranslated on the first legal-article run).
+    title: {...(existing.title as object), ...L(plan.title)},
+    excerpt: {...(existing.excerpt as object), ...T(plan.excerpt)},
+    content: {...(existing.content as object), _type: 'localizedBlockContent', en: blocks},
+    // keyFacts/faq are wholesale NEW content, not a same-facts-reworded edit,
+    // so there is no old translation worth keeping — an old locale's text
+    // would describe a different fact at the same array index. English only
+    // until Translate produces real ones for the new facts.
     keyFacts: plan.keyFacts.map((f, i) => ({...L(f), _key: `kf-${plan.slug}-${i}`})),
     faq: plan.faq.map((f, i) => ({
       _type: 'localizedFaqItem',
@@ -184,10 +198,13 @@ async function main(): Promise<void> {
       question: L(f.question),
       answer: T(f.answer),
     })),
+    // sourceItem.label is a plain `string` field in the schema, not
+    // localizedString — writing a {_type, en} object into it doesn't match
+    // the field type and would show broken in Studio's source-item preview.
     sources: plan.sources.map((s, i) => ({
       _type: 'sourceItem',
       _key: `src-${plan.slug}-${i}`,
-      label: L(s),
+      label: s,
     })),
     author: {_type: 'reference', _ref: AUTHOR_ID},
   }
