@@ -40,3 +40,4 @@ scripts/data/normalizeListingCopy-backup-*.json
 scripts/data/editorialPass-*.json
 scripts/data/legacyPropertySeo-backup-*.json
 scripts/data/legalArticles-backup-*.json
+scripts/data/blogPost-*-backup-*.json
