@@ -10,7 +10,7 @@ import {TranslateIcon} from '@sanity/icons'
 import {Box, Button, Checkbox, Flex, Select, Stack, Text} from '@sanity/ui'
 import {useDocumentOperation, type DocumentActionComponent} from 'sanity'
 import {PROJECT_LOCALE_IDS, type ProjectLocaleId} from '../../../lib/sanity/localizedPaste/projectLocales'
-import {discoverLocalized, discoverPortableText, portableTextPatch} from '../../../lib/studioAi/discoverLocalized'
+import {discoverLocalized, discoverPortableText, deserializeBlockText} from '../../../lib/studioAi/discoverLocalized'
 import {buildTranslateItems, decideTranslationSets, type TranslatedLocales} from '../../../lib/studioAi/applyTranslations'
 import {aiConfigured, aiTranslate} from '../../../lib/studioAi/client'
 
@@ -35,7 +35,7 @@ export const TranslateDocumentAction: DocumentActionComponent = (props) => {
   // the text lives in children[].text spans, not in localized objects.
   const ptField = PORTABLE_TEXT_FIELD[props.type]
   const pt = useMemo(
-    () => (doc && ptField ? discoverPortableText(doc[ptField], ptField, base) : {entries: [], skippedMarked: 0}),
+    () => (doc && ptField ? discoverPortableText(doc[ptField], ptField, base) : {entries: [], markedBlocks: 0}),
     [doc, ptField, base],
   )
 
@@ -66,6 +66,7 @@ export const TranslateDocumentAction: DocumentActionComponent = (props) => {
       // Rebuild the whole block array per locale: a translated block gets one
       // unmarked span, everything else is returned untouched.
       let bodyWritten = 0
+      let lostMarks = 0
       if (ptField && pt.entries.length) {
         const sourceBlocks = ((doc?.[ptField] as Record<string, unknown>)?.[base] ?? []) as unknown[]
         for (const locale of PROJECT_LOCALE_IDS) {
@@ -73,19 +74,30 @@ export const TranslateDocumentAction: DocumentActionComponent = (props) => {
           const existing = (doc?.[ptField] as Record<string, unknown>)?.[locale]
           const hasContent = Array.isArray(existing) && existing.length > 0
           if (hasContent && !overwrite) continue
-          const byKey: Record<string, string> = {}
+          const rebuilt = new Map<string, {children: unknown[]; lost: number}>()
           for (const e of pt.entries) {
             const value = translated.get(e.path)?.[locale]
-            if (typeof value === 'string' && value.trim()) byKey[e.key] = value
+            if (typeof value !== 'string' || !value.trim()) continue
+            const source = (sourceBlocks as Array<Record<string, unknown>>).find((b) => b?._key === e.key)
+            if (!source) continue
+            const out = deserializeBlockText(source, value, e.runs)
+            rebuilt.set(e.key, {children: out.children, lost: out.lostMarks})
+            lostMarks += out.lostMarks
           }
-          if (Object.keys(byKey).length === 0) continue
-          ops[`${ptField}.${locale}`] = portableTextPatch(sourceBlocks, byKey)
+          if (rebuilt.size === 0) continue
+          ops[`${ptField}.${locale}`] = (sourceBlocks as Array<Record<string, unknown>>).map((b) => {
+            const key = typeof b?._key === 'string' ? b._key : ''
+            const next = key ? rebuilt.get(key) : undefined
+            // A block with no translation — an image, a CTA, an embed — is
+            // returned untouched.
+            return next ? {...b, children: next.children} : b
+          })
           bodyWritten += 1
         }
       }
-      if (pt.skippedMarked > 0) {
+      if (lostMarks > 0) {
         notes.push(
-          `${pt.skippedMarked} body block(s) carry formatting and were left for a human — translating around a bold word would fragment the sentence.`,
+          `${lostMarks} formatting run(s) did not come back and render as plain text — the wording is intact.`,
         )
       }
       if (bodyWritten > 0) notes.push(`Article body written for ${bodyWritten} locale(s).`)
@@ -138,7 +150,7 @@ export const TranslateDocumentAction: DocumentActionComponent = (props) => {
             {discovery.entries.length} localized field(s) found
             {discovery.skippedNoKey > 0 ? ` (${discovery.skippedNoKey} inside lists have no key and cannot be patched)` : ''}
             {pt.entries.length > 0 ? `, plus ${pt.entries.length} article body block(s)` : ''}
-            {pt.skippedMarked > 0 ? ` (${pt.skippedMarked} block(s) carry formatting and are left for a human)` : ''}.
+            {pt.markedBlocks > 0 ? ` (${pt.markedBlocks} carry formatting, which is preserved)` : ''}.
           </Text>
           <Stack space={2}>
             <Text size={1} weight="semibold">
