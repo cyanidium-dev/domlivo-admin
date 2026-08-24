@@ -137,7 +137,11 @@ async function main(): Promise<void> {
       title: L(a.title),
       excerpt: T(a.excerpt),
       content: {_type: 'localizedBlockContent', en: blocks},
-      keyFacts: a.keyFacts.map((f) => L(f)),
+      // Every array item needs a _key. Without one `discoverLocalized` refuses
+      // to patch it — the item cannot be addressed safely — so the first run
+      // silently left all five key facts in English while everything around
+      // them translated.
+      keyFacts: a.keyFacts.map((f, i) => ({...L(f), _key: `kf-${a.slug}-${i}`})),
       faq: a.faq.map((f, i) => ({
         _type: 'localizedFaqItem',
         _key: `faq-${a.slug}-${i}`,
