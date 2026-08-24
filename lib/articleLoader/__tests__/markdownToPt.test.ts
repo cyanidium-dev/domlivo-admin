@@ -143,6 +143,19 @@ describe('markdownToPortableText', () => {
     expect(blocks[2].listItem).toBeUndefined()
   })
 
+  // Without a blank line, a list glued to a paragraph would otherwise get
+  // silently swallowed as literal "- item" text inside the paragraph span.
+  it('splits a list from a paragraph even with no blank line between them', () => {
+    const blocks = markdownToPortableText('Before the list.\n- One.\n- Two.')
+    expect(blocks.map((b) => b.listItem ?? b._type)).toEqual(['block', 'bullet', 'bullet'])
+    expect((blocks[0].children as Array<{text: string}>)[0].text).toBe('Before the list.')
+  })
+
+  it('splits a numbered list from a paragraph even with no blank line between them', () => {
+    const blocks = markdownToPortableText('Before the list.\n1. One.\n2. Two.')
+    expect(blocks.map((b) => b.listItem ?? b._type)).toEqual(['block', 'number', 'number'])
+  })
+
   it('supports bold, italic and links inside a list item', () => {
     const [item] = markdownToPortableText('- **Ksamil** — see [the data](/en/blog/x) for more.')
     const marks = (item.children as Array<{marks: string[]}>).map((s) => s.marks)

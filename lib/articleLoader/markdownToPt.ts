@@ -204,6 +204,7 @@ export function markdownToPortableText(
     while (i < lines.length && lines[i].trim() && !lines[i].trimStart().startsWith('|')) {
       if (/^#{1,6}\s/.test(lines[i]) && i > start) break
       if (ZONE_EMBED_MARKER.test(lines[i].trim()) && i > start) break
+      if (/^\s*(?:[-*+]\s+|\d+\.\s+)/.test(lines[i]) && i > start) break
       para.push(lines[i].trim())
       i += 1
     }
