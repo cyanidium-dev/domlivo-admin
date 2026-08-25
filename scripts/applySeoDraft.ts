@@ -1,14 +1,20 @@
 /**
  * Writes fresh English SEO meta (title/description, mirrored into Open Graph)
- * onto the six 2026-08-24 blog post drafts. The rewrite changed every
- * article's body and title; the seo block still carried the pre-rewrite
- * meta text describing the old article, found while auditing publish
- * readiness. Only `.en` is set here — the Translate pass (translateBlogPost.ts)
- * picks these up and produces the other locales from them.
+ * onto whichever blog post drafts a JSON file names. Built for the
+ * 2026-08-24 batch, where a rewrite changed every article's body and title
+ * but the seo block still carried the pre-rewrite meta text describing the
+ * old article — found while auditing publish readiness. Generalized to take
+ * the draft file as an argument so the same script covers the next batch's
+ * SEO fix too, not just this one. Only `.en` is set here — the Translate
+ * pass (translateBlogPost.ts) picks these up and produces the other
+ * locales from them.
+ *
+ * The draft JSON is `{ "<slug>": {"metaTitle": "...", "metaDescription":
+ * "..."} }` — see scripts/data/blogSeoDraft-2026-08-24.json for the shape.
  *
  * Run:
- *   npm run apply:blog-seo-draft
- *   npm run apply:blog-seo-draft -- --execute
+ *   npm run apply:blog-seo-draft -- scripts/data/blogSeoDraft-<date>.json
+ *   npm run apply:blog-seo-draft -- scripts/data/blogSeoDraft-<date>.json --execute
  */
 
 import path from 'node:path'
@@ -18,8 +24,13 @@ import {createClient} from '@sanity/client'
 
 loadDotenv({path: path.resolve(process.cwd(), '.env')})
 
-const execute = process.argv.slice(2).includes('--execute')
-const DRAFT_PATH = path.resolve(process.cwd(), 'scripts/data/blogSeoDraft-2026-08-24.json')
+const args = process.argv.slice(2)
+const execute = args.includes('--execute')
+const draftArg = args.find((a) => !a.startsWith('--'))
+if (!draftArg) {
+  throw new Error('usage: npm run apply:blog-seo-draft -- <path-to-draft.json> [--execute]')
+}
+const DRAFT_PATH = path.resolve(process.cwd(), draftArg)
 
 const client = createClient({
   projectId: (process.env.SANITY_PROJECT_ID || '').trim(),

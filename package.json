@@ -30,6 +30,7 @@
     "load:legal-articles": "tsx scripts/loadLegalArticles.ts",
     "load:blog-post": "tsx scripts/loadBlogPost.ts",
     "translate:blog-post": "tsx scripts/translateBlogPost.ts",
+    "audit:block-translations": "tsx scripts/auditBlockTranslations.ts",
     "apply:blog-seo-draft": "tsx scripts/applySeoDraft.ts",
     "backfill:source-urls": "tsx scripts/backfillSourceUrls.ts",
     "create:zone-shells": "tsx scripts/createZoneShells.ts",
