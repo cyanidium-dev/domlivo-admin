@@ -45,3 +45,4 @@ scripts/data/unpublish-*-backup-*.json
 scripts/data/cleanup-*-backup-*.json
 scripts/data/coverimage-*-backup-*.json
 scripts/data/factfix-*-backup-*.json
+scripts/data/setpublishedat-*-backup-*.json
