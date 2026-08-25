@@ -33,6 +33,7 @@
     "audit:block-translations": "tsx scripts/auditBlockTranslations.ts",
     "apply:blog-seo-draft": "tsx scripts/applySeoDraft.ts",
     "backfill:source-urls": "tsx scripts/backfillSourceUrls.ts",
+    "unpublish:document": "tsx scripts/unpublishDocument.ts",
     "create:zone-shells": "tsx scripts/createZoneShells.ts",
     "seed:studio-ai-tests": "tsx scripts/createStudioAiTestDocs.ts",
     "verify:studio-ai-tests": "tsx scripts/verifyStudioAiTestDocs.ts",
