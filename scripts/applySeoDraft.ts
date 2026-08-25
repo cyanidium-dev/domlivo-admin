@@ -21,6 +21,7 @@ import path from 'node:path'
 import fs from 'node:fs'
 import {config as loadDotenv} from 'dotenv'
 import {createClient} from '@sanity/client'
+import {resolveBlogPostDraftId} from './lib/resolveBlogPostDraftId'
 
 loadDotenv({path: path.resolve(process.cwd(), '.env')})
 
@@ -51,9 +52,9 @@ async function main(): Promise<void> {
       throw new Error(`${slug}: metaDescription is ${metaDescription.length} chars, over 160`)
     }
 
-    const id = `drafts.blogPost-${slug}`
-    const existing = await client.getDocument(id)
-    if (!existing) {
+    const id = await resolveBlogPostDraftId(client, slug)
+    const existing = id ? await client.getDocument(id) : null
+    if (!existing || !id) {
       console.log(`${slug}: NO DRAFT — skipped`)
       continue
     }

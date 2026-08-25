@@ -30,6 +30,7 @@ import path from 'node:path'
 import {config as loadDotenv} from 'dotenv'
 import {createClient} from '@sanity/client'
 import {discoverLocalized, discoverPortableText, deserializeBlockText} from '../lib/studioAi/discoverLocalized'
+import {resolveBlogPostDraftId} from './lib/resolveBlogPostDraftId'
 import {
   buildTranslateItems,
   chunkTranslateItems,
@@ -153,9 +154,9 @@ const client = createClient({
 const PT_FIELD = 'content'
 
 async function main(): Promise<void> {
-  const id = `drafts.blogPost-${slug}`
-  const doc = (await client.getDocument(id)) as Record<string, unknown> | null
-  if (!doc) throw new Error(`draft not found: ${id}`)
+  const id = await resolveBlogPostDraftId(client, slug)
+  const doc = id ? ((await client.getDocument(id)) as Record<string, unknown> | null) : null
+  if (!doc || !id) throw new Error(`draft not found for slug: ${slug}`)
 
   // `content` is handled entirely by discoverPortableText below — excluded
   // here so the generic walker doesn't also reach into it. A rewritten

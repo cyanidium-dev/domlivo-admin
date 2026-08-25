@@ -23,6 +23,7 @@
 import path from 'node:path'
 import {config as loadDotenv} from 'dotenv'
 import {createClient} from '@sanity/client'
+import {resolveBlogPostDraftId} from './lib/resolveBlogPostDraftId'
 
 loadDotenv({path: path.resolve(process.cwd(), '.env')})
 
@@ -45,7 +46,8 @@ function textOf(block: any): string {
 async function main() {
   let totalIssues = 0
   for (const slug of slugs) {
-    const doc: any = await client.getDocument(`drafts.blogPost-${slug}`)
+    const id = await resolveBlogPostDraftId(client, slug)
+    const doc: any = id ? await client.getDocument(id) : null
     if (!doc) {
       console.log(slug, 'MISSING DRAFT')
       continue

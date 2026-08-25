@@ -40,7 +40,7 @@ import path from 'node:path'
 import fs from 'node:fs'
 import {config as loadDotenv} from 'dotenv'
 import {createClient} from '@sanity/client'
-import {markdownToPortableText} from '../lib/articleLoader/markdownToPt'
+import {markdownToPortableText, plainTextFromInline} from '../lib/articleLoader/markdownToPt'
 
 loadDotenv({path: path.resolve(process.cwd(), '.env')})
 
@@ -87,25 +87,37 @@ function parsePlan(md: string): Plan {
   if (!slugMatch) throw new Error('plan is missing the "# Blog Post Plan — `<slug>`" heading')
   const slug = slugMatch[1]
 
-  const title = section(md, 'Title').replace(/^\*\*(.+)\*\*$/, '$1').trim()
+  // title/excerpt/keyFacts/faq are plain localizedString/localizedText
+  // fields in the schema — no marks, no links, same as a blogTable cell.
+  // Run every one through plainTextFromInline so a plan file that slips
+  // *emphasis* into one of these (easy to do — it reads as ordinary prose
+  // in the source markdown) ships as plain text instead of with literal,
+  // unrendered asterisks. Found exactly that bug live in two already-
+  // published drafts before this existed.
+  const title = plainTextFromInline(section(md, 'Title').replace(/^\*\*(.+)\*\*$/, '$1').trim())
 
   const keyFacts = section(md, 'keyFacts')
     .split('\n')
-    .map((l) => l.replace(/^\d+\.\s*/, '').trim())
+    .map((l) => plainTextFromInline(l.replace(/^\d+\.\s*/, '').trim()))
     .filter(Boolean)
 
-  const excerpt = section(md, 'excerpt').replace(/\s*\n+\s*/g, ' ').trim()
+  const excerpt = plainTextFromInline(section(md, 'excerpt').replace(/\s*\n+\s*/g, ' ').trim())
   const body = section(md, 'Body')
 
   const faq: Faq[] = []
   for (const pair of section(md, 'faq').split(/\n\n(?=\*\*)/)) {
     const m = /^\*\*(.+?)\*\*\n([\s\S]+)$/.exec(pair.trim())
-    if (m) faq.push({question: m[1].trim(), answer: m[2].trim().replace(/\s*\n+\s*/g, ' ')})
+    if (m) {
+      faq.push({
+        question: plainTextFromInline(m[1].trim()),
+        answer: plainTextFromInline(m[2].trim().replace(/\s*\n+\s*/g, ' ')),
+      })
+    }
   }
 
   const sources = section(md, 'sources')
     .split('\n')
-    .map((l) => l.replace(/^-\s*/, '').trim())
+    .map((l) => plainTextFromInline(l.replace(/^-\s*/, '').trim()))
     .filter(Boolean)
 
   if (!title || !body || keyFacts.length === 0) {
