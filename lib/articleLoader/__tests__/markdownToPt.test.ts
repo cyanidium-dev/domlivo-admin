@@ -1,5 +1,5 @@
 import {describe, it, expect} from 'vitest'
-import {markdownToPortableText, spansFromInline} from '../markdownToPt'
+import {markdownToPortableText, spansFromInline, plainTextFromInline} from '../markdownToPt'
 
 describe('spansFromInline', () => {
   it('returns one unmarked span for plain text', () => {
@@ -193,5 +193,22 @@ describe('markdownToPortableText', () => {
 
   it('throws on a zoneStatsEmbed marker with no resolver provided', () => {
     expect(() => markdownToPortableText('{{zoneStatsEmbed:blloku}}')).toThrow(/no zone resolver/)
+  })
+})
+
+// plainTextFromInline is exported for any plain-text field in the schema —
+// blogTable cells originally, and now loadBlogPost.ts's title/excerpt/
+// keyFacts/faq/sources parsing too, after *emphasis* markdown was found
+// leaking as literal asterisks into a live FAQ answer (no Portable Text
+// path exists for those fields to strip it).
+describe('plainTextFromInline', () => {
+  it('strips bold, italic and link syntax down to plain text', () => {
+    expect(plainTextFromInline('an Albanian *sh.p.k.* company')).toBe('an Albanian sh.p.k. company')
+    expect(plainTextFromInline('**+4.4%**')).toBe('+4.4%')
+    expect(plainTextFromInline('[Blloku](/en/albania/tirana/districts/blloku)')).toBe('Blloku')
+  })
+
+  it('leaves plain text with no markdown untouched', () => {
+    expect(plainTextFromInline('Plain sentence.')).toBe('Plain sentence.')
   })
 })

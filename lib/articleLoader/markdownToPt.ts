@@ -78,13 +78,18 @@ export function resetKeys(): void {
 }
 
 /**
- * `blogTable` cells are plain strings in the schema — no marks, no links.
- * Reusing the inline tokenizer here strips `**bold**`/`*italic*` markers and
- * collapses a `[text](href)` link down to its text, so a table cell shows
- * "Blloku" rather than the literal, unrendered "[Blloku](/en/...)". The
- * dropped href isn't a regression: cells never had anywhere to put one.
+ * Strips `**bold**`/`*italic*` markers and collapses a `[text](href)` link
+ * down to its text, for any field that's plain text in the schema — no
+ * marks, no links. `blogTable` cells are the original case; `blogPost`'s
+ * title, excerpt, keyFacts and faq question/answer are all the same shape
+ * (`localizedString`/`localizedText`, not Portable Text), and a plan file
+ * that puts `*emphasis*` in one of those — an easy mistake, since it reads
+ * as ordinary prose everywhere else in a plan — would otherwise ship with
+ * literal, unrendered asterisks in the live field. Found exactly that bug
+ * live in two already-published drafts before this was exported and wired
+ * into loadBlogPost.ts's field parsing.
  */
-function plainTextFromInline(text: string): string {
+export function plainTextFromInline(text: string): string {
   return spansFromInline(text, 'cell', () => '')
     .map((s) => s.text)
     .join('')
