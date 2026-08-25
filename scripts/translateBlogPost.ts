@@ -46,15 +46,16 @@ const AI_API_SECRET = (process.env.SANITY_STUDIO_AI_API_SECRET ?? '').trim()
 const LOCAL_STUDIO_ORIGIN = 'http://localhost:3333'
 // client.ts's own caps (24,000 / locale count ≈ 4,800 chars/request) are
 // sized for short field values (titles, keyFacts). Article-body items are
-// full paragraphs — a 20-item, 4,129-char batch of them failed twice with
-// "translation failed, try again" (batch 3/3 below) while two field-only
-// batches at 25 items succeeded, both under the 4,800 cap; five-locale
-// output for long paragraphs likely runs past the endpoint's max_tokens
-// budget for that request even though the *input* fits. Halved here so
-// body-heavy batches stay comfortably inside budget; costs nothing on the
-// short-field batches, which were never close to either cap.
-const MAX_ITEMS_PER_REQUEST = 25
-const maxCharsPerRequest = () => Math.max(1_000, Math.floor(12_000 / Math.max(1, PROJECT_LOCALE_IDS.length)))
+// full paragraphs, and a batch of them has failed two different ways once
+// the response has to carry roughly five translated paragraphs at once:
+// "translation failed, try again" on a 20-item/4,129-char batch, and later
+// a 7-item/2,168-char batch whose response came back as truncated JSON text
+// instead of a parsed array — deterministic on retry, so it reads as an
+// output-budget problem on the endpoint side rather than a transient one.
+// Halved twice from client.ts's original cap; costs nothing on short-field
+// batches, which were never close to either cap regardless of the value here.
+const MAX_ITEMS_PER_REQUEST = 12
+const maxCharsPerRequest = () => Math.max(1_000, Math.floor(6_000 / Math.max(1, PROJECT_LOCALE_IDS.length)))
 
 async function studioTranslate(
   sourceLang: string,
@@ -80,15 +81,54 @@ async function studioTranslate(
       },
       body: JSON.stringify({sourceLang, items: batch, locales: [...PROJECT_LOCALE_IDS]}),
     })
-    const json = (await res.json().catch(() => ({}))) as {error?: string; items?: typeof merged}
+    const json = (await res.json().catch(() => ({}))) as {error?: string; items?: unknown}
     if (!res.ok) {
       throw new Error(
         `batch ${i + 1}/${batches.length} (${batch.length} items, ${chars} chars) failed: ` +
           `${json.error ?? `request failed (${res.status})`} — keys: ${batch.map((it) => it.key).join(', ')}`,
       )
     }
-    merged.push(...(json.items ?? []))
-    console.log(`  batch ${i + 1}/${batches.length}: ok, ${json.items?.length ?? 0} item(s) back`)
+    // A 200 response isn't proof the payload is right. Two failure modes
+    // observed running this against real documents:
+    // (a) `items` comes back as a JSON-stringified array instead of a
+    //     parsed one — the endpoint's own serialization double-encoded it.
+    //     Recoverable: parse it ourselves. This repeats deterministically
+    //     for the same batch, so a bare retry doesn't help; recovering the
+    //     data does.
+    // (b) `items` is genuinely not an array at all, or the parse in (a)
+    //     doesn't yield one — nothing to recover, fail loudly rather than
+    //     spread garbage (spreading a raw string below would silently push
+    //     one "item" per character, none matching a real key, so the whole
+    //     batch's translation would quietly vanish while the run reports
+    //     success — which is exactly what happened before this check
+    //     existed).
+    if (typeof json.items === 'string') {
+      try {
+        const parsed = JSON.parse(json.items)
+        if (Array.isArray(parsed)) json.items = parsed
+      } catch {
+        // fall through to the Array.isArray check below, which throws
+      }
+    }
+    if (!Array.isArray(json.items)) {
+      throw new Error(
+        `batch ${i + 1}/${batches.length} returned a malformed response — ` +
+          `"items" is ${typeof json.items}, not an array (got ${JSON.stringify(json).slice(0, 200)}...)`,
+      )
+    }
+    const returnedKeys = new Set(
+      (json.items as Array<{key?: unknown}>).map((it) => (typeof it?.key === 'string' ? it.key : null)).filter(Boolean),
+    )
+    const missingKeys = batch.map((it) => it.key).filter((k) => !returnedKeys.has(k))
+    if (missingKeys.length > 0) {
+      throw new Error(
+        `batch ${i + 1}/${batches.length} response is missing ${missingKeys.length} of ${batch.length} requested key(s): ` +
+          missingKeys.join(', '),
+      )
+    }
+    const validatedItems = json.items as typeof merged
+    merged.push(...validatedItems)
+    console.log(`  batch ${i + 1}/${batches.length}: ok, ${validatedItems.length} item(s) back`)
   }
   return {items: merged, oversized}
 }
