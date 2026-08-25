@@ -46,3 +46,4 @@ scripts/data/cleanup-*-backup-*.json
 scripts/data/coverimage-*-backup-*.json
 scripts/data/factfix-*-backup-*.json
 scripts/data/setpublishedat-*-backup-*.json
+scripts/data/coverimage12-*-backup-*.json
