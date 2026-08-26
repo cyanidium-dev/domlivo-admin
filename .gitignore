@@ -48,3 +48,4 @@ scripts/data/factfix-*-backup-*.json
 scripts/data/setpublishedat-*-backup-*.json
 scripts/data/coverimage12-*-backup-*.json
 scripts/data/publish-*-prevpublished-backup-*.json
+scripts/data/renameslug-*-backup-*.json
