@@ -27,7 +27,7 @@ if (!token || !projectId) {
 
 const client = createClient({projectId, dataset, apiVersion: '2024-01-01', useCdn: false, token})
 
-const LOCALES = ['en', 'sq', 'it', 'ru', 'uk'] as const
+const LOCALES = ['en', 'sq', 'it', 'ru', 'uk', 'pl'] as const
 type Locale = (typeof LOCALES)[number]
 
 /** Fields a reader actually sees. `title` is required; the rest matter once written. */
