@@ -3,9 +3,9 @@
  * SEO helper (Studio only). Static templates per locale — no AI.
  */
 
-export type LocaleId = 'en' | 'uk' | 'ru' | 'sq' | 'it'
+export type LocaleId = 'en' | 'uk' | 'ru' | 'sq' | 'it' | 'pl'
 
-export const LOCALE_IDS: LocaleId[] = ['en', 'uk', 'ru', 'sq', 'it']
+export const LOCALE_IDS: LocaleId[] = ['en', 'uk', 'ru', 'sq', 'it', 'pl']
 
 type LocalizedTitle = {title?: Record<string, string | undefined>} | null | undefined
 
@@ -29,6 +29,7 @@ function intlLocaleFor(locale: LocaleId): string {
     ru: 'ru-RU',
     sq: 'sq-AL',
     it: 'it-IT',
+    pl: 'pl-PL',
   }
   return map[locale]
 }
@@ -55,6 +56,7 @@ export function formatAreaSqm(area: number, locale: LocaleId): string {
     ru: 'м²',
     sq: 'm²',
     it: 'm²',
+    pl: 'm²',
   }
   return `${n} ${unit[locale]}`
 }
@@ -107,6 +109,11 @@ const DEAL_LABELS: Record<LocaleId, Record<DealKind, string>> = {
     sale: 'vendita',
     rent: 'affitto',
     shortTerm: 'affitto breve',
+  },
+  pl: {
+    sale: 'sprzedaż',
+    rent: 'wynajem',
+    shortTerm: 'wynajem krótkoterminowy',
   },
 }
 
@@ -213,6 +220,20 @@ const PROPERTY_TITLE_TEMPLATES: Record<LocaleId, (d: PropertyTitleBuild) => stri
     if (city) parts.push(`a ${city}`)
     return parts.join(' ').replace(/\s+/g, ' ').trim()
   },
+
+  pl: (d) => {
+    const type = d.typeTitle.trim()
+    const rooms = d.rooms
+    const deal = dealForLocale('pl', d.status)
+    const city = d.cityTitle.trim()
+    const afterType = rooms ? (type ? `${type} ${rooms}` : rooms) : type
+    const head = afterType.trim()
+    const parts: string[] = []
+    if (head) parts.push(head)
+    parts.push(`na ${deal}`)
+    if (city) parts.push(`w ${city}`)
+    return parts.join(' ').replace(/\s+/g, ' ').trim()
+  },
 }
 
 export function generatePropertyOgTitle(locale: LocaleId, ctx: PropertyOgContext): string {
@@ -257,6 +278,7 @@ const CITY_POPULAR: Record<LocaleId, string> = {
   ru: 'Популярный',
   sq: 'Popullore',
   it: 'Popolare',
+  pl: 'Popularne',
 }
 
 function truncate(s: string, max: number): string {
