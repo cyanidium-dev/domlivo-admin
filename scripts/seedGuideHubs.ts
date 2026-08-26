@@ -423,6 +423,37 @@ const FOOTER_LINKS: Array<{key: string; href: string; label: L}> = [
   },
 ]
 
+// ---- Market hub extra: manual city-guides block (audit F-7) ----------------
+// The market hub's auto collection matches theme-tagged custom guides — today
+// that means the 15 comparisons. The roadmap's «Рынок по городам» intent also
+// wants the 7 city market pages, which are pageType 'city' and carry no theme
+// tags, so they are listed explicitly here (manual refs dereference for free).
+
+const CITY_GUIDES_TITLE: L = {
+  en: 'Explore the market by city',
+  uk: 'Ринок по містах',
+  ru: 'Рынок по городам',
+  sq: 'Tregu sipas qyteteve',
+  it: 'Il mercato per città',
+  pl: 'Rynek według miast',
+}
+
+const CITY_SLUGS = ['tirana', 'durres', 'vlore', 'sarande', 'himare', 'shengjin', 'shkoder']
+
+const CITY_GUIDES_SECTION = {
+  _key: 'cities',
+  _type: 'relatedPagesAutoSection',
+  enabled: true,
+  mode: 'manual',
+  title: CITY_GUIDES_TITLE,
+  manualItems: CITY_SLUGS.map((slug, i) => ({
+    _key: `c${i}`,
+    _type: 'reference',
+    _ref: `landing-${slug}`,
+  })),
+  limit: 8,
+}
+
 // ---- Build + write ---------------------------------------------------------
 
 function buildHubDoc(hub: Hub): Record<string, unknown> {
@@ -459,6 +490,7 @@ function buildHubDoc(hub: Hub): Record<string, unknown> {
         topicTags: hub.collectionTags,
         limit: 6,
       },
+      ...(hub.id === 'landing-hub-albania-market' ? [CITY_GUIDES_SECTION] : []),
       {
         _key: 'faq',
         _type: 'faqSection',
@@ -478,7 +510,8 @@ function buildHubDoc(hub: Hub): Record<string, unknown> {
         enabled: true,
         title: CTA_TITLE,
         description: CTA_TEXT,
-        cta: {href: '/contact', label: CTA_PRIMARY},
+        // Audit F-1: the contact page lives at /contacts (nav parity); /contact has no root route.
+        cta: {href: '/contacts', label: CTA_PRIMARY},
         secondaryCta: {href: '/cities', label: CTA_SECONDARY},
       },
     ],

@@ -22,6 +22,13 @@ import path from 'node:path'
 import fs from 'node:fs'
 import {config as loadDotenv} from 'dotenv'
 import {createClient} from '@sanity/client'
+import {
+  insertSections,
+  isGeneratorSiblingBlock,
+  relatedSection,
+  sameTags,
+  type SectionLite,
+} from './lib/relatedPagesBackfill'
 
 loadDotenv({path: path.resolve(process.cwd(), '.env')})
 
@@ -37,8 +44,6 @@ const client = createClient({
 
 const BACKUP_DIR = 'C:/GitHub23/domlivo-backups'
 
-type SectionLite = Record<string, unknown> & {_key?: string; _type?: string}
-
 type LandingRow = {
   _id: string
   pageType: string
@@ -49,30 +54,9 @@ type LandingRow = {
   districtCitySlug?: string
 }
 
-function sameTags(a: string[] | undefined, b: string[]): boolean {
-  if (!Array.isArray(a) || a.length !== b.length) return false
-  const set = new Set(a)
-  return b.every((t) => set.has(t))
-}
-
-function relatedSection(key: string, mode: string, extra?: Record<string, unknown>): SectionLite {
-  return {_key: key, _type: 'relatedPagesAutoSection', enabled: true, mode, limit: 6, ...(extra ?? {})}
-}
-
-/** Insert before a trailing ctaSection (the generators' convention), else append. */
-function insertSections(sections: SectionLite[], toInsert: SectionLite[]): SectionLite[] {
-  const last = sections[sections.length - 1]
-  if (last?._type === 'ctaSection') return [...sections.slice(0, -1), ...toInsert, last]
-  return [...sections, ...toInsert]
-}
-
-function isGeneratorSiblingBlock(s: SectionLite): boolean {
-  if (s._type !== 'landingCollectionSection') return false
-  if ((s as {mode?: string}).mode !== 'manual') return false
-  const items = (s as {manualItems?: Array<{_ref?: string}>}).manualItems
-  if (!Array.isArray(items) || items.length === 0) return false
-  return items.every((m) => typeof m?._ref === 'string' && m._ref.startsWith('landing-comparison-'))
-}
+// Pure helpers (sameTags / relatedSection / insertSections /
+// isGeneratorSiblingBlock) live in scripts/lib/relatedPagesBackfill.ts so the
+// fingerprint matcher is unit-tested (audit F-2).
 
 async function main(): Promise<void> {
   const rows: LandingRow[] = await client.fetch(
@@ -113,6 +97,16 @@ async function main(): Promise<void> {
     } else if (comparisonZones.has(row._id)) {
       const [l, r] = comparisonZones.get(row._id)!
       tags = ['theme:market', 'theme:comparison', `zone:${l}`, `zone:${r}`]
+    }
+    if (!tags) {
+      // F-5: make silent skips loud so a re-run on future data is trustworthy.
+      if (row.pageType === 'city' || row.pageType === 'district') {
+        console.warn(
+          `!  ${row._id}: ${row.pageType} landing with an unresolvable linked slug chain — tags NOT set`,
+        )
+      } else {
+        console.warn(`!  ${row._id}: comparison landing absent from comparisons.json — left untouched`)
+      }
     }
     if (tags && !sameTags(row.topicTags, tags)) {
       ops.topicTags = tags
