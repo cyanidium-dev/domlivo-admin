@@ -56,7 +56,7 @@ const LOCAL_STUDIO_ORIGIN = 'http://localhost:3333'
 // Halved twice from client.ts's original cap; costs nothing on short-field
 // batches, which were never close to either cap regardless of the value here.
 const MAX_ITEMS_PER_REQUEST = 12
-const maxCharsPerRequest = () => Math.max(1_000, Math.floor(6_000 / Math.max(1, PROJECT_LOCALE_IDS.length)))
+const maxCharsPerRequest = () => Math.max(1_000, Math.floor(6_000 / Math.max(1, requestLocales.length)))
 
 async function studioTranslate(
   sourceLang: string,
@@ -80,7 +80,7 @@ async function studioTranslate(
         'x-studio-secret': AI_API_SECRET,
         origin: LOCAL_STUDIO_ORIGIN,
       },
-      body: JSON.stringify({sourceLang, items: batch, locales: [...PROJECT_LOCALE_IDS]}),
+      body: JSON.stringify({sourceLang, items: batch, locales: [...requestLocales]}),
     })
     const json = (await res.json().catch(() => ({}))) as {error?: string; items?: unknown}
     if (!res.ok) {
@@ -139,8 +139,22 @@ const execute = args.includes('--execute')
 const overwrite = args.includes('--overwrite')
 const baseArg = args.find((a) => a.startsWith('--base='))
 const base = (baseArg ? baseArg.slice('--base='.length) : 'en') as ProjectLocaleId
+const localesArg = args.find((a) => a.startsWith('--locales='))
+// Defaults to every project locale (the normal case: a fresh rewrite has
+// every non-base locale empty). Override with e.g. --locales=pl when only
+// backfilling one newly added locale on already-fully-translated posts --
+// the endpoint still translates the body's real paragraphs, so requesting
+// 5 locales that are just going to be discarded is not free.
+const parsedLocales: readonly ProjectLocaleId[] = localesArg
+  ? (localesArg.slice('--locales='.length).split(',').map((s) => s.trim()) as ProjectLocaleId[])
+  : PROJECT_LOCALE_IDS
+// The endpoint requires >=2 locale codes even when only one is actually
+// wanted -- `base` is always discarded downstream (decideTranslationSets
+// never writes it), so padding with it costs nothing but satisfies the floor.
+const requestLocales: readonly ProjectLocaleId[] =
+  parsedLocales.length >= 2 ? parsedLocales : [base, ...parsedLocales]
 const slug = args.find((a) => !a.startsWith('--'))
-if (!slug) throw new Error('usage: npm run translate:blog-post -- <slug> [--base=en] [--overwrite] [--execute]')
+if (!slug) throw new Error('usage: npm run translate:blog-post -- <slug> [--base=en] [--locales=pl] [--overwrite] [--execute]')
 if (!PROJECT_LOCALE_IDS.includes(base)) throw new Error(`--base=${base} is not a project locale`)
 
 const client = createClient({
@@ -154,9 +168,21 @@ const client = createClient({
 const PT_FIELD = 'content'
 
 async function main(): Promise<void> {
-  const id = await resolveBlogPostDraftId(client, slug)
-  const doc = id ? ((await client.getDocument(id)) as Record<string, unknown> | null) : null
-  if (!doc || !id) throw new Error(`draft not found for slug: ${slug}`)
+  const draftId = await resolveBlogPostDraftId(client, slug)
+  let id = draftId
+  let doc = draftId ? ((await client.getDocument(draftId)) as Record<string, unknown> | null) : null
+  // Every blog post published through the review workflow (see
+  // publishBlogPost.ts) has no pending draft once live -- `resolveBlogPostDraftId`
+  // always assumes one exists, which was true while posts sat in the
+  // load/review/translate pipeline but is no longer true for anything already
+  // shipped. Fall back to the published id so re-translating a live post (e.g.
+  // backfilling a newly added locale) doesn't require manufacturing a draft first.
+  if (!doc && draftId) {
+    const publishedId = draftId.replace(/^drafts\./, '')
+    doc = (await client.getDocument(publishedId)) as Record<string, unknown> | null
+    if (doc) id = publishedId
+  }
+  if (!doc || !id) throw new Error(`document not found for slug: ${slug}`)
 
   // `content` is handled entirely by discoverPortableText below — excluded
   // here so the generic walker doesn't also reach into it. A rewritten
