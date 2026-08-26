@@ -132,6 +132,7 @@ export const landingPage = defineType({
         defineArrayMember({type: 'districtsComparisonSection'}),
         defineArrayMember({type: 'linkedGallerySection'}),
         defineArrayMember({type: 'landingCollectionSection'}),
+        defineArrayMember({type: 'relatedPagesAutoSection'}),
         defineArrayMember({type: 'investorLogosSection'}),
         defineArrayMember({type: 'priceTableSection'}),
         defineArrayMember({type: 'statsBandSection'}),
@@ -244,6 +245,17 @@ export const landingPage = defineType({
       group: 'basic',
       description:
         'Optional editorial freshness date. When set, the frontend shows an "Updated: {date}" badge and emits article:modified_time metadata.',
+    }),
+
+    defineField({
+      name: 'topicTags',
+      title: 'Topic tags',
+      description:
+        'Plain matching keys for automatic interlinking — not display text. Format: city:<slug>, zone:<slug>, theme:<key>. See SPEC-tz16-related-pages-2026-08-26.',
+      type: 'array',
+      group: 'basic',
+      of: [{type: 'string'}],
+      validation: (Rule) => Rule.unique(),
     }),
 
     defineField({

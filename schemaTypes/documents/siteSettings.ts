@@ -111,6 +111,16 @@ export const siteSettings = defineType({
       group: 'footer',
       validation: (Rule) => Rule.max(20),
     }),
+    defineField({
+      name: 'footerGuideLinks',
+      title: 'Footer Guide Links',
+      type: 'array',
+      of: [defineArrayMember({type: 'localizedFooterLink'})],
+      group: 'footer',
+      description:
+        'The "Guides" footer column (ТЗ-16). 4–6 links; the column is hidden while this list is empty.',
+      validation: (Rule) => Rule.max(6),
+    }),
 
     // CONTENT
     defineField({
