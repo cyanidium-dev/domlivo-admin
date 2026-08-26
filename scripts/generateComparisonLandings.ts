@@ -427,17 +427,12 @@ function buildLanding(c: Comparison, zones: Map<string, ZoneRow>, year: string):
           }],
         }]
       : []),
-    ...(c.related.length
-      ? [{
-          _key: 'related', _type: 'landingCollectionSection', enabled: true,
-          presentation: 'grid',
-          mode: 'manual',
-          title: T.relatedTitle as unknown as Localized,
-          manualItems: c.related.map((slug, i) => ({
-            _key: `rel-${i}`, _type: 'reference', _ref: `landing-comparison-${slug}`,
-          })),
-        }]
-      : []),
+    // ТЗ-16: sibling comparisons resolve automatically at render time from
+    // shared `zone:` topic tags — the config's `related` graph is no longer read.
+    {
+      _key: 'related', _type: 'relatedPagesAutoSection', enabled: true,
+      mode: 'zoneComparisons', title: T.relatedTitle as unknown as Localized, limit: 6,
+    },
     {
       _key: 'cta', _type: 'ctaSection', enabled: true,
       eyebrow: fill({en: '{a} vs {b}', uk: '{a} проти {b}', ru: '{a} против {b}', sq: '{a} kundrejt {b}', it: '{a} contro {b}'}, names),
@@ -458,6 +453,9 @@ function buildLanding(c: Comparison, zones: Map<string, ZoneRow>, year: string):
     slug: {_type: 'slug', current: c.slug},
     title,
     cardDescription: c.angle,
+    // Registry zone slugs (c.left/right.slug), never the landing's cosmetic URL
+    // slug — `himara-vs-saranda` features the zone `himare`.
+    topicTags: ['theme:market', 'theme:comparison', `zone:${c.left.slug}`, `zone:${c.right.slug}`],
     // Without this the /guides hub and the related-comparison cards render as
     // text tiles, because both read `cardImage` from the landing.
     ...(heroImage
@@ -568,18 +566,10 @@ async function main() {
   if (toWrite.length === 0) { console.log('\nNothing to write.'); return }
   if (isForce) console.log('\n⚠ --force replaces existing landings, including Studio edits.')
 
-  // Two passes: every landing must exist before the `related` references can
-  // resolve, otherwise the first page written points at documents that do not
-  // exist yet and Sanity rejects the transaction.
-  const withoutRelated = toWrite.map((d) => ({
-    ...d,
-    pageSections: (d.pageSections as any[]).filter((s) => s._type !== 'landingCollectionSection'),
-  }))
-  await withoutRelated
-    .reduce((t, d) => (isForce ? t.createOrReplace(d as never) : t.createIfNotExists(d as never)), client.transaction())
-    .commit()
+  // Single pass (ТЗ-16): the related block no longer references sibling
+  // landings, so nothing requires documents to exist before it is written.
   await toWrite
-    .reduce((t, d) => t.patch(d._id as string, (p) => p.set({pageSections: d.pageSections})), client.transaction())
+    .reduce((t, d) => (isForce ? t.createOrReplace(d as never) : t.createIfNotExists(d as never)), client.transaction())
     .commit()
 
   console.log(`\nWrote ${toWrite.length} comparison landings.`)

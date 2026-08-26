@@ -366,6 +366,16 @@ async function main() {
         columns: ['priceNew', 'priceResale', 'referencePrice'],
         sortBy: 'price', linkRows: true, showSources: true,
       }]),
+      // ТЗ-16: sibling districts and the comparisons featuring this zone both
+      // resolve automatically from the page's own context at render time.
+      {
+        _key: 'related-districts', _type: 'relatedPagesAutoSection', enabled: true,
+        mode: 'cityDistricts', limit: 6,
+      },
+      {
+        _key: 'related-comparisons', _type: 'relatedPagesAutoSection', enabled: true,
+        mode: 'zoneComparisons', limit: 6,
+      },
       {
         _key: 'cta', _type: 'ctaSection', enabled: true,
         eyebrow: names,
@@ -385,6 +395,7 @@ async function main() {
       linkedDistrict: {_type: 'reference', _ref: d._id},
       title: composedSeo?.metaTitle ?? d.seo?.metaTitle ?? names,
       cardDescription: d.heroSubtitle,
+      topicTags: [`city:${d.citySlug}`, `zone:${d.slug}`],
       contentUpdatedAt: new Date().toISOString().slice(0, 10),
       seo: seo ?? undefined,
       pageSections: sections,
