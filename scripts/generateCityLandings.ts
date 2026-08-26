@@ -240,6 +240,11 @@ function buildLanding(city: CityRow, year: string): Record<string, unknown> {
       filters: {city: {_type: 'reference', _ref: city._id}},
       autoMode: {limit: 12, sort: 'newest'},
     },
+    // ТЗ-16: district cards resolve automatically from this page's own city.
+    {
+      _key: 'related-districts', _type: 'relatedPagesAutoSection', enabled: true,
+      mode: 'cityDistricts', limit: 6,
+    },
     {
       _key: 'cta', _type: 'ctaSection', enabled: true,
       eyebrow: names,
@@ -259,6 +264,7 @@ function buildLanding(city: CityRow, year: string): Record<string, unknown> {
     linkedCity: {_type: 'reference', _ref: city._id},
     title: seo?.metaTitle ?? names,
     cardDescription: subtitle,
+    topicTags: [`city:${city.slug}`, `zone:${city.slug}`],
     contentUpdatedAt: new Date().toISOString().slice(0, 10),
     ...(seo
       ? {

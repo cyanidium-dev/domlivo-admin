@@ -32,6 +32,7 @@ import {seoAuthor} from './seoAuthor'
 import {seoPullQuote} from './seoPullQuote'
 import {ctaSection} from './ctaSection'
 import {landingCollectionSection} from './landingCollectionSection'
+import {relatedPagesAutoSection} from './relatedPagesAutoSection'
 import {localizedFaqItemRich} from './localizedFaqItemRich'
 import {districtsComparisonSection} from './districtsComparisonSection'
 import {linkedGallerySection} from './linkedGallerySection'
@@ -97,6 +98,7 @@ export const objects = [
   seoPullQuote,
   ctaSection,
   landingCollectionSection,
+  relatedPagesAutoSection,
   districtsComparisonSection,
   linkedGallerySection,
   faqSection,

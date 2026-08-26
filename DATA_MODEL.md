@@ -20,7 +20,7 @@ Managed via the Studio structure (`structure/index.ts`), pinned to fixed `_id`s:
 ## Document Types (18)
 
 ### landingPage
-Universal editorial/SEO landing built from an ordered `pageSections[]` block array (see the section catalog below). `pageType` is presented in the Studio as **"Route family"** and determines where the landing renders (contract: `domlivo-workspace/docs/engineering/ROUTING.md`): editorial families `custom` (Guide → `/guides/<slug>`), `city` (→ `/<country>/<city>/info` via `linkedCity`), `district` (overlays the district page via `linkedDistrict`), `unique` (top-level `/<slug>`; **no index page — wire navigation manually**); system families `home` (singleton `landing-home`), `cityIndex` (singleton `landing-cities` → `/cities`), `investment` (slug-addressed deal landings: `sale`, `long-term-rent`, `short-term-rent`). The former `propertyType` family was retired 2026-08-14 (0 docs, no consumer route). Slug validation rejects reserved route segments for `custom`/`unique` (allowlisted exception: `for-realtors`), and async eclipse checks block a `unique` slug already owned by a `country`/`city`/`propertyType` (entity routes win at `/<slug>`) — with the mirror check on those entity schemas; audit backstop: `npm run report:route-collisions`. Key fields: `enabled`, `title`, `slug` (required except home), `pageSections[]`, card overrides (`cardTitle`, `cardDescription`, `cardImage`) for landing carousels, `linkedCity` / `linkedDistrict` (validated per family; one enabled city landing per city), `contentUpdatedAt` (freshness badge), `seo` (all 5 locales required for enabled pages).
+Universal editorial/SEO landing built from an ordered `pageSections[]` block array (see the section catalog below). `pageType` is presented in the Studio as **"Route family"** and determines where the landing renders (contract: `domlivo-workspace/docs/engineering/ROUTING.md`): editorial families `custom` (Guide → `/guides/<slug>`), `city` (→ `/<country>/<city>/info` via `linkedCity`), `district` (overlays the district page via `linkedDistrict`), `unique` (top-level `/<slug>`; **no index page — wire navigation manually**); system families `home` (singleton `landing-home`), `cityIndex` (singleton `landing-cities` → `/cities`), `investment` (slug-addressed deal landings: `sale`, `long-term-rent`, `short-term-rent`). The former `propertyType` family was retired 2026-08-14 (0 docs, no consumer route). Slug validation rejects reserved route segments for `custom`/`unique` (allowlisted exception: `for-realtors`), and async eclipse checks block a `unique` slug already owned by a `country`/`city`/`propertyType` (entity routes win at `/<slug>`) — with the mirror check on those entity schemas; audit backstop: `npm run report:route-collisions`. Key fields: `enabled`, `title`, `slug` (required except home), `pageSections[]`, card overrides (`cardTitle`, `cardDescription`, `cardImage`) for landing carousels, `linkedCity` / `linkedDistrict` (validated per family; one enabled city landing per city), `contentUpdatedAt` (freshness badge), `topicTags[]` (plain matching keys `city:<slug>` / `zone:<slug>` / `theme:<key>` for automatic interlinking — ТЗ-16), `seo` (all 5 locales required for enabled pages).
 
 ### property
 A property listing (sale / rent / short-term). Key fields: localized `title`/`shortDescription`/`description`/`address`, `slug`, required refs to `agent`, `propertyType` (`type`) and `city`, optional `developer` and city-filtered `district`, `status`, `isPublished`, `lifecycleStatus` (draft/active/reserved/sold/rented/archived), `price` (EUR base currency), promotion fields (`promoted`, `promotionType` premium/top/sale with agent-scoped caps validated via `utils/propertyPromotionCapValidation`, `featuredOrder`, `discountPercent`), `investment`, coordinates, `locationTags[]`, `area`/`bedrooms`/`bathrooms`/`yearBuilt`, `amenitiesRefs[]` (→ `amenity`), `propertyOffers[]`, `articlesSection`, `gallery` (1–30 images), `seo`, read-only analytics counters (`viewCount`, `saveCount`, `contactCount`) and hidden `ownerUserId`. Legacy hidden `country` string is deprecated — country derives from `city.country`.
@@ -68,12 +68,12 @@ Blog category for filtering and category pages. Fields: localized `title` (EN re
 Singleton (`blog-settings`) configuring the `/blog` index: localized `heroTitle`/`heroDescription`, `relatedPostsSidebarCount` (0–50, default 5), `seo`.
 
 ### siteSettings
-Singleton (`siteSettings`) for global configuration. Groups: branding (`siteName`, `siteTagline`, `logo`), contact (`contactEmail`, `contactPhone`, `companyAddress`, `contactsManagerPhoto`), social (`socialLinks[]`), footer (intro, Telegram/WhatsApp/Codesite/Webbond URLs, `footerApp`, `policyLinks[]`, `copyrightText`), content (`howToPublishVideoUrl`), properties (`propertySettings` — promotion defaults and catalog banner candidates), currency (read-only cron-synced `currencyRates[]` + `currencyLastSyncedAt`, editor-selected `displayCurrencies[]`), SEO (`defaultSeo` fallback).
+Singleton (`siteSettings`) for global configuration. Groups: branding (`siteName`, `siteTagline`, `logo`), contact (`contactEmail`, `contactPhone`, `companyAddress`, `contactsManagerPhoto`), social (`socialLinks[]`), footer (intro, Telegram/WhatsApp/Codesite/Webbond URLs, `footerApp`, `policyLinks[]`, `footerGuideLinks[]` (ТЗ-16 Guides column, max 6), `copyrightText`), content (`howToPublishVideoUrl`), properties (`propertySettings` — promotion defaults and catalog banner candidates), currency (read-only cron-synced `currencyRates[]` + `currencyLastSyncedAt`, editor-selected `displayCurrencies[]`), SEO (`defaultSeo` fallback).
 
 ### registrationRequest
 Operational inbox (not public content) for website registration requests; create contract in `docs/registration-request-sanity-frontend-contract.md`. Read-only submitted fields (`name`, `phone`, `email`, `realtorOrAgency`, `language`) plus editorial `status` (unread/read/inWork/registered/declined) and `internalComment`.
 
-## Page-Builder Sections (`landingPage.pageSections`, 22 types)
+## Page-Builder Sections (`landingPage.pageSections`, 25 types)
 
 Every section carries an `enabled` toggle; editors add/reorder freely.
 
@@ -91,6 +91,7 @@ Every section carries an `enabled` toggle; editors add/reorder freely.
 | `districtsComparisonSection` | District comparison table |
 | `linkedGallerySection` | Gallery linked to an entity |
 | `landingCollectionSection` | Cards linking to other landing pages |
+| `relatedPagesAutoSection` | Auto-interlinking cards: districts of this city / comparisons involving this zone / guides by `topicTags` / manual (ТЗ-16) |
 | `investorLogosSection` | Investor / partner logo band |
 | `priceTableSection` | Data table with sources (price/indicator data from the research base) |
 | `statsBandSection` | Key-figures band: 2–6 large numbers with labels/trends |
@@ -101,6 +102,8 @@ Every section carries an `enabled` toggle; editors add/reorder freely.
 | `trackerSection` | Embeds a `tracker` document (full or compact) |
 | `developersRatingSection` | Grouped traffic-light list of `developer` documents |
 | `developerCardSection` | Single expanded developer card |
+| `zoneStatsAutoSection` | Key figures for a zone from its newest `zoneMetrics` record (automatic) |
+| `zonePriceTableAutoSection` | Price table across a city's districts or hand-picked zones, from `zoneMetrics` (automatic) |
 
 ## Localized Primitives & Shared Objects
 

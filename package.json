@@ -33,6 +33,8 @@
     "translate:blog-post": "tsx scripts/translateBlogPost.ts",
     "translate:by-type": "tsx scripts/translateDocsByType.ts",
     "translate:inline": "tsx scripts/applyInlineTranslation.ts",
+    "backfill:related-pages": "tsx scripts/backfillRelatedPagesSections.ts",
+    "seed:guide-hubs": "tsx scripts/seedGuideHubs.ts",
     "dump:blog-for-translation": "tsx scripts/dumpBlogForTranslation.ts",
     "audit:block-translations": "tsx scripts/auditBlockTranslations.ts",
     "apply:blog-seo-draft": "tsx scripts/applySeoDraft.ts",
