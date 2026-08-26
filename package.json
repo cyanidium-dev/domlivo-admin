@@ -12,6 +12,7 @@
     "test:watch": "vitest",
     "parse:listings": "tsx scripts/parser/run.ts",
     "audit:zone-localization": "tsx scripts/auditZoneLocalization.ts",
+    "audit:pl-locale": "tsx scripts/addPlLocaleFields.ts",
     "audit:district-taxonomy": "sanity exec scripts/auditDistrictTaxonomy.ts --with-user-token",
     "align:district-taxonomy:dry": "sanity exec scripts/alignDistrictTaxonomy.ts --with-user-token",
     "align:district-taxonomy": "sanity exec scripts/alignDistrictTaxonomy.ts --with-user-token -- --apply",
