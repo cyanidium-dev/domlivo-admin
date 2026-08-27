@@ -345,17 +345,31 @@ function buildTodoContent(v: Vars): Record<Locale, Block[]> {
 
 const IGNORED_KEYS = new Set(['_rev', '_createdAt', '_updatedAt', '_system', 'contentUpdatedAt'])
 
-function diffDoc(built: Record<string, unknown>, live: Record<string, unknown>, prefix = ''): string[] {
-  const diffs: string[] = []
-  const keys = new Set([...Object.keys(built), ...Object.keys(live)])
-  for (const k of keys) {
-    if (IGNORED_KEYS.has(k)) continue
-    const a = built[k]
-    const b = live[k]
-    const p = prefix ? `${prefix}.${k}` : k
-    if (JSON.stringify(a) !== JSON.stringify(b)) diffs.push(p)
+// Recursive and key-order-insensitive (the comparison generator's version,
+// verbatim): Sanity returns object keys alphabetically sorted, so a shallow
+// JSON.stringify compare reports every perfectly-reproduced doc as "edited".
+function diffDoc(built: unknown, live: unknown, p = ''): string[] {
+  if (built === live) return []
+  const both =
+    built && live && typeof built === 'object' && typeof live === 'object' &&
+    !Array.isArray(built) && !Array.isArray(live)
+  if (both) {
+    const b = built as Record<string, unknown>
+    const l = live as Record<string, unknown>
+    const out: string[] = []
+    for (const k of new Set([...Object.keys(b), ...Object.keys(l)])) {
+      if (IGNORED_KEYS.has(k)) continue
+      if (b[k] === undefined && l[k] === undefined) continue
+      out.push(...diffDoc(b[k], l[k], p ? `${p}.${k}` : k))
+    }
+    return out
   }
-  return diffs
+  if (Array.isArray(built) && Array.isArray(live)) {
+    if (built.length !== live.length) return [`${p}: ${built.length} built vs ${live.length} live`]
+    return built.flatMap((x, i) => diffDoc(x, live[i], `${p}[${i}]`))
+  }
+  const show = (v: unknown) => String(typeof v === 'string' ? v : JSON.stringify(v)).slice(0, 60)
+  return [`${p}: built ${show(built)} / live ${show(live)}`]
 }
 
 // ---- build ----------------------------------------------------------------
