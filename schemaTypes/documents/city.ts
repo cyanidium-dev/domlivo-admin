@@ -46,6 +46,20 @@ export const city = defineType({
     }),
 
     defineField({
+      name: 'sqDeclension',
+      title: 'Albanian declension (optional)',
+      type: 'object',
+      group: 'basic',
+      description:
+        'Albanian grammar forms for correct headings. Locative = after "në" (indefinite: Tiranë, Durrës, Vlorë). Genitive = after "e/i/rreth" (definite: Tiranës, Durrësit, Vlorës). Falls back to the city name when empty.',
+      options: {collapsible: true, collapsed: true},
+      fields: [
+        {name: 'locative', title: 'Locative (në …)', type: 'string'},
+        {name: 'genitive', title: 'Genitive (e/i …)', type: 'string'},
+      ],
+    }),
+
+    defineField({
       name: 'country',
       title: 'Country',
       type: 'reference',

@@ -31,7 +31,26 @@ export const socialLink = defineType({
       name: 'url',
       title: 'URL',
       type: 'string',
-      validation: (Rule) => Rule.required(),
+      description: 'Full profile/page URL — bare domains (e.g. https://youtube.com) are rejected.',
+      validation: (Rule) =>
+        Rule.required().custom((value: string | undefined) => {
+          const v = String(value ?? '').trim()
+          if (!v) return 'URL is required.'
+          if (!/^https?:\/\//i.test(v)) return 'Use a full URL starting with http:// or https://.'
+          let parsed: URL
+          try {
+            parsed = new URL(v)
+          } catch {
+            return 'Enter a valid URL.'
+          }
+          // Reject bare domains for social platforms (must link to a profile/channel).
+          const bareSocials = /(youtube|facebook|instagram|linkedin|twitter|x|tiktok|t)\.(com|me)$/i
+          const path = parsed.pathname.replace(/\/+$/, '')
+          if (bareSocials.test(parsed.hostname.replace(/^www\./, '')) && path === '') {
+            return 'Link to a specific profile/channel, not the bare domain.'
+          }
+          return true
+        }),
     }),
   ],
 

@@ -117,7 +117,7 @@ export const siteSettings = defineType({
       title: 'Footer — WhatsApp URL',
       type: 'string',
       group: 'footer',
-      description: 'Optional WhatsApp link (e.g. https://wa.me/…).',
+      description: 'WhatsApp link with a phone number, e.g. https://wa.me/355691234567.',
       validation: (Rule) =>
         Rule.custom((value: string | undefined) => {
           if (value == null || !String(value).trim()) return true
@@ -125,10 +125,17 @@ export const siteSettings = defineType({
           if (!/^https?:\/\//i.test(v)) return 'Use a full URL starting with http:// or https://.'
           try {
             void new URL(v)
-            return true
           } catch {
             return 'Enter a valid URL.'
           }
+          // wa.me / api.whatsapp.com must carry a phone number, not a bare handle.
+          if (/wa\.me\/?$/i.test(v) || /wa\.me\/(?![+0-9])/i.test(v)) {
+            return 'wa.me links must include a phone number, e.g. https://wa.me/355691234567.'
+          }
+          if (/api\.whatsapp\.com/i.test(v) && !/phone=\+?\d/i.test(v)) {
+            return 'api.whatsapp.com links must include ?phone=<number>.'
+          }
+          return true
         }),
     }),
     defineField({
