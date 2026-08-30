@@ -1,0 +1,37 @@
+[
+  {
+    "zone": "parruce",
+    "citySlug": "shkoder",
+    "query": "https://merrjep.al/njoftime/imobiliare-vendbanime/apartamente/ne-shitje/shkoder/q-parruce",
+    "pages": 5,
+    "expectLabel": "parru"
+  },
+  {
+    "zone": "gjuhadol",
+    "citySlug": "shkoder",
+    "query": "https://merrjep.al/njoftime/imobiliare-vendbanime/apartamente/ne-shitje/shkoder/q-gjuhadol",
+    "pages": 2,
+    "expectLabel": "gjuhadol"
+  },
+  {
+    "zone": "qender-shkoder",
+    "citySlug": "shkoder",
+    "query": "https://merrjep.al/njoftime/imobiliare-vendbanime/apartamente/ne-shitje/shkoder/q-qender",
+    "pages": 3,
+    "expectLabel": "qend"
+  },
+  {
+    "zone": "livadh",
+    "citySlug": "himare",
+    "query": "https://merrjep.al/njoftime/imobiliare-vendbanime/apartamente/ne-shitje/q-livadh",
+    "pages": 1,
+    "expectLabel": "himar"
+  },
+  {
+    "zone": "center-himare",
+    "citySlug": "himare",
+    "query": "https://merrjep.al/njoftime/imobiliare-vendbanime/apartamente/ne-shitje/q-himare",
+    "pages": 4,
+    "expectLabel": "himar"
+  }
+]

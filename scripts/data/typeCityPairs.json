@@ -1,0 +1,17 @@
+{
+  "$comment": "TZ-17 type-x-city landing registry. Identity only - no figures, no prose (the comparisons.json rule). Copy is templated in generateTypeCityLandings.ts; counts come from the dataset at run time. See SPEC-tz17-type-city-landings-2026-08-26.md.",
+  "pairs": [
+    {"type": "apartment", "city": "tirana"},
+    {"type": "apartment", "city": "durres"},
+    {"type": "apartment", "city": "vlore"},
+    {"type": "apartment", "city": "sarande"},
+    {"type": "villa", "city": "tirana"},
+    {"type": "villa", "city": "durres"},
+    {"type": "villa", "city": "vlore"},
+    {"type": "villa", "city": "sarande"},
+    {"type": "house", "city": "tirana"},
+    {"type": "house", "city": "durres"},
+    {"type": "house", "city": "vlore"},
+    {"type": "house", "city": "sarande"}
+  ]
+}

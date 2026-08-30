@@ -6,10 +6,12 @@ export const socialLinkPreview = {
   select: {
     platform: 'platform',
     url: 'url',
+    channel: 'channel',
   },
-  prepare({platform, url}: {platform?: string; url?: string}) {
+  prepare({platform, url, channel}: {platform?: string; url?: string; channel?: string}) {
     const title = platform?.trim() || 'Social link'
-    const subtitle = url?.trim() || 'Add URL'
+    const column = channel === 'contact' ? 'Contacts column' : 'Social column'
+    const subtitle = `${column} · ${url?.trim() || 'Add URL'}`
     return {title, subtitle, media: LinkIcon}
   },
 }
@@ -51,6 +53,23 @@ export const socialLink = defineType({
           }
           return true
         }),
+    }),
+
+    defineField({
+      name: 'channel',
+      title: 'Footer column',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Social — “Follow us on …” list', value: 'social'},
+          {title: 'Contacts — direct-contact channel (Telegram, WhatsApp)', value: 'contact'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'social',
+      description:
+        'Which footer column this link belongs to. Direct-contact channels used to live in their own siteSettings fields; they are entries here now so every social/contact link has one source.',
+      validation: (Rule) => Rule.required(),
     }),
   ],
 

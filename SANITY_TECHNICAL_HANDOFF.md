@@ -1,3 +1,5 @@
+> ⚠️ Historical snapshot (2026-03). Schema reference: DATA_MODEL.md (regenerated 2026-08). Live backlog: workspace docs/engineering/BACKLOG.md.
+
 # Sanity CMS — Technical Handoff for Senior Engineers
 
 This document describes the actual Sanity CMS/admin architecture of the domlivo real estate platform. It is based on direct inspection of the codebase (schema, structure, queries, fragments, config).

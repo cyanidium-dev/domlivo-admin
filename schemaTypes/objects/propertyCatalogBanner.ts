@@ -16,7 +16,7 @@ export const propertyCatalogBanner = defineType({
   title: 'Property Catalog Banner',
   type: 'object',
   description:
-    'Note: Currently only BIG banner is used on frontend. Small banner is reserved for a future map layout and is not displayed yet.',
+    'Both images are required. BIG is used by the full-width catalog placement, SMALL by the half-width placement. A banner only becomes eligible once both images and both alt texts are filled and the linked property is published.',
   fields: [
     defineField({
       name: 'label',
@@ -58,19 +58,20 @@ export const propertyCatalogBanner = defineType({
     }),
     defineField({
       name: 'imageSmall',
-      title: 'Small banner image (compact placements)',
+      title: 'Small banner image (half-width placement)',
       type: 'image',
-      hidden: true,
       options: {hotspot: true},
       fields: [{name: 'alt', type: 'string', title: 'Alternative text'}],
       description:
-        'Not currently used on frontend.\n\nReserved for future layouts (map integration).\n\nIf provided:\n- Use similar composition as big banner\n- Wide landscape image recommended (~3:1)',
+        'Required, and required for the banner to appear at all — the catalog query filters on it.\n\nUsed by the half-width placement.\n\n- Same composition as the big banner\n- Wide landscape image recommended (~3:1)',
       validation: (Rule) =>
         Rule.custom((value, context) => {
-          // Keep schema key for future use, but do not require while field is hidden.
-          if (!value) return true
-          if (!hasImageAsset(value)) return 'Small image must include an uploaded asset.'
-          if (!hasImageAlt(value)) return 'Add alternative text to the Small image.'
+          // Same gate as imageBig below: skipped only for explicitly disabled
+          // banners, so a banner cannot be enabled without its half-width image.
+          const parent = context.parent as {enabled?: boolean} | undefined
+          if (parent?.enabled === false) return true
+          if (!hasImageAsset(value)) return 'Upload a Small image when this banner is enabled.'
+          if (!hasImageAlt(value)) return 'Add alternative text to the Small image when this banner is enabled.'
           return true
         }),
     }),

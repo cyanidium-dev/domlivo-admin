@@ -26,25 +26,6 @@ export const propertyCarouselSection = defineType({
       description: 'Optional button or link below the header.',
     }),
     defineField({
-      name: 'tabs',
-      title: 'Tabs / groups',
-      type: 'array',
-      group: 'layout',
-      of: [defineArrayMember({type: 'homePropertyCarouselTab'})],
-      description:
-        'Which tab groups are enabled and in what order. If empty, default groups (e.g. popular / new) may be used.',
-      validation: (Rule) =>
-        Rule.custom((value) => {
-          if (!value || !Array.isArray(value) || value.length === 0) return true
-          const enabledTabs = value.filter((t: {enabled?: boolean}) => t?.enabled !== false)
-          if (enabledTabs.length === 0) return 'Enable at least one tab (or leave this list empty).'
-          const keys = value.map((t: {key?: string}) => t?.key).filter(Boolean) as string[]
-          const uniq = new Set(keys)
-          if (uniq.size !== keys.length) return 'Tab keys must be unique.'
-          return true
-        }),
-    }),
-    defineField({
       name: 'mode',
       title: 'Content mode',
       type: 'string',
@@ -82,6 +63,47 @@ export const propertyCarouselSection = defineType({
         ],
       },
       description: 'Optional sort when using auto mode (top-level).',
+    }),
+    defineField({
+      name: 'filters',
+      title: 'Auto mode filters',
+      type: 'object',
+      group: 'data',
+      hidden: ({parent}) => parent?.mode === 'selected',
+      description:
+        'Narrow what auto mode pulls from the catalog. Leave empty and the carousel follows the page: a district landing shows that district, a city landing shows that city.',
+      options: {collapsible: true, collapsed: true},
+      fields: [
+        defineField({name: 'city', title: 'City', type: 'reference', to: [{type: 'city'}]}),
+        defineField({
+          name: 'district',
+          title: 'District',
+          type: 'reference',
+          to: [{type: 'district'}],
+          description:
+            "Wins over City. Without it, a district page's carousel shows the whole city — other districts' properties included.",
+        }),
+        defineField({
+          name: 'propertyType',
+          title: 'Property type',
+          type: 'reference',
+          to: [{type: 'propertyType'}],
+        }),
+        defineField({
+          name: 'deal',
+          title: 'Deal',
+          type: 'string',
+          options: {
+            list: [
+              {title: 'Sale', value: 'sale'},
+              {title: 'Long-term rent', value: 'rent'},
+              {title: 'Short-term rent', value: 'short-term'},
+            ],
+            layout: 'radio',
+            direction: 'horizontal',
+          },
+        }),
+      ],
     }),
     defineField({
       name: 'autoMode',

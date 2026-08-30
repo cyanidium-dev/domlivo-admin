@@ -1,5 +1,11 @@
 import React from 'react'
 import {defineType, defineField, defineArrayMember} from 'sanity'
+import {
+  findUniqueLandingOwningSlug,
+  isReservedForGeoEntity,
+  landingOwnsSlugMessage,
+  reservedSlugMessage,
+} from '../constants/reservedRouteSlugs'
 import {SeoFillInfoInput} from '../../components/sanity/SeoFillInfoInput'
 import {GalleryWithCopyAltInput} from '../../components/sanity/GalleryWithCopyAltInput'
 
@@ -42,7 +48,18 @@ export const city = defineType({
         },
         maxLength: 96,
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) =>
+        Rule.required().custom(async (value, context) => {
+          const current = (value as {current?: string} | undefined)?.current
+          if (!current) return true
+          if (isReservedForGeoEntity(current)) return reservedSlugMessage(current)
+          // Entity routes eclipse Unique Landings at /<slug> — block a city
+          // slug that would silently take over an existing landing's URL.
+          const client = context.getClient({apiVersion: '2024-06-01'})
+          const landing = await findUniqueLandingOwningSlug(client, current)
+          if (landing) return landingOwnsSlugMessage(current)
+          return true
+        }),
     }),
 
     defineField({
@@ -261,8 +278,14 @@ export const city = defineType({
           ],
         }),
       ],
+      // A warning, not an error: a city can be created before anyone sources
+      // its images, and publication is gated by `npm run audit:zone-readiness`
+      // rather than by Studio validation.
       validation: (Rule) =>
-        Rule.min(1).error('Add at least one image').max(20).error('Maximum 20 images allowed'),
+        Rule.min(1)
+          .warning('Add at least one image before publishing this city')
+          .max(20)
+          .error('Maximum 20 images allowed'),
       components: {input: GalleryWithCopyAltInput},
     }),
 

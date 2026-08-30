@@ -148,8 +148,23 @@ export const property = defineType({
       type: 'number',
       group: 'pricing',
       description: 'Listing price in EUR (base currency). All property prices are stored in EUR.',
-      validation: (Rule) =>
+      validation: (Rule) => [
         Rule.required().min(0).error('Price must be a positive value'),
+        // A Vlorë house went live at €18 421 for 109 m² — exactly 169 × 109,
+        // because a per-m² figure had been read as the total. A warning rather
+        // than an error: land, commercial space and genuinely exceptional
+        // listings all have honest reasons to sit outside a residential band,
+        // and blocking publish on a heuristic is worse than showing one.
+        Rule.custom((price, context) => {
+          const doc = context.document as {area?: number; status?: string} | undefined
+          const area = doc?.area
+          if (typeof price !== 'number' || typeof area !== 'number' || area <= 0) return true
+          if (doc?.status !== 'sale') return true
+          const perM2 = price / area
+          if (perM2 >= 300 && perM2 <= 6000) return true
+          return `€${Math.round(perM2)}/m² looks wrong for a sale — the catalogue runs €875–2 500/m². Check whether this is the total price or a per-m² figure.`
+        }).warning(),
+      ],
     }),
 
     defineField({
@@ -242,20 +257,6 @@ export const property = defineType({
     }),
 
     // LOCATION
-    // Deprecated: prefer city.country (Country document). Kept for backward compatibility;
-    // GROQ resolves "country" from city first, then falls back to this field.
-    defineField({
-      name: 'country',
-      title: 'Country (slug)',
-      type: 'string',
-      group: 'location',
-      hidden: true,
-      validation: (Rule) =>
-        Rule.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
-          .warning('Use lowercase kebab-case, e.g. "albania" or "north-macedonia".'),
-      description:
-        'Legacy fallback only — do not set for new content. Canonical country is derived from city → country. Remove redundant values when it matches city.country (see cleanup script).',
-    }),
 
     defineField({
       name: 'city',
@@ -289,7 +290,8 @@ export const property = defineType({
       title: 'Address',
       type: 'localizedString',
       group: 'location',
-      description: 'Street address per language.',
+      description:
+        'Street address per language. Kept for internal reference and agent handover only — deliberately NOT rendered on the public listing page.',
     }),
 
     defineField({
@@ -312,14 +314,6 @@ export const property = defineType({
         Rule.min(-180).max(180).error('Longitude must be between -180 and 180'),
     }),
 
-    defineField({
-      name: 'locationTags',
-      title: 'Location Tags',
-      type: 'array',
-      of: [defineArrayMember({type: 'reference', to: [{type: 'locationTag'}]})],
-      group: 'location',
-      description: 'Tags for filtering and discovery (e.g. near beach, central).',
-    }),
 
     // DETAILS
     defineField({
@@ -336,6 +330,26 @@ export const property = defineType({
       type: 'number',
       group: 'details',
       validation: (Rule) => Rule.min(0),
+    }),
+
+    defineField({
+      name: 'rooms',
+      title: 'Rooms (total)',
+      type: 'number',
+      group: 'details',
+      description:
+        'Total habitable rooms — bedrooms plus living rooms, excluding kitchen and bathrooms. This is the number behind the Albanian 2+1 notation (3 rooms, 2 bedrooms) and the Russian «двухкомнатная» (2 rooms, 1 bedroom), and it is what the ru/uk listing titles count. Leave empty if the listing does not say — nothing is derived from the area.',
+      validation: (Rule) =>
+        Rule.integer()
+          .min(1)
+          .max(20)
+          .custom((value, context) => {
+            const beds = (context.document as {bedrooms?: number} | undefined)?.bedrooms
+            if (typeof value !== 'number' || typeof beds !== 'number') return true
+            return value >= beds
+              ? true
+              : 'Rooms counts bedrooms plus living rooms, so it cannot be below the bedroom count.'
+          }),
     }),
 
     defineField({
@@ -381,7 +395,8 @@ export const property = defineType({
       title: 'Property Code',
       type: 'string',
       group: 'details',
-      description: 'Internal reference code for this property.',
+      description:
+        'Internal reference code for this property. Studio-only — deliberately not shown on the public listing page.',
     }),
 
     defineField({
@@ -466,7 +481,6 @@ export const property = defineType({
       initialValue: 0,
       readOnly: true,
     }),
-
     // TODO: migrate existing properties to populate ownerUserId
     defineField({
       name: 'ownerUserId',
@@ -478,6 +492,7 @@ export const property = defineType({
       initialValue: (_, context) =>
         (context as {currentUser?: {id?: string}}).currentUser?.id ?? '',
     }),
+
   ],
 
   preview: {

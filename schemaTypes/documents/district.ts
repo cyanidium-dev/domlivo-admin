@@ -1,4 +1,5 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
+import {isReservedForGeoEntity, reservedSlugMessage} from '../constants/reservedRouteSlugs'
 import {GalleryWithCopyAltInput} from '../../components/sanity/GalleryWithCopyAltInput'
 
 export const district = defineType({
@@ -37,7 +38,12 @@ export const district = defineType({
         },
         maxLength: 96,
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) =>
+        Rule.required().custom((value) => {
+          const current = (value as {current?: string} | undefined)?.current
+          if (current && isReservedForGeoEntity(current)) return reservedSlugMessage(current)
+          return true
+        }),
     }),
 
     defineField({
@@ -134,24 +140,7 @@ export const district = defineType({
       description: 'Main content for the district landing page.',
     }),
 
-    defineField({
-      name: 'metricsTitle',
-      title: 'Metrics Title',
-      type: 'localizedString',
-      group: 'content',
-      description: 'Title shown above the metrics section.',
-    }),
 
-    defineField({
-      name: 'metrics',
-      title: 'Metrics',
-      type: 'array',
-      of: [defineArrayMember({type: 'districtMetric'})],
-      group: 'content',
-      description:
-        'Key metrics displayed on the district page (e.g. average price, properties count).',
-      validation: (Rule) => Rule.max(10),
-    }),
 
     defineField({
       name: 'allPropertiesCta',
@@ -192,8 +181,15 @@ export const district = defineType({
           ],
         }),
       ],
+      // A warning, not an error: districts are created as unpublished shells
+      // before anyone sources an image, and an error would mark every shell —
+      // and the nineteen existing gallery-less districts — as broken documents.
+      // Publication is gated by `npm run audit:zone-readiness` instead.
       validation: (Rule) =>
-        Rule.min(1).error('Add at least one image').max(20).error('Maximum 20 images allowed'),
+        Rule.min(1)
+          .warning('Add at least one image before publishing this district')
+          .max(20)
+          .error('Maximum 20 images allowed'),
       components: {input: GalleryWithCopyAltInput},
     }),
 

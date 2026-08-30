@@ -782,5 +782,3 @@ main().catch((e) => {
   console.error('\nFATAL:', e)
   process.exit(1)
 })
-cess.exit(1)
-})

@@ -1,0 +1,857 @@
+{
+  "$comment": "Zone identity registry. Market figures live in zone-metrics-seed.json and are cross-checked against this file by scripts/lib/__tests__/zoneRegistry.test.ts. See docs/engineering/SPEC-zone-generation-2026-08-16.md section 4.",
+  "countries": {
+    "albania": {
+      "cities": {
+        "durres": {
+          "title": {
+            "en": "Durres",
+            "uk": "Дуррес",
+            "ru": "Дуррес",
+            "sq": "Durrësi",
+            "it": "Durazzo"
+          },
+          "districts": [
+            {
+              "slug": "plazh",
+              "title": {
+                "en": "Plazh",
+                "uk": "Плаж",
+                "ru": "Плаж",
+                "sq": "Plazhi",
+                "it": "Plazh"
+              }
+            },
+            {
+              "slug": "city-center-durres",
+              "title": {
+                "en": "City Center",
+                "uk": "Центр",
+                "ru": "Центр",
+                "sq": "Qendra",
+                "it": "Centro città"
+              }
+            },
+            {
+              "slug": "porto-romano",
+              "title": {
+                "en": "Porto Romano",
+                "uk": "Порто Романо",
+                "ru": "Порто Романо",
+                "sq": "Porto Romano",
+                "it": "Porto Romano"
+              }
+            },
+            {
+              "slug": "shkozet",
+              "title": {
+                "en": "Shkozet",
+                "uk": "Шкозет",
+                "ru": "Шкозет",
+                "sq": "Shkozeti",
+                "it": "Shkozet"
+              }
+            },
+            {
+              "slug": "golem-1st-line",
+              "title": {
+                "en": "Golem 1st Line",
+                "uk": "Голем, перша лінія",
+                "ru": "Голем, первая линия",
+                "sq": "Golemi, vija e parë",
+                "it": "Golem, prima linea"
+              },
+              "role": "metric-only",
+              "note": "Price line within Golem, not a toponym — no listing carries \"1st line\" as an address. Kept for the seafront premium. ZONE-TAXONOMY.md, \"Descriptor vs toponym\"."
+            },
+            {
+              "slug": "golem-durres",
+              "title": {
+                "en": "Golem",
+                "uk": "Голем",
+                "ru": "Голем",
+                "sq": "Golemi",
+                "it": "Golem"
+              },
+              "note": "Administratively Bashkia Kavaje, kept under Durres because market convention is loud and consistent. ZONE-TAXONOMY.md, \"Administrative attachment\"."
+            },
+            {
+              "slug": "plepa-durres",
+              "title": {
+                "en": "Plepa",
+                "uk": "Плепа",
+                "ru": "Плепа",
+                "sq": "Plepa",
+                "it": "Plepa"
+              }
+            },
+            {
+              "slug": "shkembi-durres",
+              "title": {
+                "en": "Shkëmbi",
+                "uk": "Шкембі",
+                "ru": "Шкемби",
+                "sq": "Shkëmbi",
+                "it": "Shkëmbi"
+              }
+            },
+            {
+              "slug": "qerret",
+              "title": {
+                "en": "Qerret",
+                "uk": "Черрет",
+                "ru": "Черрет",
+                "sq": "Qerret",
+                "it": "Qerret"
+              },
+              "kbSource": "02-cities/durres.md §2",
+              "note": "Administratively Bashkia Kavajë, kept under Durrës by market convention — same precedent as Golem. The KB’s fastest-moving zone: +21–43% y/y."
+            },
+            {
+              "slug": "currila",
+              "title": {
+                "en": "Currila",
+                "uk": "Чуррila",
+                "ru": "Чуррила",
+                "sq": "Currila",
+                "it": "Currila"
+              },
+              "kbSource": "02-cities/durres.md §2",
+              "note": "KB prices Currila, Vollga and Taulantia as one premium city seafront band (€1,900–2,800). Slug takes the lead toponym, which also carries the +70–90% since-2019 figure."
+            },
+            {
+              "slug": "gjiri-i-lalzit",
+              "title": {
+                "en": "Gjiri i Lalzit",
+                "uk": "Затока Лальзіт",
+                "ru": "Залив Лальзит",
+                "sq": "Gjiri i Lalzit",
+                "it": "Baia di Lalzi"
+              },
+              "kbSource": "02-cities/durres.md §2",
+              "note": "The KB’s separate Lalzi luxury and villa bands are product segments inside this zone, not places; they belong to this document rather than to zones of their own."
+            },
+            {
+              "slug": "mali-i-robit",
+              "title": {
+                "en": "Mali i Robit",
+                "uk": "Малі і Робіт",
+                "ru": "Мали и Робит",
+                "sq": "Mali i Robit",
+                "it": "Mali i Robit"
+              },
+              "kbSource": "02-cities/durres.md §2"
+            },
+            {
+              "slug": "rrashbull",
+              "title": {
+                "en": "Rrashbull",
+                "uk": "Рашбуль",
+                "ru": "Рашбуль",
+                "sq": "Rrashbull",
+                "it": "Rrashbull"
+              },
+              "kbSource": "02-cities/durres.md §2"
+            },
+            {
+              "slug": "spitalle",
+              "title": {
+                "en": "Spitallë",
+                "uk": "Спітале",
+                "ru": "Спитале",
+                "sq": "Spitallë",
+                "it": "Spitallë"
+              },
+              "kbSource": "02-cities/durres.md §2",
+              "note": "Lead toponym of the KB’s budget belt (with Kënetë). Xhafzotaj is deliberately excluded — it is Bashkia Shijak, not Durrës."
+            }
+          ]
+        },
+        "himare": {
+          "title": {
+            "en": "Himare",
+            "uk": "Хімара",
+            "ru": "Химара",
+            "sq": "Himara",
+            "it": "Himara"
+          },
+          "districts": [
+            {
+              "slug": "lukove",
+              "title": {
+                "en": "Lukove",
+                "uk": "Лукове",
+                "ru": "Лукове",
+                "sq": "Lukova",
+                "it": "Lukove"
+              },
+              "note": "Moved to Himare: administration and the state reference map agree, and the market is silent."
+            },
+            {
+              "slug": "center-himare",
+              "title": {
+                "en": "Center",
+                "uk": "Центр",
+                "ru": "Центр",
+                "sq": "Qendra",
+                "it": "Centro"
+              }
+            },
+            {
+              "slug": "old-town-himare",
+              "title": {
+                "en": "Old Town",
+                "uk": "Старе місто",
+                "ru": "Старый город",
+                "sq": "Qyteti i Vjetër",
+                "it": "Città vecchia"
+              }
+            },
+            {
+              "slug": "livadh",
+              "title": {
+                "en": "Livadh",
+                "uk": "Ліваді",
+                "ru": "Ливади",
+                "sq": "Livadhi",
+                "it": "Livadh"
+              },
+              "note": "Absorbed `seaside-himare`, which carried the same seed description for the same beach."
+            },
+            {
+              "slug": "potami",
+              "title": {
+                "en": "Potami",
+                "uk": "Потамі",
+                "ru": "Потами",
+                "sq": "Potami",
+                "it": "Potami"
+              },
+              "kbSource": "02-cities/himara.md §7",
+              "note": "Beach zone next to Livadh, same prime-land-for-villas profile; MerrJep shows it dearer than Livadh."
+            },
+            {
+              "slug": "qeparo",
+              "title": {
+                "en": "Qeparo",
+                "uk": "Кепаро",
+                "ru": "Кепаро",
+                "sq": "Qeparo",
+                "it": "Qeparo"
+              },
+              "kbSource": "02-cities/himara.md §2",
+              "note": "Municipality village, €1,100–1,800: stone stock, character, few transactions."
+            },
+            {
+              "slug": "vuno",
+              "title": {
+                "en": "Vuno",
+                "uk": "Вуно",
+                "ru": "Вуно",
+                "sq": "Vuno",
+                "it": "Vuno"
+              },
+              "kbSource": "02-cities/himara.md §2"
+            },
+            {
+              "slug": "dhermi",
+              "title": {
+                "en": "Dhërmi",
+                "uk": "Дхермі",
+                "ru": "Дхерми",
+                "sq": "Dhërmi",
+                "it": "Dhërmi"
+              },
+              "kbSource": "02-cities/vlora-riviera.md §7; 12-reference-prices §7",
+              "note": "Under Himarë, not Vlorë: the reference-price map lists it among Bashkia Himarë villages. Researched in the Vlorë/Riviera file only because that file predates Himarë having its own. New build ~€3,000, 1st line to €3,500."
+            },
+            {
+              "slug": "palasa",
+              "title": {
+                "en": "Palasa / Green Coast",
+                "uk": "Паласа / Green Coast",
+                "ru": "Паласа / Green Coast",
+                "sq": "Palasa / Green Coast",
+                "it": "Palasa / Green Coast"
+              },
+              "kbSource": "02-cities/vlora-riviera.md §7",
+              "note": "Under Himarë for the same reason as Dhërmi. BALFIN’s Green Coast; main beneficiary of the Llogara tunnel."
+            }
+          ]
+        },
+        "sarande": {
+          "title": {
+            "en": "Sarande",
+            "uk": "Саранда",
+            "ru": "Саранда",
+            "sq": "Saranda",
+            "it": "Saranda"
+          },
+          "districts": [
+            {
+              "slug": "buze-shetitores",
+              "title": {
+                "en": "Promenade",
+                "uk": "Набережна",
+                "ru": "Набережная",
+                "sq": "Buzë Shetitores",
+                "it": "Lungomare"
+              },
+              "note": "Renamed from `seafront-sarande`: \"Bregdeti\" was a descriptor; the market names this strip Buze Shetitores."
+            },
+            {
+              "slug": "ksamil",
+              "title": {
+                "en": "Ksamil",
+                "uk": "Ксаміл",
+                "ru": "Ксамил",
+                "sq": "Ksamil",
+                "it": "Ksamil"
+              }
+            },
+            {
+              "slug": "city-center-sarande",
+              "title": {
+                "en": "City Center",
+                "uk": "Центр",
+                "ru": "Центр",
+                "sq": "Qendra",
+                "it": "Centro città"
+              }
+            },
+            {
+              "slug": "zona-e-portit",
+              "title": {
+                "en": "Port Zone",
+                "uk": "Портова зона",
+                "ru": "Портовая зона",
+                "sq": "Zona e Portit",
+                "it": "Zona del porto"
+              }
+            },
+            {
+              "slug": "gjiri-i-hartes",
+              "title": {
+                "en": "Gjiri i Hartës",
+                "uk": "Затока Хартес",
+                "ru": "Залив Хартес",
+                "sq": "Gjiri i Hartës",
+                "it": "Gjiri i Hartës"
+              },
+              "kbSource": "02-cities/saranda-ksamil.md §2",
+              "note": "KB marks the Saranda microzones a GAP — reachable only through listing parsing. No price row yet."
+            },
+            {
+              "slug": "rruga-butrinti",
+              "title": {
+                "en": "Rruga Butrinti",
+                "uk": "Руга Бутрінті",
+                "ru": "Руга Бутринти",
+                "sq": "Rruga Butrinti",
+                "it": "Rruga Butrinti"
+              },
+              "kbSource": "02-cities/saranda-ksamil.md §2",
+              "note": "Same GAP as Gjiri i Hartës."
+            }
+          ]
+        },
+        "shengjin": {
+          "title": {
+            "en": "Shëngjin",
+            "uk": "Шенджін",
+            "ru": "Шенджин",
+            "sq": "Shëngjini",
+            "it": "Shëngjin"
+          },
+          "districts": [
+            {
+              "slug": "center-shengjin",
+              "title": {
+                "en": "City Center",
+                "uk": "Центр",
+                "ru": "Центр",
+                "sq": "Qendra",
+                "it": "Centro città"
+              }
+            },
+            {
+              "slug": "rana-e-hedhur",
+              "title": {
+                "en": "Rana e Hedhur",
+                "uk": "Рана е Хедхур",
+                "ru": "Рана э Хедхур",
+                "sq": "Rana e Hedhur",
+                "it": "Rana e Hedhur"
+              },
+              "kbSource": "02-cities/shengjin-velipoja.md §2",
+              "note": "Dune belt north of Shëngjin; Dukagjini Resort. Carries the KB’s single largest legal risk — criminal proceedings over illegal building on a protected dune system."
+            },
+            {
+              "slug": "tale",
+              "title": {
+                "en": "Tale",
+                "uk": "Тале",
+                "ru": "Тале",
+                "sq": "Tale",
+                "it": "Tale"
+              },
+              "kbSource": "02-cities/shengjin-velipoja.md §2",
+              "note": "Bashkia Lezhë, the same municipality as Shëngjin, and the KB groups them. From €600/m² raw up to €1,450–1,690 at Talea Coast."
+            }
+          ]
+        },
+        "shkoder": {
+          "title": {
+            "en": "Shkoder",
+            "uk": "Шкодер",
+            "ru": "Шкодер",
+            "sq": "Shkodra",
+            "it": "Scutari"
+          },
+          "districts": [
+            {
+              "slug": "gjuhadol",
+              "title": {
+                "en": "Gjuhadol",
+                "uk": "Гьюхадол",
+                "ru": "Гьюхадол",
+                "sq": "Gjuhadoli",
+                "it": "Gjuhadol"
+              }
+            },
+            {
+              "slug": "qender-shkoder",
+              "title": {
+                "en": "City Center",
+                "uk": "Центр",
+                "ru": "Центр",
+                "sq": "Qendra",
+                "it": "Centro città"
+              }
+            },
+            {
+              "slug": "dobrac",
+              "title": {
+                "en": "Dobraç",
+                "uk": "Добрач",
+                "ru": "Добрач",
+                "sq": "Dobraç",
+                "it": "Dobraç"
+              }
+            },
+            {
+              "slug": "parruce",
+              "title": {
+                "en": "Parrucë",
+                "uk": "Парруче",
+                "ru": "Парруче",
+                "sq": "Parruca",
+                "it": "Parrucë"
+              }
+            },
+            {
+              "slug": "velipoja",
+              "title": {
+                "en": "Velipoja",
+                "uk": "Веліпоя",
+                "ru": "Велипоя",
+                "sq": "Velipojë",
+                "it": "Velipoja"
+              },
+              "kbSource": "02-cities/shengjin-velipoja.md §2",
+              "note": "Shkodra’s beach, 15 km from Shëngjin since the 2025 road. Listings address it as “Velipojë, Shkodër”, which is why it sits under Shkodër rather than standing alone."
+            }
+          ]
+        },
+        "tirana": {
+          "title": {
+            "en": "Tirana",
+            "uk": "Тірана",
+            "ru": "Тирана",
+            "sq": "Tirana",
+            "it": "Tirana"
+          },
+          "districts": [
+            {
+              "slug": "blloku",
+              "title": {
+                "en": "Blloku",
+                "uk": "Блоку",
+                "ru": "Блоку",
+                "sq": "Blloku",
+                "it": "Blloku"
+              }
+            },
+            {
+              "slug": "komuna-e-parisit",
+              "title": {
+                "en": "Komuna e Parisit",
+                "uk": "Комуна Паризит",
+                "ru": "Коммуна Паризит",
+                "sq": "Komuna e Parisit",
+                "it": "Komuna e Parisit"
+              }
+            },
+            {
+              "slug": "pazari-i-ri",
+              "title": {
+                "en": "Pazari i Ri",
+                "uk": "Пазарі і Рі",
+                "ru": "Пазари и Ри",
+                "sq": "Pazari i Ri",
+                "it": "Pazari i Ri"
+              }
+            },
+            {
+              "slug": "qender-tirana",
+              "title": {
+                "en": "City Center",
+                "uk": "Центр",
+                "ru": "Центр",
+                "sq": "Qendra",
+                "it": "Centro città"
+              }
+            },
+            {
+              "slug": "fresku",
+              "title": {
+                "en": "Fresku",
+                "uk": "Фреску",
+                "ru": "Фреску",
+                "sq": "Fresku",
+                "it": "Fresku"
+              }
+            },
+            {
+              "slug": "liqeni-artificial",
+              "title": {
+                "en": "Artificial Lake",
+                "uk": "Штучне озеро",
+                "ru": "Искусственное озеро",
+                "sq": "Liqeni Artificial",
+                "it": "Lago Artificiale"
+              }
+            },
+            {
+              "slug": "myslym-shyri",
+              "title": {
+                "en": "Myslym Shyri",
+                "uk": "Мюслім Шюрі",
+                "ru": "Мюслим Шюри",
+                "sq": "Myslym Shyri",
+                "it": "Myslym Shyri"
+              }
+            },
+            {
+              "slug": "bulevardi-i-ri",
+              "title": {
+                "en": "New Boulevard",
+                "uk": "Новий бульвар",
+                "ru": "Новый бульвар",
+                "sq": "Bulevardi i Ri",
+                "it": "Nuovo Boulevard"
+              }
+            },
+            {
+              "slug": "don-bosko",
+              "title": {
+                "en": "Don Bosko",
+                "uk": "Дон Боско",
+                "ru": "Дон Боско",
+                "sq": "Don Bosko",
+                "it": "Don Bosko"
+              }
+            },
+            {
+              "slug": "ali-demi",
+              "title": {
+                "en": "Ali Demi",
+                "uk": "Алі Демі",
+                "ru": "Али Деми",
+                "sq": "Ali Demi",
+                "it": "Ali Demi"
+              }
+            },
+            {
+              "slug": "21-dhjetori",
+              "title": {
+                "en": "21 Dhjetori",
+                "uk": "21 Дьєтори",
+                "ru": "21 Дьетори",
+                "sq": "21 Dhjetori",
+                "it": "21 Dhjetori"
+              }
+            },
+            {
+              "slug": "astir-unaza-e-re",
+              "title": {
+                "en": "Astir / Unaza e Re",
+                "uk": "Астір / Нове кільце",
+                "ru": "Астир / Новое кольцо",
+                "sq": "Astir / Unaza e Re",
+                "it": "Astir / Unaza e Re"
+              }
+            },
+            {
+              "slug": "shkoze",
+              "title": {
+                "en": "Shkozë",
+                "uk": "Шкоза",
+                "ru": "Шкоза",
+                "sq": "Shkozë",
+                "it": "Shkozë"
+              }
+            },
+            {
+              "slug": "kashar",
+              "title": {
+                "en": "Kashar",
+                "uk": "Кашар",
+                "ru": "Кашар",
+                "sq": "Kashar",
+                "it": "Kashar"
+              }
+            },
+            {
+              "slug": "kombinat",
+              "title": {
+                "en": "Kombinat",
+                "uk": "Комбінат",
+                "ru": "Комбинат",
+                "sq": "Kombinat",
+                "it": "Kombinat"
+              }
+            },
+            {
+              "slug": "paskuqan",
+              "title": {
+                "en": "Paskuqan",
+                "uk": "Паскукан",
+                "ru": "Паскукан",
+                "sq": "Paskuqan",
+                "it": "Paskuqan"
+              },
+              "note": "Formally its own municipality inside Tirana county; the KB prices it in the Tirana table and the market treats it as Tirana’s cheap edge."
+            },
+            {
+              "slug": "kamez",
+              "title": {
+                "en": "Kamëz",
+                "uk": "Камза",
+                "ru": "Камза",
+                "sq": "Kamëz",
+                "it": "Kamëz"
+              },
+              "note": "Formally its own municipality inside Tirana county; modelled as a Tirana district for the same reason as Paskuqan."
+            },
+            {
+              "slug": "laprake",
+              "title": {
+                "en": "Laprakë",
+                "uk": "Лапраке",
+                "ru": "Лапраке",
+                "sq": "Laprakë",
+                "it": "Laprakë"
+              },
+              "kbSource": "03-districts/tirana-districts.md §2",
+              "note": "Gentrifying: trauma hospital, American Hospital, new regional bus terminal. KB has no separate price row yet."
+            },
+            {
+              "slug": "yzberisht",
+              "title": {
+                "en": "Yzberisht",
+                "uk": "Ізберишт",
+                "ru": "Изберишт",
+                "sq": "Yzberisht",
+                "it": "Yzberisht"
+              },
+              "kbSource": "03-districts/tirana-districts.md §2",
+              "note": "Former factory edge turned mass new-build. Oversupply risk shared with Astir and Kashar."
+            },
+            {
+              "slug": "kinostudio",
+              "title": {
+                "en": "Kinostudio",
+                "uk": "Кіностудіо",
+                "ru": "Киностудио",
+                "sq": "Kinostudio",
+                "it": "Kinostudio"
+              },
+              "kbSource": "03-districts/tirana-districts.md §2"
+            },
+            {
+              "slug": "sauk",
+              "title": {
+                "en": "Sauk",
+                "uk": "Саук",
+                "ru": "Саук",
+                "sq": "Sauk",
+                "it": "Sauk"
+              },
+              "kbSource": "03-districts/tirana-districts.md §2",
+              "note": "Old and New Sauk, from Qyteti Studenti to TEG; villa stock in Old Sauk, Farka lake nearby."
+            },
+            {
+              "slug": "farke-lunder",
+              "title": {
+                "en": "Farkë / Lundër",
+                "uk": "Фарке / Лундер",
+                "ru": "Фарке / Лундер",
+                "sq": "Farkë / Lundër",
+                "it": "Farkë / Lundër"
+              },
+              "kbSource": "03-districts/tirana-districts.md §2",
+              "note": "The country’s most expensive reference zone (Farka lake, 257,000 lek/m² ≈ €2,620). Gated villa segment; KB groups the two."
+            },
+            {
+              "slug": "liqeni-i-thate",
+              "title": {
+                "en": "Dry Lake",
+                "uk": "Сухе озеро",
+                "ru": "Сухое озеро",
+                "sq": "Liqeni i Thatë",
+                "it": "Lago Secco"
+              },
+              "kbSource": "03-districts/tirana-districts.md §2",
+              "note": "Descriptive name, translated like Liqeni Artificial. Premium low-rise, quiet and green, close to the centre."
+            },
+            {
+              "slug": "kodra-e-diellit",
+              "title": {
+                "en": "Kodra e Diellit / Selitë",
+                "uk": "Кодра-е-Дієллит / Селіта",
+                "ru": "Кодра-э-Диеллит / Селита",
+                "sq": "Kodra e Diellit / Selitë",
+                "it": "Kodra e Diellit / Selitë"
+              },
+              "kbSource": "03-districts/tirana-districts.md §2",
+              "note": "Agikons residences plus the Selitë quarter; KB prices them as one zone. Slug takes the lead toponym."
+            },
+            {
+              "slug": "rruga-e-elbasanit",
+              "title": {
+                "en": "Rruga e Elbasanit / Grand Park",
+                "uk": "Руга е Ельбасанит / Великий парк",
+                "ru": "Руга э Эльбасанит / Большой парк",
+                "sq": "Rruga e Elbasanit / Parku i Madh",
+                "it": "Rruga e Elbasanit / Grand Park"
+              },
+              "kbSource": "03-districts/tirana-districts.md §2",
+              "note": "Embassy district. The city’s most expensive villa lots and almost no new build."
+            }
+          ]
+        },
+        "vlore": {
+          "title": {
+            "en": "Vlore",
+            "uk": "Вльора",
+            "ru": "Влёра",
+            "sq": "Vlora",
+            "it": "Valona"
+          },
+          "districts": [
+            {
+              "slug": "lungomare",
+              "title": {
+                "en": "Lungomare",
+                "uk": "Лунгомаре",
+                "ru": "Лунгомаре",
+                "sq": "Lungomare",
+                "it": "Lungomare"
+              }
+            },
+            {
+              "slug": "uji-i-ftohte",
+              "title": {
+                "en": "Uji i Ftohtë",
+                "uk": "Уйи і Фтохте",
+                "ru": "Уйи и Фтохте",
+                "sq": "Uji i Ftohtë",
+                "it": "Uji i Ftohtë"
+              }
+            },
+            {
+              "slug": "city-center-vlore",
+              "title": {
+                "en": "City Center",
+                "uk": "Центр",
+                "ru": "Центр",
+                "sq": "Qendra",
+                "it": "Centro città"
+              }
+            },
+            {
+              "slug": "orikum",
+              "title": {
+                "en": "Orikum",
+                "uk": "Орикум",
+                "ru": "Орикум",
+                "sq": "Orikumi",
+                "it": "Orikum"
+              }
+            },
+            {
+              "slug": "lungomare-2nd-line",
+              "title": {
+                "en": "Lungomare 2nd Line",
+                "uk": "Лунгомаре, друга лінія",
+                "ru": "Лунгомаре, вторая линия",
+                "sq": "Lungomare, vija e dytë",
+                "it": "Lungomare, seconda linea"
+              },
+              "role": "metric-only",
+              "note": "Price line within Lungomare, not a toponym. Kept because the 2nd line is the +33-67% y/y story on the Vlore coast (RESEARCH-DATA-MAP 1.2)."
+            },
+            {
+              "slug": "jonufer-radhime",
+              "title": {
+                "en": "Jonufër / Radhimë",
+                "uk": "Йонуфер / Радхіме",
+                "ru": "Йонуфер / Радхиме",
+                "sq": "Jonufër / Radhimë",
+                "it": "Jonufër / Radhimë"
+              },
+              "kbSource": "02-cities/vlora-riviera.md §2",
+              "note": "The arc south of Lungomare, €2,500–3,500; the KB prices the two together."
+            },
+            {
+              "slug": "transballkanike",
+              "title": {
+                "en": "Transballkanike",
+                "uk": "Трансбалканіке",
+                "ru": "Трансбалканике",
+                "sq": "Transballkanike",
+                "it": "Transballkanike"
+              },
+              "kbSource": "02-cities/vlora-riviera.md §2"
+            },
+            {
+              "slug": "skele-vlore",
+              "title": {
+                "en": "Skelë",
+                "uk": "Скеле",
+                "ru": "Скеле",
+                "sq": "Skelë",
+                "it": "Skelë"
+              },
+              "kbSource": "02-cities/vlora-riviera.md §2",
+              "note": "Port and old town. KB marks this a GAP — no price row, so it will stay unpublished until one exists."
+            },
+            {
+              "slug": "akernia",
+              "title": {
+                "en": "Akërnia",
+                "uk": "Акернія",
+                "ru": "Акерния",
+                "sq": "Akërnia",
+                "it": "Akërnia"
+              },
+              "kbSource": "02-cities/vlora-riviera.md §2",
+              "note": "New investment zone by the airport. KB marks this a GAP — no prices yet."
+            }
+          ]
+        }
+      }
+    }
+  }
+}

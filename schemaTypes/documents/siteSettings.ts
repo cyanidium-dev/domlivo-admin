@@ -1,6 +1,7 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
 import {CurrencyRatesInput} from '../../components/sanity/CurrencyRatesInput'
 import {DisplayCurrenciesInput} from '../../components/sanity/DisplayCurrenciesInput'
+import {optionalHttpUrl} from '../objects/footerApp'
 
 export const siteSettings = defineType({
   name: 'siteSettings',
@@ -16,6 +17,7 @@ export const siteSettings = defineType({
     {name: 'properties', title: 'Properties'},
     {name: 'currency', title: 'Currency'},
     {name: 'seo', title: 'SEO'},
+    {name: 'bot', title: 'Telegram Bot'},
   ],
 
   fields: [
@@ -94,94 +96,12 @@ export const siteSettings = defineType({
         'Optional short supporting text in the footer (separate from the global site tagline). Labels and layout are defined in code.',
     }),
     defineField({
-      name: 'footerTelegramUrl',
-      title: 'Footer — Telegram URL',
-      type: 'string',
-      group: 'footer',
-      description: 'Optional public Telegram link for the footer contact area.',
-      validation: (Rule) =>
-        Rule.custom((value: string | undefined) => {
-          if (value == null || !String(value).trim()) return true
-          const v = String(value).trim()
-          if (!/^https?:\/\//i.test(v)) return 'Use a full URL starting with http:// or https://.'
-          try {
-            void new URL(v)
-            return true
-          } catch {
-            return 'Enter a valid URL.'
-          }
-        }),
-    }),
-    defineField({
-      name: 'footerWhatsappUrl',
-      title: 'Footer — WhatsApp URL',
-      type: 'string',
-      group: 'footer',
-      description: 'WhatsApp link with a phone number, e.g. https://wa.me/355691234567.',
-      validation: (Rule) =>
-        Rule.custom((value: string | undefined) => {
-          if (value == null || !String(value).trim()) return true
-          const v = String(value).trim()
-          if (!/^https?:\/\//i.test(v)) return 'Use a full URL starting with http:// or https://.'
-          try {
-            void new URL(v)
-          } catch {
-            return 'Enter a valid URL.'
-          }
-          // wa.me / api.whatsapp.com must carry a phone number, not a bare handle.
-          if (/wa\.me\/?$/i.test(v) || /wa\.me\/(?![+0-9])/i.test(v)) {
-            return 'wa.me links must include a phone number, e.g. https://wa.me/355691234567.'
-          }
-          if (/api\.whatsapp\.com/i.test(v) && !/phone=\+?\d/i.test(v)) {
-            return 'api.whatsapp.com links must include ?phone=<number>.'
-          }
-          return true
-        }),
-    }),
-    defineField({
       name: 'footerApp',
       title: 'Footer App',
       type: 'footerApp',
       group: 'footer',
-      description: 'Store URLs for a future app column; visibility is controlled by enabled (UI copy lives in the frontend).',
-    }),
-    defineField({
-      name: 'footerCodesiteUrl',
-      title: 'Footer — Codesite URL',
-      type: 'string',
-      group: 'footer',
-      description: 'Optional partner/credits link (label in frontend).',
-      validation: (Rule) =>
-        Rule.custom((value: string | undefined) => {
-          if (value == null || !String(value).trim()) return true
-          const v = String(value).trim()
-          if (!/^https?:\/\//i.test(v)) return 'Use a full URL starting with http:// or https://.'
-          try {
-            void new URL(v)
-            return true
-          } catch {
-            return 'Enter a valid URL.'
-          }
-        }),
-    }),
-    defineField({
-      name: 'footerWebbondUrl',
-      title: 'Footer — Webbond URL',
-      type: 'string',
-      group: 'footer',
-      description: 'Optional partner/credits link (label in frontend).',
-      validation: (Rule) =>
-        Rule.custom((value: string | undefined) => {
-          if (value == null || !String(value).trim()) return true
-          const v = String(value).trim()
-          if (!/^https?:\/\//i.test(v)) return 'Use a full URL starting with http:// or https://.'
-          try {
-            void new URL(v)
-            return true
-          } catch {
-            return 'Enter a valid URL.'
-          }
-        }),
+      description:
+        'App Store / Google Play URLs for the footer app column. The column renders only when Enabled is on and at least one URL is set; labels and layout live in the frontend.',
     }),
     defineField({
       name: 'policyLinks',
@@ -192,10 +112,14 @@ export const siteSettings = defineType({
       validation: (Rule) => Rule.max(20),
     }),
     defineField({
-      name: 'copyrightText',
-      title: 'Copyright Text',
-      type: 'localizedString',
+      name: 'footerGuideLinks',
+      title: 'Footer Guide Links',
+      type: 'array',
+      of: [defineArrayMember({type: 'localizedFooterLink'})],
       group: 'footer',
+      description:
+        'The "Guides" footer column (ТЗ-16). 4–6 links; the column is hidden while this list is empty.',
+      validation: (Rule) => Rule.max(6),
     }),
 
     // CONTENT
@@ -214,18 +138,7 @@ export const siteSettings = defineType({
       group: 'content',
       description:
         'Optional embed URL for the hero video on `/how-to-publish` (and localized routes such as `/[locale]/how-to-publish`). Paste a YouTube, Vimeo, or other URL the frontend supports for embedding. Leave empty to hide the video or until a link is ready.',
-      validation: (Rule) =>
-        Rule.custom((value: string | undefined) => {
-          if (value == null || !String(value).trim()) return true
-          const v = String(value).trim()
-          if (!/^https?:\/\//i.test(v)) return 'Use a full URL starting with http:// or https://.'
-          try {
-            void new URL(v)
-            return true
-          } catch {
-            return 'Enter a valid URL.'
-          }
-        }),
+      validation: optionalHttpUrl,
     }),
 
     // CURRENCY
@@ -300,6 +213,50 @@ export const siteSettings = defineType({
       type: 'localizedSeo',
       group: 'seo',
       description: 'Default meta and Open Graph values used when page-specific SEO is not set',
+    }),
+
+    // TELEGRAM INTAKE BOT
+    defineField({
+      name: 'botEnabled',
+      title: 'Intake Bot Enabled',
+      type: 'boolean',
+      group: 'bot',
+      initialValue: false,
+      description:
+        'Kill-switch for the Telegram property-intake bot. When off (or unset), the bot refuses every message. The bot checks this on each message.',
+    }),
+    defineField({
+      name: 'botOwnerTelegramUserId',
+      title: 'Owner Telegram User ID',
+      type: 'number',
+      group: 'bot',
+      description:
+        'Your own Telegram account id. Messages from this id are attributed to the Default Agent below.',
+    }),
+    defineField({
+      name: 'botDefaultAgent',
+      title: 'Default Agent for Owner Submissions',
+      type: 'reference',
+      to: [{type: 'agent'}],
+      group: 'bot',
+      description: 'Drafts submitted by the owner id above are assigned to this agent.',
+    }),
+    defineField({
+      name: 'siteBaseUrl',
+      title: 'Site Base URL',
+      type: 'url',
+      group: 'bot',
+      description:
+        'Public site origin, e.g. https://www.domlivo.com. The intake bot is a separate deployment and cannot read the frontend env, so it needs this copy. Keep it identical to the frontend NEXT_PUBLIC_SITE_URL.',
+    }),
+    defineField({
+      name: 'botAllowPublish',
+      title: 'Bot Can Publish (🚀 Post button)',
+      type: 'boolean',
+      group: 'bot',
+      initialValue: false,
+      description:
+        'Kill-switch for publishing from the Telegram bot. When off (or unset), the bot shows draft previews without the 🚀 Post button and publishing stays Studio-only.',
     }),
   ],
 

@@ -34,13 +34,6 @@ export const structure: StructureResolver = (S, context) =>
                 .title('District Landings')
                 .child(S.documentTypeList('landingPage').filter('_type == "landingPage" && pageType == "district"')),
               S.listItem()
-                .title('Property Type Landings')
-                .child(
-                  S.documentTypeList('landingPage').filter(
-                    '_type == "landingPage" && pageType == "propertyType"',
-                  ),
-                ),
-              S.listItem()
                 .title('Investment Landings')
                 .child(
                   S.documentTypeList('landingPage').filter('_type == "landingPage" && pageType == "investment"'),
@@ -51,6 +44,13 @@ export const structure: StructureResolver = (S, context) =>
                   S.documentTypeList('landingPage')
                     .title('Guides')
                     .filter('_type == "landingPage" && pageType == "custom"'),
+                ),
+              S.listItem()
+                .title('Unique Landings (top-level /slug)')
+                .child(
+                  S.documentTypeList('landingPage')
+                    .title('Unique Landings')
+                    .filter('_type == "landingPage" && pageType == "unique"'),
                 ),
             ]),
         ),
@@ -76,6 +76,15 @@ export const structure: StructureResolver = (S, context) =>
             .title('Registration Requests')
             .initialValueTemplates([S.initialValueTemplateItem('registration-request-default')])
             .defaultOrdering([{field: '_createdAt', direction: 'desc'}]),
+        ),
+
+      S.listItem()
+        .title('Bot Access Requests')
+        .id('botAccessRequests')
+        .child(
+          S.documentTypeList('botAccessRequest')
+            .title('Bot Access Requests')
+            .defaultOrdering([{field: 'requestedAt', direction: 'desc'}]),
         ),
 
       S.divider(),
@@ -124,6 +133,38 @@ export const structure: StructureResolver = (S, context) =>
             .defaultOrdering([
               {field: 'order', direction: 'asc'},
               {field: 'title.en', direction: 'asc'},
+            ]),
+        ),
+
+      S.listItem()
+        .title('Zone Metrics')
+        .child(
+          S.list()
+            .title('Zone Metrics')
+            .items([
+              S.listItem()
+                .title('By City')
+                .child(
+                  S.documentTypeList('city')
+                    .title('Zone Metrics by City')
+                    .child((cityId) =>
+                      S.documentTypeList('zoneMetrics')
+                        .title('Zone Metrics')
+                        // The city's own record plus every record of its districts.
+                        .filter(
+                          '_type == "zoneMetrics" && (zone._ref == $cityId || zone->city._ref == $cityId)',
+                        )
+                        .params({cityId})
+                        .defaultOrdering([{field: 'periodDate', direction: 'desc'}]),
+                    ),
+                ),
+              S.listItem()
+                .title('All Records')
+                .child(
+                  S.documentTypeList('zoneMetrics')
+                    .title('All Zone Metrics')
+                    .defaultOrdering([{field: 'periodDate', direction: 'desc'}]),
+                ),
             ]),
         ),
 
@@ -216,9 +257,47 @@ export const structure: StructureResolver = (S, context) =>
 
       S.documentTypeListItem('propertyType').title('Property Types'),
 
-      S.documentTypeListItem('locationTag').title('Location Tags'),
+      // One list, flagged first: intake creates amenities on sight and marks
+      // them, so review happens where amenities already live rather than in a
+      // separate queue an editor has to remember.
+      S.listItem()
+        .title('Amenities')
+        .child(
+          S.documentTypeList('amenity')
+            .title('Amenities')
+            .defaultOrdering([
+              {field: 'needsReview', direction: 'desc'},
+              {field: 'order', direction: 'asc'},
+              {field: 'title.en', direction: 'asc'},
+            ]),
+        ),
 
-      S.documentTypeListItem('amenity').title('Amenities'),
+      // Cities and districts intake could not place. A zone cannot be stubbed
+      // — it needs a country, a route and the readiness gate — so these are
+      // requests for staff, not documents waiting to be published.
+      S.listItem()
+        .title('Location requests')
+        .child(
+          S.list()
+            .title('Location requests')
+            .items([
+              S.listItem()
+                .title('Needs a decision')
+                .child(
+                  S.documentList()
+                    .title('Needs a decision')
+                    .filter('_type == "locationRequest" && status == "new"')
+                    .defaultOrdering([{field: 'count', direction: 'desc'}]),
+                ),
+              S.listItem()
+                .title('All requests')
+                .child(
+                  S.documentTypeList('locationRequest')
+                    .title('All requests')
+                    .defaultOrdering([{field: 'count', direction: 'desc'}]),
+                ),
+            ]),
+        ),
 
       S.divider(),
 
@@ -261,6 +340,39 @@ export const structure: StructureResolver = (S, context) =>
                   S.document()
                     .schemaType('blogSettings')
                     .documentId('blog-settings'),
+                ),
+            ]),
+        ),
+
+      S.listItem()
+        .title('Image Credits')
+        .child(
+          S.list()
+            .title('Image Credits')
+            .items([
+              S.listItem()
+                .title('Needs attribution on the page')
+                .child(
+                  S.documentTypeList('imageCredit')
+                    .title('Attribution-licensed images')
+                    .filter('_type == "imageCredit" && licence match "cc-by*"')
+                    .defaultOrdering([{field: 'title', direction: 'asc'}]),
+                ),
+              S.listItem()
+                .title('Stand-ins to replace')
+                .child(
+                  S.documentTypeList('imageCredit')
+                    .title('Stand-ins')
+                    .filter('_type == "imageCredit" && isStandIn == true')
+                    .defaultOrdering([{field: 'title', direction: 'asc'}]),
+                ),
+              S.divider(),
+              S.listItem()
+                .title('All credits')
+                .child(
+                  S.documentTypeList('imageCredit')
+                    .title('All image credits')
+                    .defaultOrdering([{field: 'title', direction: 'asc'}]),
                 ),
             ]),
         ),

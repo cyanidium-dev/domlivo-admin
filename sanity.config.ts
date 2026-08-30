@@ -8,6 +8,9 @@ import {blogSettingsTemplate} from './templates/blogSettings'
 import {registrationRequestDefaultTemplate} from './templates/registrationRequestDefault'
 import {withPropertyPromotionPublishGuard} from './components/sanity/PropertyPromotionPublishAction'
 import {OpenInLandingEditorAction} from './components/sanity/OpenInLandingEditorAction'
+import {TranslateDocumentAction, TRANSLATE_ACTION_TYPES} from './components/sanity/ai/TranslateDocumentAction'
+import {ParseFromTextAction} from './components/sanity/ai/ParseFromTextAction'
+import {ApproveAmenityAction} from './components/sanity/ai/ApproveAmenityAction'
 
 export default defineConfig({
   name: 'default',
@@ -33,6 +36,17 @@ export default defineConfig({
       // Expose "Open in landing editor" on landing documents.
       if (context.schemaType === 'landingPage') {
         actions = [...actions, OpenInLandingEditorAction]
+      }
+      // AI actions: parse a pasted listing (property), translate localized fields.
+      if (context.schemaType === 'property') {
+        actions = [...actions, ParseFromTextAction]
+      }
+      if (TRANSLATE_ACTION_TYPES.has(context.schemaType)) {
+        actions = [...actions, TranslateDocumentAction]
+      }
+      // Intake creates amenities flagged; Approve is what lets one reach the site.
+      if (context.schemaType === 'amenity') {
+        actions = [...actions, ApproveAmenityAction]
       }
       return actions
     },

@@ -1,4 +1,10 @@
 import {defineType, defineField} from 'sanity'
+import {
+  findUniqueLandingOwningSlug,
+  isReservedForPropertyType,
+  landingOwnsSlugMessage,
+  reservedSlugMessage,
+} from '../constants/reservedRouteSlugs'
 
 /**
  * Property type (Apartment, House, Villa, etc.).
@@ -22,7 +28,8 @@ export const propertyType = defineType({
       name: 'slug',
       type: 'slug',
       title: 'URL slug',
-      description: 'Used in /property-types/[slug]. Same style as city/property.',
+      description:
+        'Used as the catalog filter value for this type (there is no /property-types/[slug] route). Same slug style as city/property.',
       options: {
         source: (doc: Record<string, unknown>) => {
           const t = doc?.title as {en?: string} | undefined
@@ -30,7 +37,18 @@ export const propertyType = defineType({
         },
         maxLength: 96,
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) =>
+        Rule.required().custom(async (value, context) => {
+          const current = (value as {current?: string} | undefined)?.current
+          if (!current) return true
+          if (isReservedForPropertyType(current)) return reservedSlugMessage(current)
+          // Entity routes eclipse Unique Landings at /<slug> — block a type
+          // slug that would silently take over an existing landing's URL.
+          const client = context.getClient({apiVersion: '2024-06-01'})
+          const landing = await findUniqueLandingOwningSlug(client, current)
+          if (landing) return landingOwnsSlugMessage(current)
+          return true
+        }),
     }),
 
     defineField({

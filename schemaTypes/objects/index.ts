@@ -1,11 +1,6 @@
-import {seo} from './seo'
-import {faqItem} from './faqItem'
-import {ctaLink} from './ctaLink'
 import {socialLink} from './socialLink'
-import {footerLink} from './footerLink'
 import {footerApp} from './footerApp'
 import {districtStat} from './districtStat'
-import {districtMetric} from './districtMetric'
 import {localizedString} from './localizedString'
 import {localizedText} from './localizedText'
 import {localizedSlug} from './localizedSlug'
@@ -17,13 +12,14 @@ import {localizedBlockContent} from './localizedBlockContent'
 import {blogTable} from './blogTable'
 import {blogCallout} from './blogCallout'
 import {blogFaqBlock} from './blogFaqBlock'
+import {zoneStatsEmbed} from './zoneStatsEmbed'
+import {trackerEmbed} from './trackerEmbed'
 import {blogCtaBlock} from './blogCtaBlock'
 import {blogRelatedPostsBlock} from './blogRelatedPostsBlock'
 import {blogPropertyEmbedBlock} from './blogPropertyEmbedBlock'
 import {heroSearchTab} from './heroSearchTab'
 import {heroSection} from './heroSection'
 import {propertyCarouselSection} from './propertyCarouselSection'
-import {homePropertyCarouselTab} from './homePropertyCarouselTab'
 import {locationCarouselSection} from './locationCarouselSection'
 import {propertyTypesSection} from './propertyTypesSection'
 import {marketingContentSection} from './marketingContentSection'
@@ -36,6 +32,7 @@ import {seoAuthor} from './seoAuthor'
 import {seoPullQuote} from './seoPullQuote'
 import {ctaSection} from './ctaSection'
 import {landingCollectionSection} from './landingCollectionSection'
+import {relatedPagesAutoSection} from './relatedPagesAutoSection'
 import {localizedFaqItemRich} from './localizedFaqItemRich'
 import {districtsComparisonSection} from './districtsComparisonSection'
 import {linkedGallerySection} from './linkedGallerySection'
@@ -45,6 +42,8 @@ import {investorLogosSection} from './investorLogosSection'
 import {priceTableSection} from './priceTableSection'
 import {statsBandSection} from './statsBandSection'
 import {sourcesSection} from './sourcesSection'
+import {zoneStatsAutoSection} from './zoneStatsAutoSection'
+import {zonePriceTableAutoSection} from './zonePriceTableAutoSection'
 import {mortgageCalcSection} from './mortgageCalcSection'
 import {roiCalcSection} from './roiCalcSection'
 import {purchaseCostCalcSection} from './purchaseCostCalcSection'
@@ -64,20 +63,17 @@ import {propertySettings} from './propertySettings'
  * Add new object schemas here.
  */
 export const objects = [
-  seo,
-  faqItem,
   blogTable,
   blogCallout,
   blogFaqBlock,
+  zoneStatsEmbed,
+  trackerEmbed,
   blogCtaBlock,
   blogRelatedPostsBlock,
   blogPropertyEmbedBlock,
-  ctaLink,
   socialLink,
-  footerLink,
   footerApp,
   districtStat,
-  districtMetric,
   localizedString,
   localizedText,
   localizedBlockContent,
@@ -90,7 +86,6 @@ export const objects = [
   heroSearchTab,
   heroSection,
   propertyCarouselSection,
-  homePropertyCarouselTab,
   locationCarouselSection,
   propertyTypesSection,
   marketingContentSection,
@@ -103,6 +98,7 @@ export const objects = [
   seoPullQuote,
   ctaSection,
   landingCollectionSection,
+  relatedPagesAutoSection,
   districtsComparisonSection,
   linkedGallerySection,
   faqSection,
@@ -111,6 +107,8 @@ export const objects = [
   priceTableSection,
   statsBandSection,
   sourcesSection,
+  zoneStatsAutoSection,
+  zonePriceTableAutoSection,
   mortgageCalcSection,
   roiCalcSection,
   purchaseCostCalcSection,

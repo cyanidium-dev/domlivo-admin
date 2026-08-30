@@ -25,7 +25,7 @@ function detectFormat(trimmed: string): 'json' | 'separator' | 'label' | null {
   if (trimmed.startsWith('{')) return 'json'
   const sepLine = /^\s*---\s*.+?\s*---\s*$/m
   if (sepLine.test(trimmed)) return 'separator'
-  const labelLine = /^\s*(EN|UK|UA|RU|AL|SQ|IT)\s*:/im
+  const labelLine = /^\s*(EN|UK|UA|RU|AL|SQ|IT|PL)\s*:/im
   if (labelLine.test(trimmed)) return 'label'
   return null
 }
@@ -125,7 +125,7 @@ function parseSeparator(raw: string): ParseLocalizedPasteResult {
 }
 
 /** EN: or EN: text on same line */
-const LABEL_START = /^\s*(EN|UK|UA|RU|AL|SQ|IT)\s*:\s*(.*)$/i
+const LABEL_START = /^\s*(EN|UK|UA|RU|AL|SQ|IT|PL)\s*:\s*(.*)$/i
 
 function parseLabel(raw: string): ParseLocalizedPasteResult {
   const lines = raw.split(/\r?\n/)

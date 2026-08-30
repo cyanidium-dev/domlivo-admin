@@ -120,7 +120,7 @@ UK:
       </Text>
       <Code size={1} language="text">{`{"en":"Hello","uk":"Привіт"}`}</Code>
       <Text muted size={1}>
-        Locales: en, uk, ru, sq, it (UA→uk, AL→sq). CSV not supported.
+        Locales: en, uk, ru, sq, it, pl (UA→uk, AL→sq). CSV not supported.
       </Text>
     </Stack>
   </Box>
@@ -314,7 +314,7 @@ export function LocalizedPasteTranslationsInput(props: Props) {
     const en = v?.en
     if (en === undefined || en === null) return
     const enStr = typeof en === 'string' ? en : String(en)
-    const next = {...v, en: enStr, uk: enStr, ru: enStr, sq: enStr, it: enStr}
+    const next = {...v, en: enStr, uk: enStr, ru: enStr, sq: enStr, it: enStr, pl: enStr}
     onChange(PatchEvent.from(set(next)))
   }, [value, onChange])
 

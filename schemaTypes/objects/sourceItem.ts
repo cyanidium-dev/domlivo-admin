@@ -18,9 +18,11 @@ export const sourceItem = defineType({
     }),
     defineField({
       name: 'url',
-      title: 'URL',
+      title: 'URL (optional)',
       type: 'url',
-      validation: (Rule) => Rule.required().uri({scheme: ['http', 'https']}),
+      description:
+        'Leave blank for an internal KB reference or a citation that synthesizes several outlets rather than one page — forcing a link in either case means guessing one, which is worse than no link.',
+      validation: (Rule) => Rule.uri({scheme: ['http', 'https']}),
     }),
     defineField({name: 'publisher', title: 'Publisher (optional)', type: 'string'}),
     defineField({name: 'date', title: 'Date (optional)', type: 'date'}),

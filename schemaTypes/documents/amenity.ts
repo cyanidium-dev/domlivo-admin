@@ -87,16 +87,50 @@ export const amenity = defineType({
       title: 'Active',
       initialValue: true,
     }),
+
+    defineField({
+      name: 'needsReview',
+      title: 'Needs review',
+      type: 'boolean',
+      initialValue: false,
+      description:
+        'Set by the listing intake the first time it met this wording. The amenity is attached to listings straight away but stays off the site — catalog filters and property pages both skip it — until someone confirms the name, translates it and picks an icon. Clear it with the Approve action.',
+    }),
+
+    defineField({
+      name: 'aliases',
+      title: 'Also known as',
+      type: 'array',
+      of: [{type: 'string'}],
+      description:
+        'Alternative wordings the listing intake resolves to this amenity — e.g. "Private pool" for Swimming Pool. Used only when matching parsed listings, never shown on the site. Normally filled by approving an entry in Amenity suggestions.',
+      validation: (Rule) =>
+        Rule.unique().custom((value) => {
+          const short = ((value as string[]) ?? []).filter((v) => typeof v !== 'string' || v.trim().length < 3)
+          return short.length === 0 ? true : 'Each alias needs at least 3 characters — shorter ones match too much.'
+        }),
+    }),
   ],
 
   preview: {
     select: {
       titleEn: 'title.en',
       titleSq: 'title.sq',
+      needsReview: 'needsReview',
+      active: 'active',
     },
     prepare(selection) {
       const title = selection.titleEn || selection.titleSq || 'Untitled'
-      return {title}
+      // The flag has to show in the list, not only inside the document: review
+      // happens by scanning Amenities, there is no separate queue any more.
+      const notes = [
+        selection.needsReview ? 'needs review — hidden on the site' : null,
+        selection.active === false ? 'inactive' : null,
+      ].filter(Boolean)
+      return {
+        title: selection.needsReview ? `⚠ ${title}` : title,
+        subtitle: notes.join(' · ') || undefined,
+      }
     },
   },
 })

@@ -3,6 +3,7 @@ import {country} from './country'
 import {city} from './city'
 import {district} from './district'
 import {amenity} from './amenity'
+import {locationRequest} from './locationRequest'
 import {blogCategory} from './blogCategory'
 import {blogAuthor} from './blogAuthor'
 import {blogPost} from './blogPost'
@@ -10,12 +11,14 @@ import {blogSettings} from './blogSettings'
 import {agent} from './agent'
 import {property} from './property'
 import {propertyType} from './propertyType'
-import {locationTag} from './locationTag'
 import {siteSettings} from './siteSettings'
 import {landingPage} from './landingPage'
 import {registrationRequest} from './registrationRequest'
+import {botAccessRequest} from './botAccessRequest'
 import {tracker} from './tracker'
 import {developer} from './developer'
+import {zoneMetrics} from './zoneMetrics'
+import {imageCredit} from './imageCredit'
 
 /**
  * Document types (standalone content)
@@ -28,6 +31,7 @@ export const documents = [
   city,
   district,
   amenity,
+  locationRequest,
   blogAuthor,
   blogCategory,
   blogPost,
@@ -35,9 +39,11 @@ export const documents = [
   agent,
   property,
   propertyType,
-  locationTag,
   siteSettings,
   registrationRequest,
+  botAccessRequest,
   tracker,
   developer,
+  zoneMetrics,
+  imageCredit,
 ]

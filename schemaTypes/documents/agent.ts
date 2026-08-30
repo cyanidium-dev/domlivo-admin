@@ -175,6 +175,14 @@ export const agent = defineType({
     }),
 
     defineField({
+      name: 'telegramUserId',
+      title: 'Telegram User ID',
+      type: 'number',
+      description:
+        'Numeric Telegram account id. When set, this agent may submit listings through the intake bot (drafts only). The agent can get their id from @userinfobot.',
+    }),
+
+    defineField({
       name: 'maxPremiumPromotionsOverride',
       title: 'Override: Max Premium promotions',
       type: 'number',

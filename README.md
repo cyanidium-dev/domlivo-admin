@@ -8,7 +8,7 @@ Domlivo is a headless CMS that powers property listings, city and district landi
 
 **Key capabilities:**
 
-- Multilingual content (English, Russian, Ukrainian, Albanian) via **field-level i18n**
+- Multilingual content (English, Ukrainian, Russian, Albanian, Italian) via **field-level i18n**
 - Property listings with localized fields
 - City and district SEO landing pages (one document each, localized fields)
 - Agent-owned properties with filtered views in Studio
@@ -44,8 +44,8 @@ domlivo-admin/
 The project uses **field-level i18n** only:
 
 - **One document per entity** — One city, one district, one home page, one site settings document, one property, one blog post, one property type, one location tag.
-- **Localized fields** — Text fields use `localizedString`, `localizedText`, or other localized objects (`{ en, ru, uk, sq }`). Images, URLs, numbers, references, and flags are **shared** across languages.
-- **Supported locales:** `en`, `ru`, `uk`, `sq` (configurable in `lib/languages.ts`).
+- **Localized fields** — Text fields use `localizedString`, `localizedText`, or other localized objects (`{ en, uk, ru, sq, it }`). Images, URLs, numbers, references, and flags are **shared** across languages.
+- **Supported locales:** `en`, `uk`, `ru`, `sq`, `it` (configurable in `lib/languages.ts`).
 - **Frontend:** Resolve `propertyType.title`, `locationTag.title`, `locationTag.slug` (and other localized fields) with `getLocalizedValue(obj, locale)` or equivalent.
 
 Document-level translations (separate documents per language) are **not** used for city, district, homePage, siteSettings, blogPost, propertyType, or locationTag.
@@ -54,7 +54,7 @@ Document-level translations (separate documents per language) are **not** used f
 
 | Type           | Multilingual        | Purpose                          |
 |----------------|---------------------|----------------------------------|
-| homePage       | Field-level         | Homepage content (singleton)     |
+| landingPage    | Field-level         | Editorial landings; homepage is the `landing-home` singleton |
 | siteSettings   | Field-level         | Global site settings (singleton) |
 | city           | Field-level         | City landing pages               |
 | district       | Field-level         | District landing pages           |

@@ -83,8 +83,17 @@ const imageBlockDefinition = () =>
 
 /**
  * Allowed block types for article/rich content body.
- * Related posts and property embeds are managed via dedicated blogPost fields
- * (relatedPosts, relatedProperties), not inline blocks.
+ *
+ * `blogRelatedPostsBlock` and `blogPropertyEmbedBlock` are *inline* blocks placed
+ * mid-article; `blogPost.relatedPosts` / `relatedProperties` remain the
+ * page-level lists. Both inline blocks are queried and fully rendered by the
+ * frontend (`BlogArticleContent.tsx:158,181`), so they must be offered here —
+ * otherwise no editor can ever produce the data those renderers expect.
+ *
+ * `zoneStatsEmbed` and `trackerEmbed` (ТЗ-13) are data embeds: they store a
+ * reference and nothing else, so the figures come from `zoneMetrics` and
+ * `tracker` at render time. An article can never quietly contradict the zone
+ * page it links to, which is what the hand-typed comparison tables did.
  */
 const richContentArrayOf = [
   articleBodyBlockMember(),
@@ -93,6 +102,10 @@ const richContentArrayOf = [
   defineArrayMember({type: 'blogFaqBlock'}),
   defineArrayMember({type: 'blogCallout'}),
   defineArrayMember({type: 'blogCtaBlock'}),
+  defineArrayMember({type: 'blogRelatedPostsBlock'}),
+  defineArrayMember({type: 'blogPropertyEmbedBlock'}),
+  defineArrayMember({type: 'zoneStatsEmbed'}),
+  defineArrayMember({type: 'trackerEmbed'}),
 ]
 
 export const localizedBlockContent = defineType({
@@ -135,6 +148,12 @@ export const localizedBlockContent = defineType({
       type: 'array',
       of: richContentArrayOf,
     }),
+    defineField({
+      name: 'pl',
+      title: 'Polish',
+      type: 'array',
+      of: richContentArrayOf,
+    }),
   ],
 
   preview: {
@@ -144,10 +163,11 @@ export const localizedBlockContent = defineType({
       ru: 'ru',
       sq: 'sq',
       it: 'it',
+      pl: 'pl',
     },
-    prepare(selection: {en?: unknown[]; uk?: unknown[]; ru?: unknown[]; sq?: unknown[]; it?: unknown[]}) {
-      const {en, uk, ru, sq, it} = selection
-      const blocks = en || uk || ru || sq || it || []
+    prepare(selection: {en?: unknown[]; uk?: unknown[]; ru?: unknown[]; sq?: unknown[]; it?: unknown[]; pl?: unknown[]}) {
+      const {en, uk, ru, sq, it, pl} = selection
+      const blocks = en || uk || ru || sq || it || pl || []
       const count = Array.isArray(blocks) ? blocks.length : 0
       return {title: 'Block content', subtitle: `${count} block(s)`}
     },

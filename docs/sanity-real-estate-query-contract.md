@@ -1,3 +1,5 @@
+> Note (2026-08): lib/sanity/queries.ts+fragments.ts in this repo are a stale contract copy — the frontend maintains its own query layer in your-house-albania/src/lib/sanity/queries/. Treat §10/§12 as backlog input, not current state.
+
 # Sanity Real Estate — Query Contract & Data Access Map
 
 This document is the **authoritative developer reference** for GROQ/query contracts in this repository: what schemas exist for real estate, what can be filtered, what dictionaries the AI ingestion tool must load, which queries already ship in `lib/sanity`, and which GROQ patterns are **recommended** to fill gaps.

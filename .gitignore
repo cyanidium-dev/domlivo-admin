@@ -31,3 +31,22 @@
 !.env.example
 *.local
 /nbyg
+
+# Pre-run snapshots from the copy scripts. They hold whatever the run
+# replaced - for the normalization pass that is the seller contact details it
+# strips. Keep them on disk so --restore works; do not put them in version
+# control.
+scripts/data/normalizeListingCopy-backup-*.json
+scripts/data/editorialPass-*.json
+scripts/data/legacyPropertySeo-backup-*.json
+scripts/data/legalArticles-backup-*.json
+scripts/data/blogPost-*-backup-*.json
+scripts/data/unpublish-*-backup-*.json
+scripts/data/cleanup-*-backup-*.json
+scripts/data/coverimage-*-backup-*.json
+scripts/data/factfix-*-backup-*.json
+scripts/data/setpublishedat-*-backup-*.json
+scripts/data/coverimage12-*-backup-*.json
+scripts/data/publish-*-prevpublished-backup-*.json
+scripts/data/renameslug-*-backup-*.json
+scripts/data/tracker-vlora-airport-backup-*.json
