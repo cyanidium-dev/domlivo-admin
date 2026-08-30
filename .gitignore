@@ -50,3 +50,8 @@ scripts/data/coverimage12-*-backup-*.json
 scripts/data/publish-*-prevpublished-backup-*.json
 scripts/data/renameslug-*-backup-*.json
 scripts/data/tracker-vlora-airport-backup-*.json
+
+# Local data dumps and backups from one-off migrations
+dato-objects-raw.json
+properties-backup-*.json
+catalog-seo-titles-backup*.json

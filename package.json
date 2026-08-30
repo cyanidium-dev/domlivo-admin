@@ -79,6 +79,8 @@
     "seed:catalog-seo": "tsx scripts/seedCatalogSeoPages.ts",
     "migrate:catalog-seo-titles:dry": "tsx scripts/migrateCatalogSeoTitles.ts --dry",
     "migrate:catalog-seo-titles": "tsx scripts/migrateCatalogSeoTitles.ts --execute",
+    "migrate:dato-properties:dry": "tsx scripts/migrateDatoProperties.ts --dry",
+    "migrate:dato-properties": "tsx scripts/migrateDatoProperties.ts --execute",
     "seed:blog": "tsx scripts/seed-blog.ts",
     "clear:blog": "tsx scripts/clear-blog.ts",
     "wipe:dataset": "tsx scripts/wipeDataset.ts",
