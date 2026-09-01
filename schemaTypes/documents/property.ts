@@ -314,6 +314,24 @@ export const property = defineType({
         Rule.min(-180).max(180).error('Longitude must be between -180 and 180'),
     }),
 
+    defineField({
+      name: 'locationPrecision',
+      title: 'How exact is the pin?',
+      type: 'string',
+      group: 'location',
+      description:
+        'Most listings arrived without a street address, so their pin is the centre of the district. ' +
+        'The map says so to the visitor. Set this to "exact" only once the coordinates are the building itself.',
+      options: {
+        list: [
+          {title: 'Exact — the coordinates are the building', value: 'exact'},
+          {title: 'Approximate — district or city centre', value: 'approximate'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'exact',
+    }),
+
 
     // DETAILS
     defineField({

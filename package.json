@@ -119,6 +119,8 @@
     "audit:image-provenance": "tsx scripts/auditImageProvenance.ts",
     "source:zone-images": "tsx scripts/sourceZoneImages.ts",
     "apply:zone-images": "tsx scripts/applyZoneImages.ts",
+    "replace:stock-imagery": "tsx scripts/replaceStockImagery.ts",
+    "seed:property-coordinates": "tsx scripts/seedPropertyCoordinatesByZone.ts",
     "generate:comparisons": "tsx scripts/generateComparisonLandings.ts"
   },
   "keywords": [
