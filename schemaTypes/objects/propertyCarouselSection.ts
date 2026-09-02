@@ -103,6 +103,30 @@ export const propertyCarouselSection = defineType({
             direction: 'horizontal',
           },
         }),
+        defineField({
+          name: 'stage',
+          title: 'Construction stage',
+          type: 'string',
+          description:
+            'Makes this carousel a new-builds block. "Still being built" covers off-plan and under construction together, which is how buyers ask for it.',
+          options: {
+            list: [
+              {title: 'Still being built', value: 'unfinished'},
+              {title: 'Off-plan', value: 'off-plan'},
+              {title: 'Under construction', value: 'under-construction'},
+              {title: 'Completed', value: 'completed'},
+            ],
+            layout: 'radio',
+          },
+        }),
+        defineField({
+          name: 'investment',
+          title: 'Only listings marked as an investment',
+          type: 'boolean',
+          initialValue: false,
+          description:
+            'Uses the Investment flag on the property — an editorial judgement, not a fact about the building. Combine with a stage to get "new builds worth investing in".',
+        }),
       ],
     }),
     defineField({

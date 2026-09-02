@@ -383,8 +383,96 @@ export const property = defineType({
       title: 'Year Built',
       type: 'number',
       group: 'details',
+      description:
+        'The year the building was finished. Leave empty while it is still going up — say so in "Construction stage" and give the handover instead.',
       validation: (Rule) =>
         Rule.min(1800).max(2100).error('Year must be between 1800 and 2100'),
+    }),
+
+    /**
+     * Construction stage, handover and paperwork.
+     *
+     * Three separate facts that a single "new build" label would smear together,
+     * and buyers of an unfinished flat ask about all three: whether it exists
+     * yet, when they get the keys, and whether the ownership certificate is in
+     * hand. `investment` above stays what it is — an editorial judgement that a
+     * listing suits an investor — and is deliberately not derived from these.
+     */
+    defineField({
+      name: 'constructionStage',
+      title: 'Construction stage',
+      type: 'string',
+      group: 'details',
+      options: {
+        list: [
+          {title: 'Off-plan — sold before building starts', value: 'off-plan'},
+          {title: 'Under construction — going up now', value: 'under-construction'},
+          {title: 'Completed — finished and handed over', value: 'completed'},
+        ],
+        layout: 'radio',
+      },
+      description:
+        'Leave empty when it is genuinely unknown. Empty is honest; guessing "completed" puts an unfinished building in front of a buyer who filtered for ready ones.',
+    }),
+
+    defineField({
+      name: 'handoverYear',
+      title: 'Handover year',
+      type: 'number',
+      group: 'details',
+      description: 'The year the keys are promised. Required once the stage is off-plan or under construction.',
+      hidden: ({document}) =>
+        !['off-plan', 'under-construction'].includes(
+          (document as {constructionStage?: string} | undefined)?.constructionStage ?? '',
+        ),
+      validation: (Rule) =>
+        Rule.integer()
+          .min(2020)
+          .max(2100)
+          .custom((value, context) => {
+            const stage = (context.document as {constructionStage?: string} | undefined)?.constructionStage
+            if (['off-plan', 'under-construction'].includes(stage ?? '') && !value) {
+              return 'An unfinished building needs a handover year — it is the first thing a buyer asks.'
+            }
+            return true
+          }),
+    }),
+
+    defineField({
+      name: 'handoverQuarter',
+      title: 'Handover quarter',
+      type: 'number',
+      group: 'details',
+      description: 'Optional. Developers quote quarters; leave empty if only the year is known.',
+      hidden: ({document}) =>
+        !['off-plan', 'under-construction'].includes(
+          (document as {constructionStage?: string} | undefined)?.constructionStage ?? '',
+        ),
+      options: {
+        list: [
+          {title: 'Q1', value: 1},
+          {title: 'Q2', value: 2},
+          {title: 'Q3', value: 3},
+          {title: 'Q4', value: 4},
+        ],
+        layout: 'radio',
+      },
+    }),
+
+    defineField({
+      name: 'documentation',
+      title: 'Ownership documents',
+      type: 'string',
+      group: 'details',
+      options: {
+        list: [
+          {title: 'Certificate issued', value: 'certificate'},
+          {title: 'In process', value: 'in-process'},
+        ],
+        layout: 'radio',
+      },
+      description:
+        'Whether the ownership certificate exists yet. On an off-plan unit this is the buyer\'s real risk, so the listing page shows it. Leave empty rather than assume.',
     }),
 
     defineField({

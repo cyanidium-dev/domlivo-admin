@@ -55,3 +55,6 @@ scripts/data/tracker-vlora-airport-backup-*.json
 dato-objects-raw.json
 properties-backup-*.json
 catalog-seo-titles-backup*.json
+
+# Local agent state — the frontend repo ignores this too; it is 2 MB of session history.
+.claude/

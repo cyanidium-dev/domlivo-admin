@@ -30,6 +30,7 @@
     "seed:tz13": "tsx scripts/seedTz13Fixtures.ts",
     "load:legal-articles": "tsx scripts/loadLegalArticles.ts",
     "load:blog-post": "tsx scripts/loadBlogPost.ts",
+    "create:blog-post": "tsx scripts/createBlogPost.ts",
     "translate:blog-post": "tsx scripts/translateBlogPost.ts",
     "translate:by-type": "tsx scripts/translateDocsByType.ts",
     "translate:inline": "tsx scripts/applyInlineTranslation.ts",
@@ -120,6 +121,8 @@
     "source:zone-images": "tsx scripts/sourceZoneImages.ts",
     "apply:zone-images": "tsx scripts/applyZoneImages.ts",
     "replace:stock-imagery": "tsx scripts/replaceStockImagery.ts",
+    "backfill:construction-stage": "tsx scripts/backfillConstructionStage.ts",
+    "add:investment-carousel": "tsx scripts/addInvestmentCarousel.ts",
     "seed:property-coordinates": "tsx scripts/seedPropertyCoordinatesByZone.ts",
     "generate:comparisons": "tsx scripts/generateComparisonLandings.ts"
   },
