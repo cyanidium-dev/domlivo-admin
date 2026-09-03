@@ -45,19 +45,23 @@ const MAX_ITEMS_PER_REQUEST = 12
 
 const args = process.argv.slice(2)
 const execute = args.includes('--execute')
+// `--drafts-only`: touch only documents that have a pending draft. Added
+// 2026-09-03 for the district FAQ drafts, where the same type also carried a
+// handful of published documents with unrelated locale gaps that the run was
+// not meant to fill.
+const draftsOnly = args.includes('--drafts-only')
 const type = args.find((a) => !a.startsWith('--'))
 const localesArg = args.find((a) => a.startsWith('--locales='))
 const base: ProjectLocaleId = 'en'
 const targetLocales: string[] = localesArg
   ? localesArg.slice('--locales='.length).split(',').map((s) => s.trim()).filter(Boolean)
   : [...PROJECT_LOCALE_IDS]
-// The endpoint requires >=2 locale codes even when only one is actually
-// wanted -- `base` is always discarded downstream (decideTranslationSets
-// never writes it), so padding with it costs nothing but satisfies the
-// floor.
-const requestLocales = targetLocales.includes(base) || targetLocales.length >= 2
-  ? targetLocales
-  : [base, ...targetLocales]
+// The endpoint requires `sourceLang` to be one of `locales` (and at least two
+// codes) -- it rejects the request with "sourceLang (one of locales) and
+// items are required" otherwise, seen 2026-09-03 with --locales=sq,uk,ru,it,pl.
+// `base` is always discarded downstream (decideTranslationSets never writes
+// it), so including it costs nothing.
+const requestLocales = targetLocales.includes(base) ? targetLocales : [base, ...targetLocales]
 
 if (!type) {
   throw new Error('usage: npm run translate:by-type -- <sanityType> [--locales=pl] [--execute]')
@@ -159,9 +163,11 @@ async function main(): Promise<void> {
       byBaseId.set(baseId, doc)
     }
   }
-  const docs = [...byBaseId.values()]
+  const docs = [...byBaseId.values()].filter((d) => !draftsOnly || String(d._id).startsWith('drafts.'))
   const draftCount = docs.filter((d) => String(d._id).startsWith('drafts.')).length
-  console.log(`${docs.length} unique document(s) after draft/published dedup (${draftCount} targeted via their draft)`)
+  console.log(
+    `${docs.length} unique document(s) after draft/published dedup (${draftCount} targeted via their draft)${draftsOnly ? ' — --drafts-only' : ''}`,
+  )
   console.log(`target locales: ${targetLocales.join(', ')} (request locales: ${requestLocales.join(', ')}, base: ${base})`)
 
   let totalWritten = 0
