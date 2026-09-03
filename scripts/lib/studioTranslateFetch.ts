@@ -29,8 +29,9 @@ export async function studioTranslate(
   if (!AI_API_URL || !AI_API_SECRET) {
     throw new Error('SANITY_STUDIO_AI_API_URL / SANITY_STUDIO_AI_API_SECRET not set in .env')
   }
-  // The endpoint needs >= 2 locale codes; the source is discarded downstream.
-  const requestLocales = locales.length >= 2 ? [...locales] : [sourceLang, ...locales]
+  // The endpoint requires the source language to be one of `locales` (and at
+  // least two codes); the source's own "translation" is discarded downstream.
+  const requestLocales = locales.includes(sourceLang) ? [...locales] : [sourceLang, ...locales]
   const maxChars = Math.max(1_000, Math.floor(6_000 / Math.max(1, requestLocales.length)))
   const {batches, oversized} = chunkTranslateItems(items, {maxItems: MAX_ITEMS_PER_REQUEST, maxChars})
   const merged: TranslatedItem[] = []

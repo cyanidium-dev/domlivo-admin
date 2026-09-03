@@ -56,13 +56,12 @@ const base: ProjectLocaleId = 'en'
 const targetLocales: string[] = localesArg
   ? localesArg.slice('--locales='.length).split(',').map((s) => s.trim()).filter(Boolean)
   : [...PROJECT_LOCALE_IDS]
-// The endpoint requires >=2 locale codes even when only one is actually
-// wanted -- `base` is always discarded downstream (decideTranslationSets
-// never writes it), so padding with it costs nothing but satisfies the
-// floor.
-const requestLocales = targetLocales.includes(base) || targetLocales.length >= 2
-  ? targetLocales
-  : [base, ...targetLocales]
+// The endpoint requires `sourceLang` to be one of `locales` (and at least two
+// codes) -- it rejects the request with "sourceLang (one of locales) and
+// items are required" otherwise, seen 2026-09-03 with --locales=sq,uk,ru,it,pl.
+// `base` is always discarded downstream (decideTranslationSets never writes
+// it), so including it costs nothing.
+const requestLocales = targetLocales.includes(base) ? targetLocales : [base, ...targetLocales]
 
 if (!type) {
   throw new Error('usage: npm run translate:by-type -- <sanityType> [--locales=pl] [--execute]')
