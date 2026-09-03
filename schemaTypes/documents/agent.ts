@@ -63,6 +63,15 @@ export const agent = defineType({
     }),
 
     defineField({
+      name: 'isPublished',
+      title: 'Published',
+      type: 'boolean',
+      initialValue: true,
+      description:
+        'Show this agent on the website. Unchecking drops the agent page from the sitemap and marks it noindex; the agent’s listings are unaffected. Added because the sitemap previously listed every agent document, test records included, with no way to hide one.',
+    }),
+
+    defineField({
       name: 'email',
       type: 'string',
       validation: (Rule) => Rule.required().email(),
