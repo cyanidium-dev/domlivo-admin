@@ -34,10 +34,13 @@ export const CONTENT_OPS_LISTS: readonly ContentOpsList[] = [
     id: 'landings-todo',
     title: 'Landings: TODO-CONTENT stubs',
     types: ['landingPage'],
+    // All six locales, not only en: a page can be written in English and still
+    // carry stubs elsewhere (the type×city fill of 2026-09-05 had to stop at
+    // English when the translate endpoint went down).
     filter:
-      '_type == "landingPage" && count(pageSections[_type == "seoTextSection" && pt::text(content.en) match "TODO*"]) > 0',
+      '_type == "landingPage" && count(pageSections[_type == "seoTextSection" && (pt::text(content.en) match "TODO*" || pt::text(content.uk) match "TODO*" || pt::text(content.ru) match "TODO*" || pt::text(content.sq) match "TODO*" || pt::text(content.it) match "TODO*" || pt::text(content.pl) match "TODO*")]) > 0',
     ordering: [{field: 'title.en', direction: 'asc'}],
-    meaning: 'A generator left editorial prose to write. Replace the stub from the research KB, then set contentUpdatedAt.',
+    meaning: 'A generator left editorial prose to write, in at least one locale. Replace the stub from the research KB (fill:type-city-copy for type×city pages), then set contentUpdatedAt.',
   },
   {
     id: 'landings-scoped',

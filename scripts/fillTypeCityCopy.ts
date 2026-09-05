@@ -24,6 +24,11 @@ loadDotenv({path: path.resolve(process.cwd(), '.env')})
 const args = process.argv.slice(2)
 const execute = args.includes('--execute')
 const only = args.includes('--only') ? args[args.indexOf('--only') + 1] : ''
+// `--en-only`: write the English paragraphs and leave the other locales' stubs
+// in place — for when the translate endpoint is down (it returned 502 on a
+// 50-character request on 2026-09-05 after the first three pages were done).
+// Re-run without the flag once it is back; `--redo` then rewrites all six.
+const enOnly = args.includes('--en-only')
 const BASE = 'en'
 const TARGETS = PROJECT_LOCALE_IDS.filter((l) => l !== BASE)
 const client = createClient({
@@ -63,7 +68,10 @@ async function main(): Promise<void> {
     }
     const enBlocks = section.content.en ?? []
     const stillStub = enBlocks.some((b) => (b.children?.[0]?.text ?? '').startsWith('TODO-CONTENT'))
-    if (!stillStub && !args.includes('--redo')) {
+    const otherStub = TARGETS.some((loc) =>
+      (section.content?.[loc] ?? []).some((b) => (b.children?.[0]?.text ?? '').startsWith('TODO-CONTENT')),
+    )
+    if (!stillStub && !otherStub && !args.includes('--redo')) {
       console.log(`  done  ${l.slug} — already filled (pass --redo to rewrite)`)
       continue
     }
@@ -83,10 +91,15 @@ async function main(): Promise<void> {
     // three ~800-character paragraphs into five locales at once exceeds the
     // endpoint's output budget and comes back as truncated JSON (seen on the
     // first run, 2026-09-05: 3 of 12 written, then "items is string").
-    const LOCALE_GROUPS: string[][] = [['uk', 'ru'], ['sq', 'it'], ['pl']]
+    // One target locale per request: the ~1,000-character "what to check"
+    // paragraph failed three times for sq+it together (2026-09-05, second run).
+    const LOCALE_GROUPS: string[][] = [['uk'], ['ru'], ['sq'], ['it'], ['pl']]
     const translated = new Map<string, Record<string, string>>()
-    console.log(`\n${p.l.slug}: translating ${PARAS.length} paragraphs → ${TARGETS.join(', ')} (${PARAS.length * LOCALE_GROUPS.length} requests)`)
-    for (let i = 0; i < PARAS.length; i += 1) {
+    const targetsNow = enOnly ? [] : TARGETS
+    console.log(
+      `\n${p.l.slug}: ${enOnly ? 'English only' : `translating ${PARAS.length} paragraphs → ${TARGETS.join(', ')} (${PARAS.length * LOCALE_GROUPS.length} requests)`}`,
+    )
+    for (let i = 0; i < PARAS.length && !enOnly; i += 1) {
       const key = `p${i + 1}`
       const merged: Record<string, string> = {}
       for (const group of LOCALE_GROUPS) {
@@ -100,6 +113,7 @@ async function main(): Promise<void> {
           } catch (e) {
             lastErr = e
             console.log(`    retry ${attempt}/3 for ${key} → ${group.join(',')}: ${e instanceof Error ? e.message : e}`)
+            await new Promise((r) => setTimeout(r, 4000 * attempt))
           }
         }
         if (lastErr) throw lastErr
@@ -107,7 +121,7 @@ async function main(): Promise<void> {
       translated.set(key, merged)
     }
     const ops: Record<string, unknown> = {}
-    const locales = [BASE, ...TARGETS]
+    const locales = [BASE, ...targetsNow]
     for (const loc of locales) {
       for (let i = 0; i < PARAS.length; i += 1) {
         const text = loc === BASE ? copy[PARAS[i]] : String(translated.get(`p${i + 1}`)?.[loc] ?? '').trim()
