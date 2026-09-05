@@ -1,6 +1,7 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
 import {docOwnerIds} from '../utils/docOwnerIds'
 import {PROJECT_LOCALE_IDS} from '../../lib/sanity/localizedPaste/projectLocales'
+import {hasTodoContent} from '../../lib/contentOps/desk'
 import {
   entityOwnsSlugMessage,
   findTopLevelEntityOwningSlug,
@@ -313,10 +314,26 @@ export const landingPage = defineType({
   ],
 
   preview: {
-    select: {title: 'title.en', pageType: 'pageType', enabled: 'enabled'},
-    prepare({title, pageType, enabled}: {title?: string; pageType?: string; enabled?: boolean}) {
+    // ТЗ-18: the two facts an editor needs while scanning a list — is the page
+    // still a stub, and where does it exist.
+    select: {title: 'title.en', pageType: 'pageType', enabled: 'enabled', locales: 'locales', sections: 'pageSections'},
+    prepare({
+      title,
+      pageType,
+      enabled,
+      locales,
+      sections,
+    }: {
+      title?: string
+      pageType?: string
+      enabled?: boolean
+      locales?: unknown
+      sections?: unknown
+    }) {
+      const todo = hasTodoContent(sections) ? ' ⚠ TODO' : ''
       const status = enabled === false ? ' (disabled)' : ''
-      return {title: (title || 'Landing') + status, subtitle: pageType || 'landingPage'}
+      const scope = Array.isArray(locales) && locales.length ? locales.join(', ') : 'all locales'
+      return {title: `${title || 'Landing'}${todo}${status}`, subtitle: `${pageType || 'landingPage'} · ${scope}`}
     },
   },
 })
