@@ -42,6 +42,7 @@
     "translate:inline": "tsx scripts/applyInlineTranslation.ts",
     "backfill:related-pages": "tsx scripts/backfillRelatedPagesSections.ts",
     "seed:guide-hubs": "tsx scripts/seedGuideHubs.ts",
+    "seed:pl-cluster": "tsx scripts/seedPlCluster.ts",
     "generate:type-city-landings": "tsx scripts/generateTypeCityLandings.ts",
     "dump:blog-for-translation": "tsx scripts/dumpBlogForTranslation.ts",
     "audit:block-translations": "tsx scripts/auditBlockTranslations.ts",
