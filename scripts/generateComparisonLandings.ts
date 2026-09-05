@@ -53,6 +53,7 @@ const token = process.env.SANITY_API_TOKEN?.trim()
 const args = process.argv.slice(2)
 const isDry = args.includes('--dry')
 const isExecute = args.includes('--execute')
+import {droppedSections, forceMayProceed, type SectionLike} from './lib/forceGuard'
 const isForce = args.includes('--force')
 const isVerify = args.includes('--verify')
 
@@ -564,7 +565,18 @@ async function main() {
   const toWrite = docs.filter((d) => isForce || !existing.has(d._id as string))
   if (isDry) { console.log(`\nDry run. ${toWrite.length} to write, ${docs.length - toWrite.length} skipped.`); return }
   if (toWrite.length === 0) { console.log('\nNothing to write.'); return }
-  if (isForce) console.log('\n⚠ --force replaces existing landings, including Studio edits.')
+  if (isForce) {
+    console.log('\n⚠ --force replaces existing landings, including Studio edits.')
+    // Sweep 2026-09-05 F4: refuse to drop sections the generator does not emit.
+    const liveDocs: Array<{_id: string; pageSections?: SectionLike[]}> = await client.fetch(
+      `*[_id in $ids]{_id, pageSections[]{_type, _key}}`,
+      {ids: toWrite.map((d) => d._id)},
+    )
+    const drops = toWrite.flatMap((d) =>
+      droppedSections(d._id as string, liveDocs.find((l) => l._id === d._id)?.pageSections, d.pageSections as SectionLike[]),
+    )
+    if (!forceMayProceed(drops, args)) process.exit(1)
+  }
 
   // Single pass (ТЗ-16): the related block no longer references sibling
   // landings, so nothing requires documents to exist before it is written.
