@@ -57,7 +57,16 @@ const T = (pl: string, en = pl) => ({_type: 'localizedText', pl, en})
 
 export function buildDoc(p: PlPage): Record<string, unknown> {
   const sections: Array<Record<string, unknown>> = [
-    {_key: 'hero', _type: 'heroSection', enabled: true, title: L(p.h1), subtitle: T(p.lead)},
+    {
+      _key: 'hero',
+      _type: 'heroSection',
+      enabled: true,
+      title: L(p.h1),
+      subtitle: T(p.lead),
+      // Without a shortLine the hero falls back to the theme's "Palm Springs,
+      // CA" eyebrow (seen live on the ТЗ-16 hubs too, 2026-09-05).
+      shortLine: L('Przewodnik DomLivo dla kupujących z Polski', 'DomLivo guide for Polish buyers'),
+    },
     {
       _key: 'body',
       _type: 'seoTextSection',
