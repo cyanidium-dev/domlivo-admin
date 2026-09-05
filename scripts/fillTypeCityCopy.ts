@@ -63,6 +63,10 @@ async function main(): Promise<void> {
     }
     const enBlocks = section.content.en ?? []
     const stillStub = enBlocks.some((b) => (b.children?.[0]?.text ?? '').startsWith('TODO-CONTENT'))
+    if (!stillStub && !args.includes('--redo')) {
+      console.log(`  done  ${l.slug} — already filled (pass --redo to rewrite)`)
+      continue
+    }
     console.log(`  ${stillStub ? 'fill  ' : 'redo  '} ${l.slug}  (${PARAS.length} paragraphs × ${1 + TARGETS.length} locales)`)
     planned += 1
     plans.push({l, type, city, sectionKey: section._key, ops: {}})
@@ -75,15 +79,38 @@ async function main(): Promise<void> {
 
   for (const p of plans) {
     const copy = COPY[p.city][p.type]
-    const items = PARAS.map((k, i) => ({key: `p${i + 1}`, kind: 'text' as const, text: copy[k]}))
-    console.log(`\n${p.l.slug}: translating ${items.length} paragraphs → ${TARGETS.join(', ')}`)
-    const {items: out} = await studioTranslate(BASE, items, TARGETS)
-    const byKey = new Map(out.map((it) => [it.key, it.locales]))
+    // One paragraph per request and at most two target locales per request:
+    // three ~800-character paragraphs into five locales at once exceeds the
+    // endpoint's output budget and comes back as truncated JSON (seen on the
+    // first run, 2026-09-05: 3 of 12 written, then "items is string").
+    const LOCALE_GROUPS: string[][] = [['uk', 'ru'], ['sq', 'it'], ['pl']]
+    const translated = new Map<string, Record<string, string>>()
+    console.log(`\n${p.l.slug}: translating ${PARAS.length} paragraphs → ${TARGETS.join(', ')} (${PARAS.length * LOCALE_GROUPS.length} requests)`)
+    for (let i = 0; i < PARAS.length; i += 1) {
+      const key = `p${i + 1}`
+      const merged: Record<string, string> = {}
+      for (const group of LOCALE_GROUPS) {
+        let lastErr: unknown
+        for (let attempt = 1; attempt <= 3; attempt += 1) {
+          try {
+            const {items: out} = await studioTranslate(BASE, [{key, kind: 'text', text: copy[PARAS[i]]}], group)
+            Object.assign(merged, out[0]?.locales ?? {})
+            lastErr = undefined
+            break
+          } catch (e) {
+            lastErr = e
+            console.log(`    retry ${attempt}/3 for ${key} → ${group.join(',')}: ${e instanceof Error ? e.message : e}`)
+          }
+        }
+        if (lastErr) throw lastErr
+      }
+      translated.set(key, merged)
+    }
     const ops: Record<string, unknown> = {}
     const locales = [BASE, ...TARGETS]
     for (const loc of locales) {
       for (let i = 0; i < PARAS.length; i += 1) {
-        const text = loc === BASE ? copy[PARAS[i]] : String(byKey.get(`p${i + 1}`)?.[loc as keyof ReturnType<typeof byKey.get>] ?? '').trim()
+        const text = loc === BASE ? copy[PARAS[i]] : String(translated.get(`p${i + 1}`)?.[loc] ?? '').trim()
         if (!text) throw new Error(`${p.l.slug}: empty ${loc} paragraph ${i + 1}`)
         const blockKey = `tc-${loc}-p${i + 1}`
         ops[`pageSections[_key=="${p.sectionKey}"].content.${loc}[_key=="${blockKey}"]`] = paragraphBlock(blockKey, text)

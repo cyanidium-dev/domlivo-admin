@@ -190,8 +190,9 @@ async function main(): Promise<void> {
   const todo = ZONES.filter((z) => {
     const l = live.find((x) => x._id === z.id)
     if (!l) throw new Error(`${z.id} not found`)
-    if (l.n > 0) console.log(`  skip  ${l.slug} — gallery already has ${l.n} photo(s)`)
-    return l.n === 0
+    const n = l.n ?? 0 // count() of an absent gallery is null
+    if (n > 0) console.log(`  skip  ${l.slug} — gallery already has ${n} photo(s)`)
+    return n === 0
   })
   console.log(`\n${todo.length} zone(s), ${todo.reduce((n, z) => n + z.photos.length, 0)} photo(s) to resolve (paced ${PACE_MS / 1000}s each)\n`)
   for (const z of todo) {

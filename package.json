@@ -46,6 +46,7 @@
     "generate:type-city-landings": "tsx scripts/generateTypeCityLandings.ts",
     "fill:type-city-copy": "tsx scripts/fillTypeCityCopy.ts",
     "remove:test-fixtures": "tsx scripts/removeTestFixtures.ts",
+    "add:zone-galleries": "tsx scripts/addZoneGalleries.ts",
     "dump:blog-for-translation": "tsx scripts/dumpBlogForTranslation.ts",
     "audit:block-translations": "tsx scripts/auditBlockTranslations.ts",
     "audit:content-ops": "tsx scripts/auditContentOps.ts",
