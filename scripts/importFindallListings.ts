@@ -262,6 +262,17 @@ function lifecycleFor(row: Scraped): string {
   }
 }
 
+/**
+ * The partner's CMS leaves bedrooms at 0 on most flats while the title says
+ * "2+1" — the Albanian notation for two bedrooms and a living room. The
+ * title is the figure the agency actually typed, so it fills the gap.
+ */
+function bedroomsFor(row: Scraped): number {
+  if (row.bedrooms > 0) return row.bedrooms
+  const m = /(\d)\s*\+\s*1\b/.exec(row.title)
+  return m ? Number(m[1]) : 0
+}
+
 function priceEur(row: Scraped): number {
   if (row.priceFlag === 'implausible') return 0
   if ((row.currency || 'EUR').toUpperCase() === 'LEK' || row.currency === 'ALL') {
@@ -463,7 +474,7 @@ async function main() {
       price: priceEur(row),
       priceUnit: row.priceFlag === 'per-sqm' ? 'per-sqm' : 'total',
       ...(row.area > 0 ? {area: row.area} : {}),
-      ...(row.bedrooms > 0 ? {bedrooms: row.bedrooms} : {}),
+      ...(bedroomsFor(row) > 0 ? {bedrooms: bedroomsFor(row)} : {}),
       ...(row.baths > 0 ? {bathrooms: row.baths} : {}),
       ...(stage ? {constructionStage: stage} : {}),
       ...(DOCS[row.documentation || ''] ? {documentation: DOCS[row.documentation || '']} : {}),
