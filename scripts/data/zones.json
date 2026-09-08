@@ -164,6 +164,28 @@
               },
               "kbSource": "02-cities/durres.md §2",
               "note": "Lead toponym of the KB’s budget belt (with Kënetë). Xhafzotaj is deliberately excluded — it is Bashkia Shijak, not Durrës."
+            },
+            {
+              "slug": "kavaje",
+              "title": {
+                "en": "Kavajë",
+                "uk": "Кавая",
+                "ru": "Кавая",
+                "sq": "Kavaja",
+                "it": "Kavajë"
+              },
+              "note": "Kavajë town itself, south of Golem. Kept under Durrës as a district rather than a city of its own: the partner feed (findall.al) files it with the same coastal strip as Golem and Qerret, and a city page with four listings would be a shell."
+            },
+            {
+              "slug": "spille",
+              "title": {
+                "en": "Spille",
+                "uk": "Спілле",
+                "ru": "Спилле",
+                "sq": "Spille",
+                "it": "Spille"
+              },
+              "note": "Administratively Bashkia Rrogozhinë. Kept under Durrës by the same administrative-attachment precedent as Golem and Qerret: the partner feed markets it as the southern end of the Durrës coast (Spille, Rreth-Greth, Vilë-Bashtovë)."
             }
           ]
         },

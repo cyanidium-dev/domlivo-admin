@@ -156,7 +156,10 @@ export const property = defineType({
         // listings all have honest reasons to sit outside a residential band,
         // and blocking publish on a heuristic is worse than showing one.
         Rule.custom((price, context) => {
-          const doc = context.document as {area?: number; status?: string} | undefined
+          const doc = context.document as {area?: number; status?: string; priceUnit?: string} | undefined
+          // A listing that says outright it is quoting a rate is not the
+          // mistake this warning is looking for.
+          if (doc?.priceUnit === 'per-sqm') return true
           const area = doc?.area
           if (typeof price !== 'number' || typeof area !== 'number' || area <= 0) return true
           if (doc?.status !== 'sale') return true
@@ -165,6 +168,23 @@ export const property = defineType({
           return `€${Math.round(perM2)}/m² looks wrong for a sale — the catalogue runs €875–2 500/m². Check whether this is the total price or a per-m² figure.`
         }).warning(),
       ],
+    }),
+
+    defineField({
+      name: 'priceUnit',
+      title: 'What the price means',
+      type: 'string',
+      group: 'pricing',
+      options: {
+        list: [
+          {title: 'Total for the property', value: 'total'},
+          {title: 'Per m² — a rate, not a total', value: 'per-sqm'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'total',
+      description:
+        'New builds sold off-plan, and most land, are quoted per square metre and have no total price until a unit is chosen. Set this and the card shows "from €1 300/m²" instead of pretending €1 300 buys the flat. Per-m² listings are also left out of the price-range filter, where they would otherwise sort below every real total.',
     }),
 
     defineField({
@@ -339,6 +359,18 @@ export const property = defineType({
       title: 'Area (m²)',
       type: 'number',
       group: 'details',
+      validation: (Rule) => Rule.min(0),
+    }),
+
+    defineField({
+      name: 'plotArea',
+      title: 'Plot area (m²)',
+      type: 'number',
+      group: 'details',
+      description:
+        'The land the house or villa stands on, not the floor area. Shown on houses and villas; ' +
+        'the site prints "not specified" when it is empty, so fill it in whenever the seller gave a figure. ' +
+        'For a bare plot use Area instead.',
       validation: (Rule) => Rule.min(0),
     }),
 
