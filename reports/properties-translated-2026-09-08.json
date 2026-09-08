@@ -1,0 +1,1499 @@
+[
+  {
+    "id": "2fcTC6RE9VYvTVnVmT9L3U",
+    "kind": "check",
+    "issues": [],
+    "rewritten": []
+  },
+  {
+    "id": "2fcTC6RE9VYvTVnVmT9yx2",
+    "kind": "check",
+    "issues": [],
+    "rewritten": []
+  },
+  {
+    "id": "2fcTC6RE9VYvTVnVmT9wAm",
+    "kind": "fill",
+    "targets": [
+      "sq"
+    ],
+    "fields": 1
+  },
+  {
+    "id": "2fcTC6RE9VYvTVnVmTA0O4",
+    "kind": "check",
+    "issues": [
+      {
+        "locale": "pl",
+        "field": "description",
+        "problem": "Nazwa miasta zapisana jako „Durres” zamiast poprawnej formy „Durrës”."
+      }
+    ],
+    "rewritten": [
+      "description.pl"
+    ]
+  },
+  {
+    "id": "2fcTC6RE9VYvTVnVmTAWuq",
+    "kind": "check",
+    "issues": [],
+    "rewritten": []
+  },
+  {
+    "id": "2fcTC6RE9VYvTVnVmTA7oi",
+    "kind": "check",
+    "issues": [
+      {
+        "locale": "ru",
+        "field": "description",
+        "problem": "Not a translation of the English source: adds many facts not present (new renovation, 82.5 m² certified area, building 15 years old, south-west orientation, walking time, rental potential, beach/promenade claims, call to action) and omits Wi-Fi/air conditioning."
+      },
+      {
+        "locale": "uk",
+        "field": "description",
+        "problem": "Not a translation of the English source: adds facts not present (renovation, 82.5 m² certified area, 15-year-old building, orientation, rental potential, beach claims, call to action) and omits Wi-Fi and air conditioning."
+      },
+      {
+        "locale": "pl",
+        "field": "description",
+        "problem": "Missing Polish diacritics (winde, klimatyzacje, sprzedazy) and unnatural phrasing; price notation should follow Polish style."
+      },
+      {
+        "locale": "sq",
+        "field": "description",
+        "problem": "Place names in definite nominative form (Golemi, Durrësi) instead of the natural locative construction; reads as a calque."
+      }
+    ],
+    "rewritten": [
+      "description.ru",
+      "description.uk",
+      "description.pl",
+      "description.sq"
+    ]
+  },
+  {
+    "id": "2fcTC6RE9VYvTVnVmTATt6",
+    "kind": "check",
+    "issues": [
+      {
+        "locale": "ru",
+        "field": "description",
+        "problem": "Not a translation of the English source: adds many facts (2nd floor, new elevator, 150 m from the promenade, renovation and appliances, area 'per certificate', very good bargaining, call-to-action) and drops the sea view and Wi-Fi."
+      },
+      {
+        "locale": "uk",
+        "field": "description",
+        "problem": "Not a translation of the English source: adds facts (2nd floor, new elevator, 150 m from the promenade, renovation and appliances, 'per certificate', bargaining, call-to-action) and omits the sea view and Wi-Fi."
+      },
+      {
+        "locale": "ru",
+        "field": "shortDescription",
+        "problem": "District name transliterated as 'Шкемби-и-Кавайес' instead of the established Cyrillic form 'Шкемби-и-Каваяс'."
+      },
+      {
+        "locale": "uk",
+        "field": "shortDescription",
+        "problem": "District name transliterated as 'Шкемби-і-Кавайєс' instead of the established form 'Шкемби-і-Каваяс'."
+      },
+      {
+        "locale": "pl",
+        "field": "description",
+        "problem": "Ungrammatical calque: 'posiada winda' (should be accusative 'windę'); 'Świetnie doświetlony' overstates the plain English 'Bright'."
+      },
+      {
+        "locale": "sq",
+        "field": "description",
+        "problem": "Grammar error: 'me 1 dhoma gjumi' should be singular 'me 1 dhomë gjumi'; 'Durrësi' should be 'Durrës' in this list."
+      }
+    ],
+    "rewritten": [
+      "description.ru",
+      "description.uk",
+      "shortDescription.ru",
+      "shortDescription.uk",
+      "description.pl",
+      "description.sq"
+    ]
+  },
+  {
+    "id": "2fcTC6RE9VYvTVnVmTAoQe",
+    "kind": "check",
+    "issues": [
+      {
+        "locale": "ru",
+        "field": "description",
+        "problem": "Not a translation of the English: adds floor, distance to sea, price/investment pitch, residence permit claim and a call to action; drops Wi-Fi and the 2-bedroom/56 m² framing."
+      },
+      {
+        "locale": "uk",
+        "field": "description",
+        "problem": "Not a translation of the English: adds floor, 100 m to the sea, investment and residence-permit claims and a call to action; omits Wi-Fi and the English structure."
+      },
+      {
+        "locale": "pl",
+        "field": "description",
+        "problem": "Grammatical errors and calque wording ('Świetlisty apartament', 'posiada winda'); reads as a machine translation."
+      }
+    ],
+    "rewritten": [
+      "description.ru",
+      "description.uk",
+      "description.pl"
+    ]
+  },
+  {
+    "id": "2fcTC6RE9VYvTVnVmTAhiW",
+    "kind": "check",
+    "issues": [
+      {
+        "locale": "ru",
+        "field": "title",
+        "problem": "Не передаёт «two balconies» и «central Vlorë»; добавлено «Большая»."
+      },
+      {
+        "locale": "uk",
+        "field": "title",
+        "problem": "Пропущено «central» (центр Вльори); додано «Простора»."
+      },
+      {
+        "locale": "ru",
+        "field": "description",
+        "problem": "Полностью переписанный рекламный текст с множеством фактов, которых нет в источнике (год постройки, этаж, лифты, камеры, администратор, аэропорт, парк, 10 минут до моря, инвестиционные оценки); отсутствует упоминание вида на море как в оригинале."
+      },
+      {
+        "locale": "uk",
+        "field": "description",
+        "problem": "Довільний рекламний текст із фактами, яких немає в англійському джерелі (рік побудови, поверх, ліфти, камери, адміністратор, аеропорт, парк, 10 хвилин до моря, інвестиційні твердження)."
+      }
+    ],
+    "rewritten": [
+      "title.ru",
+      "title.uk",
+      "description.ru",
+      "description.uk"
+    ]
+  },
+  {
+    "id": "Bvr0zm8arkql17QDTGKeaR",
+    "kind": "check",
+    "issues": [],
+    "rewritten": []
+  },
+  {
+    "id": "2fcTC6RE9VYvTVnVmTB5oi",
+    "kind": "check",
+    "issues": [],
+    "rewritten": []
+  },
+  {
+    "id": "Bvr0zm8arkql17QDTGKspz",
+    "kind": "check",
+    "issues": [],
+    "rewritten": []
+  },
+  {
+    "id": "2fcTC6RE9VYvTVnVmTAtQK",
+    "kind": "check",
+    "issues": [
+      {
+        "locale": "ru",
+        "field": "shortDescription",
+        "problem": "Площадь участка переведена как «10 соток» вместо указанной единицы 1,000 m² — числа и единицы должны сохраняться как в источнике."
+      },
+      {
+        "locale": "uk",
+        "field": "shortDescription",
+        "problem": "Площу ділянки подано як «10 соток» замість 1,000 m² — числа й одиниці мають зберігатися як у джерелі."
+      },
+      {
+        "locale": "ru",
+        "field": "description",
+        "problem": "«10 соток» вместо 1,000 m²; кроме того, «отделка современная и качественная» добавляет оценку («качественная»), которой нет в английском тексте."
+      },
+      {
+        "locale": "uk",
+        "field": "description",
+        "problem": "«10 соток» замість 1,000 m²; крім того, «оздоблення сучасне та якісне» додає оцінку («якісне»), якої немає в англійському тексті."
+      }
+    ],
+    "rewritten": [
+      "shortDescription.ru",
+      "shortDescription.uk",
+      "description.ru",
+      "description.uk"
+    ]
+  },
+  {
+    "id": "Fbta1oBE0kPqbOrzwcNVtC",
+    "kind": "check",
+    "issues": [],
+    "rewritten": []
+  },
+  {
+    "id": "Bvr0zm8arkql17QDTGOMQl",
+    "kind": "check",
+    "issues": [
+      {
+        "locale": "ru",
+        "field": "shortDescription",
+        "problem": "Название района передано как «Пляж» (перевод слова), тогда как принятая форма — «Плаж»."
+      },
+      {
+        "locale": "uk",
+        "field": "shortDescription",
+        "problem": "Назву району подано як «Пляж» (переклад слова), хоча усталена форма — «Плаж»."
+      }
+    ],
+    "rewritten": [
+      "shortDescription.ru",
+      "shortDescription.uk"
+    ]
+  },
+  {
+    "id": "2fcTC6RE9VYvTVnVmTBCai",
+    "kind": "check",
+    "issues": [
+      {
+        "locale": "ru",
+        "field": "description",
+        "problem": "Not a translation of the English source: it is a promotional Telegram-style ad that adds many facts not in the source (72 m² per certificate, rental/resale income potential, full document package, booking request, 'one of the best locations') and omits the stated Wi-Fi and the plain 1-bedroom/138 m²/€149,000 framing."
+      },
+      {
+        "locale": "uk",
+        "field": "description",
+        "problem": "Same as ru: a marketing text with invented facts (72 m² certificate, yield/payback claims, document package, call to action) instead of the English description; source features (Wi-Fi, 1 bedroom) not conveyed."
+      },
+      {
+        "locale": "pl",
+        "field": "description",
+        "problem": "Grammar/typo errors ('posiada winde' instead of 'windę'), unnatural 'Świetnie doświetlony', and place name given as 'Durres' instead of the Albanian spelling 'Durrës'."
+      },
+      {
+        "locale": "sq",
+        "field": "description",
+        "problem": "Grammatical errors and wrong place forms: 'me 1 dhoma gjumi' (should be '1 dhomë gjumi'), 'Plazhi, Durrësi' instead of 'Plazh, Durrës'; reads as a calque."
+      }
+    ],
+    "rewritten": [
+      "description.ru",
+      "description.uk",
+      "description.pl",
+      "description.sq"
+    ]
+  },
+  {
+    "id": "Fbta1oBE0kPqbOrzwcNW26",
+    "kind": "check",
+    "issues": [],
+    "rewritten": []
+  },
+  {
+    "id": "Fbta1oBE0kPqbOrzwcNWB0",
+    "kind": "check",
+    "issues": [],
+    "rewritten": []
+  },
+  {
+    "id": "Bvr0zm8arkql17QDTGLgSR",
+    "kind": "check",
+    "issues": [
+      {
+        "locale": "ru",
+        "field": "description",
+        "problem": "Не перевод английского текста: добавлено множество фактов, которых нет в источнике (площадь по сертификату 58 м², скидка реальному покупателю, ВНЖ для 2–3 человек, вторая квартира рядом, качественный ремонт, техника, оценки инвестиционной привлекательности) и рекламные призывы."
+      },
+      {
+        "locale": "uk",
+        "field": "description",
+        "problem": "Не переклад англійського тексту: додано факти, відсутні в джерелі (58 м² за сертифікатом, знижка, ВНП на 2–3 особи, схожа квартира поряд, ремонт, техніка) та рекламні заклики."
+      },
+      {
+        "locale": "pl",
+        "field": "description",
+        "problem": "Błąd: „winę” zamiast „windę” (winda/lift); nazwa miasta bez formy Durrës."
+      },
+      {
+        "locale": "sq",
+        "field": "description",
+        "problem": "Gabime gramatikore: „me 1 dhoma gjumi“ (duhet „1 dhomë gjumi“) dhe emrat e vendeve në formë të gabuar („Plazhi, Durrësi“ në vend të „Plazh, Durrës“)."
+      }
+    ],
+    "rewritten": [
+      "description.ru",
+      "description.uk",
+      "description.pl",
+      "description.sq"
+    ]
+  },
+  {
+    "id": "Fbta1oBE0kPqbOrzwcNVxe",
+    "kind": "check",
+    "issues": [
+      {
+        "locale": "ru",
+        "field": "title",
+        "problem": "District name rendered as «Шкемби Кавая» instead of the established Cyrillic form «Шкемби-и-Каваяс» (short: «Шкемби»)."
+      },
+      {
+        "locale": "ru",
+        "field": "shortDescription",
+        "problem": "Same district-name issue: «Шкемби Кавая» instead of «Шкемби-и-Каваяс»."
+      },
+      {
+        "locale": "ru",
+        "field": "description",
+        "problem": "Same district-name issue: «Шкемби Кавая» instead of «Шкемби-и-Каваяс»."
+      },
+      {
+        "locale": "uk",
+        "field": "title",
+        "problem": "District name rendered as «Шкемби Кавая» instead of the established Cyrillic form «Шкемби-и-Каваяс»."
+      },
+      {
+        "locale": "uk",
+        "field": "shortDescription",
+        "problem": "Same district-name issue: «Шкемби Кавая» instead of «Шкемби-и-Каваяс»."
+      },
+      {
+        "locale": "uk",
+        "field": "description",
+        "problem": "Same district-name issue: «Шкемби Кавая» instead of «Шкемби-и-Каваяс»."
+      }
+    ],
+    "rewritten": [
+      "title.ru",
+      "shortDescription.ru",
+      "description.ru",
+      "title.uk",
+      "shortDescription.uk",
+      "description.uk"
+    ]
+  },
+  {
+    "id": "Fbta1oBE0kPqbOrzwcNWJu",
+    "kind": "check",
+    "issues": [],
+    "rewritten": []
+  },
+  {
+    "id": "Fbta1oBE0kPqbOrzwcNW6Y",
+    "kind": "check",
+    "issues": [
+      {
+        "locale": "ru",
+        "field": "title",
+        "problem": "District name translated as \"Пляж\" instead of the established transliteration \"Плаж\"."
+      },
+      {
+        "locale": "uk",
+        "field": "title",
+        "problem": "District name rendered as \"Пляж\" instead of \"Плаж\"."
+      },
+      {
+        "locale": "ru",
+        "field": "shortDescription",
+        "problem": "District name \"Плаж\" rendered as the common noun \"Пляж\", causing confusion with the beach itself."
+      },
+      {
+        "locale": "uk",
+        "field": "shortDescription",
+        "problem": "District name \"Плаж\" rendered as \"Пляж\", clashing with the word for beach."
+      },
+      {
+        "locale": "ru",
+        "field": "description",
+        "problem": "District name \"Плаж\" rendered as \"Пляж\"."
+      },
+      {
+        "locale": "uk",
+        "field": "description",
+        "problem": "District name \"Плаж\" rendered as \"Пляж\"."
+      }
+    ],
+    "rewritten": [
+      "title.ru",
+      "title.uk",
+      "shortDescription.ru",
+      "shortDescription.uk",
+      "description.ru",
+      "description.uk"
+    ]
+  },
+  {
+    "id": "Fbta1oBE0kPqbOrzwcNWFS",
+    "kind": "check",
+    "issues": [
+      {
+        "locale": "ru",
+        "field": "description",
+        "problem": "«зелёный и уважаемый участок побережья» — калька с английского, по-русски о районе так не говорят; также название района дано без дефисов (нужно «Мали-и-Робит»)."
+      },
+      {
+        "locale": "uk",
+        "field": "description",
+        "problem": "«шанована ділянка узбережжя» — калька, неприродно українською; також назва району подана без дефісів (потрібно «Малі-і-Робіт»)."
+      }
+    ],
+    "rewritten": [
+      "description.ru",
+      "description.uk"
+    ]
+  },
+  {
+    "id": "property-findall-101",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 and 2+1 apartments at Golem Beach, Kavajë, new development"
+  },
+  {
+    "id": "property-findall-108",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "Restaurant in Kryeluzaj, 1150 m² building on 3000 m² of land"
+  },
+  {
+    "id": "property-findall-107",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "Agricultural land in Rreth Greth, Spille, 5250 m², first coastal line"
+  },
+  {
+    "id": "property-findall-110",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "14,000 m² agricultural land at Cape of Rodon, Durrës — first sea line"
+  },
+  {
+    "id": "property-findall-112",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 Apartment at Shkëmbi i Kavajës, 200 m from the Sea"
+  },
+  {
+    "id": "property-findall-113",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "Business unit, 100 m², in Shkëmbi i Kavajës, Durrës"
+  },
+  {
+    "id": "property-findall-111",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "149 m² business unit in Shkëmbi i Kavajës, Durrës, 200 m from the sea"
+  },
+  {
+    "id": "property-findall-122",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 Apartment in Shkëmbi i Kavajës, Durrës – 100 m from the sea"
+  },
+  {
+    "id": "property-findall-124",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 apartment in Shkëmbi i Kavajës, Durrës — 100 m from the sea, large veranda"
+  },
+  {
+    "id": "property-findall-125",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "Loredis Residence apartments, Qerret Beach – new development"
+  },
+  {
+    "id": "property-findall-151",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "Agricultural land in Vilë-Bashtovë, 10000 m², 500 m from the sea"
+  },
+  {
+    "id": "property-findall-153",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "Hotel on Spille Beach, 27 apartments"
+  },
+  {
+    "id": "property-findall-155",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "Agricultural land in Rreth Greth, Spille, 6500 m²"
+  },
+  {
+    "id": "property-findall-156",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "4-storey hotel in Spille, 1477 m²"
+  },
+  {
+    "id": "property-findall-154",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "Land plot of 4600 m² on Spille beach, second coastal line"
+  },
+  {
+    "id": "property-findall-133",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "3-storey villa, 450 m², in the centre of Kavaja – Merhorve neighbourhood"
+  },
+  {
+    "id": "property-findall-157",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "Agricultural land in Patk-Milot, 15570 m²"
+  },
+  {
+    "id": "property-findall-159",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "3500 m² agricultural land in Rreth Greth, first coastal line"
+  },
+  {
+    "id": "property-findall-161",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "Hotel in Greth, Spille, 1240 m² with 7700 m² of land"
+  },
+  {
+    "id": "property-findall-162",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 Apartment in Shkëmbi i Kavajës, 40 m from the beach"
+  },
+  {
+    "id": "property-findall-169",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "2+1 apartment in Shkëmbi i Kavajës, 50 m from the sea"
+  },
+  {
+    "id": "property-findall-171",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "Studio apartment at Golem Beach, 250 m from the sea"
+  },
+  {
+    "id": "property-findall-179",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "Agricultural land at Plazhi i Bardhë, 24,577 m², first row from the sea"
+  },
+  {
+    "id": "property-findall-210",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "Studios, 1+1 & 2+1 – Oriental 2, Golem Beach, new construction"
+  },
+  {
+    "id": "property-findall-209",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "2+1 apartment in Qerret, 380 m from the beach"
+  },
+  {
+    "id": "property-findall-205",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "Business premises in Durrës, 70 m² on Rruga Sulejman Pitarka"
+  },
+  {
+    "id": "property-findall-216",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "x sold x"
+  },
+  {
+    "id": "property-findall-212",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 Apartment on Golem Beach, new construction"
+  },
+  {
+    "id": "property-findall-220",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "Studios & 1+1 Apartments in Mali i Robit, Golem – New Development"
+  },
+  {
+    "id": "property-findall-218",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 apartment on the seafront, Shkëmbi i Kavajës"
+  },
+  {
+    "id": "property-findall-221",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 apartment in Shkëmbi i Kavajës, first coastal line"
+  },
+  {
+    "id": "property-findall-223",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 apartment in Golem, 200 m from the sea"
+  },
+  {
+    "id": "property-findall-225",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 apartment in Shkëmbi i Kavajës, 150 m from the sea"
+  },
+  {
+    "id": "property-findall-233",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "Land on a % basis – 1st coastal line, Rreth Greth, Spille"
+  },
+  {
+    "id": "property-findall-227",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 Apartment in Golem, Plazh – 150 m from the sea"
+  },
+  {
+    "id": "property-findall-229",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 Apartment – Golem Beach, 200 m from the sea"
+  },
+  {
+    "id": "property-findall-232",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "2 Hotel Buildings – Spille Beach, 27 apartments"
+  },
+  {
+    "id": "property-findall-235",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 Apartment in Golem, 3rd Floor with Balcony"
+  },
+  {
+    "id": "property-findall-234",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "Apartment in Golem, 85 m², furnished with 2 balconies"
+  },
+  {
+    "id": "property-findall-236",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "2+1 apartment in Mali i Robit, Golem – first sea line, sea view"
+  },
+  {
+    "id": "property-findall-238",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 Apartment on Golem Beach, 350 m from the sea"
+  },
+  {
+    "id": "property-findall-237",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "Land plot 830 m², first line to the sea, Spille Beach"
+  },
+  {
+    "id": "property-findall-239",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "2+1 Apartment – Golem Beach, 150 m from the sea"
+  },
+  {
+    "id": "property-findall-240",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 apartment – comfortable and fully furnished"
+  },
+  {
+    "id": "property-findall-242",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 Apartment on Golem Beach, New Construction"
+  },
+  {
+    "id": "property-findall-244",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "Studio apartment on Golem beach, new development"
+  },
+  {
+    "id": "property-findall-246",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 apartment on Golem beach, new construction"
+  },
+  {
+    "id": "property-findall-247",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 Apartment on Golem Beach, New Construction"
+  },
+  {
+    "id": "property-findall-249",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 Apartment on Golem Beach, New Construction"
+  },
+  {
+    "id": "property-findall-250",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 Apartment on Golem Beach, New Construction"
+  },
+  {
+    "id": "property-findall-254",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 apartment on Golem beach, new development"
+  },
+  {
+    "id": "property-findall-255",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "2+1 apartment on Golem beach, new development"
+  },
+  {
+    "id": "property-findall-259",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 apartment on Golem beach, new construction"
+  },
+  {
+    "id": "property-findall-274",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "Studios and 1+1 apartments – Golem Beach, new construction"
+  },
+  {
+    "id": "property-findall-277",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "Land plot in Shkallnur, Durrës — 5022 m², 200 m from Plepa"
+  },
+  {
+    "id": "property-findall-275",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "20 m² garage in Shkëmbi i Kavajës, second coastal line — RESERVED"
+  },
+  {
+    "id": "property-findall-278",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "2-Storey Building + Land in Golem, Tilaj"
+  },
+  {
+    "id": "property-findall-282",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCgp4fY6zYxcADY4mM4\"}"
+  },
+  {
+    "id": "property-findall-279",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "1+1 apartment at Golem Beach, new construction"
+  },
+  {
+    "id": "property-findall-284",
+    "kind": "partner",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "it",
+      "pl"
+    ],
+    "fields": 15,
+    "title": "2+1 apartment in Kavajë, near Shëngjergj street"
+  },
+  {
+    "id": "property-findall-285",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiCN8ZzRhdoB2UncXL\"}"
+  },
+  {
+    "id": "property-findall-286",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiCMPHY4fnZTfQF9eT\"}"
+  },
+  {
+    "id": "property-findall-288",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiE4pcRZs2w6qBwSiM\"}"
+  },
+  {
+    "id": "property-findall-287",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiDvt9gT6DiEdrg6c4\"}"
+  },
+  {
+    "id": "property-findall-289",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiFFG39qrTybJVoSdF\"}"
+  },
+  {
+    "id": "property-findall-290",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiFeKffcS2QxASeS8h\"}"
+  },
+  {
+    "id": "property-findall-291",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiFnkZfhmjixe6nRwm\"}"
+  },
+  {
+    "id": "property-findall-292",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiGvxiFnGEjRSatcfA\"}"
+  },
+  {
+    "id": "property-findall-293",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiHKmuk26hZf2wnBF6\"}"
+  },
+  {
+    "id": "property-findall-295",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiHPk7rEhJVRQsoZuu\"}"
+  },
+  {
+    "id": "property-findall-297",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiJyjzSouN2F32oKzK\"}"
+  },
+  {
+    "id": "property-findall-296",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiJe9o8DbMRqmHh1zx\"}"
+  },
+  {
+    "id": "property-findall-298",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiK2UWzPGsDd1wbok9\"}"
+  },
+  {
+    "id": "property-findall-299",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiM5Fc9Q7J8Bk476Vs\"}"
+  },
+  {
+    "id": "property-findall-301",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiM7Uy9aqzX9TL9vXU\"}"
+  },
+  {
+    "id": "property-findall-302",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiMAD71kbZxEGxWHuZ\"}"
+  },
+  {
+    "id": "property-findall-303",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiNgjiHgL4WgV6BenH\"}"
+  },
+  {
+    "id": "property-findall-305",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiNoBmygbcqzSz9hsV\"}"
+  },
+  {
+    "id": "property-findall-304",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiNnSYUYCMjhkxFbjA\"}"
+  },
+  {
+    "id": "property-findall-307",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiQRAkGyHqxWDMHyXF\"}"
+  },
+  {
+    "id": "property-findall-308",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiQVPScapnabHHifWg\"}"
+  },
+  {
+    "id": "property-findall-306",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiQFkPBBtELysNobyy\"}"
+  },
+  {
+    "id": "property-findall-283",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCgwyQvUpbp5U2VU9tH\"}"
+  },
+  {
+    "id": "property-findall-309",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiS4949eiUsQafEmTP\"}"
+  },
+  {
+    "id": "property-findall-310",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiS7N6BDeLN67Ucnn3\"}"
+  },
+  {
+    "id": "property-findall-311",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiSDKTyvSfXzbHCqJT\"}"
+  },
+  {
+    "id": "property-findall-312",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiSdNj7iTGRF1izu9L\"}"
+  },
+  {
+    "id": "property-findall-313",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiTj72UgpJyiBrECCp\"}"
+  },
+  {
+    "id": "property-findall-315",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiTo4wVFKmp3J25aVe\"}"
+  },
+  {
+    "id": "property-findall-314",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiTqJQF7VXk4oLVJMQ\"}"
+  },
+  {
+    "id": "property-findall-316",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiUJLA76rb1MRzJdjd\"}"
+  },
+  {
+    "id": "property-findall-72",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiVhv3MUmou7ydFonQ\"}"
+  },
+  {
+    "id": "property-findall-76",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiVpMiZWFNJj6PDFzF\"}"
+  },
+  {
+    "id": "property-findall-57",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiVeh6ajetJmD7SVdp\"}"
+  },
+  {
+    "id": "property-findall-74",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiVeSdGzUvyTNWF1Xr\"}"
+  },
+  {
+    "id": "property-findall-81",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiXQrY9c2PwTeUbbtv\"}"
+  },
+  {
+    "id": "property-findall-9",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiXb2F8vptLm9vnoKX\"}"
+  },
+  {
+    "id": "property-findall-77",
+    "kind": "partner",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiXdVxPrPg1Erp7oXV\"}"
+  },
+  {
+    "id": "property-tg-221b9f3b-7e5e-49ca-9af0-a06acb75a573",
+    "kind": "fill",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiXhDzF1xkwCiSqJf9\"}"
+  },
+  {
+    "id": "property-tg-67abe451-0fc0-427b-8835-e04813bc490d",
+    "kind": "check",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiZGEGEJo6Qr1wg4tC\"}"
+  },
+  {
+    "id": "property-tg-8cf55f9b-981a-43b1-9b4f-7313c981f56f",
+    "kind": "fill",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiZFyrzobwvDUvwwqd\"}"
+  },
+  {
+    "id": "property-tg-39d826df-0319-49ad-bf49-662fb31b8a6d",
+    "kind": "fill",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiZDW7Ze234YJAd46W\"}"
+  },
+  {
+    "id": "property-tg-8ec4a257-d8b6-4087-9531-329b0851f955",
+    "kind": "fill",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiZHxtubfDTX5Ho5iE\"}"
+  },
+  {
+    "id": "property-tg-ac6b4b3a-6985-428b-a0a7-bfe4dff1c0d6",
+    "kind": "check",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiaqV7JYY12BjCBkbG\"}"
+  },
+  {
+    "id": "property-tg-95cd72c9-919c-4549-8e20-8df48b91c517",
+    "kind": "fill",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiasTrFAmacW8E7Lek\"}"
+  },
+  {
+    "id": "tAsBDJwz7xVWniA1Klvgdw",
+    "kind": "check",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCibH2REqV1qxAAXoPe\"}"
+  },
+  {
+    "id": "property-tg-eec38647-0afc-4565-bab3-6b1b5d2b8a69",
+    "kind": "check",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCib7Mc4JszfkxbdRVk\"}"
+  },
+  {
+    "id": "tAsBDJwz7xVWniA1Klvo4E",
+    "kind": "check",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCicaAH72isU48MmeRn\"}"
+  },
+  {
+    "id": "tAsBDJwz7xVWniA1KlvlZm",
+    "kind": "check",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCicWScW9o7ZaDiM8cY\"}"
+  },
+  {
+    "id": "tAsBDJwz7xVWniA1Klvot6",
+    "kind": "check",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCicvzW9NnNTi2uKsBP\"}"
+  },
+  {
+    "id": "tAsBDJwz7xVWniA1Klvw10",
+    "kind": "check",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiczTxcfCHeyLLCAC5\"}"
+  },
+  {
+    "id": "tAsBDJwz7xVWniA1Klw2d2",
+    "kind": "check",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCieXyiuMNvx2YLwcMd\"}"
+  },
+  {
+    "id": "tAsBDJwz7xVWniA1Klw5EE",
+    "kind": "check",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCieaxPKBiQ1VZxGDJ1\"}"
+  },
+  {
+    "id": "tAsBDJwz7xVWniA1KlvzHG",
+    "kind": "check",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCieYyQ1u46rwJrNvNv\"}"
+  },
+  {
+    "id": "tAsBDJwz7xVWniA1Klvwum",
+    "kind": "check",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCiedgjVE3EKkpfZuj6\"}"
+  },
+  {
+    "id": "tAsBDJwz7xVWniA1Klw8Se",
+    "kind": "check",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCig7jbcSMgR1ttgUzh\"}"
+  },
+  {
+    "id": "tAsBDJwz7xVWniA1KlwIwK",
+    "kind": "check",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CerCigBT9gbKok1UPkvQ9\"}"
+  }
+]

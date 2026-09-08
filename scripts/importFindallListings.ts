@@ -82,6 +82,22 @@ const SOURCES = sourceArg
   : ['findall-sale.json', 'findall-rent.json'].map((f) => path.join(SOURCE_DIR, f)).filter(fs.existsSync)
 const PARTNER = 'findall'
 const CITY_SLUG = 'durres'
+
+/**
+ * Listings the partner published twice — same photographs, same facts, same
+ * price — found on 2026-09-08. The earlier id stays live; these copies are
+ * imported archived so a re-run cannot bring them back. Extend the list when
+ * the audit (see the duplicate check in the session notes) finds more.
+ */
+const DUPLICATE_OF: Record<number, number> = {
+  123: 122,
+  256: 255,
+  263: 259,
+  219: 101,
+  294: 154,
+  231: 156,
+  300: 209,
+}
 const PACE_MS = 250
 const LEK_PER_EUR = 100
 
@@ -244,6 +260,7 @@ function statusFor(row: Scraped): 'sale' | 'rent' | 'short-term' {
 }
 
 function lifecycleFor(row: Scraped): string {
+  if (DUPLICATE_OF[row.id]) return 'archived'
   const title = fold(row.title)
   const gone = row.publishedFor === 'rent' ? 'rented' : 'sold'
   if (/shitur|rented|dhene me qera/.test(title)) return gone
@@ -296,6 +313,9 @@ function bathsFor(row: Scraped): number {
 
 function priceEur(row: Scraped): number {
   if (row.priceFlag === 'implausible') return 0
+  // "Jepet Tokë me %" — land offered for a share of the build, priced 1 in
+  // the partner's CMS. A rate under €10/m² is a placeholder, not a price.
+  if (row.priceFlag === 'per-sqm' && row.price < 10) return 0
   if ((row.currency || 'EUR').toUpperCase() === 'LEK' || row.currency === 'ALL') {
     return Math.round(row.price / LEK_PER_EUR)
   }
@@ -477,23 +497,31 @@ async function main() {
     const description = cleanDescription(row.descriptionText) || title
     const stage = STAGE[(row.status || '').toLowerCase()]
     const district = districtSlug ? districtBySlug.get(districtSlug)?._id : undefined
+    const short = description.split('\n')[0]?.slice(0, 200) || title
+    // The partner's text is the Albanian source. Other locales are seeded
+    // with it only when empty, so the translations that
+    // translateProperties.ts writes survive every re-run.
+    const textSq: Record<string, string> = {'title.sq': title, 'shortDescription.sq': short, 'description.sq': description}
+    const textSeed: Record<string, string> = {}
+    for (const loc of ['en', 'ru', 'uk', 'it', 'pl']) {
+      textSeed[`title.${loc}`] = title
+      textSeed[`shortDescription.${loc}`] = short
+      textSeed[`description.${loc}`] = description
+    }
     const doc: Record<string, unknown> = {
       _id: docId,
       _type: 'property',
-      title: sameEverywhere(title),
       slug: {_type: 'slug', current: `${slugify(title)}-${row.id}`},
-      shortDescription: sameEverywhere(description.split('\n')[0]?.slice(0, 200) || title),
-      description: sameEverywhere(description),
       agent: {_type: 'reference', _ref: agentId},
       city: {_type: 'reference', _ref: cityId},
       ...(district ? {district: {_type: 'reference', _ref: district}} : {}),
       type: {_type: 'reference', _ref: typeBySlug.get(typeSlug)},
       status,
-      isPublished: !keepUnpublished,
+      isPublished: !keepUnpublished && !DUPLICATE_OF[row.id],
       lifecycleStatus: keepUnpublished ? 'draft' : lifecycle,
       // Required by the schema; zero reads as "unknown" and stays out of price sorting.
       price: priceEur(row),
-      priceUnit: row.priceFlag === 'per-sqm' ? 'per-sqm' : 'total',
+      priceUnit: row.priceFlag === 'per-sqm' && priceEur(row) > 0 ? 'per-sqm' : 'total',
       ...(row.area > 0 ? {area: row.area} : {}),
       ...(bedroomsFor(row) > 0 ? {bedrooms: bedroomsFor(row)} : {}),
       ...(bathsFor(row) > 0 ? {bathrooms: bathsFor(row)} : {}),
@@ -505,18 +533,20 @@ async function main() {
       locationPrecision: 'approximate',
     }
 
-    if (fresh.length) {
-      // Photos uploaded on an earlier run stay in front; new ones follow.
-      await client.createOrReplace({...doc, gallery: [...kept.map((k) => k.item), ...fresh]} as never)
-    } else {
-      // Nothing new to upload: patch the facts and leave the gallery alone.
-      const {_id, _type, ...rest} = doc
-      await client
-        .transaction()
-        .createIfNotExists({_id: _id as string, _type: _type as string} as never)
-        .patch(_id as string, (p) => p.set(rest).unset(district ? [] : ['district']))
-        .commit()
-    }
+    // Always a patch, never createOrReplace: the document accumulates things
+    // this import does not own — translations, an editor's coordinates, a
+    // hand-picked seo block — and a replace would wipe them.
+    const {_id, _type, ...rest} = doc
+    await client
+      .transaction()
+      .createIfNotExists({_id: _id as string, _type: _type as string} as never)
+      .patch(_id as string, (p) => {
+        let patch = p.set(rest).set(textSq).setIfMissing(textSeed).unset(district ? [] : ['district'])
+        // Photos uploaded on an earlier run stay in front; new ones follow.
+        if (fresh.length) patch = patch.set({gallery: [...kept.map((k) => k.item), ...fresh]})
+        return patch
+      })
+      .commit()
 
     done += 1
     if (done % 10 === 0 || done === plan.length) console.log(`  ${done}/${plan.length} listings, ${uploaded} photos uploaded`)
