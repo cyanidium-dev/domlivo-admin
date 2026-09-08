@@ -38,9 +38,12 @@ loadDotenv({path: path.resolve(process.cwd(), '.env')})
 
 const args = process.argv.slice(2)
 const execute = args.includes('--execute')
+const fillHeading = args.includes('--fill-heading')
 const srcArg = args.find((a) => !a.startsWith('--'))
-if (!srcArg) throw new Error('usage: npm run add:district-faq -- <path-to-source.json> [--execute]')
-const SRC_PATH = path.resolve(process.cwd(), srcArg)
+if (!srcArg && !fillHeading) {
+  throw new Error('usage: npm run add:district-faq -- <path-to-source.json> [--execute] | --fill-heading [--execute]')
+}
+const SRC_PATH = srcArg ? path.resolve(process.cwd(), srcArg) : ''
 
 const MIN_WORDS = 35
 const MAX_WORDS = 75
@@ -87,12 +90,52 @@ function loadSource(): Source {
 const L = (en: string) => ({_type: 'localizedString', en})
 const T = (en: string) => ({_type: 'localizedText', en})
 
-function faqSection(slug: string, items: Pair[]): Record<string, unknown> {
+/**
+ * Without a title the frontend falls back to the homepage theme copy
+ * ("Everything about Domlivo homes"), so every section carries its own heading.
+ * Colon form so no locale has to decline the district name.
+ */
+export const FAQ_TITLE: Record<string, (district: string) => string> = {
+  en: (d) => `${d}: frequently asked questions`,
+  sq: (d) => `${d}: pyetje të shpeshta`,
+  pl: (d) => `${d}: najczęstsze pytania`,
+  ru: (d) => `${d}: частые вопросы`,
+  uk: (d) => `${d}: часті запитання`,
+  it: (d) => `${d}: domande frequenti`,
+}
+export const FAQ_SUBTITLE: Record<string, string> = {
+  en: 'Prices, who the area suits and what to check — short answers from the DomLivo research base.',
+  sq: 'Çmimet, kujt i përshtatet zona dhe çfarë duhet kontrolluar — përgjigje të shkurtra nga baza kërkimore e DomLivo.',
+  pl: 'Ceny, dla kogo jest ta okolica i co sprawdzić — krótkie odpowiedzi z bazy badawczej DomLivo.',
+  ru: 'Цены, кому подходит район и что проверить — короткие ответы из исследовательской базы DomLivo.',
+  uk: 'Ціни, кому підходить район і що перевірити — короткі відповіді з дослідницької бази DomLivo.',
+  it: 'Prezzi, a chi si adatta la zona e cosa verificare — risposte brevi dalla base di ricerca DomLivo.',
+}
+
+type DistrictTitle = Record<string, string | undefined>
+
+export function faqHeading(districtTitle: DistrictTitle): {
+  title: Record<string, string>
+  subtitle: Record<string, string>
+} {
+  const title: Record<string, string> = {_type: 'localizedString'}
+  const subtitle: Record<string, string> = {_type: 'localizedText'}
+  for (const loc of Object.keys(FAQ_TITLE)) {
+    const name = (districtTitle?.[loc] || districtTitle?.en || '').trim()
+    if (!name) continue
+    title[loc] = FAQ_TITLE[loc](name)
+    subtitle[loc] = FAQ_SUBTITLE[loc]
+  }
+  return {title, subtitle}
+}
+
+function faqSection(slug: string, items: Pair[], districtTitle: DistrictTitle): Record<string, unknown> {
   return {
     _type: 'faqSection',
     _key: `faq-${slug}`,
     enabled: true,
     imageMode: 'withoutImage',
+    ...faqHeading(districtTitle),
     items: items.map(([q, a], i) => ({
       _type: 'localizedFaqItem',
       _key: `faq-${slug}-${i}`,
@@ -102,21 +145,65 @@ function faqSection(slug: string, items: Pair[]): Record<string, unknown> {
   }
 }
 
+/** Puts the six-locale heading on drafted sections written before it existed. */
+async function fillHeadings(): Promise<void> {
+  const drafts: Array<{_id: string; slug: string; districtTitle: DistrictTitle; key: string; hasTitle: boolean}> =
+    await client.fetch(
+      `*[_type=="landingPage" && pageType=="district" && _id in path("drafts.**") && count(pageSections[_type=="faqSection"])>0]{
+         _id, "slug": linkedDistrict->slug.current, "districtTitle": linkedDistrict->title,
+         "key": pageSections[_type=="faqSection"][0]._key,
+         "hasTitle": defined(pageSections[_type=="faqSection"][0].title.en)
+       }`,
+    )
+  const todo = drafts.filter((d) => !d.hasTitle)
+  for (const d of drafts) {
+    const note = d.hasTitle ? 'already has a title' : FAQ_TITLE.en(d.districtTitle?.en || d.slug)
+    console.log(`  ${d.hasTitle ? 'skip ' : 'set  '} ${String(d.slug).padEnd(22)} ${note}`)
+  }
+  console.log(`\n  ${todo.length} of ${drafts.length} drafted FAQ sections need a heading`)
+  if (!execute) {
+    console.log('\nDry run. Re-run with --execute to write the drafts.')
+    return
+  }
+  for (const d of todo) {
+    const {title, subtitle} = faqHeading(d.districtTitle)
+    await client
+      .patch(d._id)
+      .set({[`pageSections[_key=="${d.key}"].title`]: title, [`pageSections[_key=="${d.key}"].subtitle`]: subtitle})
+      .commit()
+    console.log(`  wrote heading on ${d._id}`)
+  }
+}
+
 async function main(): Promise<void> {
+  if (fillHeading) return fillHeadings()
   if (!fs.existsSync(SRC_PATH)) throw new Error(`source file not found at ${SRC_PATH}`)
   const src = loadSource()
   const slugs = Object.keys(src.districts)
 
-  const pages: Array<{
+  let pages: Array<{
     _id: string
     slug: string
+    districtTitle: DistrictTitle
     sections: Array<Record<string, unknown>>
   }> = await client.fetch(
     `*[_type=="landingPage" && pageType=="district" && linkedDistrict->slug.current in $slugs]{
-       _id, "slug": linkedDistrict->slug.current, "sections": pageSections
+       _id, "slug": linkedDistrict->slug.current, "districtTitle": linkedDistrict->title, "sections": pageSections
      }`,
     {slugs},
   )
+
+  // The query returns both `drafts.<id>` and `<id>` when a draft exists. Keep
+  // the draft: it is what Studio shows and what a re-run must not overwrite
+  // with a published copy that has no FAQ yet (found 2026-09-03, 38 matches
+  // for 19 landings).
+  const byBase = new Map<string, (typeof pages)[number]>()
+  for (const p of pages) {
+    const base = String(p._id).replace(/^drafts\./, '')
+    const current = byBase.get(base)
+    if (!current || String(p._id).startsWith('drafts.')) byBase.set(base, p)
+  }
+  pages = Array.from(byBase.values())
 
   const missing = slugs.filter((s) => !pages.some((p) => p.slug === s))
   if (missing.length) console.log(`  no district landing page for: ${missing.join(', ')}`)
@@ -136,7 +223,7 @@ async function main(): Promise<void> {
     // Before the closing call to action, so the FAQ is the last thing read.
     const ctaAt = sections.findIndex((s) => s?._type === 'ctaSection')
     const at = ctaAt >= 0 ? ctaAt : sections.length
-    const next = [...sections.slice(0, at), faqSection(page.slug, items), ...sections.slice(at)]
+    const next = [...sections.slice(0, at), faqSection(page.slug, items, page.districtTitle), ...sections.slice(at)]
     console.log(`  add   ${page.slug} — ${items.length} Q&A at position ${at + 1}/${next.length}`)
     planned++
     writes.push({_id: `drafts.${String(page._id).replace(/^drafts\./, '')}`, pageSections: next, __base: page._id})

@@ -1,11 +1,25 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
 import {docOwnerIds} from '../utils/docOwnerIds'
+import {PROJECT_LOCALE_IDS} from '../../lib/sanity/localizedPaste/projectLocales'
+import {hasTodoContent} from '../../lib/contentOps/desk'
 import {
   entityOwnsSlugMessage,
   findTopLevelEntityOwningSlug,
   isReservedForCustomLanding,
   reservedSlugMessage,
 } from '../constants/reservedRouteSlugs'
+
+/**
+ * SEO meta is required for the locales the page exists in: all five original
+ * locales when the page is unscoped (pl stays optional for the transition, see
+ * ТЗ-15), only the listed ones when `locales` is set (SEO-04).
+ */
+export function requiredSeoLocales(locales: unknown): string[] {
+  const scoped = Array.isArray(locales)
+    ? locales.filter((l): l is string => typeof l === 'string' && l.trim() !== '')
+    : []
+  return scoped.length ? scoped : ['en', 'ru', 'uk', 'sq', 'it']
+}
 
 export const landingPage = defineType({
   name: 'landingPage',
@@ -259,6 +273,18 @@ export const landingPage = defineType({
     }),
 
     defineField({
+      name: 'locales',
+      title: 'Show only in these locales',
+      description:
+        'Leave empty to show the page in every locale (the default). Pick locales to publish a page for one market only — it 404s elsewhere and is left out of the other locales’ sitemap, guides index, related-page cards and hreflang. Added for the Polish cluster (SEO-04).',
+      type: 'array',
+      group: 'basic',
+      of: [{type: 'string'}],
+      options: {list: PROJECT_LOCALE_IDS.map((id) => ({title: id, value: id})), layout: 'grid'},
+      validation: (Rule) => Rule.unique(),
+    }),
+
+    defineField({
       name: 'seo',
       title: 'SEO',
       type: 'localizedSeo',
@@ -266,10 +292,10 @@ export const landingPage = defineType({
       description: 'Localized meta title, description and Open Graph for this landing.',
       validation: (Rule) =>
         Rule.custom((value, context) => {
-          const doc = context.document as {enabled?: boolean} | undefined
+          const doc = context.document as {enabled?: boolean; locales?: unknown} | undefined
           if (doc?.enabled === false) return true
 
-          const requiredLocales = ['en', 'ru', 'uk', 'sq', 'it'] as const
+          const requiredLocales = requiredSeoLocales(doc?.locales)
           const metaTitle = (value as any)?.metaTitle || {}
           const metaDescription = (value as any)?.metaDescription || {}
 
@@ -288,10 +314,26 @@ export const landingPage = defineType({
   ],
 
   preview: {
-    select: {title: 'title.en', pageType: 'pageType', enabled: 'enabled'},
-    prepare({title, pageType, enabled}: {title?: string; pageType?: string; enabled?: boolean}) {
+    // ТЗ-18: the two facts an editor needs while scanning a list — is the page
+    // still a stub, and where does it exist.
+    select: {title: 'title.en', pageType: 'pageType', enabled: 'enabled', locales: 'locales', sections: 'pageSections'},
+    prepare({
+      title,
+      pageType,
+      enabled,
+      locales,
+      sections,
+    }: {
+      title?: string
+      pageType?: string
+      enabled?: boolean
+      locales?: unknown
+      sections?: unknown
+    }) {
+      const todo = hasTodoContent(sections) ? ' ⚠ TODO' : ''
       const status = enabled === false ? ' (disabled)' : ''
-      return {title: (title || 'Landing') + status, subtitle: pageType || 'landingPage'}
+      const scope = Array.isArray(locales) && locales.length ? locales.join(', ') : 'all locales'
+      return {title: `${title || 'Landing'}${todo}${status}`, subtitle: `${pageType || 'landingPage'} · ${scope}`}
     },
   },
 })

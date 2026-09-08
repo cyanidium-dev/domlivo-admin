@@ -101,8 +101,8 @@ describe('buildTranslateItems', () => {
 describe('decideTranslationSets', () => {
   const {entries} = discoverLocalized(doc)
   const translated = new Map([
-    ['title', {en: 'Center!', uk: 'Центр', ru: 'Центр', sq: 'Qendër', it: 'Centro'}],
-    ['description', {en: 'Long text.', uk: 'Довгий текст.', ru: 'Длинный текст.', sq: 'Tekst i gjatë.', it: 'X'}],
+    ['title', {en: 'Center!', uk: 'Центр', ru: 'Центр', sq: 'Qendër', it: 'Centro', pl: 'Centrum'}],
+    ['description', {en: 'Long text.', uk: 'Довгий текст.', ru: 'Длинный текст.', sq: 'Tekst i gjatë.', it: 'X', pl: 'Długi tekst.'}],
   ])
 
   it('overwrite OFF fills only empty locales and never the base', () => {
@@ -211,9 +211,9 @@ describe('decideParseSets', () => {
     parsed: {
       facts: {dealType: 'sale', areaM2: 76, bedrooms: 2, rooms: 3, bathrooms: null, yearBuilt: 2019, address: 'Rruga X'},
       editorial: {
-        title: {en: 'T-en', uk: 'T-uk', ru: 'T-ru', sq: 'T-sq', it: 'T-it'},
-        shortDescription: {en: 's', uk: 's', ru: 's', sq: 's', it: 's'},
-        description: {en: 'd', uk: 'd', ru: 'd', sq: 'd', it: 'd'},
+        title: {en: 'T-en', uk: 'T-uk', ru: 'T-ru', sq: 'T-sq', it: 'T-it', pl: 'T-pl'},
+        shortDescription: {en: 's', uk: 's', ru: 's', sq: 's', it: 's', pl: 's'},
+        description: {en: 'd', uk: 'd', ru: 'd', sq: 'd', it: 'd', pl: 'd'},
       },
       parserNotes: '',
     },
@@ -261,9 +261,9 @@ describe('rooms', () => {
     parsed: {
       facts: {dealType: 'sale', areaM2: 60, bedrooms: 1, rooms: 2, bathrooms: 1, yearBuilt: null, address: null},
       editorial: {
-        title: {en: 'T', uk: 'T', ru: 'T', sq: 'T', it: 'T'},
-        shortDescription: {en: 's', uk: 's', ru: 's', sq: 's', it: 's'},
-        description: {en: 'd', uk: 'd', ru: 'd', sq: 'd', it: 'd'},
+        title: {en: 'T', uk: 'T', ru: 'T', sq: 'T', it: 'T', pl: 'T'},
+        shortDescription: {en: 's', uk: 's', ru: 's', sq: 's', it: 's', pl: 's'},
+        description: {en: 'd', uk: 'd', ru: 'd', sq: 'd', it: 'd', pl: 'd'},
       },
       parserNotes: '',
     },

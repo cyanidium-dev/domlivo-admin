@@ -1,7 +1,12 @@
 import type {StructureResolver} from 'sanity/structure'
+import {CONTENT_OPS_API_VERSION, CONTENT_OPS_LISTS, contentOpsParams} from '../lib/contentOps/desk'
 
-export const structure: StructureResolver = (S, context) =>
-  S.list()
+export const structure: StructureResolver = (S, context) => {
+  // ТЗ-18: cut-offs are computed once per Studio load (a day-old tab is a day
+  // stale; reload fixes it). The same lists feed `npm run audit:content-ops`.
+  const contentOpsParamValues = contentOpsParams()
+
+  return S.list()
     .title('Content')
     .items([
       S.listItem()
@@ -12,6 +17,32 @@ export const structure: StructureResolver = (S, context) =>
             .schemaType('landingPage')
             .documentId('landing-home'),
         ),
+
+      // Half-done content and stale data, one list per signal (ТЗ-18).
+      S.listItem()
+        .title('Content ops')
+        .id('contentOps')
+        .child(
+          S.list()
+            .title('Content ops')
+            .items(
+              CONTENT_OPS_LISTS.map((l) =>
+                S.listItem()
+                  .title(l.title)
+                  .id(l.id)
+                  .child(
+                    (l.types.length === 1 ? S.documentTypeList(l.types[0]) : S.documentList())
+                      .title(l.title)
+                      .apiVersion(CONTENT_OPS_API_VERSION)
+                      .filter(l.filter)
+                      .params(contentOpsParamValues)
+                      .defaultOrdering(l.ordering),
+                  ),
+              ),
+            ),
+        ),
+
+      S.divider(),
 
       S.listItem()
         .title('Landing Pages')
@@ -377,3 +408,4 @@ export const structure: StructureResolver = (S, context) =>
             ]),
         ),
     ])
+}

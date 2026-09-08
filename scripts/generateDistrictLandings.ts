@@ -39,6 +39,7 @@ const cityArg = (args.find((a) => a.startsWith('--city='))?.split('=')[1] ??
   (args.includes('--city') ? args[args.indexOf('--city') + 1] : '')) as string
 const isDry = args.includes('--dry')
 const isExecute = args.includes('--execute')
+import {droppedSections, forceMayProceed, type SectionLike} from './lib/forceGuard'
 const isForce = args.includes('--force')
 /**
  * Rebuild every landing in memory and diff it against the dataset. Writes
@@ -454,6 +455,15 @@ Verify: ${same}/${docs.length} reproduce exactly` +
 
   if (isForce) {
     console.log('\n⚠ --force replaces existing landings, including any edits made in Studio.')
+    // Sweep 2026-09-05 F4: refuse to drop sections the generator does not emit.
+    const liveDocs: Array<{_id: string; pageSections?: SectionLike[]}> = await client.fetch(
+      `*[_id in $ids]{_id, pageSections[]{_type, _key}}`,
+      {ids: docs.map((d) => d._id)},
+    )
+    const drops = docs.flatMap((d) =>
+      droppedSections(d._id as string, liveDocs.find((l) => l._id === d._id)?.pageSections, d.pageSections as SectionLike[]),
+    )
+    if (!forceMayProceed(drops, args)) process.exit(1)
   }
 
   const tx = docs.reduce(
