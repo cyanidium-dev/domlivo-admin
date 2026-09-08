@@ -68,9 +68,6 @@ function isLocalizedObject(value: unknown): value is Record<string, unknown> {
   return keys.every((k) => LOCALE_SET.has(k)) && keys.some((k) => typeof (value as Record<string, unknown>)[k] === 'string')
 }
 
-const CYRILLIC = /[Ѐ-ӿ]/
-const LATIN_LETTERS = /[A-Za-z]/
-
 function scriptWrong(locale: Locale, text: string): boolean {
   const t = text.trim()
   if (!t) return false
