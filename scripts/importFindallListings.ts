@@ -269,8 +269,29 @@ function lifecycleFor(row: Scraped): string {
  */
 function bedroomsFor(row: Scraped): number {
   if (row.bedrooms > 0) return row.bedrooms
-  const m = /(\d)\s*\+\s*1\b/.exec(row.title)
+  const m = /(\d)\s*\+\s*1\b/.exec(row.title) ?? /(\d)\s*dhom[ëe]?\s*gjumi/i.exec(row.descriptionText)
   return m ? Number(m[1]) : 0
+}
+
+const DWELLING_CATEGORIES = new Set(['apartment', 'villa'])
+
+/**
+ * Bathrooms follow the same pattern: 39 of 95 source rows say 0. "2+1+2" is
+ * the partner's own notation for two bathrooms, "2 tualete" / "2 banjo" in
+ * the text is the next best source, and a flat or villa with nothing written
+ * has one — a dwelling with no bathroom does not exist, and the card printed
+ * "0 bathrooms" under a furnished 1+1. Land and commercial stay at zero.
+ */
+function bathsFor(row: Scraped): number {
+  if (row.baths > 0) return row.baths
+  const text = `${row.title}\n${row.descriptionText}`
+  const notation = /\d\s*\+\s*1\s*\+\s*(\d)\b/.exec(text)
+  if (notation) return Number(notation[1])
+  const words = /(\d)\s*(?:tualet|banj[oa]|wc\b)/i.exec(text)
+  if (words) return Number(words[1])
+  const category = (row.category || '').trim().toLowerCase()
+  const isDwelling = DWELLING_CATEGORIES.has(category) || /apartament|garsonier|vil[ëe]|penthouse/i.test(row.title)
+  return isDwelling ? 1 : 0
 }
 
 function priceEur(row: Scraped): number {
@@ -475,7 +496,7 @@ async function main() {
       priceUnit: row.priceFlag === 'per-sqm' ? 'per-sqm' : 'total',
       ...(row.area > 0 ? {area: row.area} : {}),
       ...(bedroomsFor(row) > 0 ? {bedrooms: bedroomsFor(row)} : {}),
-      ...(row.baths > 0 ? {bathrooms: row.baths} : {}),
+      ...(bathsFor(row) > 0 ? {bathrooms: bathsFor(row)} : {}),
       ...(stage ? {constructionStage: stage} : {}),
       ...(DOCS[row.documentation || ''] ? {documentation: DOCS[row.documentation || '']} : {}),
       ...(row.address ? {address: sameEverywhere(row.address)} : {}),
