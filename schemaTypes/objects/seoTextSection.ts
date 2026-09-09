@@ -81,6 +81,23 @@ export const seoTextSection = defineType({
       description: 'Optional button or link below the content.',
     }),
     defineField({
+      name: 'image',
+      title: 'Photograph (optional)',
+      type: 'image',
+      group: 'media',
+      options: {hotspot: true},
+      description:
+        'Wide photograph above the copy — a city or district view. Setting it also widens the block to full page width.',
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alt text',
+          type: 'string',
+          description: 'What the photograph shows, for search and screen readers.',
+        }),
+      ],
+    }),
+    defineField({
       name: 'videoUrl',
       title: 'Video URL (optional)',
       type: 'string',

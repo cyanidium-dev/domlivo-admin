@@ -140,7 +140,11 @@
     "add:investment-carousel": "tsx scripts/addInvestmentCarousel.ts",
     "seed:property-coordinates": "tsx scripts/seedPropertyCoordinatesByZone.ts",
     "generate:comparisons": "tsx scripts/generateComparisonLandings.ts",
-    "strip:listing-emoji": "tsx scripts/stripListingEmoji.ts"
+    "strip:listing-emoji": "tsx scripts/stripListingEmoji.ts",
+    "apply:zone-editorial": "tsx scripts/applyZoneEditorialCopy.ts",
+    "purge:seed-galleries": "tsx scripts/purgeSeedCityGalleries.ts",
+    "translate:zone-editorial": "tsx scripts/translateZoneEditorialCopy.ts",
+    "fix:city-heading-cases": "tsx scripts/fixCityHeadingCases.ts"
   },
   "keywords": [
     "sanity"
