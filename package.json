@@ -144,7 +144,8 @@
     "apply:zone-editorial": "tsx scripts/applyZoneEditorialCopy.ts",
     "purge:seed-galleries": "tsx scripts/purgeSeedCityGalleries.ts",
     "translate:zone-editorial": "tsx scripts/translateZoneEditorialCopy.ts",
-    "fix:city-heading-cases": "tsx scripts/fixCityHeadingCases.ts"
+    "fix:city-heading-cases": "tsx scripts/fixCityHeadingCases.ts",
+    "fix:broken-links": "tsx scripts/fixBrokenInternalLinks.ts"
   },
   "keywords": [
     "sanity"
