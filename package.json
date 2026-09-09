@@ -139,7 +139,8 @@
     "backfill:construction-stage": "tsx scripts/backfillConstructionStage.ts",
     "add:investment-carousel": "tsx scripts/addInvestmentCarousel.ts",
     "seed:property-coordinates": "tsx scripts/seedPropertyCoordinatesByZone.ts",
-    "generate:comparisons": "tsx scripts/generateComparisonLandings.ts"
+    "generate:comparisons": "tsx scripts/generateComparisonLandings.ts",
+    "strip:listing-emoji": "tsx scripts/stripListingEmoji.ts"
   },
   "keywords": [
     "sanity"
