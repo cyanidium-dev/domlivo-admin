@@ -59,3 +59,8 @@ catalog-seo-titles-backup*.json
 
 # Local agent state — the frontend repo ignores this too; it is 2 MB of session history.
 .claude/
+
+# Sanity document dumps taken before a scripted write. Local safety copies —
+# they are large, they are snapshots of production content, and nothing reads
+# them from the repo.
+scripts/data/backups/
