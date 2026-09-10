@@ -62,6 +62,10 @@ type Row = {
   bedrooms?: number
   bathrooms?: number
   price?: number
+  rooms?: number
+  type?: string
+  district?: string
+  city?: string
 }
 
 const val = (m: Localized | undefined, l: Locale) => (typeof m?.[l] === 'string' ? (m[l] as string).trim() : '')
@@ -72,6 +76,24 @@ Short description: one or two sentences, the essence.
 Description: the full text translated faithfully, paragraph breaks preserved as "\\n\\n". Drop nothing, add nothing.
 Reply: {"title": {"en": …, "uk": …, …}, "shortDescription": {…}, "description": {…}} with a key per requested language.`
 
+/**
+ * get.al listings are rewritten rather than translated. The source is another
+ * agency's marketing copy: republishing it word for word in six languages
+ * would put their text on our pages and hand Google six near-duplicates of a
+ * page it already knows. So the facts are kept and the prose is ours — and
+ * the model is told, twice, that inventing a fact is the one unforgivable
+ * move, because a listing that promises a sea view there is none is worse
+ * than a dull one.
+ */
+const SYSTEM_GETAL = `Task: write the copy for a real-estate listing in Albania, in every language listed in "to". The user message is JSON: "source" is the selling agency's own Albanian text, and "facts" are the listing's verified fields.
+Write original copy. Do NOT translate the source sentence by sentence and do NOT reuse its phrasing, structure or slogans — take the facts out of it and write the listing yourself, the way a good local agent would.
+Never state anything the source and the facts do not support: no invented sea views, renovations, yields, distances, year built, furnishings or neighbours. If the source is thin, write less. Never mention the selling agency, its agents, phone numbers or a price inside the text.
+Title: no sale verb ("Shitet", "Shiten"), no emoji, no "◆". Keep the layout notation (1+1, 2+1), the place and the one distinctive detail — e.g. "2+1 apartment with balcony near the hospital, Durrës". Under 90 characters.
+Short description: one or two sentences, the essence, under 200 characters.
+Description: 3 to 5 short paragraphs separated by "\\n\\n" — what it is and where, the layout and the condition, the surroundings, who it suits. No bullet lists, no headings.
+Each language must read as if written natively in it, not as a translation of the others. Albanian is written natively too, with correct case forms.
+Reply: {"title": {"en": …, "sq": …, …}, "shortDescription": {…}, "description": {…}} with a key per requested language.`
+
 const SYSTEM_OWN_FILL = `Task: an in-house real-estate listing written in English. Produce the target languages listed in "to" for "title", "shortDescription" and "description", faithfully, paragraph breaks preserved as "\\n\\n".
 Reply: {"title": {…}, "shortDescription": {…}, "description": {…}} with a key per requested language.`
 
@@ -80,15 +102,41 @@ For every non-English version decide whether it says the same as the English: sa
 Reply: {"issues": [{"locale": "ru", "field": "description", "problem": "…"}], "rewrite": {"description": {"ru": "…"}}} — "rewrite" carries a fresh translation from the English for exactly the field/locale pairs listed in "issues", and is {} when there are none.`
 
 async function main() {
-  const filter = only === 'findall' ? '&& _id match "property-findall-*"' : only === 'own' ? '&& !(_id match "property-findall-*")' : ''
+  const filter =
+    only === 'findall'
+      ? '&& _id match "property-findall-*"'
+      : only === 'getal'
+        ? '&& _id match "property-getal-*"'
+        : only === 'own'
+          ? '&& !(_id match "property-findall-*") && !(_id match "property-getal-*")'
+          : ''
+  // get.al listings are imported unpublished on purpose — they are not fit to
+  // publish until this script has replaced the Albanian in the other locales —
+  // so they are the one kind selected regardless of the published flag.
+  const published = only === 'getal' ? '' : '&& isPublished == true'
   let rows = await client.fetch<Row[]>(
-    `*[_type == "property" && isPublished == true ${filter}] | order(_id) {_id, title, shortDescription, description, area, bedrooms, bathrooms, price}`,
+    `*[_type == "property" ${published} ${filter}] | order(_id) {_id, title, shortDescription, description, area, bedrooms, bathrooms, price, rooms, "type": type->slug.current, "district": district->title.en, "city": city->title.en}`,
   )
   if (limit > 0) rows = rows.slice(0, limit)
 
-  type Job = {row: Row; kind: 'partner' | 'fill' | 'check'; targets: Locale[]}
+  type Job = {row: Row; kind: 'partner' | 'getal' | 'fill' | 'check'; targets: Locale[]}
   const jobs: Job[] = []
   for (const row of rows) {
+    // The agency's own marketing prose is not republished. Every locale,
+    // Albanian included, is rewritten from the source facts, so all six
+    // targets are always in play.
+    if (row._id.startsWith('property-getal-')) {
+      const sq = val(row.title, 'sq')
+      if (!sq) continue
+      // The import seeds every locale with the same Albanian string, so a
+      // listing whose English still equals its Albanian has not been rewritten
+      // yet. Skipping the rest makes the run resumable — the 2026-09-10 run
+      // stopped halfway on an API credit limit, and re-doing the finished ones
+      // would have cost the money twice.
+      if (!check && val(row.title, 'en') && val(row.title, 'en') !== sq) continue
+      jobs.push({row, kind: 'getal', targets: [...LOCALES]})
+      continue
+    }
     const partner = row._id.startsWith('property-findall-')
     if (partner) {
       const sq = val(row.title, 'sq')
@@ -106,9 +154,11 @@ async function main() {
     if (missing.length) jobs.push({row, kind: 'fill', targets: missing})
     else if (check) jobs.push({row, kind: 'check', targets: LOCALES.filter((l) => l !== 'en')})
   }
-  const counts = {partner: 0, fill: 0, check: 0}
+  const counts = {partner: 0, getal: 0, fill: 0, check: 0}
   for (const j of jobs) counts[j.kind] += 1
-  console.log(`${rows.length} published listings → ${jobs.length} jobs: ${counts.partner} partner translations, ${counts.fill} in-house fills, ${counts.check} consistency checks`)
+  console.log(
+    `${rows.length} listings → ${jobs.length} jobs: ${counts.partner} partner translations, ${counts.getal} get.al rewrites, ${counts.fill} in-house fills, ${counts.check} consistency checks`,
+  )
   if (isDry) {
     for (const j of jobs.slice(0, 15)) console.log(`  ${j.kind.padEnd(7)} ${j.row._id} → ${j.targets.join(',')} "${(val(j.row.title, 'sq') || val(j.row.title, 'en')).slice(0, 60)}"`)
     console.log('\nDry run — nothing sent, nothing written.')
@@ -121,7 +171,41 @@ async function main() {
     const {row, kind, targets} = job
     const facts = {area: row.area, bedrooms: row.bedrooms, bathrooms: row.bathrooms, price: row.price}
     try {
-      if (kind === 'partner' || kind === 'fill') {
+      if (kind === 'getal') {
+        const payload = {
+          source: {
+            title: val(row.title, 'sq'),
+            description: val(row.description, 'sq') || val(row.title, 'sq'),
+          },
+          facts: {
+            ...facts,
+            rooms: row.rooms,
+            propertyType: row.type,
+            district: row.district,
+            city: row.city,
+          },
+          to: targets,
+        }
+        const reply = await askJson(SYSTEM_GETAL, JSON.stringify(payload))
+        const set: Record<string, string> = {}
+        for (const f of FIELDS) {
+          const got = reply[f]
+          if (!got || typeof got !== 'object') continue
+          for (const l of targets) {
+            const text = typeof (got as Record<string, unknown>)[l] === 'string' ? ((got as Record<string, string>)[l] as string).trim() : ''
+            if (text) set[`${f}.${l}`] = text
+          }
+        }
+        // Six locales × three fields. A reply missing most of them is a bad
+        // generation, not a partial success — leaving the Albanian in place is
+        // better than writing half a listing.
+        if (Object.keys(set).length < targets.length * 2) {
+          throw new Error(`only ${Object.keys(set).length} of ${targets.length * FIELDS.length} fields came back`)
+        }
+        await client.patch(row._id).set(set).commit()
+        written += Object.keys(set).length
+        report.push({id: row._id, kind, targets, fields: Object.keys(set).length, title: set['title.en']})
+      } else if (kind === 'partner' || kind === 'fill') {
         const src: Locale = kind === 'partner' ? 'sq' : 'en'
         const payload = {
           title: val(row.title, src),

@@ -149,8 +149,7 @@
     "fix:city-heading-cases": "tsx scripts/fixCityHeadingCases.ts",
     "fix:broken-links": "tsx scripts/fixBrokenInternalLinks.ts",
     "fix:redirecting-links": "tsx scripts/fixRedirectingLinks.ts",
-    "create:legal-pages": "tsx scripts/createLegalPages.ts",
-    "translate:legal-pages": "tsx scripts/translateLegalPages.ts"
+    "create:legal-pages": "tsx scripts/createLegalPages.ts"
   },
   "keywords": [
     "sanity"
