@@ -132,7 +132,9 @@
     "audit:property-content": "tsx scripts/auditPropertyContent.ts",
     "fix:property-content": "tsx scripts/applyPropertyContentFixes.ts",
     "scrape:findall": "tsx scripts/scrapeFindallListings.ts",
+    "scrape:getal": "tsx scripts/scrapeGetAlListings.ts",
     "import:findall": "tsx scripts/importFindallListings.ts",
+    "import:getal": "tsx scripts/importGetAlListings.ts",
     "source:zone-images": "tsx scripts/sourceZoneImages.ts",
     "apply:zone-images": "tsx scripts/applyZoneImages.ts",
     "replace:stock-imagery": "tsx scripts/replaceStockImagery.ts",
@@ -146,7 +148,9 @@
     "translate:zone-editorial": "tsx scripts/translateZoneEditorialCopy.ts",
     "fix:city-heading-cases": "tsx scripts/fixCityHeadingCases.ts",
     "fix:broken-links": "tsx scripts/fixBrokenInternalLinks.ts",
-    "fix:redirecting-links": "tsx scripts/fixRedirectingLinks.ts"
+    "fix:redirecting-links": "tsx scripts/fixRedirectingLinks.ts",
+    "create:legal-pages": "tsx scripts/createLegalPages.ts",
+    "translate:legal-pages": "tsx scripts/translateLegalPages.ts"
   },
   "keywords": [
     "sanity"
