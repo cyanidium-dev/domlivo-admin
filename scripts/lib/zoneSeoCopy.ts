@@ -12,12 +12,23 @@
  * back to the first sentence of its editorial description.
  */
 
-export const SEO_LOCALES = ['en', 'uk', 'ru', 'sq', 'it'] as const
+// `pl` was missing here while production carried Polish descriptions from a
+// separate backfill, so every regeneration left them behind at whatever the
+// backfill produced. It is a first-class locale on this site.
+export const SEO_LOCALES = ['en', 'uk', 'ru', 'sq', 'it', 'pl'] as const
 export type SeoLocale = (typeof SEO_LOCALES)[number]
 export type SeoLocalized = Partial<Record<SeoLocale, string>>
 
 /** A description longer than this was written by a person; do not overwrite it. */
 export const HAND_WRITTEN_MIN = 80
+
+/**
+ * Below this a description is thin enough to be worth padding with the zone's
+ * own first sentence; above the max it gets cut off in a result page anyway.
+ * Both are the conventions crawlers report against, not hard rules.
+ */
+export const META_DESCRIPTION_MIN = 120
+export const META_DESCRIPTION_MAX = 158
 
 export type ZoneMetricsForSeo = {
   priceNewMin?: number
@@ -54,6 +65,7 @@ const T = {
     ru: '{n}, {c}: цены на недвижимость {y}',
     sq: '{n}, {c}: çmimet e pronave {y}',
     it: '{n}, {c}: prezzi immobili {y}',
+    pl: '{n}, {c}: ceny nieruchomości {y}',
   },
   cityTitle: {
     en: 'Property in {n}: prices {y}',
@@ -61,27 +73,33 @@ const T = {
     ru: 'Недвижимость в {n}: цены {y}',
     sq: 'Prona në {n}: çmimet {y}',
     it: 'Immobili a {n}: prezzi {y}',
+    pl: 'Nieruchomości w {n}: ceny {y}',
   },
   newBuild: {
     en: 'New builds {v}/m²', uk: 'Новобудови {v}/м²', ru: 'Новостройки {v}/м²',
     sq: 'Ndërtime të reja {v}/m²', it: 'Nuovo {v}/m²',
+    pl: 'Nowe budownictwo {v}/m²',
   },
   resale: {
     en: 'resale {v}/m²', uk: 'вторинка {v}/м²', ru: 'вторичка {v}/м²',
     sq: 'të përdorura {v}/m²', it: 'usato {v}/m²',
+    pl: 'rynek wtórny {v}/m²',
   },
   all: {
     en: 'asking {v}/m²', uk: 'ціна пропозиції {v}/м²', ru: 'цена предложения {v}/м²',
     sq: 'çmimi i kërkuar {v}/m²', it: 'prezzo richiesto {v}/m²',
+    pl: 'cena ofertowa {v}/m²',
   },
   rent: {
     en: 'a 1+1 rents for {v}/month', uk: 'оренда 1+1 — {v}/міс', ru: 'аренда 1+1 — {v}/мес',
     sq: 'qiraja 1+1 {v}/muaj', it: 'affitto 1+1 {v}/mese',
+    pl: 'wynajem 1+1 — {v}/mies.',
   },
   reference: {
     en: 'state reference {v} lek/m²', uk: 'державний референс {v} лек/м²',
     ru: 'государственный референс {v} лек/м²', sq: 'çmimi i referencës {v} lekë/m²',
     it: 'riferimento statale {v} lek/m²',
+    pl: 'referencja państwowa {v} lek/m²',
   },
   tail: {
     en: 'Sourced asking prices, {p}.',
@@ -89,6 +107,7 @@ const T = {
     ru: 'Цены предложения с источниками, {p}.',
     sq: 'Çmime të kërkuara me burime, {p}.',
     it: 'Prezzi richiesti con fonti, {p}.',
+    pl: 'Ceny ofertowe ze źródłami, {p}.',
   },
 } as const
 
@@ -151,17 +170,87 @@ export function buildZoneMetaDescription(
     }
   }
 
+  const desc = zone.description?.[locale] ?? zone.description?.en
+  const sentences = desc ? desc.split(/(?<=[.!?])\s/).filter((x) => x.trim()) : []
+
   if (parts.length > 0) {
+    // Name the place first. A zone with figures but no editorial note produced
+    // "Asking €1,900–2,800/m². Sourced asking prices, 2026-H1." — 55 characters
+    // that never say which zone, in which city, and are indistinguishable
+    // between the fifty-four zones the crawl of 2026-09-10 found sharing that
+    // shape. What someone searched for is the place name.
+    const place = placeLabel(zone, locale)
     const body = parts.join(', ')
-    // Whichever fragment leads, the sentence has to start like one.
-    const lead = body.charAt(0).toLocaleUpperCase(locale) + body.slice(1)
-    return `${lead}. ${fill(T.tail[locale], {p: m?.periodLabel ?? year})}`
+    const lead = place ? `${place}: ${body}` : body.charAt(0).toLocaleUpperCase(locale) + body.slice(1)
+    const tail = fill(T.tail[locale], {p: m?.periodLabel ?? year})
+
+    // Then, if it is still thin, the zone's own first sentence — the part that
+    // distinguishes it from the zone next door.
+    const base = `${lead}. ${tail}`
+    // The editorial sentence often opens by restating the band the lead just
+    // gave — "Plazh, Durres: asking €1,200–1,700/m². Plazh is the mass beach
+    // segment of Durrës: €1,200–1,700/m²…" — which spends the description's
+    // best characters saying the same thing twice. Take the first sentence
+    // that adds something instead.
+    const firstSentence = pickSentence(sentences, body)
+    if (base.length >= META_DESCRIPTION_MIN || !firstSentence) return base
+
+    // Best case, everything fits: figures, the sentence, and the provenance.
+    const withBoth = `${lead}. ${firstSentence} ${tail}`
+    if (withBoth.length <= META_DESCRIPTION_MAX) return withBoth
+
+    // Otherwise the sentence displaces the tail rather than sharing the room
+    // with it. Keeping both under pressure meant cutting the sentence mid-word
+    // and then resuming with boilerplate — "…prices inside Shëngjin'… Sourced
+    // asking prices, 2026-H1." — which reads worse than the short version it
+    // was meant to improve. The tail is a provenance note; the sentence is the
+    // only part that says what this zone is.
+    const withSentence = `${lead}. ${firstSentence}`
+    if (withSentence.length <= META_DESCRIPTION_MAX) return withSentence
+
+    const room = META_DESCRIPTION_MAX - lead.length - 3
+    if (room < 60) return base
+    const cut = firstSentence.slice(0, room)
+    const atWord = cut.slice(0, cut.lastIndexOf(' ')).trimEnd().replace(/[,;:—-]$/, '')
+    return atWord.length >= 60 ? `${lead}. ${atWord}…` : base
   }
 
-  const desc = zone.description?.[locale] ?? zone.description?.en
-  if (!desc) return null
-  const first = desc.split(/(?<=[.!?])\s/)[0]
-  return first.length > 200 ? `${first.slice(0, 197)}…` : first
+  const opener = sentences[0]
+  if (!opener) return null
+  return opener.length > 200 ? `${opener.slice(0, 197)}…` : opener
+}
+
+/**
+ * The first sentence that is not a restatement of the figures already shown.
+ * Falls back to the opener when every sentence repeats them, because a
+ * duplicated fact still beats no sentence at all.
+ */
+function pickSentence(sentences: string[], shown: string): string | null {
+  if (sentences.length === 0) return null
+  // Split bands into their endpoints: "€1,200–1,700" has to become "1,200" and
+  // "1,700", or a sentence repeating the whole band matches nothing.
+  const numbers = Array.from(
+    new Set(
+      (shown.match(/\d[\d\s,. ]*/g) ?? [])
+        .flatMap((run) => run.split(/[–—-]/))
+        .map((n) => n.replace(/[\s ]/g, '').replace(/[.,]$/, ''))
+        .filter((n) => n.replace(/[.,]/g, '').length >= 3),
+    ),
+  )
+  const repeats = (sentence: string) => {
+    const flat = sentence.replace(/[\s ]/g, '')
+    return numbers.filter((n) => flat.includes(n)).length >= 2
+  }
+  return sentences.find((x) => !repeats(x)) ?? sentences[0]
+}
+
+/** "Blloku, Tirana" for a district, "Tirana" for a city. */
+function placeLabel(zone: ZoneSeoInput, locale: SeoLocale): string | null {
+  const name = zone.title?.[locale] ?? zone.title?.en ?? zone.slug
+  if (!name) return null
+  if (zone.kind === 'city') return name
+  const city = zone.cityTitle?.[locale] ?? zone.cityTitle?.en
+  return city ? `${name}, ${city}` : name
 }
 
 export function buildZoneMetaTitle(zone: ZoneSeoInput, locale: SeoLocale, fallbackYear: string): string {
@@ -193,6 +282,33 @@ export function isGenericMetaTitle(existing: string | undefined, name: string | 
  * landing and the document it came from cannot disagree — which is what keeps
  * `generate:district-landings --verify` meaningful.
  */
+/**
+ * True when a description is this generator's own earlier output.
+ *
+ * `HAND_WRITTEN_MIN` alone was not enough to tell them apart: an earlier
+ * generated stub — "New builds €2,300–3,500/m², resale €1,500–2,500/m².
+ * Sourced asking prices, 2026-H1." — is 83 characters, clears the threshold and
+ * was therefore protected as if a person had written it, so a template
+ * improvement never reached the zones that needed it most.
+ *
+ * The provenance tail is the tell: nothing hand-written ends with it.
+ */
+export function looksGenerated(
+  text: string | undefined,
+  locale: SeoLocale,
+  place?: string | null,
+): boolean {
+  const value = text?.trim()
+  if (!value) return false
+  // The tail carries a period label, so compare against its fixed prefix.
+  const tail = T.tail[locale].split('{')[0].trim()
+  if (tail.length > 0 && value.includes(tail)) return true
+  // The tail is displaced when an editorial sentence needs the room, so the
+  // lead is the other tell: nobody hand-writes a description that opens
+  // "Plazh, Durres: ".
+  return Boolean(place && value.startsWith(`${place}: `))
+}
+
 export function resolveZoneSeo(
   zone: ZoneSeoInput,
   year: string,
@@ -203,8 +319,11 @@ export function resolveZoneSeo(
   if (!composed) return null
 
   const force = opts?.force ?? false
+  const existingEn = existing?.metaDescription?.en
   const keepDescription =
-    !force && (existing?.metaDescription?.en?.trim().length ?? 0) >= HAND_WRITTEN_MIN
+    !force &&
+    !looksGenerated(existingEn, 'en', placeLabel(zone, 'en')) &&
+    (existingEn?.trim().length ?? 0) >= HAND_WRITTEN_MIN
   const keepTitle =
     !force && !isGenericMetaTitle(existing?.metaTitle?.en, zone.title?.en ?? zone.slug)
 
