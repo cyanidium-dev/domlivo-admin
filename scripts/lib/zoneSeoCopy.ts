@@ -177,8 +177,16 @@ export function buildZoneMetaDescription(
     }
   }
 
-  const desc = zone.description?.[locale] ?? zone.description?.en
-  const sentences = desc ? desc.split(/(?<=[.!?])\s/).filter((x) => x.trim()) : []
+  // Strict on locale for the padding sentence: falling back to English put
+  // "Tirana: cena ofertowa €1863/m². Recorded sales split Tirana more usefully
+  // than any average…" on the Polish page. A short description in the right
+  // language beats a long one in two languages.
+  const localeDesc = zone.description?.[locale]
+  const sentences = localeDesc ? localeDesc.split(/(?<=[.!?])\s/).filter((x) => x.trim()) : []
+
+  // The no-metrics branch below is the zone's only description, so there the
+  // English original still beats having none at all.
+  const anyDesc = localeDesc ?? zone.description?.en
 
   if (parts.length > 0) {
     // Name the place first. A zone with figures but no editorial note produced
@@ -222,7 +230,7 @@ export function buildZoneMetaDescription(
     return atWord.length >= 60 ? `${lead}. ${atWord}…` : base
   }
 
-  const opener = sentences[0]
+  const opener = (localeDesc ? sentences : anyDesc ? anyDesc.split(/(?<=[.!?])\s/).filter((x) => x.trim()) : [])[0]
   if (!opener) return null
   return opener.length > 200 ? `${opener.slice(0, 197)}…` : opener
 }
@@ -244,9 +252,13 @@ function pickSentence(sentences: string[], shown: string): string | null {
         .filter((n) => n.replace(/[.,]/g, '').length >= 3),
     ),
   )
+  // Half the figures, at least one. A fixed threshold of two never fired for a
+  // zone quoted as a single median — "Durres: asking €1,450/m². Durres averages
+  // about €1,450/m²…" — because there was only one number to match.
+  const needed = Math.max(1, Math.ceil(numbers.length / 2))
   const repeats = (sentence: string) => {
     const flat = sentence.replace(/[\s ]/g, '')
-    return numbers.filter((n) => flat.includes(n)).length >= 2
+    return numbers.filter((n) => flat.includes(n)).length >= needed
   }
   return sentences.find((x) => !repeats(x)) ?? sentences[0]
 }

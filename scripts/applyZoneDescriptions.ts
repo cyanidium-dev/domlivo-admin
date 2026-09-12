@@ -13,9 +13,11 @@
  *   npm run generate:zone-seo -- --execute
  *   npm run translate:zone-editorial -- --execute   (uk, sq, it, pl)
  *
- * Only `en` and `ru` are authored, and the other four locales are dropped
- * rather than left holding the stub — same contract as
- * `applyZoneEditorialCopy.ts`, and for the same reason.
+ * All six locales are written: `en` and `ru` from `data/cityZoneDescriptions.ts`,
+ * the rest from `data/cityZoneDescriptionsTranslations.ts`, translated by hand.
+ * The generator is strict about locale when it borrows a sentence, so an
+ * untranslated locale would silently get the shorter description instead of a
+ * half-English one.
  *
  * Idempotent: a zone whose description already clears the threshold is left
  * alone unless --force.
@@ -25,7 +27,11 @@ import path from 'node:path'
 import {config as loadDotenv} from 'dotenv'
 import {createClient} from '@sanity/client'
 import {CITY_ZONE_DESCRIPTIONS, EXTRA_DISTRICT_DESCRIPTIONS} from './data/cityZoneDescriptions'
-import type {EditorialCopy} from './data/zoneEditorialCopy'
+import {
+  CITY_DESCRIPTION_TRANSLATIONS,
+  DISTRICT_DESCRIPTION_TRANSLATIONS,
+  withTranslations,
+} from './data/cityZoneDescriptionsTranslations'
 
 loadDotenv({path: path.resolve(process.cwd(), '.env')})
 
@@ -56,7 +62,7 @@ type Row = {_id: string; slug: string; length: number}
 
 async function applyTo(
   type: 'city' | 'district',
-  copy: Record<string, EditorialCopy>,
+  copy: Record<string, Record<string, string>>,
 ): Promise<number> {
   const slugs = Object.keys(copy)
   if (slugs.length === 0) return 0
@@ -82,13 +88,14 @@ async function applyTo(
     }
     console.log(
       `  ${type} ${row.slug}: ${row.length} → ${text.en.length} chars (en), ` +
-        `${text.ru.length} (ru); first sentence ${text.en.split(/(?<=[.!?])\s/)[0].length} chars`,
+        `${Object.keys(text).length} locales; first sentence ` +
+        `${text.en.split(/(?<=[.!?])\s/)[0].length} chars`,
     )
     if (isExecute) {
-      // The whole field is replaced: the four unauthored locales still hold the
-      // stub, and leaving them would pair a real paragraph with "Durres is the
-      // main port." in Italian.
-      await client.patch(row._id).set({description: {en: text.en, ru: text.ru}}).commit()
+      // The whole field is replaced: whatever a locale held was the stub, and
+      // leaving it would pair a real paragraph with "Durres is the main port."
+      // in Italian.
+      await client.patch(row._id).set({description: text}).commit()
     }
     written += 1
   }
@@ -97,8 +104,14 @@ async function applyTo(
 
 async function run() {
   console.log(`\n=== apply:zone-descriptions (${isDry ? 'DRY RUN' : 'EXECUTE'}${isForce ? ', force' : ''}) ===\n`)
-  const cities = await applyTo('city', CITY_ZONE_DESCRIPTIONS)
-  const districts = await applyTo('district', EXTRA_DISTRICT_DESCRIPTIONS)
+  const cities = await applyTo(
+    'city',
+    withTranslations(CITY_ZONE_DESCRIPTIONS, CITY_DESCRIPTION_TRANSLATIONS),
+  )
+  const districts = await applyTo(
+    'district',
+    withTranslations(EXTRA_DISTRICT_DESCRIPTIONS, DISTRICT_DESCRIPTION_TRANSLATIONS),
+  )
   console.log(`\nDone: ${cities} city, ${districts} district description(s).`)
   if (isDry) console.log('Nothing was written — rerun with --execute.\n')
   else console.log('Now run: npm run generate:zone-seo -- --execute\n')

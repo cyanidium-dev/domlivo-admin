@@ -88,6 +88,22 @@ describe('buildZoneMetaDescription', () => {
     expect(out).not.toContain('is the priciest part of Tirana')
   })
 
+  it('skips a restatement even when the lead quotes a single figure', () => {
+    // A fixed threshold of two matches never fired for a zone quoted as one
+    // median, so "Durres: asking €1,450/m². Durres averages about €1,450/m²…"
+    // got through.
+    const city = {
+      kind: 'city' as const,
+      slug: 'durres',
+      title: {en: 'Durres'},
+      description: {en: 'Durres averages about €1,450/m² and is up 18% year on year. It prices as a dozen strips rather than one.'},
+      metrics: {priceAllMedian: 1450, periodLabel: '2026-H1'},
+    }
+    const out = buildZoneMetaDescription(city, 'en', '2026')!
+    expect(out).not.toContain('averages about')
+    expect(out).toContain('a dozen strips')
+  })
+
   it('leaves an already-substantial description unpadded', () => {
     const out = buildZoneMetaDescription(
       {...zone, description: {en: 'Something long enough to be worth adding but not needed here.'}},
