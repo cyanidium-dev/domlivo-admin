@@ -248,8 +248,11 @@ function pickSentence(sentences: string[], shown: string): string | null {
     new Set(
       (shown.match(/\d[\d\s,. ]*/g) ?? [])
         .flatMap((run) => run.split(/[–—-]/))
-        .map((n) => n.replace(/[\s ]/g, '').replace(/[.,]$/, ''))
-        .filter((n) => n.replace(/[.,]/g, '').length >= 3),
+        // Strip every thousands separator before comparing. Albanian formats
+        // 1450 as "1.450" while the generated lead writes "1450", so the two
+        // never matched and the restatement slipped through.
+        .map((n) => n.replace(/[\s .,]/g, ''))
+        .filter((n) => n.length >= 3),
     ),
   )
   // Half the figures, at least one. A fixed threshold of two never fired for a
@@ -257,7 +260,7 @@ function pickSentence(sentences: string[], shown: string): string | null {
   // about €1,450/m²…" — because there was only one number to match.
   const needed = Math.max(1, Math.ceil(numbers.length / 2))
   const repeats = (sentence: string) => {
-    const flat = sentence.replace(/[\s ]/g, '')
+    const flat = sentence.replace(/[\s .,]/g, '')
     return numbers.filter((n) => flat.includes(n)).length >= needed
   }
   return sentences.find((x) => !repeats(x)) ?? sentences[0]
