@@ -86,7 +86,12 @@ async function main() {
         priceNewMin, priceNewMax, priceNewMedian,
         priceResaleMin, priceResaleMax, priceResaleMedian,
         priceAllMin, priceAllMax, priceAllMedian,
-        rentLtr1brMin, rentLtr1brMax, referencePrice, periodLabel
+        rentLtr1brMin, rentLtr1brMax,
+        // The band fields matter as much as the point: Laprake publishes only
+        // referencePriceMin/Max, and selecting the singular alone left it with
+        // no figure in its description at all.
+        referencePrice, referencePriceMin, referencePriceMax,
+        periodLabel
       },
       "landing": *[
         _type == "landingPage" &&

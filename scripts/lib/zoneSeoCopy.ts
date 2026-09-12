@@ -43,6 +43,8 @@ export type ZoneMetricsForSeo = {
   rentLtr1brMin?: number
   rentLtr1brMax?: number
   referencePrice?: number
+  referencePriceMin?: number
+  referencePriceMax?: number
   periodLabel?: string
 }
 
@@ -165,8 +167,13 @@ export function buildZoneMetaDescription(
     if (resale) parts.push(fill(T.resale[locale], {v: `€${resale}`}))
     if (!newB && !resale && all) parts.push(fill(T.all[locale], {v: `€${all}`}))
     if (rent) parts.push(fill(T.rent[locale], {v: `€${rent}`}))
-    if (!newB && !resale && !all && typeof m.referencePrice === 'number') {
-      parts.push(fill(T.reference[locale], {v: nf(locale).format(m.referencePrice)}))
+    if (!newB && !resale && !all) {
+      // Some zones carry the state reference as a band rather than a point —
+      // Laprakë has only `referencePriceMin`/`Max`, and reading the singular
+      // field alone left it with no figure at all, so its description fell back
+      // to a bare sentence with no price in it.
+      const reference = formatBand(locale, m.referencePriceMin, m.referencePriceMax, m.referencePrice)
+      if (reference) parts.push(fill(T.reference[locale], {v: reference}))
     }
   }
 

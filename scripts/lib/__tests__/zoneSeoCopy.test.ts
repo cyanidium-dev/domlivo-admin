@@ -109,6 +109,23 @@ describe('buildZoneMetaDescription', () => {
     }
   })
 
+  it('reads the state reference as a band, not only as a point', () => {
+    // Laprake publishes referencePriceMin/Max and no singular value. Reading
+    // only the point left it with no figure at all, so its description fell
+    // back to a bare sentence with no price in it.
+    const banded = {
+      kind: 'district' as const,
+      slug: 'laprake',
+      title: {en: 'Laprake'},
+      cityTitle: tirana,
+      description: {en: 'One of the fastest gentrifying parts of Tirana.'},
+      metrics: {referencePriceMin: 93600, referencePriceMax: 113000, periodLabel: '2026-H1'},
+    }
+    const out = buildZoneMetaDescription(banded, 'en', '2026')!
+    expect(out).toContain('93,600–113,000')
+    expect(out.startsWith('Laprake, Tirana:')).toBe(true)
+  })
+
   it('falls back to the first sentence when a zone has no metrics', () => {
     const noMetrics = {
       kind: 'district' as const,
