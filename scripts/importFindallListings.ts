@@ -27,8 +27,8 @@
  *  - Prices quoted in lek are converted at LEK_PER_EUR.
  *  - Availability becomes the lifecycle status: sold, reserved and withdrawn
  *    listings are imported but the site's published filter hides them.
- *  - Rentals get `status: 'rent'` (or 'short-term' for daily rates). Whether
- *    rentals are shown is the front end's decision (PUBLIC_DEAL_TYPES).
+ *  - Rentals are not imported. Domlivo sells only; the rentals once imported
+ *    were archived on 2026-09-15, and a rent row in the source is skipped.
  *
  * Idempotent: every document has a deterministic id derived from the partner's
  * own listing id, so a second run updates rather than duplicates, and photos
@@ -79,7 +79,7 @@ if (!isDry && !isExecute) {
 const SOURCE_DIR = path.resolve(process.cwd(), '../domlivo-workspace/findall')
 const SOURCES = sourceArg
   ? [path.resolve(sourceArg)]
-  : ['findall-sale.json', 'findall-rent.json'].map((f) => path.join(SOURCE_DIR, f)).filter(fs.existsSync)
+  : ['findall-sale.json'].map((f) => path.join(SOURCE_DIR, f)).filter(fs.existsSync)
 const PARTNER = 'findall'
 const CITY_SLUG = 'durres'
 
@@ -340,6 +340,8 @@ async function main() {
     process.exit(1)
   }
   let rows: Scraped[] = SOURCES.flatMap((file) => JSON.parse(fs.readFileSync(file, 'utf8')) as Scraped[])
+    // Sale only: a rent row in an explicitly passed source is dropped too.
+    .filter((row) => row.publishedFor !== 'rent')
   if (limitArg > 0) rows = rows.slice(0, limitArg)
 
   const [cityId, districts, existingTypes, existingAgent] = await Promise.all([
