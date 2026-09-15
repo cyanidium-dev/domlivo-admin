@@ -508,6 +508,25 @@ export const property = defineType({
     }),
 
     defineField({
+      name: 'seaDistanceMeters',
+      title: 'Distance to the sea (m)',
+      type: 'number',
+      group: 'details',
+      description:
+        'Walking distance to the sea or beach in metres, as the listing states it. Feeds the "near the sea" pages (300 m or less). Leave empty when the listing does not say; do not estimate from the map.',
+      validation: (Rule) => Rule.min(0).max(20000).integer(),
+    }),
+
+    defineField({
+      name: 'beachfront',
+      title: 'First line / beachfront',
+      type: 'boolean',
+      group: 'details',
+      description:
+        'Only when nothing stands between the building and the beach ("first line", "vijë e parë"). A sea view alone is not first line.',
+    }),
+
+    defineField({
       name: 'amenitiesRefs',
       title: 'Amenities',
       type: 'array',
