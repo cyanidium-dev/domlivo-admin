@@ -26,8 +26,8 @@ export const CITY_ZONE_DESCRIPTIONS: Record<string, EditorialCopy> = {
   },
 
   durres: {
-    en: 'Durrës averages about €1,450/m² and is up roughly 18% year on year, but the city prices as a dozen separate strips rather than one. The centre and the Currila–Vollga–Taulantia seafront ask €1,900–2,800/m²; the beach at Plazh runs €1,200–1,700; inland Shkozet and Rrashbull sit at €1,000–1,600 with no season premium. The 01.01.2026 reference schedule tripled the port zone figure to 200,000 lek/m², which the city average does not reflect.',
-    ru: 'Дуррес в среднем стоит около €1 450/м² и прибавил примерно 18% год к году, но оценивается не как один рынок, а как десяток отдельных полос. Центр и набережная Currila–Vollga–Taulantia просят €1 900–2 800/м²; пляж в Плаже — €1 200–1 700; внутренние Шкозет и Рашбуль — €1 000–1 600 без сезонной надбавки. Редакция справочных цен от 01.01.2026 утроила показатель портовой зоны до 200 000 лек/м², и городская средняя этого не отражает.',
+    en: 'Durrës averages about €1,450/m² and is up roughly 18% year on year, but the city prices as a dozen separate strips rather than one. The centre and the Currila–Vollga–Taulantia seafront ask €1,900–2,800/m²; the beach at Plazh runs €1,200–1,700; inland Shkozet and Rrashbull sit at €1,000–1,600 with no season premium. The state reference price, from which notary and tax costs are calculated, is still a single rate for the whole city: a 2025 draft that would have raised the port zone to 200,000 lek/m² has not been approved.',
+    ru: 'Дуррес в среднем стоит около €1 450/м² и прибавил примерно 18% год к году, но оценивается не как один рынок, а как десяток отдельных полос. Центр и набережная Currila–Vollga–Taulantia просят €1 900–2 800/м²; пляж в Плаже — €1 200–1 700; внутренние Шкозет и Рашбуль — €1 000–1 600 без сезонной надбавки. Государственная справочная цена, от которой считаются нотариальные расходы и налоги, по-прежнему одна на весь город: проект 2025 года, поднимавший портовую зону до 200 000 лек/м², не утверждён.',
   },
 
   vlore: {

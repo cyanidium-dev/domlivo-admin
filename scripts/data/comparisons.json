@@ -3673,12 +3673,12 @@
             "pl": "Co sprawdzić"
           },
           "left": {
-            "en": "The reference-price schedule of 01.01.2026 tripled the port zone figure, and notary and tax costs are calculated from it, not from what you pay",
-            "uk": "Редакція референтних цін від 01.01.2026 потроїла показник портової зони, а нотаріальні й податкові витрати рахуються від неї, а не від суми угоди",
-            "ru": "Редакция справочных цен от 01.01.2026 утроила показатель портовой зоны, а нотариальные и налоговые расходы считаются от неё, а не от суммы сделки",
-            "sq": "Skema e çmimeve të referencës e 01.01.2026 e trefishoi shifrën e zonës së portit, dhe kostot noteriale e tatimore llogariten prej saj, jo nga ajo që paguani",
-            "it": "Il listino dei prezzi di riferimento dell’01.01.2026 ha triplicato il valore della zona portuale, e notaio e imposte si calcolano su quello, non su quanto pagate",
-            "pl": "Tabela cen referencyjnych z 01.01.2026 potroiła wartość strefy portowej, a koszty notarialne i podatkowe liczy się od niej, nie od ceny zakupu"
+            "en": "Notary and tax costs follow the state reference price when it is above the contract price; Durrës still has one city rate, and the 2025 draft that would have tripled the port zone has not been approved — ask the notary which value applies",
+            "uk": "Нотаріальні витрати й податки йдуть від державної довідкової ціни, якщо вона вища за ціну договору; у Дурресі досі одна міська ставка, а проєкт 2025 року, що потроїв би портову зону, не затверджено — спитайте нотаріуса, яке значення діє",
+            "ru": "Нотариальные расходы и налоги считаются от государственной справочной цены, если она выше цены договора; в Дурресе до сих пор одна городская ставка, а проект 2025 года, утраивавший портовую зону, не утверждён — спросите нотариуса, какое значение действует",
+            "sq": "Kostot e noterit dhe taksat ndjekin çmimin shtetëror të referencës kur ai është mbi çmimin e kontratës; Durrësi ka ende një tarifë të vetme, dhe drafti i 2025-s që do ta trefishonte zonën e portit nuk është miratuar — pyesni noterin cila vlerë zbatohet",
+            "it": "Notaio e imposte seguono il prezzo di riferimento statale quando supera il prezzo del contratto; Durazzo ha ancora un’unica tariffa cittadina e la bozza del 2025 che avrebbe triplicato la zona portuale non è stata approvata: chiedete al notaio quale valore si applica",
+            "pl": "Koszty notarialne i podatki liczy się od państwowej ceny referencyjnej, gdy jest wyższa od ceny z umowy; w Durrës wciąż obowiązuje jedna stawka miejska, a projekt z 2025 roku, który potroiłby strefę portową, nie został zatwierdzony — zapytaj notariusza, jaka wartość obowiązuje"
           },
           "right": {
             "en": "Building age and structure — the 2019 earthquake hit this strip hardest — and the exact metres to the sand",

@@ -32,7 +32,7 @@
       "publisher": "Monitor.al"
     },
     "monitorReference2026": {
-      "label": "Monitor.al — new reference price schedule effective 01.01.2026",
+      "label": "Monitor.al — draft reference price schedule (July 2025, not approved)",
       "url": "https://monitor.al/tabela-cmimet-e-reja-te-references-deri-ne-2-mije-euro-m2-trefishim-per-durres-vollga-e-sazan/",
       "publisher": "Monitor.al"
     },
@@ -120,8 +120,8 @@
   },
   "editions": {
     "u34": "Udhëzim 34/2023 (in force 01.01.2024)",
-    "e2026": "Edition effective 01.01.2026",
-    "south": "Southern map, collected 2026-08-15 (edition unverified — OPEN-QUESTIONS #39)"
+    "e2026": "Draft of July 2025 (planned for 01.01.2026, not approved as of July 2026)",
+    "south": "Draft map, collected 2026-08-15 — not approved as of July 2026"
   },
   "records": [
     {
@@ -900,8 +900,8 @@
         "referencePrices"
       ],
       "notes": {
-        "en": "City average, up about 18% year on year. The 01.01.2026 schedule tripled the port zone reference to 200,000 lek/m², which the city-level figure above does not reflect.",
-        "ru": "Средняя по городу, рост около 18% г/г. Редакция от 01.01.2026 утроила референс портовой зоны до 200 000 лек/м², что городская цифра выше не отражает."
+        "en": "City average, up about 18% year on year. The state reference price is still a single city rate: a 2025 draft splitting Durrës into 13 zones, with the port zone at 200,000 lek/m², had not been approved as of July 2026.",
+        "ru": "Средняя по городу, рост около 18% г/г. Государственная справочная цена по-прежнему одна на весь город: проект 2025 года с 13 зонами и портовой зоной по 200 000 лек/м² на июль 2026 года не утверждён."
       },
       "kbSource": "02-cities/durres.md §1; 12-reference-prices §3, §3a"
     },
