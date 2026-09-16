@@ -18,7 +18,7 @@
  *
  * Run:
  * - npx tsx scripts/translateLocaleGaps.ts --dry
- * - npx tsx scripts/translateLocaleGaps.ts --execute [--types city,district] [--limit 20] [--locales de]
+ * - npx tsx scripts/translateLocaleGaps.ts --execute [--types city,district] [--limit 20] [--locales de] [--page-types home,city]
  *
  * `--locales` restricts the targets, so rolling out one new locale does not also
  * re-open whatever is still pending in the others.
@@ -46,6 +46,8 @@ const isExecute = args.includes('--execute')
 const typesArg = args.includes('--types') ? args[args.indexOf('--types') + 1].split(',') : null
 const limit = args.includes('--limit') ? Number(args[args.indexOf('--limit') + 1]) : 0
 const localesArg = args.includes('--locales') ? args[args.indexOf('--locales') + 1].split(',') : null
+/** `--page-types home,city`: landing pages of these pageTypes only (other types are unaffected). */
+const pageTypesArg = args.includes('--page-types') ? args[args.indexOf('--page-types') + 1].split(',') : null
 if (!isDry && !isExecute) {
   console.error('Use --dry or --execute.')
   process.exit(1)
@@ -110,8 +112,8 @@ const SYSTEM = `Task: translate website copy fields. The user message is a JSON 
 async function main() {
   const types = typesArg ?? TYPES
   const docs = await client.fetch<Record<string, unknown>[]>(
-    `*[_type in $types && !(_id in path("drafts.**")) && (isPublished != false)]`,
-    {types},
+    `*[_type in $types && !(_id in path("drafts.**")) && (isPublished != false) && ($pageTypes == null || _type != "landingPage" || pageType in $pageTypes)]`,
+    {types, pageTypes: pageTypesArg},
   )
   let tasks: Task[] = []
   for (const doc of docs) {
@@ -148,40 +150,48 @@ async function main() {
   if (cur.length) batches.push(cur)
   console.log(`${batches.length} requests`)
 
-  const results = new Map<string, Record<string, string>>()
+  // Each batch is written as soon as it comes back, so a run that dies halfway
+  // (the 2026-09-16 German run hit the API credit limit at batch 32 of 36 and,
+  // writing only at the end, kept nothing) leaves its finished work in place
+  // and a re-run picks up only what is still missing.
+  const report: Array<{id: string; field: string; locale: string; text: string}> = []
+  let written = 0
+  let documents = 0
+  let failed = 0
   await mapLimit(batches, 4, async (batch, i) => {
     const payload: Record<string, {source: string; from: string; to: string[]}> = {}
     batch.forEach((t, j) => {
       payload[`f${j}`] = {source: t.source, from: LOCALE_NAMES[t.sourceLocale], to: t.targets}
     })
-    const reply = await askJson(SYSTEM, JSON.stringify(payload))
+    let reply: Record<string, unknown>
+    try {
+      reply = await askJson(SYSTEM, JSON.stringify(payload))
+    } catch (err) {
+      failed += 1
+      console.log(`  ! batch ${i + 1}/${batches.length}: ${err instanceof Error ? err.message : err}`)
+      return
+    }
+    const perDoc = new Map<string, Record<string, string>>()
     batch.forEach((t, j) => {
       const got = reply[`f${j}`]
-      if (got && typeof got === 'object') results.set(`${t.id}::${t.field}`, got as Record<string, string>)
+      if (!got || typeof got !== 'object') return
+      const set = perDoc.get(t.id) ?? {}
+      for (const l of t.targets) {
+        const text = typeof (got as Record<string, unknown>)[l] === 'string' ? ((got as Record<string, string>)[l] as string).trim() : ''
+        if (!text) continue
+        set[`${t.field}.${l}`] = text
+        report.push({id: t.id, field: t.field, locale: l, text})
+      }
+      perDoc.set(t.id, set)
     })
-    console.log(`  batch ${i + 1}/${batches.length} done (${batch.length} fields)`)
-  })
-
-  const report: Array<{id: string; field: string; locale: string; text: string}> = []
-  const perDoc = new Map<string, Record<string, string>>()
-  for (const t of tasks) {
-    const got = results.get(`${t.id}::${t.field}`)
-    if (!got) continue
-    const set = perDoc.get(t.id) ?? {}
-    for (const l of t.targets) {
-      const text = typeof got[l] === 'string' ? got[l].trim() : ''
-      if (!text) continue
-      set[`${t.field}.${l}`] = text
-      report.push({id: t.id, field: t.field, locale: l, text})
+    for (const [id, set] of perDoc) {
+      if (!Object.keys(set).length) continue
+      await client.patch(id).set(set).commit()
+      written += Object.keys(set).length
+      documents += 1
     }
-    perDoc.set(t.id, set)
-  }
-  let written = 0
-  for (const [id, set] of perDoc) {
-    if (!Object.keys(set).length) continue
-    await client.patch(id).set(set).commit()
-    written += Object.keys(set).length
-  }
+    console.log(`  batch ${i + 1}/${batches.length} written (${batch.length} fields)`)
+  })
   const reportPath = path.resolve(process.cwd(), `reports/locale-gaps-translated-${new Date().toISOString().slice(0, 10)}.json`)
   fs.mkdirSync(path.dirname(reportPath), {recursive: true})
   fs.writeFileSync(reportPath, JSON.stringify(report, null, 2))
