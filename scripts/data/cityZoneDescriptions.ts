@@ -46,8 +46,8 @@ export const CITY_ZONE_DESCRIPTIONS: Record<string, EditorialCopy> = {
   },
 
   himare: {
-    en: 'Himarë prices as one market: first line with a view reaches €3,500/m² and drops to about €2,200 two or three streets back. The city median is €2,701/m² across a €1,600–3,200 band. Microzones are not priced separately here because the samples are genuinely too thin — a property of this market rather than a gap in the data. The state reference rose 141%, from 58,000 to 140,000 lek/m².',
-    ru: 'Химара оценивается как единый рынок: первая линия с видом доходит до €3 500/м² и падает примерно до €2 200 через две-три улицы вглубь. Медиана по городу — €2 701/м² при диапазоне €1 600–3 200. Микрозоны здесь отдельно не оцениваются, потому что выборки действительно слишком малы — это свойство рынка, а не пробел в данных. Справочная цена выросла на 141%, с 58 000 до 140 000 лек/м².',
+    en: 'Himarë prices as one market: first line with a view reaches €3,500/m² and drops to about €2,200 two or three streets back. The city median is €2,701/m² across a €1,600–3,200 band. Microzones are not priced separately here because the samples are genuinely too thin — a property of this market rather than a gap in the data. The state reference rate is 58,000 lek/m²; a 2026 draft map would raise it 141%, to 140,000, but the draft has not been approved.',
+    ru: 'Химара оценивается как единый рынок: первая линия с видом доходит до €3 500/м² и падает примерно до €2 200 через две-три улицы вглубь. Медиана по городу — €2 701/м² при диапазоне €1 600–3 200. Микрозоны здесь отдельно не оцениваются, потому что выборки действительно слишком малы — это свойство рынка, а не пробел в данных. Государственная справочная ставка — 58 000 лек/м²; проект карты 2026 года поднял бы её на 141%, до 140 000, но он не утверждён.',
   },
 
   shkoder: {

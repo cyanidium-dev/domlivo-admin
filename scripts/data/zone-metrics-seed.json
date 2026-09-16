@@ -983,8 +983,8 @@
         "referencePrices"
       ],
       "notes": {
-        "en": "City-level only: microzone samples are too thin to price separately, which is a property of this market rather than a gap in collection. First line with a view reaches €3,500/m² and drops to about €2,200/m² two or three streets back. The reference price rose 141%, from 58,000 to 140,000 lek/m².",
-        "ru": "Только городской уровень: выборки по микрозонам слишком тонкие, и это свойство рынка, а не пробел сбора. Первая линия с видом доходит до €3 500/м², в двух-трёх улицах от моря — около €2 200/м². Референс-цена выросла на 141%, с 58 000 до 140 000 лек/м²."
+        "en": "City-level only: microzone samples are too thin to price separately, which is a property of this market rather than a gap in collection. First line with a view reaches €3,500/m² and drops to about €2,200/m² two or three streets back. The 2026 draft reference map would raise the rate 141%, from 58,000 to 140,000 lek/m²; the draft has not been approved.",
+        "ru": "Только городской уровень: выборки по микрозонам слишком тонкие, и это свойство рынка, а не пробел сбора. Первая линия с видом доходит до €3 500/м², в двух-трёх улицах от моря — около €2 200/м². Проект справочной карты 2026 года поднял бы ставку на 141%, с 58 000 до 140 000 лек/м²; проект не утверждён."
       },
       "kbSource": "02-cities/himara.md §1, §2a, §3; 12-reference-prices §4"
     },
@@ -1163,8 +1163,8 @@
         "referencePrices"
       ],
       "notes": {
-        "en": "A municipality village: stone housing stock, real character, very few transactions. The state values every Himarë village at the same 58,000 lek/m² (~€590) regardless of position, which is less than half the town rate. Title risk on this coast is the highest in Albania — the restitution chaos of the 1990s has never been cleaned up.",
-        "ru": "Деревня муниципалитета: каменный фонд, настоящий характер, очень мало сделок. Государство оценивает все сёла Химары одинаково — 58 000 лек/м² (~€590) вне зависимости от расположения, это меньше половины городской ставки. Титульный риск на этом побережье — максимальный в Албании: хаос реституции 1990-х так и не разобран."
+        "en": "A municipality village: stone housing stock, real character, very few transactions. Himarë’s state reference rate is 58,000 lek/m² (~€590), and the 2026 draft map would apply it to every village regardless of position; the draft has not been approved. Title risk on this coast is the highest in Albania — the restitution chaos of the 1990s has never been cleaned up.",
+        "ru": "Деревня муниципалитета: каменный фонд, настоящий характер, очень мало сделок. Справочная ставка Химары — 58 000 лек/м² (~€590), и проект карты 2026 года применил бы её ко всем сёлам вне зависимости от расположения; проект не утверждён. Титульный риск на этом побережье — максимальный в Албании: хаос реституции 1990-х так и не разобран."
       },
       "kbSource": "02-cities/himara.md §2; 12-reference-prices §4"
     },
@@ -1181,8 +1181,8 @@
         "referencePrices"
       ],
       "notes": {
-        "en": "A municipality village on the same band as Qeparo: stone stock, thin market. The flat 58,000 lek/m² (~€590) state rate applies to every Himarë village alike. Check title before anything else here.",
-        "ru": "Деревня муниципалитета в том же диапазоне, что и Кепаро: каменный фонд, тонкий рынок. Единая государственная ставка 58 000 лек/м² (~€590) применяется ко всем сёлам Химары. Здесь в первую очередь проверяют титул."
+        "en": "A municipality village on the same band as Qeparo: stone stock, thin market. The 2026 draft map would put every Himarë village on Himarë’s current 58,000 lek/m² (~€590) rate; the draft has not been approved. Check title before anything else here.",
+        "ru": "Деревня муниципалитета в том же диапазоне, что и Кепаро: каменный фонд, тонкий рынок. Проект карты 2026 года поставил бы все сёла Химары на действующую ставку Химары — 58 000 лек/м² (~€590); проект не утверждён. Здесь в первую очередь проверяют титул."
       },
       "kbSource": "02-cities/himara.md §2; 12-reference-prices §4"
     },
