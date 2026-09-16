@@ -195,7 +195,7 @@ async function main() {
   const reportPath = path.resolve(process.cwd(), `reports/locale-gaps-translated-${new Date().toISOString().slice(0, 10)}.json`)
   fs.mkdirSync(path.dirname(reportPath), {recursive: true})
   fs.writeFileSync(reportPath, JSON.stringify(report, null, 2))
-  console.log(`\nwrote ${written} locale values into ${perDoc.size} documents; report ${reportPath}`)
+  console.log(`\nwrote ${written} locale values in ${documents} document patches; ${failed} batches failed; report ${reportPath}`)
   console.log(`Claude: ${usage.calls} calls, ${usage.input} in / ${usage.output} out tokens ≈ $${costUsd(usage)}. Albanian values are pending native review.`)
 }
 
