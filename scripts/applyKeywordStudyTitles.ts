@@ -125,6 +125,31 @@ const CHANGES: Record<string, Change> = {
       de: 'Wohnung kaufen in Shkëmbi i Kavajës, Durrës — Preise 2026',
     },
   },
+  // The Durrës price page (/albania/durres/info): the price questions people
+  // actually type — "how much is an apartment in albania" (12/12 months in
+  // UK/US), "quanto costa una casa in albania" (100–1K), "ceny mieszkań w
+  // albanii" (100–1K), "was kostet eine wohnung in albanien". Also fixes the
+  // undeclined "у Дуррес / в Дуррес / në Durrësi" of the old titles.
+  'landing-durres': {
+    title: {
+      en: 'Property prices in Durrës 2026',
+      uk: 'Ціни на нерухомість у Дурресі 2026',
+      ru: 'Цены на недвижимость в Дурресе 2026',
+      sq: 'Çmimet e pronave në Durrës 2026',
+      it: 'Prezzi delle case a Durazzo 2026',
+      pl: 'Ceny mieszkań w Durrës 2026',
+      de: 'Immobilienpreise in Durrës 2026',
+    },
+    metaTitle: {
+      en: 'How Much Is an Apartment in Durrës? 2026 Prices by District',
+      it: 'Quanto costa una casa a Durazzo? Prezzi 2026 €/m² per zona',
+      pl: 'Ceny mieszkań w Durrës 2026: €/m² według dzielnic',
+      de: 'Was kostet eine Wohnung in Durrës? Preise 2026 nach Stadtteil',
+    },
+    metaDescription: {
+      de: 'Durrës: Angebotspreis 1.450 €/m². Zentrum und Uferpromenade Currila–Vollga–Taulantia 1.900–2.800 €/m², der Strand von Plazh 1.200–1.700 €, Golem 1.100–1.500 €.',
+    },
+  },
   'catalogSeoPage-propertiesRoot': {
     title: {
       en: 'Property for Sale in Albania — Apartments, Houses & Beach Homes',
