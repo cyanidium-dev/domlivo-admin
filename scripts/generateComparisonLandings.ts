@@ -38,10 +38,10 @@ import {
   parseComparisons,
   comparisonTitle,
   referencedZoneSlugs,
-  LOCALES,
+  localesOf,
+  type AnyLocale,
   type Comparison,
   type Localized,
-  type Locale,
 } from './lib/comparisonRegistry'
 
 loadDotenv({path: path.resolve(process.cwd(), '.env')})
@@ -72,10 +72,12 @@ const T = {
   compareTable: {
     en: '{a} against {b}, by the numbers', uk: '{a} проти {b} у цифрах', ru: '{a} против {b} в цифрах',
     sq: '{a} kundrejt {b}, në shifra', it: '{a} contro {b}, in cifre',
+    pl: '{a} kontra {b} w liczbach',
   },
   criteria: {
     en: 'Beyond the price', uk: 'Поза ціною', ru: 'За пределами цены',
     sq: 'Përtej çmimit', it: 'Oltre il prezzo',
+    pl: 'Poza ceną',
   },
   criteriaSub: {
     en: 'The things a price table cannot tell you: how long the season runs, who else is buying, and what can go wrong.',
@@ -83,14 +85,17 @@ const T = {
     ru: 'То, чего не скажет ценовая таблица: как долго длится сезон, кто ещё покупает и что может пойти не так.',
     sq: 'Ato që një tabelë çmimesh nuk i thotë: sa zgjat sezoni, kush tjetër blen dhe çfarë mund të shkojë keq.',
     it: 'Ciò che una tabella di prezzi non dice: quanto dura la stagione, chi altro compra e cosa può andare storto.',
+    pl: 'To, czego tabela cen nie powie: jak długo trwa sezon, kto jeszcze kupuje i co może pójść nie tak.',
   },
   verdict: {
     en: 'The verdict, by who you are', uk: 'Вердикт залежно від того, хто ви', ru: 'Вердикт в зависимости от того, кто вы',
     sq: 'Vendimi, sipas kush jeni', it: 'Il verdetto, secondo chi siete',
+    pl: 'Werdykt zależnie od tego, kim jesteś',
   },
   galleryTitle: {
     en: '{a} and {b}, side by side', uk: '{a} і {b} поруч', ru: '{a} и {b} рядом',
     sq: '{a} dhe {b}, krah për krah', it: '{a} e {b}, a confronto',
+    pl: '{a} i {b} obok siebie',
   },
   gallerySub: {
     en: 'Each photograph links through to that place’s own page, with its prices and sources.',
@@ -98,16 +103,19 @@ const T = {
     ru: 'Каждое фото ведёт на страницу соответствующего места — с ценами и источниками.',
     sq: 'Çdo fotografi të çon te faqja e vendit përkatës, me çmimet dhe burimet.',
     it: 'Ogni fotografia porta alla pagina del luogo, con prezzi e fonti.',
+    pl: 'Każde zdjęcie prowadzi do strony danego miejsca, z cenami i źródłami.',
   },
-  faqTitle: {en: 'Common questions', uk: 'Часті запитання', ru: 'Частые вопросы', sq: 'Pyetje të shpeshta', it: 'Domande frequenti'},
-  sourcesTitle: {en: 'Sources', uk: 'Джерела', ru: 'Источники', sq: 'Burimet', it: 'Fonti'},
+  faqTitle: {en: 'Common questions', uk: 'Часті запитання', ru: 'Частые вопросы', sq: 'Pyetje të shpeshta', it: 'Domande frequenti', pl: 'Częste pytania'},
+  sourcesTitle: {en: 'Sources', uk: 'Джерела', ru: 'Источники', sq: 'Burimet', it: 'Fonti', pl: 'Źródła'},
   relatedTitle: {
     en: 'Other comparisons', uk: 'Інші порівняння', ru: 'Другие сравнения',
     sq: 'Krahasime të tjera', it: 'Altri confronti',
+    pl: 'Inne porównania',
   },
   ctaTitle: {
     en: 'Decided, or still weighing it up?', uk: 'Вирішили — чи ще зважуєте?', ru: 'Решили — или ещё взвешиваете?',
     sq: 'Vendosët, apo ende po peshoni?', it: 'Deciso, o state ancora valutando?',
+    pl: 'Zdecydowane czy wciąż się zastanawiasz?',
   },
   ctaText: {
     en: 'Tell us the budget and the format and we will come back with what is actually on the market in either place.',
@@ -115,16 +123,19 @@ const T = {
     ru: 'Назовите бюджет и формат — мы вернёмся с тем, что действительно есть на рынке в каждом из мест.',
     sq: 'Na tregoni buxhetin dhe formatin dhe do t’ju kthehemi me atë që ka vërtet në treg në secilin vend.',
     it: 'Diteci budget e formato e vi rispondiamo con ciò che c’è davvero sul mercato in entrambi i posti.',
+    pl: 'Podaj budżet i format, a wrócimy z tym, co naprawdę jest na rynku w obu miejscach.',
   },
-  seeIn: {en: 'Listings in {n}', uk: 'Обʼєкти в {n}', ru: 'Объекты в {n}', sq: 'Pronat në {n}', it: 'Annunci a {n}'},
+  seeIn: {en: 'Listings in {n}', uk: 'Обʼєкти в {n}', ru: 'Объекты в {n}', sq: 'Pronat në {n}', it: 'Annunci a {n}', pl: 'Oferty: {n}'},
   q1: {
     en: 'Which is cheaper, {a} or {b}?', uk: 'Що дешевше — {a} чи {b}?', ru: 'Что дешевле — {a} или {b}?',
     sq: 'Cila është më e lirë, {a} apo {b}?', it: 'Quale costa meno, {a} o {b}?',
+    pl: 'Co jest tańsze: {a} czy {b}?',
   },
   q2: {
     en: 'Which is the better investment, {a} or {b}?', uk: 'Що вигідніше як інвестиція — {a} чи {b}?',
     ru: 'Что выгоднее как инвестиция — {a} или {b}?', sq: 'Cila është investim më i mirë, {a} apo {b}?',
     it: 'Quale è l’investimento migliore, {a} o {b}?',
+    pl: 'Co jest lepszą inwestycją: {a} czy {b}?',
   },
   aPrices: {
     en: 'The table above carries the current asking bands for both, with their sources and the period they cover. Prices move, so the figures are dated rather than presented as permanent.',
@@ -132,6 +143,7 @@ const T = {
     ru: 'В таблице выше — текущие диапазоны цен предложения для обоих, с источниками и периодом. Цены двигаются, поэтому цифры датированы, а не поданы как постоянные.',
     sq: 'Tabela më sipër mban intervalet aktuale të kërkuara për të dyja, me burimet dhe periudhën. Çmimet lëvizin, ndaj shifrat janë të datuara.',
     it: 'La tabella sopra riporta le fasce attuali per entrambe, con fonti e periodo. I prezzi si muovono, quindi le cifre sono datate.',
+    pl: 'Tabela powyżej podaje aktualne przedziały cen ofertowych dla obu miejsc, ze źródłami i okresem, którego dotyczą. Ceny się zmieniają, więc liczby są datowane, a nie przedstawiane jako stałe.',
   },
   aInvest: {
     en: 'It depends on what you are buying it for, which is why the verdict section above splits by audience rather than naming one winner. A place that suits a short-let investor often suits a year-round resident badly.',
@@ -139,8 +151,16 @@ const T = {
     ru: 'Зависит от того, для чего вы покупаете — поэтому раздел вердикта выше разделён по аудиториям, а не называет одного победителя. Место, подходящее инвестору в посуточную аренду, часто плохо подходит тому, кто будет жить круглый год.',
     sq: 'Varet përse po e blini, prandaj seksioni i vendimit më sipër ndahet sipas audiencës e nuk shpall një fitues. Një vend që i shkon investitorit të qirasë afatshkurtër shpesh nuk i shkon banorit gjithëvjetor.',
     it: 'Dipende da perché lo comprate: per questo la sezione del verdetto si divide per pubblico invece di nominare un vincitore. Un posto adatto agli affitti brevi spesso è pessimo per chi ci vive tutto l’anno.',
+    pl: 'To zależy od tego, po co kupujesz — dlatego werdykt powyżej jest podzielony według odbiorców, a nie wskazuje jednego zwycięzcy. Miejsce dobre dla inwestora w najem krótkoterminowy często źle pasuje komuś, kto mieszka tam cały rok.',
   },
 } as const
+
+type Template = Record<AnyLocale, string>
+
+/** The template's text in exactly the page's locales — no `pl` on a page without Polish content. */
+function pick(template: Partial<Template>, locales: AnyLocale[]): Localized {
+  return Object.fromEntries(locales.map((l) => [l, template[l] ?? ''])) as Localized
+}
 
 /** One usable photograph, with the caption the zone already carries. */
 type ZoneImage = {
@@ -170,9 +190,9 @@ type ZoneRow = {
  * zone pages follow. Reusing the zone's own alt text is what keeps the two in
  * step — it was corrected once already and must not be re-derived here.
  */
-function slideTitle(zone: ZoneRow, image: ZoneImage, name: Partial<Localized>): Localized {
+function slideTitle(zone: ZoneRow, image: ZoneImage, name: Partial<Localized>, locales: AnyLocale[]): Localized {
   const out = {} as Localized
-  for (const l of LOCALES) {
+  for (const l of locales) {
     out[l] = image.isStandIn ? (image.alt ?? name[l] ?? '') : (name[l] ?? name.en ?? image.alt ?? '')
   }
   return out
@@ -208,9 +228,9 @@ function zonePath(z: ZoneRow): string {
     : `/${country}/${z.citySlug}/districts/${z.slug}`
 }
 
-function fill(template: Record<Locale, string>, vars: Record<string, Partial<Localized>>): Localized {
+function fill(template: Template, vars: Record<string, Partial<Localized>>, locales: AnyLocale[]): Localized {
   const out = {} as Localized
-  for (const l of LOCALES) {
+  for (const l of locales) {
     let s: string = template[l]
     for (const [key, value] of Object.entries(vars)) s = s.replace(`{${key}}`, value[l] ?? value.en ?? '')
     out[l] = s
@@ -218,15 +238,15 @@ function fill(template: Record<Locale, string>, vars: Record<string, Partial<Loc
   return out
 }
 
-function toBlocks(paragraphs: Localized[], keyPrefix: string) {
+function toBlocks(paragraphs: Localized[], keyPrefix: string, locales: AnyLocale[]) {
   const out: Record<string, unknown[]> = {}
-  for (const l of LOCALES) {
+  for (const l of locales) {
     out[l] = paragraphs.map((p, i) => ({
       _key: `${keyPrefix}-${l}-${i}`,
       _type: 'block',
       style: 'normal',
       markDefs: [],
-      children: [{_key: `${keyPrefix}-${l}-${i}-s`, _type: 'span', marks: [], text: p[l]}],
+      children: [{_key: `${keyPrefix}-${l}-${i}-s`, _type: 'span', marks: [], text: p[l] ?? ''}],
     }))
   }
   return out
@@ -260,16 +280,20 @@ function diffDoc(built: unknown, live: unknown, p = ''): string[] {
 function catalogHref(z: ZoneRow | undefined): string {
   if (!z) return '/catalog'
   const country = z.countrySlug ?? 'albania'
+  // Canonical listing paths: sale is the only public deal type, so the site
+  // omits it and 308s the /sale variants — linking those wastes a redirect hop.
   return z.type === 'city'
-    ? `/${country}/${z.slug}/sale`
-    : `/${country}/${z.citySlug}/sale?district=${z.slug}`
+    ? `/${country}/${z.slug}`
+    : `/${country}/${z.citySlug}/${z.slug}`
 }
 
 function buildLanding(c: Comparison, zones: Map<string, ZoneRow>, year: string): Record<string, unknown> {
   const left = zones.get(c.left.slug)
   const right = zones.get(c.right.slug)
   const names = {a: c.left.title, b: c.right.title}
+  const L = localesOf(c)
   const title = comparisonTitle(c, year)
+  const VS: Template = {en: '{a} vs {b}', uk: '{a} проти {b}', ru: '{a} против {b}', sq: '{a} kundrejt {b}', it: '{a} contro {b}', pl: '{a} czy {b}'}
   const leftImages = imagesOf(left)
   const rightImages = imagesOf(right)
 
@@ -287,7 +311,7 @@ function buildLanding(c: Comparison, zones: Map<string, ZoneRow>, year: string):
       const name = zone === left ? c.left.title : c.right.title
       slides.push({
         _key: `slide-${slides.length}`,
-        title: slideTitle(zone, image, name),
+        title: slideTitle(zone, image, name, L),
         image: {_type: 'image', asset: {_type: 'reference', _ref: image.ref}, alt: image.alt ?? ''},
         href: zonePath(zone),
       })
@@ -313,7 +337,7 @@ function buildLanding(c: Comparison, zones: Map<string, ZoneRow>, year: string):
         _key: `stat-${i}`,
         value: `€${Math.round(z.price).toLocaleString('en-US')}/m²`,
         label: side.title,
-        sublabel: Object.fromEntries(LOCALES.map((l) => [l, z.periodLabel ?? year])) as Localized,
+        sublabel: Object.fromEntries(L.map((l) => [l, z.periodLabel ?? year])) as Localized,
         confidence: 'medium',
       }
     })
@@ -324,8 +348,8 @@ function buildLanding(c: Comparison, zones: Map<string, ZoneRow>, year: string):
       _key: 'hero', _type: 'heroSection', enabled: true,
       title,
       subtitle: c.angle,
-      shortLine: fill({en: '{a} vs {b}', uk: '{a} проти {b}', ru: '{a} против {b}', sq: '{a} kundrejt {b}', it: '{a} contro {b}'}, names),
-      cta: {href: catalogHref(left), label: fill(T.seeIn, {n: c.left.title})},
+      shortLine: fill(VS, names, L),
+      cta: {href: catalogHref(left), label: fill(T.seeIn, {n: c.left.title}, L)},
       // The zone's own photo, with the alt text it already carries so a
       // stand-in is not silently re-captioned as the place.
       ...(heroImage
@@ -341,7 +365,7 @@ function buildLanding(c: Comparison, zones: Map<string, ZoneRow>, year: string):
     ...(statItems.length === 2
       ? [{
           _key: 'stats', _type: 'statsBandSection', enabled: true,
-          title: fill(T.compareTable, names),
+          title: fill(T.compareTable, names, L),
           items: statItems,
           lastUpdated: year,
         }]
@@ -353,7 +377,7 @@ function buildLanding(c: Comparison, zones: Map<string, ZoneRow>, year: string):
       ? [{
           _key: 'prices', _type: 'zonePriceTableAutoSection', enabled: true,
           mode: 'compare',
-          title: fill(T.compareTable, names),
+          title: fill(T.compareTable, names, L),
           zones: [left, right].map((z, i) => ({_key: `z${i}`, _type: 'reference', _ref: z._id})),
           columns: ['priceNew', 'priceResale', 'referencePrice'],
           sortBy: 'price', linkRows: true, showSources: true,
@@ -361,10 +385,10 @@ function buildLanding(c: Comparison, zones: Map<string, ZoneRow>, year: string):
       : []),
     {
       _key: 'criteria', _type: 'districtsComparisonSection', enabled: true,
-      title: T.criteria as unknown as Localized,
-      description: T.criteriaSub as unknown as Localized,
+      title: pick(T.criteria, L),
+      description: pick(T.criteriaSub, L),
       headings: [
-        Object.fromEntries(LOCALES.map((l) => [l, ''])) as Localized,
+        Object.fromEntries(L.map((l) => [l, ''])) as Localized,
         c.left.title,
         c.right.title,
       ],
@@ -375,12 +399,13 @@ function buildLanding(c: Comparison, zones: Map<string, ZoneRow>, year: string):
     },
     {
       _key: 'verdict', _type: 'seoTextSection', enabled: true,
-      title: T.verdict as unknown as Localized,
+      title: pick(T.verdict, L),
       content: toBlocks(
         c.scenarios.map((s) =>
-          Object.fromEntries(LOCALES.map((l) => [l, `${s.audience[l]}: ${s.verdict[l]}`])) as Localized,
+          Object.fromEntries(L.map((l) => [l, `${s.audience[l]}: ${s.verdict[l]}`])) as Localized,
         ),
         `verdict-${c.slug}`,
+        L,
       ),
     },
     // Both places, pictured, between the verdict and the questions. Each slide
@@ -389,14 +414,14 @@ function buildLanding(c: Comparison, zones: Map<string, ZoneRow>, year: string):
     ...(slides.length >= 2
       ? [{
           _key: 'gallery', _type: 'linkedGallerySection', enabled: true,
-          title: fill(T.galleryTitle, names),
-          description: T.gallerySub as unknown as Localized,
+          title: fill(T.galleryTitle, names, L),
+          description: pick(T.gallerySub, L),
           items: slides,
         }]
       : []),
     {
       _key: 'faq', _type: 'faqSection', enabled: true,
-      title: T.faqTitle as unknown as Localized,
+      title: pick(T.faqTitle, L),
       // Only a photograph the page has not already shown. Most zones currently
       // hold a single image — their gallery duplicates their hero — so without
       // this check the FAQ would repeat the slide directly above it, which
@@ -412,14 +437,14 @@ function buildLanding(c: Comparison, zones: Map<string, ZoneRow>, year: string):
           }
         : {imageMode: 'withoutImage'}),
       items: [
-        {_key: 'q1', _type: 'localizedFaqItem', question: fill(T.q1, names), answer: T.aPrices as unknown as Localized},
-        {_key: 'q2', _type: 'localizedFaqItem', question: fill(T.q2, names), answer: T.aInvest as unknown as Localized},
+        {_key: 'q1', _type: 'localizedFaqItem', question: fill(T.q1, names, L), answer: pick(T.aPrices, L)},
+        {_key: 'q2', _type: 'localizedFaqItem', question: fill(T.q2, names, L), answer: pick(T.aInvest, L)},
       ],
     },
     ...(c.kbSource
       ? [{
           _key: 'sources', _type: 'sourcesSection', enabled: true,
-          title: T.sourcesTitle as unknown as Localized,
+          title: pick(T.sourcesTitle, L),
           sources: [{
             _key: 'kb', _type: 'sourceItem',
             label: `DomLivo research: ${c.kbSource}`,
@@ -432,16 +457,16 @@ function buildLanding(c: Comparison, zones: Map<string, ZoneRow>, year: string):
     // shared `zone:` topic tags — the config's `related` graph is no longer read.
     {
       _key: 'related', _type: 'relatedPagesAutoSection', enabled: true,
-      mode: 'zoneComparisons', title: T.relatedTitle as unknown as Localized, limit: 6,
+      mode: 'zoneComparisons', title: pick(T.relatedTitle, L), limit: 6,
     },
     {
       _key: 'cta', _type: 'ctaSection', enabled: true,
-      eyebrow: fill({en: '{a} vs {b}', uk: '{a} проти {b}', ru: '{a} против {b}', sq: '{a} kundrejt {b}', it: '{a} contro {b}'}, names),
-      title: T.ctaTitle as unknown as Localized,
-      description: T.ctaText as unknown as Localized,
-      cta: {href: catalogHref(left), label: fill(T.seeIn, {n: c.left.title})},
+      eyebrow: fill(VS, names, L),
+      title: pick(T.ctaTitle, L),
+      description: pick(T.ctaText, L),
+      cta: {href: catalogHref(left), label: fill(T.seeIn, {n: c.left.title}, L)},
       ...(c.kind === 'zones'
-        ? {secondaryCta: {href: catalogHref(right), label: fill(T.seeIn, {n: c.right.title})}}
+        ? {secondaryCta: {href: catalogHref(right), label: fill(T.seeIn, {n: c.right.title}, L)}}
         : {}),
     },
   ]

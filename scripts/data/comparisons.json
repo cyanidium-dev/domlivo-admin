@@ -2530,6 +2530,1172 @@
         "albania-vs-montenegro"
       ],
       "kbSource": "01-macro/albania-macro.md §11"
+    },
+    {
+      "slug": "golem-vs-plazh",
+      "kind": "zones",
+      "left": {
+        "slug": "golem-durres",
+        "type": "district",
+        "title": {
+          "en": "Golem",
+          "uk": "Голем",
+          "ru": "Голем",
+          "sq": "Golemi",
+          "it": "Golem",
+          "pl": "Golem"
+        }
+      },
+      "right": {
+        "slug": "plazh",
+        "type": "district",
+        "title": {
+          "en": "Plazh",
+          "uk": "Плаж",
+          "ru": "Плаж",
+          "sq": "Plazhi",
+          "it": "Plazh",
+          "pl": "Plazh"
+        }
+      },
+      "angle": {
+        "en": "The two names most people mean by “a flat by the sea in Durrës” — one is the city’s own beach, the other a cheaper strip further south with a problem sellers do not mention.",
+        "uk": "Дві назви, які найчастіше мають на увазі під «квартирою біля моря в Дурресі»: одна — міський пляж, інша — дешевша смуга південніше з проблемою, про яку продавці мовчать.",
+        "ru": "Два названия, которые чаще всего имеют в виду под «квартирой у моря в Дурресе»: одно — городской пляж, другое — более дешёвая полоса южнее с проблемой, о которой продавцы молчат.",
+        "sq": "Dy emrat që shumica kanë parasysh kur thonë “apartament buzë detit në Durrës” — njëri është plazhi i vetë qytetit, tjetri një brez më i lirë më në jug me një problem që shitësit nuk e përmendin.",
+        "it": "I due nomi che quasi tutti intendono con “un appartamento sul mare a Durazzo”: una è la spiaggia della città, l’altra una fascia più economica a sud con un problema che i venditori non citano.",
+        "pl": "Dwie nazwy, o których myśli większość, mówiąc „mieszkanie nad morzem w Durrës”: jedna to miejska plaża, druga tańszy pas dalej na południe z problemem, o którym sprzedawcy milczą."
+      },
+      "scenarios": [
+        {
+          "audience": {
+            "en": "Buyer on the lowest budget near the sand",
+            "uk": "Покупець із найменшим бюджетом біля пляжу",
+            "ru": "Покупатель с минимальным бюджетом у пляжа",
+            "sq": "Blerës me buxhetin më të ulët pranë rërës",
+            "it": "Chi ha il budget più basso vicino alla sabbia",
+            "pl": "Kupujący z najniższym budżetem blisko plaży"
+          },
+          "verdict": {
+            "en": "Golem, second or third line. Its band starts below Plazh’s — but go and look at the water in July before you sign.",
+            "uk": "Голем, друга або третя лінія. Його діапазон починається нижче, ніж у Плажа, — але подивіться на воду в липні, перш ніж підписувати.",
+            "ru": "Голем, вторая или третья линия. Его диапазон начинается ниже, чем у Плажа, — но посмотрите на воду в июле, прежде чем подписывать.",
+            "sq": "Golemi, vija e dytë ose e tretë. Intervali i tij nis më poshtë se i Plazhit — por shkoni e shihni ujin në korrik para se të firmosni.",
+            "it": "Golem, seconda o terza linea. La sua fascia parte sotto quella di Plazh, ma andate a vedere l’acqua a luglio prima di firmare.",
+            "pl": "Golem, druga lub trzecia linia. Jego przedział zaczyna się niżej niż w Plazh — ale zanim podpiszesz, obejrzyj wodę w lipcu."
+          }
+        },
+        {
+          "audience": {
+            "en": "Short-let investor",
+            "uk": "Інвестор у подобову оренду",
+            "ru": "Инвестор в посуточную аренду",
+            "sq": "Investitor në qira afatshkurtër",
+            "it": "Investitore in affitti brevi",
+            "pl": "Inwestor w najem krótkoterminowy"
+          },
+          "verdict": {
+            "en": "Plazh. Our sources rank it first in Durrës for short-let yield, and its season runs on domestic and diaspora demand, not only on foreign tourists.",
+            "uk": "Плаж. Наші джерела ставлять його першим у Дурресі за доходністю подобової оренди, а сезон тримається на внутрішньому попиті й діаспорі, а не лише на іноземних туристах.",
+            "ru": "Плаж. Наши источники ставят его первым в Дурресе по доходности посуточной аренды, а сезон держится на внутреннем спросе и диаспоре, а не только на иностранных туристах.",
+            "sq": "Plazhi. Burimet tona e rendisin të parin në Durrës për fitimin nga qiraja afatshkurtër, dhe sezoni mbahet nga kërkesa vendase dhe diaspora, jo vetëm nga turistët e huaj.",
+            "it": "Plazh. Le nostre fonti lo mettono primo a Durazzo per rendimento da affitti brevi, e la stagione vive di domanda interna e della diaspora, non solo di turisti stranieri.",
+            "pl": "Plazh. Nasze źródła stawiają go na pierwszym miejscu w Durrës pod względem rentowności najmu krótkoterminowego, a sezon opiera się na popycie krajowym i diasporze, nie tylko na turystach z zagranicy."
+          }
+        },
+        {
+          "audience": {
+            "en": "Buyer who will live there all year",
+            "uk": "Покупець, який житиме там цілий рік",
+            "ru": "Покупатель, который будет жить там круглый год",
+            "sq": "Blerës që do të jetojë aty gjithë vitin",
+            "it": "Chi ci vivrà tutto l’anno",
+            "pl": "Kupujący, który będzie tam mieszkał cały rok"
+          },
+          "verdict": {
+            "en": "Plazh. It is part of the city, so shops, schools and services do not close with the season; Golem is a resort strip outside it.",
+            "uk": "Плаж. Це частина міста, тож магазини, школи й сервіси не закриваються разом із сезоном; Голем — курортна смуга за містом.",
+            "ru": "Плаж. Это часть города, поэтому магазины, школы и сервисы не закрываются вместе с сезоном; Голем — курортная полоса за городом.",
+            "sq": "Plazhi. Është pjesë e qytetit, ndaj dyqanet, shkollat dhe shërbimet nuk mbyllen me sezonin; Golemi është një brez turistik jashtë tij.",
+            "it": "Plazh. Fa parte della città, quindi negozi, scuole e servizi non chiudono con la stagione; Golem è una fascia turistica fuori città.",
+            "pl": "Plazh. To część miasta, więc sklepy, szkoły i usługi nie zamykają się razem z sezonem; Golem to pas kurortowy poza miastem."
+          }
+        }
+      ],
+      "criteria": [
+        {
+          "label": {
+            "en": "What sets the price",
+            "uk": "Що визначає ціну",
+            "ru": "Что определяет цену",
+            "sq": "Çfarë e përcakton çmimin",
+            "it": "Cosa fa il prezzo",
+            "pl": "Co wyznacza cenę"
+          },
+          "left": {
+            "en": "The line: the first line is scarce and no longer built, so the second and third line are the real market",
+            "uk": "Лінія: першої лінії мало і її більше не будують, тож реальний ринок — друга й третя лінії",
+            "ru": "Линия: первой линии мало и её больше не строят, поэтому реальный рынок — вторая и третья линии",
+            "sq": "Vija: vija e parë është e rrallë dhe nuk ndërtohet më, ndaj tregu i vërtetë është vija e dytë dhe e tretë",
+            "it": "La linea: la prima è rara e non si costruisce più, quindi il mercato vero è seconda e terza linea",
+            "pl": "Linia: pierwszej linii jest mało i już się jej nie buduje, więc prawdziwy rynek to druga i trzecia linia"
+          },
+          "right": {
+            "en": "Metres to the sand and the floor — the stock is dense and alike, so finish matters less than distance",
+            "uk": "Метри до піску й поверх — забудова щільна й однотипна, тож оздоблення важить менше, ніж відстань",
+            "ru": "Метры до песка и этаж — застройка плотная и однотипная, поэтому отделка значит меньше, чем расстояние",
+            "sq": "Metrat deri te rëra dhe kati — ndërtimi është i dendur dhe i ngjashëm, ndaj rikonstruksioni vlen më pak se largësia",
+            "it": "I metri dalla sabbia e il piano: l’edilizia è fitta e simile, quindi la finitura conta meno della distanza",
+            "pl": "Metry do piasku i piętro — zabudowa jest gęsta i podobna, więc wykończenie znaczy mniej niż odległość"
+          }
+        },
+        {
+          "label": {
+            "en": "Last year’s growth",
+            "uk": "Зростання за рік",
+            "ru": "Рост за год",
+            "sq": "Rritja e vitit të fundit",
+            "it": "Crescita nell’ultimo anno",
+            "pl": "Wzrost w ostatnim roku"
+          },
+          "left": {
+            "en": "8–15% year on year",
+            "uk": "8–15% за рік",
+            "ru": "8–15% за год",
+            "sq": "8–15% në vit",
+            "it": "8–15% su base annua",
+            "pl": "8–15% rok do roku"
+          },
+          "right": {
+            "en": "Up to 21% year on year",
+            "uk": "До 21% за рік",
+            "ru": "До 21% за год",
+            "sq": "Deri në 21% në vit",
+            "it": "Fino al 21% su base annua",
+            "pl": "Do 21% rok do roku"
+          }
+        },
+        {
+          "label": {
+            "en": "What to check before you buy",
+            "uk": "Що перевірити до покупки",
+            "ru": "Что проверить до покупки",
+            "sq": "Çfarë të kontrolloni para blerjes",
+            "it": "Cosa verificare prima di comprare",
+            "pl": "Co sprawdzić przed zakupem"
+          },
+          "left": {
+            "en": "Sewage reaching the beach has been documented repeatedly and the World Bank project is unfinished; there is no Blue Flag. Also check that the floors built match the permit",
+            "uk": "Стоки на пляж фіксували неодноразово, проєкт Світового банку не завершено; Голубого прапора немає. Також перевірте, чи поверховість відповідає дозволу",
+            "ru": "Стоки на пляж фиксировали неоднократно, проект Всемирного банка не завершён; Голубого флага нет. Также проверьте, соответствует ли этажность разрешению",
+            "sq": "Shkarkimet e ujërave të zeza në plazh janë dokumentuar vazhdimisht dhe projekti i Bankës Botërore nuk ka përfunduar; nuk ka Flamur Blu. Kontrolloni edhe nëse katet përputhen me lejen",
+            "it": "Scarichi fognari sulla spiaggia documentati più volte e progetto della Banca Mondiale incompiuto; niente Bandiera Blu. Verificate anche che i piani costruiti corrispondano al permesso",
+            "pl": "Ścieki na plaży udokumentowano wielokrotnie, a projekt Banku Światowego nie jest ukończony; nie ma Błękitnej Flagi. Sprawdź też, czy liczba pięter zgadza się z pozwoleniem"
+          },
+          "right": {
+            "en": "Building age: the 2019 earthquake did its worst damage on this strip, so ask for the construction year and the structural file",
+            "uk": "Вік будинку: землетрус 2019 року найбільше зруйнував саме цю смугу, тож просіть рік будівництва й документи щодо конструкції",
+            "ru": "Возраст дома: землетрясение 2019 года сильнее всего ударило именно по этой полосе, поэтому просите год постройки и документы по конструкции",
+            "sq": "Mosha e ndërtesës: tërmeti i 2019 bëri dëmet më të rënda pikërisht në këtë brez, ndaj kërkoni vitin e ndërtimit dhe dosjen strukturore",
+            "it": "L’età dell’edificio: il terremoto del 2019 ha colpito soprattutto questa fascia, quindi chiedete anno di costruzione e documentazione strutturale",
+            "pl": "Wiek budynku: trzęsienie ziemi w 2019 roku najmocniej uderzyło właśnie w ten pas, więc poproś o rok budowy i dokumentację konstrukcji"
+          }
+        },
+        {
+          "label": {
+            "en": "Who buys",
+            "uk": "Хто купує",
+            "ru": "Кто покупает",
+            "sq": "Kush blen",
+            "it": "Chi compra",
+            "pl": "Kto kupuje"
+          },
+          "left": {
+            "en": "Buyers from Kosovo, the diaspora and short-let investors",
+            "uk": "Покупці з Косова, діаспора та інвестори в подобову оренду",
+            "ru": "Покупатели из Косова, диаспора и инвесторы в посуточную аренду",
+            "sq": "Blerës nga Kosova, diaspora dhe investitorë të qirasë afatshkurtër",
+            "it": "Acquirenti dal Kosovo, la diaspora e investitori in affitti brevi",
+            "pl": "Kupujący z Kosowa, diaspora i inwestorzy w najem krótkoterminowy"
+          },
+          "right": {
+            "en": "The same groups plus local families — the city around it keeps demand alive outside summer",
+            "uk": "Ті самі групи плюс місцеві родини — місто навколо тримає попит і поза літом",
+            "ru": "Те же группы плюс местные семьи — город вокруг держит спрос и вне лета",
+            "sq": "Të njëjtët grupe plus familje vendase — qyteti përreth e mban kërkesën gjallë edhe jashtë verës",
+            "it": "Gli stessi gruppi più famiglie locali: la città intorno tiene viva la domanda anche fuori estate",
+            "pl": "Te same grupy plus lokalne rodziny — miasto wokół podtrzymuje popyt także poza latem"
+          }
+        }
+      ],
+      "related": [
+        "plazh-vs-shkembi",
+        "golem-vs-mali-i-robit",
+        "golem-vs-plepa",
+        "lungomare-vs-plazh"
+      ],
+      "kbSource": "02-cities/durres.md §2, §6–7"
+    },
+    {
+      "slug": "plazh-vs-shkembi",
+      "kind": "zones",
+      "left": {
+        "slug": "plazh",
+        "type": "district",
+        "title": {
+          "en": "Plazh",
+          "uk": "Плаж",
+          "ru": "Плаж",
+          "sq": "Plazhi",
+          "it": "Plazh",
+          "pl": "Plazh"
+        }
+      },
+      "right": {
+        "slug": "shkembi-durres",
+        "type": "district",
+        "title": {
+          "en": "Shkëmbi",
+          "uk": "Шкембі",
+          "ru": "Шкемби",
+          "sq": "Shkëmbi",
+          "it": "Shkëmbi",
+          "pl": "Shkëmbi"
+        }
+      },
+      "angle": {
+        "en": "Neighbours on one promenade: Plazh sells the beach itself, Shkëmbi sells two markets under one name — new towers and old flats at a fraction of their price.",
+        "uk": "Сусіди на одній набережній: Плаж продає сам пляж, Шкембі — два ринки під однією назвою: нові башти й старі квартири за частку їхньої ціни.",
+        "ru": "Соседи на одной набережной: Плаж продаёт сам пляж, Шкемби — два рынка под одним названием: новые башни и старые квартиры за долю их цены.",
+        "sq": "Fqinjë në të njëjtin shëtitore: Plazhi shet vetë plazhin, Shkëmbi shet dy tregje me një emër — kulla të reja dhe apartamente të vjetra me një pjesë të çmimit.",
+        "it": "Vicini sullo stesso lungomare: Plazh vende la spiaggia, Shkëmbi vende due mercati con un nome solo, torri nuove e appartamenti vecchi a una frazione del prezzo.",
+        "pl": "Sąsiedzi na jednej promenadzie: Plazh sprzedaje samą plażę, Shkëmbi — dwa rynki pod jedną nazwą: nowe wieże i stare mieszkania za ułamek ich ceny."
+      },
+      "scenarios": [
+        {
+          "audience": {
+            "en": "Buyer ready to renovate",
+            "uk": "Покупець, готовий до ремонту",
+            "ru": "Покупатель, готовый к ремонту",
+            "sq": "Blerës i gatshëm për rikonstruksion",
+            "it": "Chi è pronto a ristrutturare",
+            "pl": "Kupujący gotowy na remont"
+          },
+          "verdict": {
+            "en": "Shkëmbi’s old stock — the cheapest flats in the pair, but cheap for age and condition, not location. Pay for a structural survey first.",
+            "uk": "Старий фонд Шкембі — найдешевші квартири в парі, але дешеві через вік і стан, а не через розташування. Спершу замовте огляд конструкцій.",
+            "ru": "Старый фонд Шкемби — самые дешёвые квартиры в паре, но дешёвые из-за возраста и состояния, а не расположения. Сначала закажите осмотр конструкций.",
+            "sq": "Fondi i vjetër i Shkëmbit — apartamentet më të lira në çift, por të lira për moshën dhe gjendjen, jo për vendndodhjen. Paguani më parë një ekspertizë strukturore.",
+            "it": "Il vecchio patrimonio di Shkëmbi: gli appartamenti più economici della coppia, ma per età e stato, non per posizione. Pagate prima una perizia strutturale.",
+            "pl": "Stary zasób Shkëmbi — najtańsze mieszkania w parze, ale tanie z powodu wieku i stanu, nie lokalizacji. Najpierw zamów ekspertyzę konstrukcji."
+          }
+        },
+        {
+          "audience": {
+            "en": "Short-let investor",
+            "uk": "Інвестор у подобову оренду",
+            "ru": "Инвестор в посуточную аренду",
+            "sq": "Investitor në qira afatshkurtër",
+            "it": "Investitore in affitti brevi",
+            "pl": "Inwestor w najem krótkoterminowy"
+          },
+          "verdict": {
+            "en": "Plazh for a steadier year. Shkëmbi can out-earn it at the summer peak, but the zone empties in winter and the gap disappears.",
+            "uk": "Плаж — для рівнішого року. Шкембі може заробити більше в пік літа, але взимку зона порожніє, і перевага зникає.",
+            "ru": "Плаж — для более ровного года. Шкемби может заработать больше в пик лета, но зимой зона пустеет, и преимущество исчезает.",
+            "sq": "Plazhi për një vit më të qëndrueshëm. Shkëmbi mund të fitojë më shumë në kulmin e verës, por zona zbrazet në dimër dhe diferenca zhduket.",
+            "it": "Plazh per un anno più regolare. Shkëmbi può rendere di più al picco estivo, ma d’inverno la zona si svuota e il vantaggio sparisce.",
+            "pl": "Plazh — dla równiejszego roku. Shkëmbi może zarobić więcej w szczycie lata, ale zimą strefa pustoszeje i przewaga znika."
+          }
+        },
+        {
+          "audience": {
+            "en": "Buyer who wants quiet",
+            "uk": "Покупець, якому потрібна тиша",
+            "ru": "Покупатель, которому нужна тишина",
+            "sq": "Blerës që do qetësi",
+            "it": "Chi cerca tranquillità",
+            "pl": "Kupujący, który szuka ciszy"
+          },
+          "verdict": {
+            "en": "Shkëmbi. It is quiet and green by Durrës standards and still about 150 m from the promenade.",
+            "uk": "Шкембі. Тут тихо й зелено за мірками Дурреса, а до набережної все одно близько 150 м.",
+            "ru": "Шкемби. Здесь тихо и зелено по меркам Дурреса, а до набережной всё равно около 150 м.",
+            "sq": "Shkëmbi. Është i qetë dhe i gjelbër për standardet e Durrësit dhe prapë rreth 150 m nga shëtitorja.",
+            "it": "Shkëmbi. È tranquillo e verde per gli standard di Durazzo, e comunque a circa 150 m dal lungomare.",
+            "pl": "Shkëmbi. Jest cicho i zielono jak na Durrës, a do promenady wciąż około 150 m."
+          }
+        }
+      ],
+      "criteria": [
+        {
+          "label": {
+            "en": "The stock",
+            "uk": "Житловий фонд",
+            "ru": "Жилой фонд",
+            "sq": "Fondi i banesave",
+            "it": "Il patrimonio",
+            "pl": "Zasób mieszkaniowy"
+          },
+          "left": {
+            "en": "Dense mid-rise blocks, much of it alike",
+            "uk": "Щільні середньоповерхові будинки, багато однотипних",
+            "ru": "Плотные среднеэтажные дома, много однотипных",
+            "sq": "Pallate të dendura me lartësi mesatare, shumë të ngjashme",
+            "it": "Palazzi fitti di media altezza, molti simili tra loro",
+            "pl": "Gęste bloki średniej wysokości, w dużej części podobne"
+          },
+          "right": {
+            "en": "The widest new-versus-old gap in Durrës: old flats trade at well under half of what new builds ask",
+            "uk": "Найбільший у Дурресі розрив між новим і старим: старі квартири йдуть значно дешевше за половину ціни новобудов",
+            "ru": "Самый большой в Дурресе разрыв между новым и старым: старые квартиры уходят заметно дешевле половины цены новостроек",
+            "sq": "Hendeku më i madh mes të resë dhe të vjetrës në Durrës: apartamentet e vjetra shiten shumë nën gjysmën e çmimit të ndërtimeve të reja",
+            "it": "Il divario nuovo-vecchio più ampio di Durazzo: il vecchio si vende ben sotto la metà del nuovo",
+            "pl": "Największa w Durrës różnica między nowym a starym: stare mieszkania idą za znacznie mniej niż połowę ceny nowych"
+          }
+        },
+        {
+          "label": {
+            "en": "Short-let season",
+            "uk": "Сезон подобової оренди",
+            "ru": "Сезон посуточной аренды",
+            "sq": "Sezoni i qirasë afatshkurtër",
+            "it": "Stagione degli affitti brevi",
+            "pl": "Sezon najmu krótkoterminowego"
+          },
+          "left": {
+            "en": "Yield band of 7–11%, the best in Durrës in our sources; domestic and diaspora demand carries the season",
+            "uk": "Доходність 7–11% — найкраща в Дурресі за нашими джерелами; сезон тримається на внутрішньому попиті й діаспорі",
+            "ru": "Доходность 7–11% — лучшая в Дурресе по нашим источникам; сезон держится на внутреннем спросе и диаспоре",
+            "sq": "Fitim 7–11%, më i miri në Durrës sipas burimeve tona; sezonin e mbajnë kërkesa vendase dhe diaspora",
+            "it": "Rendimento 7–11%, il migliore di Durazzo secondo le nostre fonti; la stagione regge su domanda interna e diaspora",
+            "pl": "Rentowność 7–11%, najlepsza w Durrës według naszych źródeł; sezon napędza popyt krajowy i diaspora"
+          },
+          "right": {
+            "en": "8–12% at the peak, but the zone empties in winter; off-season discounts of 40–50% are common on this coast",
+            "uk": "8–12% у пік, але взимку зона порожніє; знижки 40–50% поза сезоном на цьому узбережжі звичні",
+            "ru": "8–12% в пик, но зимой зона пустеет; скидки 40–50% вне сезона на этом побережье обычны",
+            "sq": "8–12% në kulm, por zona zbrazet në dimër; zbritjet 40–50% jashtë sezonit janë të zakonshme në këtë bregdet",
+            "it": "8–12% al picco, ma d’inverno la zona si svuota; sconti del 40–50% fuori stagione sono comuni su questa costa",
+            "pl": "8–12% w szczycie, ale zimą strefa pustoszeje; zniżki 40–50% poza sezonem są na tym wybrzeżu normą"
+          }
+        },
+        {
+          "label": {
+            "en": "What to check",
+            "uk": "Що перевірити",
+            "ru": "Что проверить",
+            "sq": "Çfarë të kontrolloni",
+            "it": "Cosa verificare",
+            "pl": "Co sprawdzić"
+          },
+          "left": {
+            "en": "The exact distance to the sand and the floor; the construction year, since the 2019 earthquake hit this strip hardest",
+            "uk": "Точну відстань до піску й поверх; рік будівництва — землетрус 2019 року найсильніше вдарив по цій смузі",
+            "ru": "Точное расстояние до песка и этаж; год постройки — землетрясение 2019 года сильнее всего ударило по этой полосе",
+            "sq": "Largësinë e saktë nga rëra dhe katin; vitin e ndërtimit, sepse tërmeti i 2019 e goditi më rëndë këtë brez",
+            "it": "La distanza esatta dalla sabbia e il piano; l’anno di costruzione, perché il terremoto del 2019 ha colpito soprattutto questa fascia",
+            "pl": "Dokładną odległość do piasku i piętro; rok budowy, bo trzęsienie ziemi w 2019 roku najmocniej uderzyło w ten pas"
+          },
+          "right": {
+            "en": "Construction year, structure and whether the floors built match the permit — unpermitted extra floors are a known problem here",
+            "uk": "Рік будівництва, конструкцію і чи відповідає поверховість дозволу — надбудовані без дозволу поверхи тут відома проблема",
+            "ru": "Год постройки, конструкцию и соответствует ли этажность разрешению — надстроенные без разрешения этажи здесь известная проблема",
+            "sq": "Vitin e ndërtimit, strukturën dhe nëse katet përputhen me lejen — katet shtesë pa leje janë problem i njohur këtu",
+            "it": "Anno di costruzione, struttura e se i piani corrispondono al permesso: i piani abusivi qui sono un problema noto",
+            "pl": "Rok budowy, konstrukcję i czy liczba pięter zgadza się z pozwoleniem — nadbudowane bez zgody piętra to tu znany problem"
+          }
+        }
+      ],
+      "related": [
+        "golem-vs-plazh",
+        "durres-centre-vs-plazh",
+        "lungomare-vs-plazh"
+      ],
+      "kbSource": "02-cities/durres.md §2–3, §6–7"
+    },
+    {
+      "slug": "golem-vs-mali-i-robit",
+      "kind": "zones",
+      "left": {
+        "slug": "golem-durres",
+        "type": "district",
+        "title": {
+          "en": "Golem",
+          "uk": "Голем",
+          "ru": "Голем",
+          "sq": "Golemi",
+          "it": "Golem",
+          "pl": "Golem"
+        }
+      },
+      "right": {
+        "slug": "mali-i-robit",
+        "type": "district",
+        "title": {
+          "en": "Mali i Robit",
+          "uk": "Малі і Робіт",
+          "ru": "Мали и Робит",
+          "sq": "Mali i Robit",
+          "it": "Mali i Robit",
+          "pl": "Mali i Robit"
+        }
+      },
+      "angle": {
+        "en": "The same beach south of Durrës, and the cheapest point on it: what you give up in Mali i Robit to pay less than in Golem.",
+        "uk": "Той самий пляж на південь від Дурреса і найдешевша точка на ньому: чим ви поступаєтеся в Малі і Робіт, щоб заплатити менше, ніж у Големі.",
+        "ru": "Тот же пляж к югу от Дурреса и самая дешёвая точка на нём: чем вы поступаетесь в Мали и Робит, чтобы заплатить меньше, чем в Големе.",
+        "sq": "I njëjti plazh në jug të Durrësit dhe pika më e lirë e tij: çfarë lini pas në Mali i Robit për të paguar më pak se në Golem.",
+        "it": "La stessa spiaggia a sud di Durazzo e il suo punto più economico: a cosa rinunciate a Mali i Robit per pagare meno che a Golem.",
+        "pl": "Ta sama plaża na południe od Durrës i jej najtańszy punkt: z czego rezygnujesz w Mali i Robit, żeby zapłacić mniej niż w Golem."
+      },
+      "scenarios": [
+        {
+          "audience": {
+            "en": "Buyer for whom price decides",
+            "uk": "Покупець, для якого вирішує ціна",
+            "ru": "Покупатель, для которого решает цена",
+            "sq": "Blerës për të cilin vendos çmimi",
+            "it": "Chi decide sul prezzo",
+            "pl": "Kupujący, dla którego decyduje cena"
+          },
+          "verdict": {
+            "en": "Mali i Robit. It is the cheapest point on this beach strip, and the coastline is the same — the discount pays for distance and fewer services, not a worse sea.",
+            "uk": "Малі і Робіт. Це найдешевша точка на цій пляжній смузі, а узбережжя те саме — знижка за відстань і менше сервісів, а не за гірше море.",
+            "ru": "Мали и Робит. Это самая дешёвая точка на этой пляжной полосе, а побережье то же — скидка за расстояние и меньше сервисов, а не за худшее море.",
+            "sq": "Mali i Robit. Është pika më e lirë në këtë brez plazhi dhe bregu është i njëjti — zbritja paguhet me largësi dhe më pak shërbime, jo me det më të keq.",
+            "it": "Mali i Robit. È il punto più economico di questa fascia e la costa è la stessa: lo sconto paga distanza e meno servizi, non un mare peggiore.",
+            "pl": "Mali i Robit. To najtańszy punkt tego pasa plaży, a wybrzeże jest to samo — zniżka jest za odległość i mniej usług, nie za gorsze morze."
+          }
+        },
+        {
+          "audience": {
+            "en": "Short-let investor",
+            "uk": "Інвестор у подобову оренду",
+            "ru": "Инвестор в посуточную аренду",
+            "sq": "Investitor në qira afatshkurtër",
+            "it": "Investitore in affitti brevi",
+            "pl": "Inwestor w najem krótkoterminowy"
+          },
+          "verdict": {
+            "en": "Golem. Guests search for the name, and the bars, restaurants and promenade they come for are there, not further down the coast.",
+            "uk": "Голем. Гості шукають саме цю назву, а бари, ресторани й набережна, заради яких вони їдуть, — там, а не далі узбережжям.",
+            "ru": "Голем. Гости ищут именно это название, а бары, рестораны и набережная, ради которых они едут, — там, а не дальше по побережью.",
+            "sq": "Golemi. Mysafirët kërkojnë këtë emër, dhe baret, restorantet e shëtitorja për të cilat vijnë janë aty, jo më poshtë bregut.",
+            "it": "Golem. Gli ospiti cercano quel nome, e bar, ristoranti e passeggiata per cui vengono sono lì, non più giù lungo la costa.",
+            "pl": "Golem. Goście szukają tej nazwy, a bary, restauracje i promenada, dla których przyjeżdżają, są tam, nie dalej na wybrzeżu."
+          }
+        },
+        {
+          "audience": {
+            "en": "Buyer who wants reliable price data",
+            "uk": "Покупець, якому потрібні надійні дані про ціни",
+            "ru": "Покупатель, которому нужны надёжные данные о ценах",
+            "sq": "Blerës që do të dhëna të besueshme çmimesh",
+            "it": "Chi vuole dati di prezzo affidabili",
+            "pl": "Kupujący, który chce wiarygodnych danych o cenach"
+          },
+          "verdict": {
+            "en": "Golem. Agency surveys and the press cover it; Mali i Robit’s figure comes from listing data alone, so compare actual listings before you trust any band.",
+            "uk": "Голем. Його охоплюють агентські огляди й преса; цифра для Малі і Робіт — лише з оголошень, тож порівняйте реальні пропозиції, перш ніж вірити будь-якому діапазону.",
+            "ru": "Голем. Его охватывают агентские обзоры и пресса; цифра по Мали и Робит — только из объявлений, поэтому сравните реальные предложения, прежде чем верить любому диапазону.",
+            "sq": "Golemi. E mbulojnë anketat e agjencive dhe shtypi; shifra për Mali i Robit vjen vetëm nga shpalljet, ndaj krahasoni ofertat reale para se t’i besoni ndonjë intervali.",
+            "it": "Golem. Lo coprono indagini di agenzia e stampa; il dato di Mali i Robit viene solo dagli annunci, quindi confrontate annunci reali prima di fidarvi di una fascia.",
+            "pl": "Golem. Obejmują go raporty agencji i prasa; dane dla Mali i Robit pochodzą wyłącznie z ogłoszeń, więc porównaj realne oferty, zanim zaufasz jakiemukolwiek przedziałowi."
+          }
+        }
+      ],
+      "criteria": [
+        {
+          "label": {
+            "en": "Distance and services",
+            "uk": "Відстань і сервіси",
+            "ru": "Расстояние и сервисы",
+            "sq": "Largësia dhe shërbimet",
+            "it": "Distanza e servizi",
+            "pl": "Odległość i usługi"
+          },
+          "left": {
+            "en": "The established resort strip south of the city, with the promenade, restaurants and season infrastructure",
+            "uk": "Усталена курортна смуга на південь від міста — з набережною, ресторанами й сезонною інфраструктурою",
+            "ru": "Устоявшаяся курортная полоса к югу от города — с набережной, ресторанами и сезонной инфраструктурой",
+            "sq": "Brezi turistik i konsoliduar në jug të qytetit, me shëtitore, restorante dhe infrastrukturë sezonale",
+            "it": "La fascia turistica consolidata a sud della città, con passeggiata, ristoranti e infrastrutture stagionali",
+            "pl": "Utrwalony pas kurortowy na południe od miasta, z promenadą, restauracjami i infrastrukturą sezonową"
+          },
+          "right": {
+            "en": "Further from the city and thinner on services, with none of the resort infrastructure of Qerret or Gjiri i Lalzit",
+            "uk": "Далі від міста й бідніше на сервіси, без курортної інфраструктури Черрета чи затоки Лальзіт",
+            "ru": "Дальше от города и беднее на сервисы, без курортной инфраструктуры Черрета или залива Лальзит",
+            "sq": "Më larg nga qyteti dhe më i varfër në shërbime, pa infrastrukturën turistike të Qerretit apo Gjirit të Lalzit",
+            "it": "Più lontano dalla città e con meno servizi, senza le infrastrutture turistiche di Qerret o della Baia di Lalzi",
+            "pl": "Dalej od miasta i uboższy w usługi, bez infrastruktury kurortowej Qerret czy Zatoki Lalzit"
+          }
+        },
+        {
+          "label": {
+            "en": "Main risk",
+            "uk": "Головний ризик",
+            "ru": "Главный риск",
+            "sq": "Rreziku kryesor",
+            "it": "Rischio principale",
+            "pl": "Główne ryzyko"
+          },
+          "left": {
+            "en": "Sewage reaching the beach, documented repeatedly; check the water in season",
+            "uk": "Стоки на пляж, зафіксовані неодноразово; перевірте воду в сезон",
+            "ru": "Стоки на пляж, зафиксированные неоднократно; проверьте воду в сезон",
+            "sq": "Ujërat e zeza në plazh, të dokumentuara vazhdimisht; kontrolloni ujin në sezon",
+            "it": "Scarichi fognari in spiaggia, documentati più volte; controllate l’acqua in stagione",
+            "pl": "Ścieki na plaży, udokumentowane wielokrotnie; sprawdź wodę w sezonie"
+          },
+          "right": {
+            "en": "Thin data: no agency or press series, so a single listing can move the apparent price band",
+            "uk": "Мало даних: немає агентських чи пресових рядів, тож одне оголошення може зсунути видимий діапазон цін",
+            "ru": "Мало данных: нет агентских или прессовых рядов, поэтому одно объявление может сдвинуть видимый диапазон цен",
+            "sq": "Të dhëna të pakta: nuk ka seri agjencish apo shtypi, ndaj një shpallje e vetme mund ta zhvendosë intervalin e dukshëm",
+            "it": "Pochi dati: nessuna serie di agenzia o stampa, quindi un solo annuncio può spostare la fascia apparente",
+            "pl": "Mało danych: brak serii agencyjnych czy prasowych, więc jedno ogłoszenie może przesunąć widoczny przedział cen"
+          }
+        },
+        {
+          "label": {
+            "en": "Who it suits",
+            "uk": "Кому підходить",
+            "ru": "Кому подходит",
+            "sq": "Për kë është",
+            "it": "A chi si addice",
+            "pl": "Dla kogo"
+          },
+          "left": {
+            "en": "Holiday use and seasonal letting at a lower entry than the first line",
+            "uk": "Відпочинок і сезонна оренда з нижчим входом, ніж на першій лінії",
+            "ru": "Отдых и сезонная аренда с более низким входом, чем на первой линии",
+            "sq": "Pushime dhe qira sezonale me hyrje më të ulët se vija e parë",
+            "it": "Vacanze e affitto stagionale con un ingresso più basso della prima linea",
+            "pl": "Wypoczynek i najem sezonowy przy niższym progu wejścia niż pierwsza linia"
+          },
+          "right": {
+            "en": "A buyer who trades distance and amenities for the lowest price on this coast",
+            "uk": "Покупець, який міняє відстань і зручності на найнижчу ціну на цьому узбережжі",
+            "ru": "Покупатель, который меняет расстояние и удобства на самую низкую цену на этом побережье",
+            "sq": "Blerës që shkëmben largësinë dhe komoditetet me çmimin më të ulët në këtë bregdet",
+            "it": "Chi scambia distanza e comodità con il prezzo più basso di questa costa",
+            "pl": "Kupujący, który zamienia odległość i wygody na najniższą cenę na tym wybrzeżu"
+          }
+        }
+      ],
+      "related": [
+        "golem-vs-plazh",
+        "golem-vs-plepa",
+        "qerret-vs-gjiri-i-lalzit"
+      ],
+      "kbSource": "02-cities/durres.md §2, §7"
+    },
+    {
+      "slug": "qerret-vs-gjiri-i-lalzit",
+      "kind": "zones",
+      "left": {
+        "slug": "qerret",
+        "type": "district",
+        "title": {
+          "en": "Qerret",
+          "uk": "Черрет",
+          "ru": "Черрет",
+          "sq": "Qerret",
+          "it": "Qerret",
+          "pl": "Qerret"
+        }
+      },
+      "right": {
+        "slug": "gjiri-i-lalzit",
+        "type": "district",
+        "title": {
+          "en": "Gjiri i Lalzit",
+          "uk": "Затока Лальзіт",
+          "ru": "Залив Лальзит",
+          "sq": "Gjiri i Lalzit",
+          "it": "Baia di Lalzi",
+          "pl": "Zatoka Lalzit"
+        }
+      },
+      "angle": {
+        "en": "The fastest-rising zone around Durrës against the closest thing Albania has to a planned resort coast — momentum or a finished product.",
+        "uk": "Найшвидше зростаюча зона навколо Дурреса проти найближчого до спланованого курортного узбережжя, що є в Албанії, — імпульс чи готовий продукт.",
+        "ru": "Самая быстрорастущая зона вокруг Дурреса против самого близкого к спланированному курортному побережью, что есть в Албании, — импульс или готовый продукт.",
+        "sq": "Zona me rritjen më të shpejtë rreth Durrësit përballë gjësë më të afërt me një bregdet turistik të planifikuar në Shqipëri — vrull apo produkt i gatshëm.",
+        "it": "La zona che cresce più in fretta intorno a Durazzo contro quanto di più simile a una costa turistica pianificata abbia l’Albania: slancio o prodotto finito.",
+        "pl": "Najszybciej drożejąca strefa wokół Durrës kontra to, co w Albanii najbliższe planowanemu wybrzeżu kurortowemu — rozpęd czy gotowy produkt."
+      },
+      "scenarios": [
+        {
+          "audience": {
+            "en": "Buyer chasing growth",
+            "uk": "Покупець, який шукає зростання",
+            "ru": "Покупатель, который ищет рост",
+            "sq": "Blerës që kërkon rritje",
+            "it": "Chi punta sulla crescita",
+            "pl": "Kupujący nastawiony na wzrost"
+          },
+          "verdict": {
+            "en": "Qerret — up 21–43% year on year, the fastest in the area. Just remember you would be buying after that run, not before it.",
+            "uk": "Черрет — плюс 21–43% за рік, найшвидше в районі. Тільки пам’ятайте, що купуєте після цього стрибка, а не до нього.",
+            "ru": "Черрет — плюс 21–43% за год, быстрее всех в районе. Только помните, что покупаете после этого скачка, а не до него.",
+            "sq": "Qerret — rritje 21–43% në vit, më e shpejta në zonë. Vetëm mbani mend se po blini pas kësaj rritjeje, jo para saj.",
+            "it": "Qerret: +21–43% su base annua, il più veloce della zona. Ricordate però che comprate dopo quella corsa, non prima.",
+            "pl": "Qerret — wzrost o 21–43% rok do roku, najszybszy w okolicy. Pamiętaj tylko, że kupujesz po tym skoku, a nie przed nim."
+          }
+        },
+        {
+          "audience": {
+            "en": "Family buying a holiday home",
+            "uk": "Сім’я, що купує житло для відпочинку",
+            "ru": "Семья, покупающая жильё для отдыха",
+            "sq": "Familje që blen shtëpi pushimi",
+            "it": "Famiglia che compra una casa vacanze",
+            "pl": "Rodzina kupująca dom wakacyjny"
+          },
+          "verdict": {
+            "en": "Gjiri i Lalzit. Its established complexes are built as managed resorts, which is why the diaspora from Germany, Switzerland and the US buys there.",
+            "uk": "Затока Лальзіт. Тамтешні комплекси побудовані як керовані курорти — тому там купує діаспора з Німеччини, Швейцарії та США.",
+            "ru": "Залив Лальзит. Тамошние комплексы построены как управляемые курорты — поэтому там покупает диаспора из Германии, Швейцарии и США.",
+            "sq": "Gjiri i Lalzit. Komplekset e tij janë ndërtuar si resorte të menaxhuara, prandaj aty blen diaspora nga Gjermania, Zvicra dhe SHBA.",
+            "it": "Baia di Lalzi. I complessi affermati sono resort gestiti, ed è per questo che vi compra la diaspora da Germania, Svizzera e Stati Uniti.",
+            "pl": "Zatoka Lalzit. Tamtejsze kompleksy zbudowano jako zarządzane kurorty — dlatego kupuje tam diaspora z Niemiec, Szwajcarii i USA."
+          }
+        },
+        {
+          "audience": {
+            "en": "Buyer at the lower end of the budget",
+            "uk": "Покупець із нижчим бюджетом",
+            "ru": "Покупатель с меньшим бюджетом",
+            "sq": "Blerës me buxhet më të ulët",
+            "it": "Chi ha un budget più basso",
+            "pl": "Kupujący z niższym budżetem"
+          },
+          "verdict": {
+            "en": "Qerret behind the villas, or the second line and early phases in Gjiri i Lalzit — the Lalzit band has not jumped year on year, Qerret’s has.",
+            "uk": "Черрет за віллами або друга лінія й ранні черги в затоці Лальзіт — діапазон Лальзіта за рік не стрибнув, а Черрета — так.",
+            "ru": "Черрет за виллами или вторая линия и ранние очереди в заливе Лальзит — диапазон Лальзита за год не прыгнул, а Черрета — да.",
+            "sq": "Qerret pas vilave, ose vija e dytë dhe fazat e hershme në Gjirin e Lalzit — intervali i Lalzit nuk është hedhur këtë vit, ai i Qerretit po.",
+            "it": "Qerret dietro le ville, oppure seconda linea e prime fasi nella Baia di Lalzi: la fascia di Lalzi non è balzata nell’anno, quella di Qerret sì.",
+            "pl": "Qerret za willami albo druga linia i wczesne etapy w Zatoce Lalzit — przedział w Lalzit nie podskoczył w ciągu roku, a w Qerret tak."
+          }
+        }
+      ],
+      "criteria": [
+        {
+          "label": {
+            "en": "How it is priced",
+            "uk": "Як формується ціна",
+            "ru": "Как формируется цена",
+            "sq": "Si çmohet",
+            "it": "Come si prezza",
+            "pl": "Jak kształtuje się cena"
+          },
+          "left": {
+            "en": "In three steps by distance from the water: behind the villas, nearer the sea, and the first line, where almost nothing new is built",
+            "uk": "Трьома сходинками за відстанню від води: за віллами, ближче до моря і перша лінія, де майже нічого нового не будують",
+            "ru": "Тремя ступенями по расстоянию от воды: за виллами, ближе к морю и первая линия, где почти ничего нового не строят",
+            "sq": "Në tre shkallë sipas largësisë nga uji: pas vilave, më afër detit dhe vija e parë, ku pothuajse nuk ndërtohet asgjë e re",
+            "it": "In tre gradini per distanza dall’acqua: dietro le ville, più vicino al mare e prima linea, dove non si costruisce quasi nulla",
+            "pl": "W trzech stopniach według odległości od wody: za willami, bliżej morza i pierwsza linia, gdzie prawie nic nowego się nie buduje"
+          },
+          "right": {
+            "en": "In tiers by product: second-line flats and early phases, then established complexes such as Vala Mar, San Pietro and Porto Lalëzi, then townhouses and villas",
+            "uk": "Рівнями за продуктом: квартири другої лінії й ранні черги, далі усталені комплекси на кшталт Vala Mar, San Pietro і Porto Lalëzi, далі таунхауси й вілли",
+            "ru": "Уровнями по продукту: квартиры второй линии и ранние очереди, затем устоявшиеся комплексы вроде Vala Mar, San Pietro и Porto Lalëzi, затем таунхаусы и виллы",
+            "sq": "Në nivele sipas produktit: apartamente të vijës së dytë dhe faza të hershme, pastaj komplekse të konsoliduara si Vala Mar, San Pietro e Porto Lalëzi, pastaj shtëpi në radhë dhe vila",
+            "it": "Per livelli di prodotto: appartamenti di seconda linea e prime fasi, poi complessi affermati come Vala Mar, San Pietro e Porto Lalëzi, poi townhouse e ville",
+            "pl": "Poziomami według produktu: mieszkania drugiej linii i wczesne etapy, potem uznane kompleksy jak Vala Mar, San Pietro i Porto Lalëzi, potem szeregowce i wille"
+          }
+        },
+        {
+          "label": {
+            "en": "Momentum",
+            "uk": "Динаміка",
+            "ru": "Динамика",
+            "sq": "Vrulli",
+            "it": "Slancio",
+            "pl": "Dynamika"
+          },
+          "left": {
+            "en": "21–43% year on year — the leader around Durrës; two towers of 22 and 25 floors are in the pipeline",
+            "uk": "21–43% за рік — лідер навколо Дурреса; у планах дві башти на 22 і 25 поверхів",
+            "ru": "21–43% за год — лидер вокруг Дурреса; в планах две башни на 22 и 25 этажей",
+            "sq": "21–43% në vit — lideri rreth Durrësit; në plan janë dy kulla me 22 dhe 25 kate",
+            "it": "21–43% su base annua, il primo intorno a Durazzo; in programma due torri da 22 e 25 piani",
+            "pl": "21–43% rok do roku — lider wokół Durrës; w planach dwie wieże na 22 i 25 pięter"
+          },
+          "right": {
+            "en": "No year-on-year jump in the second line; the growth already happened in the complexes, where San Pietro roughly doubled between 2021 and 2025",
+            "uk": "Друга лінія за рік не стрибнула; зростання вже відбулося в комплексах — San Pietro приблизно подвоївся між 2021 і 2025 роками",
+            "ru": "Вторая линия за год не прыгнула; рост уже случился в комплексах — San Pietro примерно удвоился между 2021 и 2025 годами",
+            "sq": "Vija e dytë nuk është hedhur në vit; rritja ka ndodhur tashmë te komplekset, ku San Pietro afërsisht u dyfishua mes 2021 dhe 2025",
+            "it": "Nessun balzo annuo in seconda linea; la crescita è già avvenuta nei complessi, dove San Pietro è circa raddoppiato tra il 2021 e il 2025",
+            "pl": "Druga linia nie podskoczyła w ciągu roku; wzrost już nastąpił w kompleksach — San Pietro mniej więcej podwoił cenę między 2021 a 2025 rokiem"
+          }
+        },
+        {
+          "label": {
+            "en": "Who buys",
+            "uk": "Хто купує",
+            "ru": "Кто покупает",
+            "sq": "Kush blen",
+            "it": "Chi compra",
+            "pl": "Kto kupuje"
+          },
+          "left": {
+            "en": "Mostly Polish and Czech buyers alongside the Albanian diaspora",
+            "uk": "Переважно поляки й чехи разом з албанською діаспорою",
+            "ru": "В основном поляки и чехи вместе с албанской диаспорой",
+            "sq": "Kryesisht blerës polakë dhe çekë krahas diasporës shqiptare",
+            "it": "Soprattutto polacchi e cechi, insieme alla diaspora albanese",
+            "pl": "Głównie Polacy i Czesi, obok albańskiej diaspory"
+          },
+          "right": {
+            "en": "The diaspora from Germany, Switzerland and the US, plus wealthier buyers from Kosovo",
+            "uk": "Діаспора з Німеччини, Швейцарії та США, а також заможніші покупці з Косова",
+            "ru": "Диаспора из Германии, Швейцарии и США, а также более состоятельные покупатели из Косова",
+            "sq": "Diaspora nga Gjermania, Zvicra dhe SHBA, si dhe blerës më të pasur nga Kosova",
+            "it": "La diaspora da Germania, Svizzera e Stati Uniti, più acquirenti benestanti dal Kosovo",
+            "pl": "Diaspora z Niemiec, Szwajcarii i USA oraz zamożniejsi kupujący z Kosowa"
+          }
+        },
+        {
+          "label": {
+            "en": "What to check",
+            "uk": "Що перевірити",
+            "ru": "Что проверить",
+            "sq": "Çfarë të kontrolloni",
+            "it": "Cosa verificare",
+            "pl": "Co sprawdzić"
+          },
+          "left": {
+            "en": "Qerret belongs to Kavajë municipality, not Durrës — check the permit and legal status there, whatever the listing address says",
+            "uk": "Черрет належить до муніципалітету Кавая, а не Дурреса — перевіряйте дозвіл і правовий статус там, хоч би що було в адресі оголошення",
+            "ru": "Черрет относится к муниципалитету Кавая, а не Дурреса — проверяйте разрешение и правовой статус там, что бы ни было в адресе объявления",
+            "sq": "Qerret i përket Bashkisë Kavajë, jo Durrësit — kontrolloni lejen dhe statusin ligjor atje, pavarësisht adresës në shpallje",
+            "it": "Qerret appartiene al comune di Kavajë, non a Durazzo: verificate lì permesso e stato legale, qualunque indirizzo riporti l’annuncio",
+            "pl": "Qerret należy do gminy Kavajë, a nie Durrës — sprawdzaj pozwolenie i status prawny tam, niezależnie od adresu w ogłoszeniu"
+          },
+          "right": {
+            "en": "Summer rates are strong but short; off-season rental demand in the resorts is not documented, so do not plan on a full year",
+            "uk": "Літні ставки високі, але сезон короткий; позасезонний попит на оренду в курортах не задокументований, тож не розраховуйте на повний рік",
+            "ru": "Летние ставки высокие, но сезон короткий; внесезонный спрос на аренду в курортах не задокументирован, поэтому не рассчитывайте на полный год",
+            "sq": "Tarifat e verës janë të forta por të shkurtra; kërkesa për qira jashtë sezonit në resorte nuk është e dokumentuar, ndaj mos planifikoni një vit të plotë",
+            "it": "Le tariffe estive sono alte ma brevi; la domanda fuori stagione nei resort non è documentata, quindi non contate su un anno pieno",
+            "pl": "Letnie stawki są wysokie, ale krótkie; popyt na najem poza sezonem w kurortach nie jest udokumentowany, więc nie planuj pełnego roku"
+          }
+        }
+      ],
+      "related": [
+        "golem-vs-mali-i-robit",
+        "durres-vs-vlore",
+        "shengjin-vs-durres"
+      ],
+      "kbSource": "02-cities/durres.md §2–5"
+    },
+    {
+      "slug": "durres-vs-vlore",
+      "kind": "zones",
+      "left": {
+        "slug": "durres",
+        "type": "city",
+        "title": {
+          "en": "Durrës",
+          "uk": "Дуррес",
+          "ru": "Дуррес",
+          "sq": "Durrës",
+          "it": "Durazzo",
+          "pl": "Durrës"
+        }
+      },
+      "right": {
+        "slug": "vlore",
+        "type": "city",
+        "title": {
+          "en": "Vlorë",
+          "uk": "Влера",
+          "ru": "Влёра",
+          "sq": "Vlorë",
+          "it": "Valona",
+          "pl": "Wlora"
+        }
+      },
+      "angle": {
+        "en": "Albania’s two port cities on the sea: one is cheaper and 22 minutes from Tirana by the coming train, the other earns more per night and has already priced in an airport that does not fly.",
+        "uk": "Два портові міста Албанії біля моря: одне дешевше й за 22 хвилини від Тирани майбутнім потягом, інше заробляє більше за ніч і вже заклало в ціну аеропорт, який не літає.",
+        "ru": "Два портовых города Албании у моря: один дешевле и в 22 минутах от Тираны будущим поездом, другой зарабатывает больше за ночь и уже заложил в цену аэропорт, который не летает.",
+        "sq": "Dy qytetet portuale të Shqipërisë buzë detit: njëri më i lirë dhe 22 minuta nga Tirana me trenin që vjen, tjetri fiton më shumë për natë dhe ka futur tashmë në çmim një aeroport që nuk fluturon.",
+        "it": "Le due città portuali dell’Albania sul mare: una costa meno ed è a 22 minuti da Tirana col treno in arrivo, l’altra rende di più a notte e ha già messo nel prezzo un aeroporto che non vola.",
+        "pl": "Dwa portowe miasta Albanii nad morzem: jedno tańsze i 22 minuty od Tirany przyszłym pociągiem, drugie zarabia więcej za noc i ma już w cenie lotnisko, które nie lata."
+      },
+      "scenarios": [
+        {
+          "audience": {
+            "en": "Buyer who works in Tirana or needs the capital",
+            "uk": "Покупець, який працює в Тирані або потребує столиці",
+            "ru": "Покупатель, который работает в Тиране или нуждается в столице",
+            "sq": "Blerës që punon në Tiranë ose ka nevojë për kryeqytetin",
+            "it": "Chi lavora a Tirana o ha bisogno della capitale",
+            "pl": "Kupujący, który pracuje w Tiranie lub potrzebuje stolicy"
+          },
+          "verdict": {
+            "en": "Durrës. The SH2 already takes 30–60 minutes, and the Tirana–Durrës railway is due to cut that to 22 — its dates have slipped before, so do not pay for it twice.",
+            "uk": "Дуррес. Траса SH2 вже дає 30–60 хвилин, а залізниця Тирана–Дуррес має скоротити це до 22 — терміни вже переносили, тож не платіть за неї двічі.",
+            "ru": "Дуррес. Трасса SH2 уже даёт 30–60 минут, а железная дорога Тирана–Дуррес должна сократить это до 22 — сроки уже переносили, поэтому не платите за неё дважды.",
+            "sq": "Durrësi. Rruga SH2 e bën tashmë në 30–60 minuta, dhe hekurudha Tiranë–Durrës pritet ta ulë në 22 — afatet janë shtyrë më parë, ndaj mos e paguani dy herë.",
+            "it": "Durazzo. La SH2 impiega già 30–60 minuti e la ferrovia Tirana–Durazzo dovrebbe portarli a 22: le date sono già slittate, quindi non pagatela due volte.",
+            "pl": "Durrës. Trasa SH2 to już 30–60 minut, a kolej Tirana–Durrës ma skrócić to do 22 — terminy już przesuwano, więc nie płać za nią dwa razy."
+          }
+        },
+        {
+          "audience": {
+            "en": "Short-let investor",
+            "uk": "Інвестор у подобову оренду",
+            "ru": "Инвестор в посуточную аренду",
+            "sq": "Investitor në qira afatshkurtër",
+            "it": "Investitore in affitti brevi",
+            "pl": "Inwestor w najem krótkoterminowy"
+          },
+          "verdict": {
+            "en": "Vlorë if you rent to foreign tourists and can pay the higher entry; Durrës if the purchase price decides — its nightly rates are lower, but so is what you pay to get in.",
+            "uk": "Вльора, якщо здаєте іноземним туристам і можете заплатити вищий вхід; Дуррес, якщо вирішує ціна покупки — нічні ставки там нижчі, але й вхід теж.",
+            "ru": "Влёра, если сдаёте иностранным туристам и можете заплатить более высокий вход; Дуррес, если решает цена покупки — ставки за ночь там ниже, но и вход тоже.",
+            "sq": "Vlora nëse u jepni me qira turistëve të huaj dhe mund të paguani hyrjen më të lartë; Durrësi nëse vendos çmimi i blerjes — tarifat për natë janë më të ulëta, por edhe hyrja.",
+            "it": "Valona se affittate a turisti stranieri e potete pagare l’ingresso più alto; Durazzo se decide il prezzo d’acquisto: le tariffe a notte sono più basse, ma lo è anche l’ingresso.",
+            "pl": "Wlora, jeśli wynajmujesz zagranicznym turystom i stać cię na wyższy próg wejścia; Durrës, jeśli decyduje cena zakupu — stawki za noc są niższe, ale próg wejścia też."
+          }
+        },
+        {
+          "audience": {
+            "en": "Buyer from Italy",
+            "uk": "Покупець з Італії",
+            "ru": "Покупатель из Италии",
+            "sq": "Blerës nga Italia",
+            "it": "Acquirente dall’Italia",
+            "pl": "Kupujący z Włoch"
+          },
+          "verdict": {
+            "en": "Vlorë. Italians are its largest foreign buyer group, and the Brindisi ferry makes it the natural crossing.",
+            "uk": "Вльора. Італійці — найбільша група іноземних покупців там, а пором із Бріндізі робить її природною точкою переправи.",
+            "ru": "Влёра. Итальянцы — крупнейшая группа иностранных покупателей там, а паром из Бриндизи делает её естественной точкой переправы.",
+            "sq": "Vlora. Italianët janë grupi më i madh i blerësve të huaj atje, dhe trageti nga Brindizi e bën kalimin natyral.",
+            "it": "Valona. Gli italiani sono il primo gruppo di acquirenti stranieri, e il traghetto da Brindisi la rende l’approdo naturale.",
+            "pl": "Wlora. Włosi to tam największa grupa zagranicznych kupujących, a prom z Brindisi czyni ją naturalnym miejscem przeprawy."
+          }
+        },
+        {
+          "audience": {
+            "en": "Buyer betting on infrastructure",
+            "uk": "Покупець, який ставить на інфраструктуру",
+            "ru": "Покупатель, который ставит на инфраструктуру",
+            "sq": "Blerës që vë bast te infrastruktura",
+            "it": "Chi scommette sulle infrastrutture",
+            "pl": "Kupujący stawiający na infrastrukturę"
+          },
+          "verdict": {
+            "en": "Neither, on promises alone. Vlorë’s airport premium is in the price while it still has no flights; Durrës’s marina vision hangs on a port move whose tender has failed twice.",
+            "uk": "Жодне, якщо лише на обіцянках. Премія за аеропорт Вльори вже в ціні, хоча рейсів досі немає; бачення марини Дурреса залежить від переносу порту, тендер на який двічі зірвали.",
+            "ru": "Ни то, ни другое, если только на обещаниях. Премия за аэропорт Влёры уже в цене, хотя рейсов до сих пор нет; видение марины Дурреса зависит от переноса порта, тендер на который дважды сорван.",
+            "sq": "Asnjëri, vetëm mbi premtime. Premiumi i aeroportit të Vlorës është në çmim ndërkohë që ende nuk ka fluturime; vizioni i marinës së Durrësit varet nga zhvendosja e portit, tenderi i së cilës dështoi dy herë.",
+            "it": "Nessuna delle due, sulle sole promesse. Il premio per l’aeroporto di Valona è nel prezzo ma i voli non ci sono; il progetto della marina di Durazzo dipende dallo spostamento del porto, la cui gara è fallita due volte.",
+            "pl": "Żadne, jeśli tylko na obietnicach. Premia za lotnisko w Wlorze jest już w cenie, choć lotów wciąż nie ma; wizja mariny w Durrës zależy od przeniesienia portu, którego przetarg dwa razy upadł."
+          }
+        }
+      ],
+      "criteria": [
+        {
+          "label": {
+            "en": "Price level and growth",
+            "uk": "Рівень цін і зростання",
+            "ru": "Уровень цен и рост",
+            "sq": "Niveli i çmimeve dhe rritja",
+            "it": "Livello dei prezzi e crescita",
+            "pl": "Poziom cen i wzrost"
+          },
+          "left": {
+            "en": "About 40% below Vlorë on the 2026 city averages, up roughly 18% year on year",
+            "uk": "Приблизно на 40% нижче за Вльору за середніми по місту 2026 року, зростання близько 18% за рік",
+            "ru": "Примерно на 40% ниже Влёры по средним по городу 2026 года, рост около 18% за год",
+            "sq": "Rreth 40% nën Vlorën sipas mesatareve të qytetit 2026, rritje rreth 18% në vit",
+            "it": "Circa il 40% sotto Valona sulle medie cittadine 2026, in crescita di circa il 18% annuo",
+            "pl": "Około 40% poniżej Wlory według średnich miejskich z 2026 roku, wzrost około 18% rok do roku"
+          },
+          "right": {
+            "en": "Up 25% year on year — at the top of Europe alongside Tirana — and a two-speed market: the seafront for foreigners, the town for local buyers",
+            "uk": "Плюс 25% за рік — у топі Європи разом із Тираною — і ринок двох швидкостей: набережна для іноземців, місто для місцевих",
+            "ru": "Плюс 25% за год — в топе Европы вместе с Тираной — и рынок двух скоростей: набережная для иностранцев, город для местных",
+            "sq": "Rritje 25% në vit — në krye të Evropës bashkë me Tiranën — dhe një treg me dy shpejtësi: bregdeti për të huajt, qyteti për vendasit",
+            "it": "+25% su base annua, ai vertici d’Europa con Tirana, e un mercato a due velocità: lungomare per gli stranieri, città per i locali",
+            "pl": "Wzrost o 25% rok do roku — w czołówce Europy razem z Tiraną — i rynek dwóch prędkości: nabrzeże dla cudzoziemców, miasto dla miejscowych"
+          }
+        },
+        {
+          "label": {
+            "en": "Short-let economics",
+            "uk": "Економіка подобової оренди",
+            "ru": "Экономика посуточной аренды",
+            "sq": "Ekonomia e qirasë afatshkurtër",
+            "it": "Economia degli affitti brevi",
+            "pl": "Ekonomia najmu krótkoterminowego"
+          },
+          "left": {
+            "en": "Lower nightly rates than Vlorë or Sarandë, but an entry price one and a half to two times lower",
+            "uk": "Нижчі нічні ставки, ніж у Вльорі чи Саранді, але вхід у півтора-два рази дешевший",
+            "ru": "Ниже ставки за ночь, чем во Влёре или Саранде, но вход в полтора-два раза дешевле",
+            "sq": "Tarifa për natë më të ulëta se në Vlorë apo Sarandë, por hyrje një e gjysmë deri në dy herë më e lirë",
+            "it": "Tariffe a notte più basse di Valona o Saranda, ma un ingresso da una volta e mezza a due volte più basso",
+            "pl": "Niższe stawki za noc niż w Wlorze czy Sarandzie, ale próg wejścia półtora–dwa razy niższy"
+          },
+          "right": {
+            "en": "Higher nightly rates and a real foreign tourist season, bought at a higher entry price",
+            "uk": "Вищі нічні ставки й справжній сезон іноземного туризму — за вищу ціну входу",
+            "ru": "Выше ставки за ночь и настоящий сезон иностранного туризма — за более высокую цену входа",
+            "sq": "Tarifa më të larta për natë dhe një sezon i vërtetë turistësh të huaj, me një çmim hyrjeje më të lartë",
+            "it": "Tariffe a notte più alte e una vera stagione di turismo straniero, a un prezzo d’ingresso più alto",
+            "pl": "Wyższe stawki za noc i prawdziwy sezon zagranicznej turystyki — za wyższy próg wejścia"
+          }
+        },
+        {
+          "label": {
+            "en": "Who buys",
+            "uk": "Хто купує",
+            "ru": "Кто покупает",
+            "sq": "Kush blen",
+            "it": "Chi compra",
+            "pl": "Kto kupuje"
+          },
+          "left": {
+            "en": "Around half of coastal buyers are foreign — Kosovo, Czechia, North Macedonia, Poland, Hungary, Slovakia; in the city, local families and Tirana commuters",
+            "uk": "Близько половини покупців на узбережжі — іноземці: Косово, Чехія, Північна Македонія, Польща, Угорщина, Словаччина; у місті — місцеві родини й ті, хто їздить до Тирани",
+            "ru": "Около половины покупателей на побережье — иностранцы: Косово, Чехия, Северная Македония, Польша, Венгрия, Словакия; в городе — местные семьи и те, кто ездит в Тирану",
+            "sq": "Rreth gjysma e blerësve në bregdet janë të huaj — Kosova, Çekia, Maqedonia e Veriut, Polonia, Hungaria, Sllovakia; në qytet, familje vendase dhe ata që udhëtojnë për në Tiranë",
+            "it": "Circa metà degli acquirenti sulla costa è straniera: Kosovo, Cechia, Macedonia del Nord, Polonia, Ungheria, Slovacchia; in città famiglie locali e pendolari verso Tirana",
+            "pl": "Około połowy kupujących na wybrzeżu to cudzoziemcy: Kosowo, Czechy, Macedonia Północna, Polska, Węgry, Słowacja; w mieście lokalne rodziny i osoby dojeżdżające do Tirany"
+          },
+          "right": {
+            "en": "Italians first, Poles second; agency samples put foreign demand at most of the coastal market",
+            "uk": "Перші — італійці, другі — поляки; за агентськими вибірками іноземці формують більшість попиту на узбережжі",
+            "ru": "Первые — итальянцы, вторые — поляки; по агентским выборкам иностранцы формируют большую часть спроса на побережье",
+            "sq": "Italianët të parët, polakët të dytët; sipas mostrave të agjencive të huajt përbëjnë shumicën e kërkesës në bregdet",
+            "it": "Prima gli italiani, poi i polacchi; secondo campioni di agenzia la domanda straniera è la maggior parte del mercato costiero",
+            "pl": "Najpierw Włosi, potem Polacy; według próbek agencji cudzoziemcy stanowią większość popytu na wybrzeżu"
+          }
+        },
+        {
+          "label": {
+            "en": "The open question",
+            "uk": "Відкрите питання",
+            "ru": "Открытый вопрос",
+            "sq": "Pyetja e hapur",
+            "it": "La questione aperta",
+            "pl": "Otwarte pytanie"
+          },
+          "left": {
+            "en": "Environment and structure: sewage on Golem’s beach, sandy soils — even Durrës Marina towers have settled — and old stock after the 2019 earthquake",
+            "uk": "Довкілля й конструкції: стоки на пляжі Голема, піщані ґрунти — осідання зафіксували навіть у башт Durrës Marina — і старий фонд після землетрусу 2019 року",
+            "ru": "Среда и конструкции: стоки на пляже Голема, песчаные грунты — осадку зафиксировали даже у башен Durrës Marina — и старый фонд после землетрясения 2019 года",
+            "sq": "Mjedisi dhe strukturat: ujërat e zeza në plazhin e Golemit, toka ranore — ulje u konstatua edhe te kullat e Durrës Marina — dhe fondi i vjetër pas tërmetit të 2019",
+            "it": "Ambiente e strutture: scarichi sulla spiaggia di Golem, terreni sabbiosi (cedimenti persino nelle torri di Durazzo Marina) e il vecchio patrimonio dopo il terremoto del 2019",
+            "pl": "Środowisko i konstrukcje: ścieki na plaży w Golem, piaszczyste grunty — osiadanie stwierdzono nawet w wieżach Durrës Marina — i stary zasób po trzęsieniu ziemi w 2019 roku"
+          },
+          "right": {
+            "en": "The airport: a 35-year concession with no flights as of summer 2026, a shareholder dispute and a prosecutor’s case — the price already assumes it opens",
+            "uk": "Аеропорт: концесія на 35 років, рейсів немає станом на літо 2026, конфлікт акціонерів і справа прокуратури — ціна вже виходить із того, що він відкриється",
+            "ru": "Аэропорт: концессия на 35 лет, рейсов нет на лето 2026, конфликт акционеров и дело прокуратуры — цена уже исходит из того, что он откроется",
+            "sq": "Aeroporti: koncesion 35-vjeçar pa fluturime deri në verën 2026, konflikt aksionerësh dhe çështje e prokurorisë — çmimi e merr tashmë si të mirëqenë hapjen",
+            "it": "L’aeroporto: concessione di 35 anni, nessun volo all’estate 2026, una lite tra soci e un’indagine della procura; il prezzo dà già per scontata l’apertura",
+            "pl": "Lotnisko: 35-letnia koncesja, brak lotów latem 2026 roku, spór udziałowców i sprawa prokuratorska — cena już zakłada, że zostanie otwarte"
+          }
+        }
+      ],
+      "related": [
+        "tirana-vs-durres",
+        "vlora-vs-saranda",
+        "qerret-vs-gjiri-i-lalzit",
+        "durres-centre-vs-plazh"
+      ],
+      "kbSource": "02-cities/durres.md §1–7; 02-cities/vlora-riviera.md §1–5"
+    },
+    {
+      "slug": "durres-centre-vs-plazh",
+      "kind": "zones",
+      "left": {
+        "slug": "city-center-durres",
+        "type": "district",
+        "title": {
+          "en": "Durrës centre",
+          "uk": "Центр Дурреса",
+          "ru": "Центр Дурреса",
+          "sq": "Qendra e Durrësit",
+          "it": "Centro di Durazzo",
+          "pl": "Centrum Durrës"
+        }
+      },
+      "right": {
+        "slug": "plazh",
+        "type": "district",
+        "title": {
+          "en": "Plazh",
+          "uk": "Плаж",
+          "ru": "Плаж",
+          "sq": "Plazhi",
+          "it": "Plazh",
+          "pl": "Plazh"
+        }
+      },
+      "angle": {
+        "en": "The top of the Durrës price range against its beach segment: the centre holds its price all year, Plazh earns its money in summer.",
+        "uk": "Верх цінового діапазону Дурреса проти його пляжного сегмента: центр тримає ціну цілий рік, Плаж заробляє влітку.",
+        "ru": "Верх ценового диапазона Дурреса против его пляжного сегмента: центр держит цену весь год, Плаж зарабатывает летом.",
+        "sq": "Maja e intervalit të çmimeve në Durrës përballë segmentit të plazhit: qendra e mban çmimin gjithë vitin, Plazhi fiton në verë.",
+        "it": "Il vertice dei prezzi di Durazzo contro il suo segmento balneare: il centro tiene il prezzo tutto l’anno, Plazh guadagna d’estate.",
+        "pl": "Szczyt przedziału cen w Durrës kontra segment plażowy: centrum trzyma cenę cały rok, Plazh zarabia latem."
+      },
+      "scenarios": [
+        {
+          "audience": {
+            "en": "Long-term landlord",
+            "uk": "Орендодавець на довгий строк",
+            "ru": "Арендодатель на долгий срок",
+            "sq": "Qiradhënës afatgjatë",
+            "it": "Chi affitta a lungo termine",
+            "pl": "Wynajmujący długoterminowo"
+          },
+          "verdict": {
+            "en": "The centre. Currila and Vollga let year-round to local families and Tirana commuters at the top of the city’s long-let range.",
+            "uk": "Центр. Currila й Vollga здаються цілий рік місцевим родинам і тим, хто їздить до Тирани, за верхньою межею міських ставок довгострокової оренди.",
+            "ru": "Центр. Currila и Vollga сдаются круглый год местным семьям и тем, кто ездит в Тирану, по верхней границе городских ставок долгосрочной аренды.",
+            "sq": "Qendra. Currila dhe Vollga jepen me qira gjithë vitin familjeve vendase dhe atyre që udhëtojnë për në Tiranë, në majë të tarifave afatgjata të qytetit.",
+            "it": "Il centro. Currila e Vollga si affittano tutto l’anno a famiglie locali e pendolari verso Tirana, al vertice dei canoni lunghi della città.",
+            "pl": "Centrum. Currila i Vollga wynajmują się cały rok lokalnym rodzinom i dojeżdżającym do Tirany, po najwyższych stawkach najmu długoterminowego w mieście."
+          }
+        },
+        {
+          "audience": {
+            "en": "Summer short-let investor",
+            "uk": "Інвестор у літню подобову оренду",
+            "ru": "Инвестор в летнюю посуточную аренду",
+            "sq": "Investitor në qira verore afatshkurtër",
+            "it": "Investitore in affitti brevi estivi",
+            "pl": "Inwestor w letni najem krótkoterminowy"
+          },
+          "verdict": {
+            "en": "Plazh. It enters cheaper and ranks first in Durrës for short-let yield in our sources; long-let rent roughly doubles there in season.",
+            "uk": "Плаж. Вхід дешевший, і за нашими джерелами він перший у Дурресі за доходністю подобової оренди; у сезон довгострокова ставка там приблизно подвоюється.",
+            "ru": "Плаж. Вход дешевле, и по нашим источникам он первый в Дурресе по доходности посуточной аренды; в сезон долгосрочная ставка там примерно удваивается.",
+            "sq": "Plazhi. Hyrja është më e lirë dhe sipas burimeve tona është i pari në Durrës për fitimin nga qiraja afatshkurtër; në sezon qiraja afatgjatë aty afërsisht dyfishohet.",
+            "it": "Plazh. Si entra a meno ed è primo a Durazzo per rendimento da affitti brevi secondo le nostre fonti; in stagione il canone lungo lì circa raddoppia.",
+            "pl": "Plazh. Wejście jest tańsze, a według naszych źródeł to pierwsze miejsce w Durrës pod względem rentowności najmu krótkoterminowego; w sezonie stawka długoterminowa mniej więcej się tam podwaja."
+          }
+        },
+        {
+          "audience": {
+            "en": "Buyer who wants a sea view in the city",
+            "uk": "Покупець, який хоче вид на море в місті",
+            "ru": "Покупатель, который хочет вид на море в городе",
+            "sq": "Blerës që do pamje nga deti në qytet",
+            "it": "Chi vuole la vista mare in città",
+            "pl": "Kupujący, który chce widok na morze w mieście"
+          },
+          "verdict": {
+            "en": "The centre’s seafront strip — Currila, Vollga, Taulantia — where penthouses sit at the very top of the market.",
+            "uk": "Приморська смуга центру — Currila, Vollga, Taulantia, — де пентхауси стоять на самій вершині ринку.",
+            "ru": "Приморская полоса центра — Currila, Vollga, Taulantia, — где пентхаусы стоят на самой вершине рынка.",
+            "sq": "Brezi bregdetar i qendrës — Currila, Vollga, Taulantia — ku penthouse-t janë në majë të tregut.",
+            "it": "La fascia sul mare del centro, Currila, Vollga, Taulantia, dove gli attici sono al vertice del mercato.",
+            "pl": "Nadmorski pas centrum — Currila, Vollga, Taulantia — gdzie penthouse’y są na samym szczycie rynku."
+          }
+        }
+      ],
+      "criteria": [
+        {
+          "label": {
+            "en": "Where it sits in the market",
+            "uk": "Місце на ринку",
+            "ru": "Место на рынке",
+            "sq": "Vendi në treg",
+            "it": "Posizione nel mercato",
+            "pl": "Miejsce na rynku"
+          },
+          "left": {
+            "en": "The top of the city’s range; Currila alone is up 70–90% since 2019",
+            "uk": "Верх міського діапазону; одна лише Currila прибавила 70–90% з 2019 року",
+            "ru": "Верх городского диапазона; одна только Currila прибавила 70–90% с 2019 года",
+            "sq": "Maja e intervalit të qytetit; vetëm Currila është rritur 70–90% që nga 2019",
+            "it": "Il vertice della città; la sola Currila è salita del 70–90% dal 2019",
+            "pl": "Szczyt miejskiego przedziału; sama Currila podrożała o 70–90% od 2019 roku"
+          },
+          "right": {
+            "en": "The mass beach segment, up as much as 21% year on year",
+            "uk": "Масовий пляжний сегмент, зростання до 21% за рік",
+            "ru": "Массовый пляжный сегмент, рост до 21% за год",
+            "sq": "Segmenti masiv i plazhit, rritje deri në 21% në vit",
+            "it": "Il segmento balneare di massa, fino al +21% annuo",
+            "pl": "Masowy segment plażowy, wzrost do 21% rok do roku"
+          }
+        },
+        {
+          "label": {
+            "en": "The rental year",
+            "uk": "Орендний рік",
+            "ru": "Арендный год",
+            "sq": "Viti i qirasë",
+            "it": "L’anno di affitto",
+            "pl": "Rok najmu"
+          },
+          "left": {
+            "en": "Year-round demand from local families and Tirana commuters; the zone holds its price out of season",
+            "uk": "Цілорічний попит від місцевих родин і тих, хто їздить до Тирани; зона тримає ціну поза сезоном",
+            "ru": "Круглогодичный спрос от местных семей и тех, кто ездит в Тирану; зона держит цену вне сезона",
+            "sq": "Kërkesë gjithëvjetore nga familjet vendase dhe ata që udhëtojnë për në Tiranë; zona e mban çmimin jashtë sezonit",
+            "it": "Domanda tutto l’anno da famiglie locali e pendolari verso Tirana; la zona tiene il prezzo fuori stagione",
+            "pl": "Całoroczny popyt lokalnych rodzin i dojeżdżających do Tirany; strefa trzyma cenę poza sezonem"
+          },
+          "right": {
+            "en": "A long-let 1+1 roughly doubles in season; winter is where short-let owners discount",
+            "uk": "Довгострокова 1+1 у сезон приблизно подвоюється; взимку власники подобової оренди дають знижки",
+            "ru": "Долгосрочная 1+1 в сезон примерно удваивается; зимой владельцы посуточной аренды дают скидки",
+            "sq": "Një 1+1 me qira afatgjatë afërsisht dyfishohet në sezon; në dimër pronarët e qirasë afatshkurtër bëjnë zbritje",
+            "it": "Un 1+1 in affitto lungo circa raddoppia in stagione; d’inverno chi affitta a breve fa sconti",
+            "pl": "Mieszkanie 1+1 na długi najem w sezonie mniej więcej podwaja stawkę; zimą właściciele najmu krótkoterminowego dają zniżki"
+          }
+        },
+        {
+          "label": {
+            "en": "What to check",
+            "uk": "Що перевірити",
+            "ru": "Что проверить",
+            "sq": "Çfarë të kontrolloni",
+            "it": "Cosa verificare",
+            "pl": "Co sprawdzić"
+          },
+          "left": {
+            "en": "The reference-price schedule of 01.01.2026 tripled the port zone figure, and notary and tax costs are calculated from it, not from what you pay",
+            "uk": "Редакція референтних цін від 01.01.2026 потроїла показник портової зони, а нотаріальні й податкові витрати рахуються від неї, а не від суми угоди",
+            "ru": "Редакция справочных цен от 01.01.2026 утроила показатель портовой зоны, а нотариальные и налоговые расходы считаются от неё, а не от суммы сделки",
+            "sq": "Skema e çmimeve të referencës e 01.01.2026 e trefishoi shifrën e zonës së portit, dhe kostot noteriale e tatimore llogariten prej saj, jo nga ajo që paguani",
+            "it": "Il listino dei prezzi di riferimento dell’01.01.2026 ha triplicato il valore della zona portuale, e notaio e imposte si calcolano su quello, non su quanto pagate",
+            "pl": "Tabela cen referencyjnych z 01.01.2026 potroiła wartość strefy portowej, a koszty notarialne i podatkowe liczy się od niej, nie od ceny zakupu"
+          },
+          "right": {
+            "en": "Building age and structure — the 2019 earthquake hit this strip hardest — and the exact metres to the sand",
+            "uk": "Вік і конструкцію будинку — землетрус 2019 року найсильніше вдарив по цій смузі — і точні метри до піску",
+            "ru": "Возраст и конструкцию дома — землетрясение 2019 года сильнее всего ударило по этой полосе — и точные метры до песка",
+            "sq": "Moshën dhe strukturën e ndërtesës — tërmeti i 2019 e goditi më rëndë këtë brez — dhe metrat e saktë deri te rëra",
+            "it": "Età e struttura dell’edificio (il terremoto del 2019 ha colpito soprattutto questa fascia) e i metri esatti dalla sabbia",
+            "pl": "Wiek i konstrukcję budynku — trzęsienie ziemi w 2019 roku najmocniej uderzyło w ten pas — oraz dokładne metry do piasku"
+          }
+        }
+      ],
+      "related": [
+        "plazh-vs-shkembi",
+        "golem-vs-plazh",
+        "tirana-vs-durres"
+      ],
+      "kbSource": "02-cities/durres.md §2–3, §6"
     }
   ]
 }

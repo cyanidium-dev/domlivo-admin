@@ -17,7 +17,15 @@
 
 export const LOCALES = ['en', 'uk', 'ru', 'sq', 'it'] as const
 export type Locale = (typeof LOCALES)[number]
-export type Localized = Record<Locale, string>
+/**
+ * Polish came later than the other five, so it is optional per comparison: a
+ * page carries `pl` only when every text of that comparison has it. Emitting a
+ * Polish template around English content would be worse than the renderer's
+ * own fallback to English for the whole page.
+ */
+export const OPTIONAL_LOCALES = ['pl'] as const
+export type AnyLocale = Locale | (typeof OPTIONAL_LOCALES)[number]
+export type Localized = Record<Locale, string> & {pl?: string}
 
 /** `zones` compares two documents we hold metrics for; `external` compares
  *  Albania with somewhere we do not model, so it has no auto price table. */
@@ -140,21 +148,32 @@ export function referencedZoneSlugs(file: ComparisonFile): string[] {
   return [...out].sort()
 }
 
+/** The locales a comparison's page is written in: the five, plus `pl` when complete. */
+export function localesOf(c: Comparison): AnyLocale[] {
+  const texts: Localized[] = [
+    c.left.title, c.right.title, c.angle,
+    ...c.scenarios.flatMap((s) => [s.audience, s.verdict]),
+    ...c.criteria.flatMap((k) => [k.label, k.left, k.right]),
+  ]
+  return texts.every((t) => typeof t.pl === 'string' && t.pl.trim() !== '') ? [...LOCALES, 'pl'] : [...LOCALES]
+}
+
 /** Headline per locale: "{X} or {Y}: which to choose in {year}". */
-const TITLE: Record<Locale, string> = {
+const TITLE: Record<AnyLocale, string> = {
   en: '{a} or {b}: which to choose in {y}',
   uk: '{a} чи {b}: що обрати у {y}',
   ru: '{a} или {b}: что выбрать в {y}',
   sq: '{a} apo {b}: cilën të zgjidhni në {y}',
   it: '{a} o {b}: quale scegliere nel {y}',
+  pl: '{a} czy {b}: co wybrać w {y}',
 }
 
 export function comparisonTitle(c: Comparison, year: string): Localized {
   const out = {} as Localized
-  for (const l of LOCALES) {
+  for (const l of localesOf(c)) {
     out[l] = TITLE[l]
-      .replace('{a}', c.left.title[l])
-      .replace('{b}', c.right.title[l])
+      .replace('{a}', c.left.title[l] as string)
+      .replace('{b}', c.right.title[l] as string)
       .replace('{y}', year)
   }
   return out
