@@ -18,7 +18,10 @@
  *
  * Run:
  * - npx tsx scripts/translateLocaleGaps.ts --dry
- * - npx tsx scripts/translateLocaleGaps.ts --execute [--types city,district] [--limit 20]
+ * - npx tsx scripts/translateLocaleGaps.ts --execute [--types city,district] [--limit 20] [--locales de]
+ *
+ * `--locales` restricts the targets, so rolling out one new locale does not also
+ * re-open whatever is still pending in the others.
  */
 import fs from 'node:fs'
 import path from 'node:path'
@@ -42,6 +45,7 @@ const isDry = args.includes('--dry')
 const isExecute = args.includes('--execute')
 const typesArg = args.includes('--types') ? args[args.indexOf('--types') + 1].split(',') : null
 const limit = args.includes('--limit') ? Number(args[args.indexOf('--limit') + 1]) : 0
+const localesArg = args.includes('--locales') ? args[args.indexOf('--locales') + 1].split(',') : null
 if (!isDry && !isExecute) {
   console.error('Use --dry or --execute.')
   process.exit(1)
@@ -93,7 +97,9 @@ function tasksFor(doc: Record<string, unknown>, gaps: Gap[]): Task[] {
     for (const l of g.missing) if (l !== sourceLocale) targets.add(l)
     if (source.length >= SENTENCE_MIN) for (const l of g.sameAsEnglish) targets.add(l)
     for (const l of g.wrongScript) if (l !== sourceLocale) targets.add(l)
-    const final = [...targets].filter((l) => LOCALES.includes(l as never) && (!allowed || allowed.includes(l)))
+    const final = [...targets].filter(
+      (l) => LOCALES.includes(l as never) && (!allowed || allowed.includes(l)) && (!localesArg || localesArg.includes(l)),
+    )
     if (final.length) out.push({id: g.id, type: g.type, field: g.field, source, sourceLocale, targets: final})
   }
   return out

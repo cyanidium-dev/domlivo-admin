@@ -3,9 +3,9 @@
  * SEO helper (Studio only). Static templates per locale — no AI.
  */
 
-export type LocaleId = 'en' | 'uk' | 'ru' | 'sq' | 'it' | 'pl'
+export type LocaleId = 'en' | 'uk' | 'ru' | 'sq' | 'it' | 'pl' | 'de'
 
-export const LOCALE_IDS: LocaleId[] = ['en', 'uk', 'ru', 'sq', 'it', 'pl']
+export const LOCALE_IDS: LocaleId[] = ['en', 'uk', 'ru', 'sq', 'it', 'pl', 'de']
 
 type LocalizedTitle = {title?: Record<string, string | undefined>} | null | undefined
 
@@ -30,6 +30,7 @@ function intlLocaleFor(locale: LocaleId): string {
     sq: 'sq-AL',
     it: 'it-IT',
     pl: 'pl-PL',
+    de: 'de-DE',
   }
   return map[locale]
 }
@@ -57,6 +58,7 @@ export function formatAreaSqm(area: number, locale: LocaleId): string {
     sq: 'm²',
     it: 'm²',
     pl: 'm²',
+    de: 'm²',
   }
   return `${n} ${unit[locale]}`
 }
@@ -114,6 +116,11 @@ const DEAL_LABELS: Record<LocaleId, Record<DealKind, string>> = {
     sale: 'sprzedaż',
     rent: 'wynajem',
     shortTerm: 'wynajem krótkoterminowy',
+  },
+  de: {
+    sale: 'zum Verkauf',
+    rent: 'zur Miete',
+    shortTerm: 'zur Kurzzeitmiete',
   },
 }
 
@@ -234,6 +241,20 @@ const PROPERTY_TITLE_TEMPLATES: Record<LocaleId, (d: PropertyTitleBuild) => stri
     if (city) parts.push(`w ${city}`)
     return parts.join(' ').replace(/\s+/g, ' ').trim()
   },
+
+  de: (d) => {
+    const type = d.typeTitle.trim()
+    const rooms = d.rooms
+    const deal = dealForLocale('de', d.status)
+    const city = d.cityTitle.trim()
+    const afterType = rooms ? (type ? `${type} ${rooms}` : rooms) : type
+    const head = afterType.trim()
+    const parts: string[] = []
+    if (head) parts.push(head)
+    parts.push(deal)
+    if (city) parts.push(`in ${city}`)
+    return parts.join(' ').replace(/\s+/g, ' ').trim()
+  },
 }
 
 export function generatePropertyOgTitle(locale: LocaleId, ctx: PropertyOgContext): string {
@@ -279,6 +300,7 @@ const CITY_POPULAR: Record<LocaleId, string> = {
   sq: 'Popullore',
   it: 'Popolare',
   pl: 'Popularne',
+  de: 'Beliebt',
 }
 
 function truncate(s: string, max: number): string {

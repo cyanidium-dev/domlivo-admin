@@ -4,7 +4,7 @@
  */
 import {languages} from '../../languages'
 
-export type ProjectLocaleId = 'en' | 'uk' | 'ru' | 'sq' | 'it' | 'pl'
+export type ProjectLocaleId = 'en' | 'uk' | 'ru' | 'sq' | 'it' | 'pl' | 'de'
 
 export const PROJECT_LOCALE_IDS: readonly ProjectLocaleId[] = languages.map(
   (l) => l.id,
@@ -27,6 +27,7 @@ export function normalizeLocaleToken(raw: string): ProjectLocaleId | undefined {
   if (lower === 'sq' || lower === 'al' || upper === 'SQ' || upper === 'AL' || upper === 'SQI') return 'sq'
   if (lower === 'it' || upper === 'IT' || upper === 'ITA') return 'it'
   if (lower === 'pl' || upper === 'PL' || upper === 'POL') return 'pl'
+  if (lower === 'de' || upper === 'DE' || upper === 'DEU' || upper === 'GER') return 'de'
 
   return undefined
 }

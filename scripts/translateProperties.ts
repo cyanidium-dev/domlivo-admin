@@ -47,8 +47,11 @@ if (!isDry && !isExecute) {
   process.exit(1)
 }
 
-const LOCALES = ['en', 'uk', 'ru', 'sq', 'it', 'pl'] as const
+const LOCALES = ['en', 'uk', 'ru', 'sq', 'it', 'pl', 'de'] as const
 type Locale = (typeof LOCALES)[number]
+/** `--locales de`: only these targets, and only listings still missing them (a new-locale rollout). */
+const onlyLocales = args.includes('--locales') ? (args[args.indexOf('--locales') + 1].split(',') as Locale[]) : null
+const wanted = (l: Locale) => !onlyLocales || onlyLocales.includes(l)
 const FIELDS = ['title', 'shortDescription', 'description'] as const
 type Field = (typeof FIELDS)[number]
 type Localized = Partial<Record<Locale, string>>
@@ -133,6 +136,11 @@ async function main() {
       // yet. Skipping the rest makes the run resumable — the 2026-09-10 run
       // stopped halfway on an API credit limit, and re-doing the finished ones
       // would have cost the money twice.
+      if (onlyLocales) {
+        const targets = LOCALES.filter((l) => wanted(l) && FIELDS.some((f) => !val(row[f], l)))
+        if (targets.length && val(row.title, 'en') && val(row.title, 'en') !== sq) jobs.push({row, kind: 'getal', targets})
+        continue
+      }
       if (!check && val(row.title, 'en') && val(row.title, 'en') !== sq) continue
       jobs.push({row, kind: 'getal', targets: [...LOCALES]})
       continue
@@ -142,17 +150,17 @@ async function main() {
       const sq = val(row.title, 'sq')
       if (!sq) continue
       // Untranslated = still the Albanian copy the import made.
-      const targets = LOCALES.filter((l) => l !== 'sq' && (val(row.title, l) === sq || !val(row.title, l)))
+      const targets = LOCALES.filter((l) => l !== 'sq' && wanted(l) && (val(row.title, l) === sq || !val(row.title, l)))
       if (targets.length) jobs.push({row, kind: 'partner', targets})
       continue
     }
     const en = val(row.title, 'en')
     if (!en) continue
     const missing = LOCALES.filter(
-      (l) => l !== 'en' && FIELDS.some((f) => !val(row[f], l) || val(row[f], l) === val(row[f], 'en')),
+      (l) => l !== 'en' && wanted(l) && FIELDS.some((f) => !val(row[f], l) || val(row[f], l) === val(row[f], 'en')),
     )
     if (missing.length) jobs.push({row, kind: 'fill', targets: missing})
-    else if (check) jobs.push({row, kind: 'check', targets: LOCALES.filter((l) => l !== 'en')})
+    else if (check) jobs.push({row, kind: 'check', targets: LOCALES.filter((l) => l !== 'en' && wanted(l))})
   }
   const counts = {partner: 0, getal: 0, fill: 0, check: 0}
   for (const j of jobs) counts[j.kind] += 1

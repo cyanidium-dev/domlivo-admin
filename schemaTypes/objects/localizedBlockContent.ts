@@ -154,6 +154,12 @@ export const localizedBlockContent = defineType({
       type: 'array',
       of: richContentArrayOf,
     }),
+    defineField({
+      name: 'de',
+      title: 'German',
+      type: 'array',
+      of: richContentArrayOf,
+    }),
   ],
 
   preview: {
@@ -164,10 +170,11 @@ export const localizedBlockContent = defineType({
       sq: 'sq',
       it: 'it',
       pl: 'pl',
+      de: 'de',
     },
-    prepare(selection: {en?: unknown[]; uk?: unknown[]; ru?: unknown[]; sq?: unknown[]; it?: unknown[]; pl?: unknown[]}) {
-      const {en, uk, ru, sq, it, pl} = selection
-      const blocks = en || uk || ru || sq || it || pl || []
+    prepare(selection: {en?: unknown[]; uk?: unknown[]; ru?: unknown[]; sq?: unknown[]; it?: unknown[]; pl?: unknown[]; de?: unknown[]}) {
+      const {en, uk, ru, sq, it, pl, de} = selection
+      const blocks = en || uk || ru || sq || it || pl || de || []
       const count = Array.isArray(blocks) ? blocks.length : 0
       return {title: 'Block content', subtitle: `${count} block(s)`}
     },

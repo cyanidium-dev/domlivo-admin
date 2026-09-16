@@ -43,8 +43,8 @@ export const STATIC_ROUTE_SLUGS = [
 /** Deal-type catalog segments; also the slugs of the deal-type landing documents. */
 export const DEAL_ROUTE_SLUGS = ['sale', 'rent', 'long-term-rent', 'short-term-rent', 'short-term'] as const
 
-/** Locale prefixes (current + legacy `al` + planned `pl`). */
-export const LOCALE_SLUGS = ['en', 'uk', 'ru', 'sq', 'it', 'al', 'pl'] as const
+/** Locale prefixes (current + legacy `al`). */
+export const LOCALE_SLUGS = ['en', 'uk', 'ru', 'sq', 'it', 'al', 'pl', 'de'] as const
 
 /** System / infrastructure segments and namespaces reserved for future routes. */
 export const SYSTEM_SLUGS = [

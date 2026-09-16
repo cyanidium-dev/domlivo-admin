@@ -7,7 +7,7 @@ describe('landingPage.locales (SEO-04)', () => {
   it('is an array of strings with the six project locales as options', () => {
     const f = (landingPage.fields as FieldLike[]).find((x) => x.name === 'locales')
     expect(f?.of?.[0]?.type).toBe('string')
-    expect(f?.options?.list?.map((o) => o.value)).toEqual(['en', 'uk', 'ru', 'sq', 'it', 'pl'])
+    expect(f?.options?.list?.map((o) => o.value)).toEqual(['en', 'uk', 'ru', 'sq', 'it', 'pl', 'de'])
   })
   it('scopes the required SEO locales to the listed ones', () => {
     expect(requiredSeoLocales(undefined)).toEqual(['en', 'ru', 'uk', 'sq', 'it'])

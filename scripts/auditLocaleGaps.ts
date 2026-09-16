@@ -31,7 +31,7 @@ const args = process.argv.slice(2)
 const verbose = args.includes('--verbose')
 const jsonOut = args.includes('--json') ? args[args.indexOf('--json') + 1] : ''
 
-export const LOCALES = ['en', 'uk', 'ru', 'sq', 'it', 'pl'] as const
+export const LOCALES = ['en', 'uk', 'ru', 'sq', 'it', 'pl', 'de'] as const
 type Locale = (typeof LOCALES)[number]
 const LOCALE_SET = new Set<string>(LOCALES)
 

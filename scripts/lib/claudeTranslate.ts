@@ -25,6 +25,7 @@ export const LOCALE_NAMES: Record<string, string> = {
   sq: 'Albanian',
   it: 'Italian',
   pl: 'Polish',
+  de: 'German',
 }
 
 export const HOUSE_STYLE = `You translate for Domlivo, a real-estate website about Albania (domlivo.com).
@@ -33,8 +34,9 @@ Rules that apply to every locale:
 - Keep every number, unit (m², €, %), date, price and the notation "1+1", "2+1", "2+1+2" exactly as written.
 - Keep placeholders such as {city}, {district}, {count} and any HTML or Markdown untouched.
 - Keep brand and product names (Domlivo, Telegram, WhatsApp, iOS, Android) as they are.
-- Place names: use the target language's established form when one exists (Durrës → ru Дуррес, uk Дуррес, it Durazzo, pl Durrës; Tiranë → ru Тирана, it Tirana; Vlorë → it Valona; Sarandë → ru Саранда; Shkodër → it Scutari), otherwise keep the Albanian spelling. District names in Cyrillic: Голем, Шкемби-и-Каваяс (or short: Шкемби), Черрет, Плаж, Плепа, Мали-и-Робит, Спилле, Кавая, залив Лальзит.
+- Place names: use the target language's established form when one exists (Durrës → ru Дуррес, uk Дуррес, it Durazzo, pl Durrës; Tiranë → ru Тирана, it Tirana; Vlorë → it Valona; Sarandë → ru Саранда; Shkodër → it Scutari), otherwise keep the Albanian spelling. German keeps the Albanian spelling with ë for towns and districts (Durrës, Golem, Plazh, Shkëmbi i Kavajës, Shëngjin) and uses Tirana, Vlora, Saranda, Shkodra, Albanien. District names in Cyrillic: Голем, Шкемби-и-Каваяс (or short: Шкемби), Черрет, Плаж, Плепа, Мали-и-Робит, Спилле, Кавая, залив Лальзит.
 - Albanian: write natively with correct case forms (në Tiranë, në Durrës, i/e Durrësit) — never a word-for-word calque.
+- German: formal "Sie", natural property vocabulary (Wohnung kaufen, Immobilien, am Meer, Meerblick, Neubau, provisionsfrei, Wohnfläche).
 - Ukrainian and Russian are different languages; never return Russian for a Ukrainian field or the reverse.
 - Never add facts, prices, opinions or calls to action that are not in the source. Never leave a field in the source language.
 Return only JSON. No prose, no code fences.`
