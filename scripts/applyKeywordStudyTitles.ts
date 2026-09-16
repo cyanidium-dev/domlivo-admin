@@ -45,7 +45,13 @@ const client = createClient({
 })
 
 type Loc = 'en' | 'uk' | 'ru' | 'sq' | 'it' | 'pl' | 'de'
-type Change = {title?: Partial<Record<Loc, string>>; metaTitle?: Partial<Record<Loc, string>>; metaDescription?: Partial<Record<Loc, string>>}
+type Change = {
+  title?: Partial<Record<Loc, string>>
+  metaTitle?: Partial<Record<Loc, string>>
+  metaDescription?: Partial<Record<Loc, string>>
+  /** Landing pages build <title> from seo.ogTitle before seo.metaTitle, so a new meta title needs the og title too. */
+  ogTitle?: Partial<Record<Loc, string>>
+}
 
 const CHANGES: Record<string, Change> = {
   'catalogSeoPage-city-city-durres': {
@@ -149,6 +155,12 @@ const CHANGES: Record<string, Change> = {
     metaDescription: {
       de: 'Durrës: Angebotspreis 1.450 €/m². Zentrum und Uferpromenade Currila–Vollga–Taulantia 1.900–2.800 €/m², der Strand von Plazh 1.200–1.700 €, Golem 1.100–1.500 €.',
     },
+    ogTitle: {
+      en: 'How Much Is an Apartment in Durrës? 2026 Prices by District',
+      it: 'Quanto costa una casa a Durazzo? Prezzi 2026 €/m² per zona',
+      pl: 'Ceny mieszkań w Durrës 2026: €/m² według dzielnic',
+      de: 'Was kostet eine Wohnung in Durrës? Preise 2026 nach Stadtteil',
+    },
   },
   'catalogSeoPage-propertiesRoot': {
     title: {
@@ -203,6 +215,9 @@ async function main() {
     }
     for (const [loc, text] of Object.entries(change.metaDescription ?? {})) {
       if (doc.seo?.metaDescription?.[loc] !== text) set[`seo.metaDescription.${loc}`] = text
+    }
+    for (const [loc, text] of Object.entries(change.ogTitle ?? {})) {
+      if (doc.seo?.ogTitle?.[loc] !== text) set[`seo.ogTitle.${loc}`] = text
     }
     for (const [key, text] of Object.entries(set)) {
       const [field, ...rest] = key.split('.')

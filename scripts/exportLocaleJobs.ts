@@ -11,13 +11,18 @@
  * Translate each chunk into chunk-NN.<locale>.json with the same keys.
  *
  * Run:
- *   npx tsx scripts/exportLocaleJobs.ts --locale de [--types city,district] [--page-types home,city] [--properties] [--chunk-chars 12000]
+ *   npx tsx scripts/exportLocaleJobs.ts --locale de [--types city,district] [--page-types home,city] [--properties] [--rich] [--chunk-chars 12000]
+ *
+ * --rich also exports the localized Portable Text fields (blog bodies, SEO text
+ * sections, rich FAQ answers) of the same documents, item by item — see
+ * lib/richTextJobs.ts; rich.json lists every item each field needs.
  */
 import fs from 'node:fs'
 import path from 'node:path'
 import {config as loadDotenv} from 'dotenv'
 import {createClient} from '@sanity/client'
 import {collectGaps, LOCALES} from './auditLocaleGaps'
+import {collectRichFields, isBlockArray, richItems, type Block} from './lib/richTextJobs'
 
 loadDotenv({path: path.resolve(process.cwd(), '.env')})
 
@@ -31,6 +36,7 @@ if (!LOCALES.includes(locale as never)) {
 const types = arg('--types') ? arg('--types').split(',') : ['siteSettings', 'city', 'district', 'propertyType', 'amenity', 'catalogSeoPage', 'landingPage']
 const pageTypes = arg('--page-types') ? arg('--page-types').split(',') : null
 const withProperties = args.includes('--properties')
+const withRich = args.includes('--rich')
 const chunkChars = Number(arg('--chunk-chars') || 12000)
 const outDir = path.resolve(process.cwd(), arg('--out') || `reports/locale-jobs-${locale}`)
 
@@ -44,7 +50,7 @@ const client = createClient({
 
 const SKIP_FIELD = /(^|\.)(slug|href|url|email|phone|siteName|brandName|copyrightText)(\.|$|\[)/i
 
-type Target = {id: string; field: string}
+type Target = {id: string; field: string; item?: string}
 
 function getPath(doc: unknown, field: string): Record<string, unknown> | null {
   let cur: unknown = doc
@@ -59,6 +65,7 @@ const str = (v: unknown) => (typeof v === 'string' ? v.trim() : '')
 
 async function main() {
   const bySource = new Map<string, Target[]>()
+  const rich: Record<string, {from: string; refs: string[]}> = {}
   const add = (source: string, target: Target) => {
     const list = bySource.get(source) ?? []
     list.push(target)
@@ -77,6 +84,19 @@ async function main() {
       const obj = getPath(doc, g.field)
       const source = obj ? str(obj.en) || str(obj.sq) : ''
       if (source) add(source, {id: String(doc._id), field: g.field})
+    }
+    if (withRich) {
+      const found: Array<{path: string; obj: Record<string, unknown>}> = []
+      collectRichFields(doc, '', found)
+      for (const {path: p, obj} of found) {
+        if (isBlockArray(obj[locale])) continue
+        const from = isBlockArray(obj.en) ? 'en' : isBlockArray(obj.sq) ? 'sq' : ''
+        if (!from) continue
+        const items = richItems(obj[from] as Block[])
+        const field = `${p}.${locale}`
+        rich[`${doc._id}::${field}`] = {from, refs: items.map((i) => i.ref)}
+        for (const it of items) add(it.text, {id: String(doc._id), field, item: it.ref})
+      }
     }
   }
 
@@ -117,10 +137,11 @@ async function main() {
   }
   if (curChars) chunks.push(cur)
   fs.writeFileSync(path.join(outDir, 'map.json'), JSON.stringify(map, null, 1))
+  fs.writeFileSync(path.join(outDir, 'rich.json'), JSON.stringify(rich, null, 1))
   chunks.forEach((c, i) => fs.writeFileSync(path.join(outDir, `chunk-${String(i).padStart(2, '0')}.src.json`), JSON.stringify(c, null, 1)))
   const chars = [...bySource.keys()].reduce((n, s) => n + s.length, 0)
   const fields = [...bySource.values()].reduce((n, t) => n + t.length, 0)
-  console.log(`${fields} fields → ${bySource.size} distinct texts, ${chars} characters, ${chunks.length} chunks in ${outDir}`)
+  console.log(`${fields} fields → ${bySource.size} distinct texts, ${chars} characters, ${chunks.length} chunks in ${outDir}; ${Object.keys(rich).length} rich-text fields`)
 }
 
 main().catch((e) => {
