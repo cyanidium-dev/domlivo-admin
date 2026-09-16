@@ -1,5 +1,5 @@
 /**
- * Creates the four Durrës research articles of 2026-09-16 as published blog
+ * Creates the Durrës research articles of 2026-09-16 as published blog
  * posts, in all six locales, from `scripts/data/articles-2026-09-16/`.
  *
  * Why these four: the knowledge base (02-cities/durres.md §5–8, 06-developers
@@ -69,6 +69,11 @@ const ARTICLES: Array<{slug: string; categories: string[]; cover: {ref: string; 
     slug: 'durres-old-apartment-earthquake-check',
     categories: ['blogCategory-buying', 'blogCategory-guides'],
     cover: {ref: 'image-4286970d8f57e0bd3038a6c34422749dae29975a-1920x1440-jpg', alt: 'The beach promenade at Durrës, Albania'},
+  },
+  {
+    slug: 'durres-reference-prices-2026',
+    categories: ['blogCategory-legal', 'blogCategory-buying'],
+    cover: {ref: 'image-913e2db279d7a045eddbd3d1b96bd893d1418c3e-1280x1707-jpg', alt: 'Bank of Albania building, central Durrës'},
   },
   {
     slug: 'tirana-durres-train-property-prices',
