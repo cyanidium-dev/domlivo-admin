@@ -750,7 +750,6 @@
       "strOccupancyPct": 38.3,
       "referencePriceMin": 60000,
       "referencePriceMax": 100000,
-      "referencePriceEdition": "south",
       "sources": [
         "monitorCoast",
         "referencePrices"
@@ -936,7 +935,6 @@
       "priceAllMax": 2500,
       "strOccupancyPct": 40.9,
       "referencePriceMax": 100000,
-      "referencePriceEdition": "south",
       "sources": [
         "monitorCoast",
         "referencePrices"
@@ -979,8 +977,6 @@
       "priceAllMin": 1600,
       "priceAllMax": 3200,
       "sampleSize": 21,
-      "referencePrice": 140000,
-      "referencePriceEdition": "south",
       "sources": [
         "merrjep",
         "rivierahomes",
@@ -1162,8 +1158,6 @@
       "confidence": "medium",
       "priceAllMin": 1100,
       "priceAllMax": 1800,
-      "referencePrice": 58000,
-      "referencePriceEdition": "south",
       "sources": [
         "balkanhome",
         "referencePrices"
@@ -1182,8 +1176,6 @@
       "confidence": "medium",
       "priceAllMin": 1100,
       "priceAllMax": 1800,
-      "referencePrice": 58000,
-      "referencePriceEdition": "south",
       "sources": [
         "balkanhome",
         "referencePrices"
