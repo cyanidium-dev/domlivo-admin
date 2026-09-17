@@ -407,5 +407,77 @@ export const structure: StructureResolver = (S, context) => {
                 ),
             ]),
         ),
+      S.listItem()
+        .title('Knowledge Base')
+        .child(
+          S.list()
+            .title('Knowledge Base')
+            .items([
+              S.listItem()
+                .title('Articles')
+                .child(
+                  S.documentTypeList('knowledgeArticle')
+                    .title('Knowledge articles')
+                    .defaultOrdering([{field: 'documentId', direction: 'asc'}]),
+                ),
+              S.listItem()
+                .title('Review overdue')
+                .child(
+                  S.documentTypeList('knowledgeArticle')
+                    .title('Articles past their review date')
+                    .filter('_type == "knowledgeArticle" && defined(nextReviewAt) && nextReviewAt < now()')
+                    .defaultOrdering([{field: 'nextReviewAt', direction: 'asc'}]),
+                ),
+              S.listItem()
+                .title('Not published yet')
+                .child(
+                  S.documentTypeList('knowledgeArticle')
+                    .title('Unpublished articles')
+                    .filter('_type == "knowledgeArticle" && isPublished != true')
+                    .defaultOrdering([{field: 'documentId', direction: 'asc'}]),
+                ),
+              S.divider(),
+              S.listItem()
+                .title('Facts')
+                .child(
+                  S.documentTypeList('knowledgeFact')
+                    .title('Current facts')
+                    .filter('_type == "knowledgeFact" && isCurrent == true')
+                    .defaultOrdering([{field: 'dataId', direction: 'asc'}]),
+                ),
+              S.listItem()
+                .title('Facts · estimates and forecasts')
+                .child(
+                  S.documentTypeList('knowledgeFact')
+                    .title('Derived values')
+                    .filter('_type == "knowledgeFact" && confidence in ["ESTIMATE", "FORECAST"]')
+                    .defaultOrdering([{field: 'dataId', direction: 'asc'}]),
+                ),
+              S.listItem()
+                .title('Facts · superseded')
+                .child(
+                  S.documentTypeList('knowledgeFact')
+                    .title('Superseded facts (history)')
+                    .filter('_type == "knowledgeFact" && isCurrent == false')
+                    .defaultOrdering([{field: 'dataId', direction: 'asc'}]),
+                ),
+              S.divider(),
+              S.listItem()
+                .title('Sources')
+                .child(
+                  S.documentTypeList('knowledgeSource')
+                    .title('Sources')
+                    .defaultOrdering([{field: 'sourceId', direction: 'asc'}]),
+                ),
+              S.listItem()
+                .title('Sources · official only')
+                .child(
+                  S.documentTypeList('knowledgeSource')
+                    .title('Government, regulators, statistics')
+                    .filter('_type == "knowledgeSource" && priorityRank <= 3')
+                    .defaultOrdering([{field: 'sourceId', direction: 'asc'}]),
+                ),
+            ]),
+        ),
     ])
 }
