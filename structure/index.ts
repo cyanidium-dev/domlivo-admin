@@ -99,6 +99,63 @@ export const structure: StructureResolver = (S, context) => {
             .defaultOrdering([{field: 'pageScope', direction: 'asc'}]),
         ),
 
+      // Website leads (forms + WhatsApp/phone/email clicks), newest first.
+      // Test traffic (?domlivo_internal=1) is saved as spam and kept out of "New".
+      S.listItem()
+        .title('Leads')
+        .id('leads')
+        .child(
+          S.list()
+            .title('Leads')
+            .items([
+              S.listItem()
+                .title('New')
+                .id('leadsNew')
+                .child(
+                  S.documentTypeList('lead')
+                    .title('New leads')
+                    .filter('_type == "lead" && status == "new"')
+                    .defaultOrdering([{field: 'createdAt', direction: 'desc'}]),
+                ),
+              S.listItem()
+                .title('In progress')
+                .id('leadsInProgress')
+                .child(
+                  S.documentTypeList('lead')
+                    .title('Leads in progress')
+                    .filter('_type == "lead" && status in ["contacted", "qualified", "viewing", "negotiation"]')
+                    .defaultOrdering([{field: 'createdAt', direction: 'desc'}]),
+                ),
+              S.listItem()
+                .title('Form leads')
+                .id('leadsForms')
+                .child(
+                  S.documentTypeList('lead')
+                    .title('Form leads')
+                    .filter('_type == "lead" && !(type in ["click_whatsapp", "click_phone", "click_email"]) && status != "spam"')
+                    .defaultOrdering([{field: 'createdAt', direction: 'desc'}]),
+                ),
+              S.listItem()
+                .title('Contact clicks')
+                .id('leadsClicks')
+                .child(
+                  S.documentTypeList('lead')
+                    .title('WhatsApp / phone / email clicks')
+                    .filter('_type == "lead" && type in ["click_whatsapp", "click_phone", "click_email"] && status != "spam"')
+                    .defaultOrdering([{field: 'createdAt', direction: 'desc'}]),
+                ),
+              S.divider(),
+              S.listItem()
+                .title('All leads')
+                .id('leadsAll')
+                .child(
+                  S.documentTypeList('lead')
+                    .title('All leads')
+                    .defaultOrdering([{field: 'createdAt', direction: 'desc'}]),
+                ),
+            ]),
+        ),
+
       S.listItem()
         .title('Registration Requests')
         .id('registrationRequests')

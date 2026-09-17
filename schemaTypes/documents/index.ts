@@ -14,6 +14,7 @@ import {propertyType} from './propertyType'
 import {siteSettings} from './siteSettings'
 import {landingPage} from './landingPage'
 import {registrationRequest} from './registrationRequest'
+import {lead} from './lead'
 import {botAccessRequest} from './botAccessRequest'
 import {tracker} from './tracker'
 import {developer} from './developer'
@@ -44,6 +45,7 @@ export const documents = [
   propertyType,
   siteSettings,
   registrationRequest,
+  lead,
   botAccessRequest,
   tracker,
   developer,
