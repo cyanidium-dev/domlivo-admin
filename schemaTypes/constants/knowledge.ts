@@ -61,6 +61,7 @@ export const KNOWLEDGE_DATA_KINDS = [
   {title: 'Fee', value: 'fee'},
   {title: 'Tax rate', value: 'tax_rate'},
   {title: 'Survey', value: 'survey'},
+  {title: 'Legal requirement (rule, no figure)', value: 'legal_requirement'},
 ] as const
 
 /** Taxonomy slugs. See 03-data-dictionary.md §4. */

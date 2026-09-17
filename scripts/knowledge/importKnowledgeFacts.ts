@@ -163,15 +163,20 @@ async function main(): Promise<void> {
     byConfidence[confidence] = (byConfidence[confidence] || 0) + 1
 
     const valueText = [row.value, row.notes].filter(Boolean).join('\n\n').slice(0, 2000)
-    const eur = firstNumber(row.normalized_eur)
-    const range = rangeBounds(row.normalized_eur) || rangeBounds(row.value)
-    const original = parseOriginal(row.original || row.value)
+    const dataKind = normalizeDataKind(row.data_kind, dataId)
+    // A rule ("the deed is translated into Albanian") has no figure. Its prose
+    // is full of numbers that are not values — article numbers, "99 years",
+    // "three times" — and parsing them would put a fake quantity on the fact.
+    const isRule = dataKind === 'legal_requirement'
+    const eur = isRule ? null : firstNumber(row.normalized_eur)
+    const range = isRule ? null : rangeBounds(row.normalized_eur) || rangeBounds(row.value)
+    const original = isRule ? {value: null, currency: null} : parseOriginal(row.original || row.value)
 
     // `value` is the normalised EUR figure when the research file computed one,
     // otherwise the number the fact opens with (a percentage, a count, a kWh
     // figure). Never a number found further inside the prose — see
     // `leadingNumber`.
-    const value = eur ?? leadingNumber(row.value) ?? firstQuantity(row.value)
+    const value = isRule ? null : eur ?? leadingNumber(row.value) ?? firstQuantity(row.value)
     const usedEur = eur !== null
     if (value === null) stats.textOnly += 1
     else if (range) stats.ranged += 1
@@ -209,7 +214,7 @@ async function main(): Promise<void> {
       category,
       metric,
       title: title.slice(0, 300) || undefined,
-      dataKind: normalizeDataKind(row.data_kind, dataId),
+      dataKind,
       value: value ?? undefined,
       valueLow: range ? range[0] : undefined,
       valueHigh: range ? range[1] : undefined,

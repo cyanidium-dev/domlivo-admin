@@ -184,6 +184,7 @@ export function normalizeConfidence(raw: string | undefined | null): string {
 }
 
 const DATA_KIND_RULES: Array<[RegExp, string]> = [
+  [/legal[_ ]?requirement/i, 'legal_requirement'],
   [/tariff|regulated|tax rate|rate card/i, 'tariff'],
   [/tax[_ ]?rate/i, 'tax_rate'],
   [/reference/i, 'reference_price'],
@@ -232,6 +233,7 @@ const CATEGORY_BY_FAMILY: Array<[RegExp, string]> = [
   [/^DATA-PLATFORM/, 'short_term_rental'],
   [/^DATA-MGMT/, 'property_management'],
   [/^DATA-REG/, 'legal'],
+  [/^DATA-LEGAL/, 'legal'],
   [/^DATA-INSTAT/, 'tourism'],
   [/^DATA-TAX/, 'taxes'],
   [/^DATA-PURCHASE/, 'purchase_costs'],
