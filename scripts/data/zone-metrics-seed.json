@@ -748,8 +748,6 @@
       "priceAllMin": 1800,
       "priceAllMax": 3000,
       "strOccupancyPct": 38.3,
-      "referencePriceMin": 60000,
-      "referencePriceMax": 100000,
       "sources": [
         "monitorCoast",
         "referencePrices"
@@ -934,7 +932,6 @@
       "priceAllMin": 2000,
       "priceAllMax": 2500,
       "strOccupancyPct": 40.9,
-      "referencePriceMax": 100000,
       "sources": [
         "monitorCoast",
         "referencePrices"
