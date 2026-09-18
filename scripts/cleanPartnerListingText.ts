@@ -33,7 +33,7 @@ const CONTACT = /📞|📲|☎|call\s*\||whats\s*app|what's app|viber|\+355|^\s*
 const SIGNOFF_EN = /trusted partner|look forward|real estate agency in albania|find the property you/i
 // "💰 Price: …" or a bare "Price: 900.000€" line, in any of the site's languages.
 const PRICE = /💰|^\s*[-–•]?\s*(price|цена|ціна|cena|preis|kaufpreis|prezzo|çmimi)\s*:/i
-const EMOJI = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}\u{2B50}\u{2B06}\u{2194}-\u{21FF}]/gu
+const EMOJI = /[\u{1F100}-\u{1F1FF}\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}\u{2B50}\u{2B06}\u{2194}-\u{21FF}]/gu
 
 type Localized = Partial<Record<string, string>>
 
@@ -93,6 +93,7 @@ async function main() {
   }
 
   console.log(`${rows.length} partner listings, ${patches.length} to clean, ${patches.reduce((n, p) => n + Object.keys(p.set).length, 0)} values`)
+  if (process.argv.includes("--keys")) for (const p of patches) console.log(p.id, Object.keys(p.set).join(" "), JSON.stringify(Object.values(p.set)[0]).slice(0, 160))
   for (const p of patches.slice(0, 3)) {
     const row = rows.find((r) => r._id === p.id)!
     console.log(`\n=== ${p.id}\n--- before (en)\n${row.description?.en?.slice(-600)}\n--- after (en)\n${(p.set['description.en'] ?? '(unchanged)').slice(-600)}\n--- after (ru)\n${(p.set['description.ru'] ?? '(unchanged)').slice(-400)}`)
