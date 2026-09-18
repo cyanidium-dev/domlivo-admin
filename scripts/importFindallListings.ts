@@ -43,6 +43,7 @@
  * - npm run import:findall -- --execute --source <file> (one file instead of the folder)
  */
 import fs from 'node:fs'
+import {generatePropertyUrlSlugs} from './generatePropertyUrlSlugs'
 import path from 'node:path'
 import {config as loadDotenv} from 'dotenv'
 import {createClient} from '@sanity/client'

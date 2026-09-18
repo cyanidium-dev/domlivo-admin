@@ -54,6 +54,31 @@ export const property = defineType({
     }),
 
     defineField({
+      name: 'localizedSlug',
+      title: 'URL per language',
+      description:
+        'The address of this listing in each language, e.g. /en/property/apartment-2-1-plazh-durres-85m2. ' +
+        'Filled by scripts/generatePropertyUrlSlugs.ts from the type, layout, district, city and area; ' +
+        'the site falls back to the URL slug above while it is empty. The URL slug and the values here all ' +
+        'redirect to the right language, but a value you overwrite stops answering (404) and the page ' +
+        'starts over in Google — leave these alone once the listing is live.',
+      type: 'object',
+      group: 'basic',
+      options: {collapsible: true, collapsed: true},
+      fields: ['en', 'uk', 'ru', 'sq', 'it', 'pl', 'de'].map((lang) =>
+        defineField({
+          name: lang,
+          title: lang.toUpperCase(),
+          type: 'string',
+          validation: (Rule) =>
+            Rule.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, {name: 'slug'}).error(
+              'Lowercase Latin letters, digits and hyphens only.',
+            ),
+        }),
+      ),
+    }),
+
+    defineField({
       name: 'shortDescription',
       title: 'Short Description',
       type: 'localizedText',
