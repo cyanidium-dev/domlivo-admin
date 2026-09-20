@@ -74,6 +74,13 @@ const T = {
     sq: '{a} kundrejt {b}, në shifra', it: '{a} contro {b}, in cifre',
     pl: '{a} kontra {b} w liczbach',
   },
+  // Its own heading: the stats band above already carries compareTable, and
+  // two identical H2s on one page read as a template defect (audit 2026-09-20).
+  priceTable: {
+    en: 'Asking prices per m², zone by zone', uk: 'Ціни за м² по зонах', ru: 'Цены за м² по зонам',
+    sq: 'Çmimet për m² sipas zonave', it: 'Prezzi al m², zona per zona',
+    pl: 'Ceny za m² według stref', de: 'Preise pro m² nach Zonen',
+  },
   criteria: {
     en: 'Beyond the price', uk: 'Поза ціною', ru: 'За пределами цены',
     sq: 'Përtej çmimit', it: 'Oltre il prezzo',
@@ -377,7 +384,7 @@ function buildLanding(c: Comparison, zones: Map<string, ZoneRow>, year: string):
       ? [{
           _key: 'prices', _type: 'zonePriceTableAutoSection', enabled: true,
           mode: 'compare',
-          title: fill(T.compareTable, names, L),
+          title: fill(T.priceTable, names, L),
           zones: [left, right].map((z, i) => ({_key: `z${i}`, _type: 'reference', _ref: z._id})),
           columns: ['priceNew', 'priceResale', 'referencePrice'],
           sortBy: 'price', linkRows: true, showSources: true,
