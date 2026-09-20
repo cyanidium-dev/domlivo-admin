@@ -18,6 +18,7 @@ export const LEAD_TYPES = [
   {title: 'Agent contact', value: 'agent_contact'},
   {title: 'Registration (realtor / agency)', value: 'registration'},
   {title: 'Clicked WhatsApp', value: 'click_whatsapp'},
+  {title: 'Clicked Telegram', value: 'click_telegram'},
   {title: 'Clicked phone', value: 'click_phone'},
   {title: 'Clicked email', value: 'click_email'},
 ] as const
@@ -50,6 +51,7 @@ const TYPE_ICON: Record<string, string> = {
   agent_contact: '👤',
   registration: '🧾',
   click_whatsapp: '🟢',
+  click_telegram: '✈️',
   click_phone: '📞',
   click_email: '✉️',
 }
