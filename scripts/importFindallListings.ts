@@ -312,6 +312,28 @@ function bathsFor(row: Scraped): number {
   return isDwelling ? 1 : 0
 }
 
+type PriceHistoryEntry = {_key?: string; _type?: string; date: string; price: number; priceUnit?: string}
+
+/**
+ * The listing's `priceHistory` after this run, or `null` when nothing is to
+ * be written: the price is unknown (0), or equals the last one on record. A
+ * first entry on a brand-new document is dated by the partner's `createdAt`,
+ * every later one by the day the change was seen.
+ */
+export function nextPriceHistory(
+  current: PriceHistoryEntry[] | undefined | null,
+  seen: {price: number; priceUnit: string; date: string},
+): PriceHistoryEntry[] | null {
+  if (!(seen.price > 0)) return null
+  const history = Array.isArray(current) ? current.filter((e) => e && typeof e.price === 'number') : []
+  const last = history[history.length - 1]
+  if (last && last.price === seen.price && (last.priceUnit ?? 'total') === seen.priceUnit) return null
+  return [
+    ...history,
+    {_key: `${seen.date}-${seen.price}`, _type: 'priceHistoryEntry', date: seen.date, price: seen.price, priceUnit: seen.priceUnit},
+  ]
+}
+
 function priceEur(row: Scraped): number {
   if (row.priceFlag === 'implausible') return 0
   // "Jepet Tokë me %" — land offered for a share of the build, priced 1 in
@@ -464,8 +486,13 @@ async function main() {
   let uploaded = 0
   for (const {row, districtSlug, typeSlug, status, lifecycle} of plan) {
     const docId = `property-${PARTNER}-${row.id}`
-    const existing = await client.fetch<{gallery?: Array<Record<string, unknown> & {publicId?: string}>} | null>(
-      `*[_id==$id][0]{ "gallery": gallery[]{ ..., "publicId": asset->originalFilename } }`,
+    const existing = await client.fetch<{
+      gallery?: Array<Record<string, unknown> & {publicId?: string}>
+      price?: number
+      priceUnit?: string
+      priceHistory?: PriceHistoryEntry[]
+    } | null>(
+      `*[_id==$id][0]{ "gallery": gallery[]{ ..., "publicId": asset->originalFilename }, price, priceUnit, priceHistory }`,
       {id: docId},
     )
     const kept = (existing?.gallery ?? []).map(({publicId, ...item}) => ({item, publicId: (publicId || '').replace(/\.jpg$/, '')}))
@@ -540,6 +567,15 @@ async function main() {
     // this import does not own — translations, an editor's coordinates, a
     // hand-picked seo block — and a replace would wipe them.
     const {_id, _type, ...rest} = doc
+    // The asking price the listing carries today goes on record when it is
+    // the first one seen or differs from the last recorded; the listing page
+    // shows the sequence ("listed on … at …, changed on …"). A price of 0
+    // means unknown and is not history.
+    const history = nextPriceHistory(existing?.priceHistory, {
+      price: doc.price as number,
+      priceUnit: doc.priceUnit as string,
+      date: (row.createdAt && !existing ? new Date(row.createdAt) : new Date()).toISOString().slice(0, 10),
+    })
     await client
       .transaction()
       .createIfNotExists({_id: _id as string, _type: _type as string} as never)
@@ -547,6 +583,7 @@ async function main() {
         let patch = p.set(rest).set(textSq).setIfMissing(textSeed).unset(district ? [] : ['district'])
         // Photos uploaded on an earlier run stay in front; new ones follow.
         if (fresh.length) patch = patch.set({gallery: [...kept.map((k) => k.item), ...fresh]})
+        if (history) patch = patch.set({priceHistory: history})
         return patch
       })
       .commit()

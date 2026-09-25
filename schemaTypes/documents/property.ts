@@ -213,6 +213,38 @@ export const property = defineType({
     }),
 
     defineField({
+      name: 'priceHistory',
+      title: 'Asking price history',
+      type: 'array',
+      group: 'pricing',
+      readOnly: true,
+      description:
+        'Every asking price this listing has carried, oldest first, written by the partner imports (scripts/importFindallListings.ts) and seeded once on 2026-09-25. The listing page shows it as "listed on … at …, changed on …". Not edited by hand: a price change made in the Studio is recorded by the next import run.',
+      of: [
+        {
+          type: 'object',
+          name: 'priceHistoryEntry',
+          fields: [
+            {name: 'date', title: 'Date', type: 'date', validation: (Rule: any) => Rule.required()},
+            {name: 'price', title: 'Price (EUR)', type: 'number', validation: (Rule: any) => Rule.required().min(0)},
+            {
+              name: 'priceUnit',
+              title: 'What the price means',
+              type: 'string',
+              options: {list: [{title: 'Total', value: 'total'}, {title: 'Per m²', value: 'per-sqm'}]},
+            },
+          ],
+          preview: {
+            select: {date: 'date', price: 'price', priceUnit: 'priceUnit'},
+            prepare: ({date, price, priceUnit}: {date?: string; price?: number; priceUnit?: string}) => ({
+              title: `${date ?? '?'} — €${price ?? '?'}${priceUnit === 'per-sqm' ? '/m²' : ''}`,
+            }),
+          },
+        },
+      ],
+    }),
+
+    defineField({
       name: 'promoted',
       title: 'Promoted',
       type: 'boolean',
