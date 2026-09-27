@@ -64,7 +64,9 @@ async function main() {
       set[`pageSections[_key=="${YIELD_SECTION}"].contentGroups[_key=="${YIELD_GROUP}"].cards[_key=="${YIELD_CARD}"].value.${l}`] = NEW_YIELD
     }
   }
-  if (!doc.popularFilters) set[`pageSections[_key=="${POPULAR_SECTION}"].filters`] = {city: 'durres'}
+  // `filters.city` is a reference in the schema; a slug string there is ignored by the projection.
+  const pf = doc.popularFilters as {city?: {_ref?: string}} | null
+  if (!pf?.city?._ref) set[`pageSections[_key=="${POPULAR_SECTION}"].filters`] = {city: {_type: 'reference', _ref: 'city-durres'}}
   console.log(execute ? 'EXECUTE' : 'DRY', {rev: doc._rev, unset, set})
   if (!execute) return
   let patch = client.patch(DOC_ID)
