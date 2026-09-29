@@ -1,0 +1,157 @@
+{
+ "asOf": "2026-09-29",
+ "all": {
+  "flats": 268,
+  "priced": 263,
+  "p20": 1176,
+  "median": 1413,
+  "p80": 1764,
+  "min": 50,
+  "max": 3113
+ },
+ "resaleInland": {
+  "flats": 0,
+  "priced": 0,
+  "p20": null,
+  "median": null,
+  "p80": null,
+  "min": null,
+  "max": null
+ },
+ "resaleNotNew": {
+  "flats": 223,
+  "priced": 218,
+  "p20": 1200,
+  "median": 1500,
+  "p80": 1824,
+  "min": 50,
+  "max": 3113
+ },
+ "newBuild": {
+  "flats": 45,
+  "priced": 45,
+  "p20": 980,
+  "median": 1250,
+  "p80": 1384,
+  "min": 900,
+  "max": 1600
+ },
+ "centreSeafront": {
+  "flats": 135,
+  "priced": 132,
+  "p20": 1069,
+  "median": 1416,
+  "p80": 1882,
+  "min": 540,
+  "max": 2900
+ },
+ "seaKnown": 100,
+ "stages": {
+  "completed": 214,
+  "unknown": 9,
+  "under-construction": 45
+ },
+ "districtSlugs": [
+  "plazh",
+  "shkembi-durres",
+  "golem-durres",
+  "plepa-durres",
+  "mali-i-robit",
+  "qerret",
+  "kavaje",
+  "spille",
+  "city-center-durres",
+  "shkozet",
+  "gjiri-i-lalzit"
+ ],
+ "byDistrict": [
+  {
+   "slug": "golem-durres",
+   "title": "Golem",
+   "flats": 79,
+   "priced": 78,
+   "p20": 1041,
+   "median": 1311,
+   "p80": 1526,
+   "min": 900,
+   "max": 2500
+  },
+  {
+   "slug": "plazh",
+   "title": "Plazh",
+   "flats": 66,
+   "priced": 65,
+   "p20": 1267,
+   "median": 1588,
+   "p80": 1809,
+   "min": 643,
+   "max": 2538
+  },
+  {
+   "slug": "city-center-durres",
+   "title": "City Center",
+   "flats": 46,
+   "priced": 43,
+   "p20": 1114,
+   "median": 1500,
+   "p80": 2073,
+   "min": 540,
+   "max": 2900
+  },
+  {
+   "slug": "shkembi-durres",
+   "title": "Shkëmbi",
+   "flats": 30,
+   "priced": 30,
+   "p20": 1179,
+   "median": 1471,
+   "p80": 1614,
+   "min": 1000,
+   "max": 2069
+  },
+  {
+   "slug": "mali-i-robit",
+   "title": "Mali i Robit",
+   "flats": 19,
+   "priced": 19,
+   "p20": 1250,
+   "median": 1500,
+   "p80": 1792,
+   "min": 973,
+   "max": 2071
+  },
+  {
+   "slug": "qerret",
+   "title": "Qerret",
+   "flats": 12,
+   "priced": 12,
+   "p20": 1300,
+   "median": 1300,
+   "p80": 1390,
+   "min": 1000,
+   "max": 1800
+  },
+  {
+   "slug": "plepa-durres",
+   "title": "Plepa",
+   "flats": 7,
+   "priced": 7,
+   "p20": 1462,
+   "median": 1625,
+   "p80": 1782,
+   "min": 1324,
+   "max": 2054
+  },
+  {
+   "slug": "spille",
+   "title": "Spille",
+   "flats": 3,
+   "priced": 3,
+   "p20": 1260,
+   "median": 1350,
+   "p80": 1350,
+   "min": 1200,
+   "max": 1350
+  }
+ ]
+}
