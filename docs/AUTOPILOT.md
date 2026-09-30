@@ -72,3 +72,7 @@ Domlivo autopilot, <дата>
 ```
 
 If a step failed, say which check failed and where the files are, so the owner can finish by hand. Never publish a post whose dry run printed a problem, and never send the report claiming a post is live without having seen `Created 1 posts` in the script output.
+
+## Scheduling
+
+The routine definition is `docs/autopilot-routine.json` (claude.ai cloud routine, cron `0 7 1 * *` = 08:00 London on the first of the month, model claude-opus-5-5, repository cyanidium-dev/domlivo-admin). Creating it needs the Claude account connected to GitHub (https://claude.ai/connect-github) and the five env vars set on the cloud environment (https://claude.ai/code/environments). The `.env` of this repository is not in git; the Sanity token must be copied into the environment by hand. A Telegram bot token and the chat id of the owner's chat are needed for the report.
