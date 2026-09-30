@@ -7,7 +7,7 @@ The site is domlivo.com, a real-estate marketplace for Albania in en, uk, ru, sq
 ## Environment
 
 - Node 20+, `npm ci` once. Scripts run with `npx tsx` (TypeScript) or `node` (.mjs).
-- Env vars, set in the cloud environment: `SANITY_PROJECT_ID`, `SANITY_DATASET` (production), `SANITY_API_TOKEN` (write), `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`. `scripts/**` read them through dotenv or the process environment; there is no `.env` in git.
+- Env vars, set in the cloud environment: `SANITY_PROJECT_ID`, `SANITY_DATASET` (production), `SANITY_API_TOKEN` (write), `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` (the leads chat; reports are sent silently). `scripts/**` read them through dotenv or the process environment; there is no `.env` in git.
 - Git: commit data files and state to `main` and push. Commit messages end with `Co-Authored-By: Claude <noreply@anthropic.com>`.
 - Time budget: one run should finish in under 90 minutes. If a step cannot be completed, skip to "Report" with what happened.
 

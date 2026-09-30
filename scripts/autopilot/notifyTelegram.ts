@@ -1,7 +1,10 @@
 /**
  * Sends one message to the owner's Telegram chat through the Bot API.
  *
- * Env: TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID. Without them the script prints
+ * Env: TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID (the leads chat; the frontend's
+ * TELEGRAM_AGENT_CONTACT_CHAT_ID is accepted as a fallback). Messages go out
+ * silent (no sound), as the owner asked: news must not ring like a lead.
+ * Without token or chat id the script prints
  * the message and exits 0, so a missing token never breaks the run that
  * produced the news. Text is sent as plain text (no Markdown parsing), so
  * figures with underscores and asterisks arrive as written.
@@ -26,7 +29,7 @@ async function main() {
   const text = (process.argv.slice(2).join(' ') || (await readStdin())).trim()
   if (!text) throw new Error('nothing to send')
   const token = process.env.TELEGRAM_BOT_TOKEN?.trim()
-  const chat = process.env.TELEGRAM_CHAT_ID?.trim()
+  const chat = (process.env.TELEGRAM_CHAT_ID || process.env.TELEGRAM_AGENT_CONTACT_CHAT_ID)?.trim()
   if (!token || !chat) {
     console.warn('TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID missing; message not sent:\n' + text)
     return
@@ -36,7 +39,7 @@ async function main() {
   const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({chat_id: chat, text: body, disable_web_page_preview: true}),
+    body: JSON.stringify({chat_id: chat, text: body, disable_web_page_preview: true, disable_notification: true}),
     signal: AbortSignal.timeout(30_000),
   })
   const json = (await res.json()) as {ok: boolean; description?: string}
