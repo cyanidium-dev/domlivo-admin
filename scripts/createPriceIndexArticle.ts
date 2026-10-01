@@ -69,6 +69,13 @@ const ARTICLES: Article[] = [
     categories: ['blogCategory-market', 'blogCategory-investment'],
     cover: {ref: 'image-1cf6d066c64bf3dd3872028133d517db16323bed-3840x2560-jpg', alt: 'The beach and seafront at Durrës, Albania'},
   },
+  {
+    slug: 'durres-asking-price-index-2026-10',
+    dir: 'scripts/data/articles-2026-10-01',
+    figures: 'scripts/data/price-index/durres-2026-10.json',
+    categories: ['blogCategory-market'],
+    cover: {ref: 'image-1cf6d066c64bf3dd3872028133d517db16323bed-3840x2560-jpg', alt: 'The beach and seafront at Durrës, Albania'},
+  },
 ]
 
 /**
