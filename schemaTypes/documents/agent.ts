@@ -72,6 +72,15 @@ export const agent = defineType({
     }),
 
     defineField({
+      name: 'noPublicLink',
+      title: 'Name only, no link',
+      type: 'boolean',
+      initialValue: false,
+      description:
+        'Show the agent’s name on listings as plain text, without a link to their catalogue. For partners whose listings we route ourselves, so nothing on the page leads away from the lead form (added 2026-10-04 for Lulekuqe).',
+    }),
+
+    defineField({
       name: 'email',
       type: 'string',
       validation: (Rule) => Rule.required().email(),
