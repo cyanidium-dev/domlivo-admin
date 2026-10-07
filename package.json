@@ -145,6 +145,7 @@
     "scrape:getal": "tsx scripts/scrapeGetAlListings.ts",
     "import:findall": "tsx scripts/importFindallListings.ts",
     "import:getal": "tsx scripts/importGetAlListings.ts",
+    "import:cactus": "tsx scripts/importCactusListings.ts",
     "source:zone-images": "tsx scripts/sourceZoneImages.ts",
     "apply:zone-images": "tsx scripts/applyZoneImages.ts",
     "replace:stock-imagery": "tsx scripts/replaceStockImagery.ts",
