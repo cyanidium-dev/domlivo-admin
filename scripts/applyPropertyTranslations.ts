@@ -12,7 +12,7 @@
  *   [
  *     {
  *       "id": "property-getal-1036",
- *       "title":            {"en": "…", "sq": "…", "ru": "…", "uk": "…", "it": "…", "pl": "…"},
+ *       "title":            {"en": "…", "sq": "…", "ru": "…", "uk": "…", "it": "…", "pl": "…", "de": "…"},
  *       "shortDescription": {"en": "…", …},
  *       "description":      {"en": "…", …}
  *     }
@@ -55,7 +55,7 @@ if (!fileArg) {
   process.exit(1)
 }
 
-const LOCALES = ['en', 'uk', 'ru', 'sq', 'it', 'pl'] as const
+const LOCALES = ['en', 'uk', 'ru', 'sq', 'it', 'pl', 'de'] as const
 const FIELDS = ['title', 'shortDescription', 'description'] as const
 type Locale = (typeof LOCALES)[number]
 type Field = (typeof FIELDS)[number]
