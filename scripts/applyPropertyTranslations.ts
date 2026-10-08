@@ -91,7 +91,9 @@ function problemsWith(entry: Entry): string[] {
   for (const f of FIELDS) {
     const ru = (entry[f]?.ru ?? '').trim()
     const uk = (entry[f]?.uk ?? '').trim()
-    if (ru && uk && ru === uk) out.push(`${f}: ru and uk are identical`)
+    // A title made only of digits and a Latin place name ("1+1, Golem, 66 м²")
+    // is legitimately the same in both; only flag strings with Cyrillic words.
+    if (ru && uk && ru === uk && /[А-Яа-яЁёІіЇїЄєҐґ]{3,}/.test(ru)) out.push(`${f}: ru and uk are identical`)
   }
   return out
 }
