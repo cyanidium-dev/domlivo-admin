@@ -112,6 +112,8 @@ const SOURCE_QUERY = `*[_type=="property"]{
 const WORKSPACE = path.resolve(process.cwd(), '../domlivo-workspace/cactus')
 const GMAPS_CACHE = cacheArg ? path.resolve(cacheArg) : path.join(WORKSPACE, 'gmaps-cache.json')
 const PACE_MS = 250
+const PHOTO_CONCURRENCY = 6
+
 /** Below this a sale total is a unit error or a per-m² rate, not a bargain. */
 const IMPLAUSIBLE_UNDER = 15000
 /** Albania, roughly: a resolved pin outside this is a wrong link. */
@@ -933,23 +935,32 @@ async function main() {
 
     const fresh: Array<Record<string, unknown>> = []
     if (!skipPhotos) {
-      for (const url of p.photos) {
-        const publicId = photoPublicId(url)
-        if (!publicId || already.has(publicId)) continue
-        try {
-          const asset = await uploadPhoto(url, publicId)
-          fresh.push({
-            _key: slugify(publicId).slice(0, 40) || `p${fresh.length}`,
-            _type: 'image',
-            asset: {_type: 'reference', _ref: asset._id},
-            alt: p.title.en.slice(0, 120),
-          })
-          uploaded += 1
-          await sleep(PACE_MS)
-        } catch (err) {
-          console.log(`   photo failed for ${docId}: ${err instanceof Error ? err.message : err}`)
+      // Sequential uploads ran at ~10 s a photo on 2026-10-08 (4,462 photos,
+      // twelve hours); a few in flight at once is what the asset API expects.
+      const todo = p.photos.map((url) => ({url, publicId: photoPublicId(url)})).filter((t) => t.publicId && !already.has(t.publicId))
+      const results: Array<Record<string, unknown> | null> = new Array(todo.length).fill(null)
+      let next = 0
+      const worker = async () => {
+        while (next < todo.length) {
+          const i = next++
+          const {url, publicId} = todo[i]
+          try {
+            const asset = await uploadPhoto(url, publicId)
+            results[i] = {
+              _key: slugify(publicId).slice(0, 40) || `p${i}`,
+              _type: 'image',
+              asset: {_type: 'reference', _ref: asset._id},
+              alt: p.title.en.slice(0, 120),
+            }
+            uploaded += 1
+          } catch (err) {
+            console.log(`   photo failed for ${docId}: ${err instanceof Error ? err.message : err}`)
+          }
         }
       }
+      await Promise.all(Array.from({length: Math.min(PHOTO_CONCURRENCY, todo.length)}, worker))
+      for (const r of results) if (r) fresh.push(r)
+      await sleep(PACE_MS)
     }
 
     const doc = buildDoc(p)
