@@ -563,6 +563,20 @@ function photoPublicId(url: string): string {
   return (url.split('/').pop() || '').replace(/\.[a-z0-9]+$/i, '')
 }
 
+/** The network to Sanity dropped mid-run twice on 2026-10-08 (ECONNRESET); a dropped connection is not a reason to lose the run. */
+async function withRetry<T>(fn: () => Promise<T>, attempts = 4): Promise<T> {
+  let lastErr: unknown
+  for (let i = 0; i < attempts; i++) {
+    try {
+      return await fn()
+    } catch (err) {
+      lastErr = err
+      await sleep(1500 * (i + 1))
+    }
+  }
+  throw lastErr
+}
+
 async function uploadPhoto(url: string, publicId: string) {
   const res = await fetch(url, {headers: {'User-Agent': UA}})
   if (!res.ok) throw new Error(`photo ${res.status} ${url}`)
@@ -923,10 +937,10 @@ async function main() {
   let uploaded = 0
   for (const p of plan) {
     const docId = `property-${PARTNER}-${p.row._id}`
-    const existing = await client.fetch<{gallery?: Array<Record<string, unknown> & {publicId?: string}>} | null>(
+    const existing = await withRetry(() => client.fetch<{gallery?: Array<Record<string, unknown> & {publicId?: string}>} | null>(
       `*[_id==$id][0]{ "gallery": gallery[]{ ..., "publicId": asset->originalFilename } }`,
       {id: docId},
-    )
+    ))
     const kept = (existing?.gallery ?? []).map(({publicId, ...item}) => ({
       item,
       publicId: (publicId || '').replace(/\.[a-z0-9]+$/i, ''),
@@ -967,15 +981,17 @@ async function main() {
     // Always a patch, never createOrReplace: the document accumulates things
     // this import does not own — translations, an editor's coordinates, a
     // hand-picked seo block — and a replace would wipe them.
-    await client
-      .transaction()
-      .createIfNotExists({_id: docId, _type: 'property'} as never)
-      .patch(docId, (q) => {
-        let patch = q.set(doc).unset([...(doc.district ? [] : ['district']), 'documentation'])
-        if (fresh.length) patch = patch.set({gallery: [...kept.map((k) => k.item), ...fresh]})
-        return patch
-      })
-      .commit()
+    await withRetry(() =>
+      client
+        .transaction()
+        .createIfNotExists({_id: docId, _type: 'property'} as never)
+        .patch(docId, (q) => {
+          let patch = q.set(doc).unset([...(doc.district ? [] : ['district']), 'documentation'])
+          if (fresh.length) patch = patch.set({gallery: [...kept.map((k) => k.item), ...fresh]})
+          return patch
+        })
+        .commit(),
+    )
 
     done += 1
     if (done % 10 === 0 || done === plan.length) console.log(`  ${done}/${plan.length} listings, ${uploaded} photos uploaded`)
