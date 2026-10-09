@@ -193,6 +193,18 @@ export const agent = defineType({
     }),
 
     defineField({
+      name: 'telegramLeadChatId',
+      title: 'Telegram group for this agent’s leads',
+      type: 'string',
+      description:
+        'Chat id of the agent’s own Telegram group (e.g. -1001234567890). The domlivo bot must be a member. Every lead on this agent’s listings is sent there as well as to the main group; other agents’ leads never are. Leave empty and the lead goes to the main group only. Added 2026-10-09 for Cactus Real Estate.',
+      validation: (Rule) =>
+        Rule.custom((value) =>
+          !value || /^-?\d{5,20}$/.test(String(value).trim()) ? true : 'A Telegram chat id is a number, usually starting with -100.',
+        ),
+    }),
+
+    defineField({
       name: 'telegramUserId',
       title: 'Telegram User ID',
       type: 'number',
