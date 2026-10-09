@@ -197,6 +197,9 @@ const DISTRICT_RULES: Array<[RegExp, string]> = [
   [/shkozet/, 'shkozet'],
   [/currila/, 'currila'],
   [/rrashbull/, 'rrashbull'],
+  // Warehouses "along the Tirana–Durrës motorway" sit in the Xhafzotaj/Shijak
+  // stretch; the pin stays approximate (2026-10-09).
+  [/autostrada/, 'xhafzotaj'],
   [/porto\s*romano/, 'porto-romano'],
   // Spitallë, the district north of the city, is not Spitali, the hospital
   // quarter in the middle of it. One "l" apart, and several kilometres.
