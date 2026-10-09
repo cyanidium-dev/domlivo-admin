@@ -166,6 +166,17 @@ export const property = defineType({
       description: 'Property listing lifecycle. Active = visible for deal; Archived = hidden from listings.',
     }),
 
+    defineField({
+      name: 'duplicateOf',
+      title: 'Duplicate of',
+      type: 'reference',
+      to: [{type: 'property'}],
+      weak: true,
+      group: 'basic',
+      description:
+        'Set when this listing is the same flat as another one already on the site (two partners listing it). Unpublish this one; its URL then 301s to the original. Added 2026-10-09 for the Cactus/get.al overlap.',
+    }),
+
     // PRICING
     defineField({
       name: 'price',
