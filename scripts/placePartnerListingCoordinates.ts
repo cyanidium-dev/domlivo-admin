@@ -19,10 +19,17 @@
  *   3. a place name in the title or description (same anchor table);
  *   4. the district centroid, then the city centroid.
  *
- * Land check: every candidate point is reverse-geocoded with Nominatim
- * (one request a second, cached in ../domlivo-workspace/geo/reverse-cache.json);
- * water, beach-free sea and "unable to geocode" answers make the point move
- * to another deterministic spot inside the same radius (up to 6 tries).
+ * Land check: every candidate point must be on solid land in the OSM water
+ * polygons the map draws (OpenFreeMap z14, scripts/lib/geoTiles.ts, 40 m of
+ * land around it) and is then reverse-geocoded with Nominatim (one request a
+ * second, cached in ../domlivo-workspace/geo/reverse-cache.json); water,
+ * beach-free sea and "unable to geocode" answers make the point move to
+ * another deterministic spot inside the same radius (up to 6 tries).
+ *
+ * Anchors of another city's district are never used (2026-10-10: "qender" in
+ * a Tirana flat's text matched Durrës centre). A label or address anchor in
+ * another district than the listing's loses to one of its own district that
+ * the title names.
  *
  * Never touches a listing whose `locationPrecision` is 'exact'. Re-runnable:
  * the same listing lands on the same spot every run unless its anchor changes.
@@ -37,6 +44,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import {getSanityClientForScripts} from './lib/sanityEnvClient'
+import {nearestLand, solidLand} from './lib/geoTiles'
 
 const args = process.argv.slice(2)
 const isDry = args.includes('--dry')
@@ -45,6 +53,7 @@ const noLandCheck = args.includes('--no-land-check')
 const only = args.includes('--only') ? args[args.indexOf('--only') + 1] : ''
 const limit = args.includes('--limit') ? Number(args[args.indexOf('--limit') + 1]) : 0
 const publishedOnly = args.includes('--include-published-only')
+const planOut = args.includes('--plan-out') ? args[args.indexOf('--plan-out') + 1] : ''
 if (!isDry && !isExecute) {
   console.error('Use --dry or --execute.')
   process.exit(1)
@@ -93,13 +102,14 @@ const anchors = anchorFile.anchors.map((a) => ({...a, matchNorm: a.match.map(nor
  * for the partner's own label: compared whole first (so "Qerret" does not
  * become "Qerreti i Durrësit"'s neighbour by accident), then by containment.
  */
-function findAnchor(text: string, wholeLabel = false): Anchor | null {
+function findAnchor(text: string, wholeLabel = false, ok: (a: Anchor) => boolean = () => true): Anchor | null {
   const t = norm(text)
   if (!t) return null
   if (wholeLabel) {
-    for (const a of anchors) if (a.matchNorm.some((m) => m === t)) return a
+    for (const a of anchors) if (ok(a) && a.matchNorm.some((m) => m === t)) return a
   }
   for (const a of anchors) {
+    if (!ok(a)) continue
     if (a.matchNorm.some((m) => m.length >= 4 && new RegExp(`(^|\\s)${escapeRe(m)}(\\s|$|\\.)`).test(t))) return a
   }
   return null
@@ -189,12 +199,18 @@ async function placeOnLand(center: {lat: number; lng: number}, radius: number, s
   for (let attempt = 0; attempt < 6; attempt++) {
     const point = scatter(center, radius, attempt ? `${seed}#${attempt}` : seed)
     if (noLandCheck) return {point, checked: false, attempts: attempt + 1}
+    // Nominatim answers with the nearest beach road for a point 100 m out at
+    // sea (2026-10-10: 90 pins in the water), so the OSM water polygons the
+    // map itself draws (OpenFreeMap z14) have the last word.
+    if (!(await solidLand(point.lat, point.lng))) continue
     const a = await reverse(point.lat, point.lng)
     if (!isWater(a)) return {point, checked: true, attempts: attempt + 1}
   }
   // Six water hits in a row: the anchor itself is probably on the shore. Use
-  // the anchor point, which an editor chose on land.
-  return {point: {lat: center.lat, lng: center.lng}, checked: true, attempts: 6, fellBack: true}
+  // the anchor point, which an editor chose on land, or the land nearest to it.
+  const land = (await solidLand(center.lat, center.lng)) ? center : await nearestLand(center.lat, center.lng)
+  const point = land ? {lat: land.lat, lng: land.lng} : {lat: center.lat, lng: center.lng}
+  return {point, checked: true, attempts: 6, fellBack: true}
 }
 
 /* ---------- main ---------- */
@@ -222,6 +238,11 @@ type Row = {
 async function main() {
   const client = getSanityClientForScripts()
   const labels = loadPartnerLabels()
+  const cityOfDistrict = new Map(
+    (await client.fetch<Array<{d: string; c?: string}>>(`*[_type == "district" && !(_id in path("drafts.**"))]{"d": slug.current, "c": city->slug.current}`))
+      .filter((x) => x.d && x.c)
+      .map((x) => [x.d, x.c!]),
+  )
   console.log(`partner labels loaded: ${labels.size}`)
 
   let rows = await client.fetch<Row[]>(`*[_type == "property" && !(_id in path("drafts.**"))]{
@@ -247,18 +268,33 @@ async function main() {
     const address = row.addrSq || row.addrEn || ''
     const text = [row.titleEn, row.titleSq, row.titleRu, row.descEn, row.descSq, row.descRu].filter(Boolean).join(' \n ')
 
+    // An anchor of another city's district is a word that happens to match
+    // ("qendra"/"qender" is Durrës centre in the table, and a Tirana or Vlorë
+    // flat "in the centre" landed in Durrës; 2026-10-10).
+    const inCity = (a: Anchor) => !row.city || !a.district || !cityOfDistrict.has(a.district) || cityOfDistrict.get(a.district) === row.city
     let anchor: Anchor | null = null
     let via = ''
     if (label) {
-      anchor = findAnchor(label, true)
+      anchor = findAnchor(label, true, inCity)
       if (anchor) via = `label "${label}"`
     }
     if (!anchor && address) {
-      anchor = findAnchor(address, true)
+      anchor = findAnchor(address, true, inCity)
       if (anchor) via = `address "${address}"`
     }
+    // A label or address anchor in another district loses to a place of the
+    // listing's own district that its title names (findall's address
+    // "Shkembi Kavajës" for "Loredis Residence, Qerret Beach").
+    if (anchor && anchor.district && row.district && anchor.district !== row.district) {
+      const titles = [row.titleEn, row.titleSq, row.titleRu].filter(Boolean).join(' \n ')
+      const own = findAnchor(titles, false, (a) => a.district === row.district)
+      if (own) {
+        anchor = own
+        via = 'title (own district)'
+      }
+    }
     if (!anchor && text) {
-      anchor = findAnchor(text)
+      anchor = findAnchor(text, false, inCity)
       if (anchor) via = 'text'
     }
     // An anchor that belongs to another district than the listing's own is a
@@ -298,6 +334,10 @@ async function main() {
   }
   console.log('\nBy source:', Object.fromEntries(viaTally))
   for (const u of unplaceable) console.log(`UNPLACEABLE ${u}`)
+  if (planOut) {
+    fs.writeFileSync(planOut, JSON.stringify(Object.fromEntries(plans.map((p) => [p.row._id, `${p.anchorKey} | ${p.via}`])), null, 1))
+    console.log(`plan written to ${planOut}`)
+  }
 
   console.log(`\n${noLandCheck ? 'No land check.' : 'Land check via Nominatim (one request a second, cached)…'}`)
   let moved = 0
