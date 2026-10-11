@@ -191,11 +191,11 @@ export function distanceToPolygonM(poly: Polygon, lat: number, lng: number): num
   return best
 }
 
-function tilesAround(lat: number, lng: number, radiusM: number) {
+function tilesAround(lat: number, lng: number, radiusM: number, z = Z) {
   const dLat = radiusM / M_PER_DEG
   const dLng = radiusM / (M_PER_DEG * Math.cos((lat * Math.PI) / 180))
-  const a = tileOf(lat + dLat, lng - dLng)
-  const b = tileOf(lat - dLat, lng + dLng)
+  const a = tileOf(lat + dLat, lng - dLng, z)
+  const b = tileOf(lat - dLat, lng + dLng, z)
   const out: Array<{x: number; y: number}> = []
   for (let x = Math.min(a.x, b.x); x <= Math.max(a.x, b.x); x++)
     for (let y = Math.min(a.y, b.y); y <= Math.max(a.y, b.y); y++) out.push({x, y})
@@ -212,6 +212,47 @@ export async function buildingsNear(lat: number, lng: number, radiusM: number) {
     }
   }
   return found.sort((a, b) => a.distance - b.distance)
+}
+
+/**
+ * The nearest water of the given classes within `radiusM`: distance in metres
+ * and the closest point on its edge (the point itself when it is in that
+ * water), or null when there is none that close. Tiles clip polygons at their
+ * edges, but the pieces still cover the same water, so the minimum over the
+ * pieces is the distance to the water itself.
+ */
+export async function nearestWater(
+  lat: number,
+  lng: number,
+  radiusM: number,
+  classes: ReadonlySet<string>,
+  z = Z,
+): Promise<{distance: number; lat: number; lng: number} | null> {
+  let best: {distance: number; lat: number; lng: number} | null = null
+  const cosLat = Math.cos((lat * Math.PI) / 180)
+  for (const t of tilesAround(lat, lng, radiusM, z)) {
+    for (const w of (await tile(t.x, t.y, z)).water) {
+      if (!classes.has(w.cls)) continue
+      if (polygonContains(w.poly, lng, lat)) return {distance: 0, lat, lng}
+      for (const ring of w.poly) {
+        for (let i = 1; i < ring.length; i++) {
+          const [ax, ay] = toXY(lat, lng, ring[i - 1][1], ring[i - 1][0])
+          const [bx, by] = toXY(lat, lng, ring[i][1], ring[i][0])
+          const dx = bx - ax
+          const dy = by - ay
+          const len2 = dx * dx + dy * dy
+          const k = len2 ? Math.max(0, Math.min(1, (-ax * dx - ay * dy) / len2)) : 0
+          const px = ax + k * dx
+          const py = ay + k * dy
+          const d = Math.hypot(px, py)
+          if (!best || d < best.distance) {
+            best = {distance: d, lat: lat + py / M_PER_DEG, lng: lng + px / (M_PER_DEG * cosLat)}
+          }
+        }
+      }
+    }
+  }
+  return best && best.distance <= radiusM ? best : null
 }
 
 /** Area-weighted centroid of a polygon's outer ring. */
