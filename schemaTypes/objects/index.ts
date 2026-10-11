@@ -59,6 +59,8 @@ import {areaRange} from './areaRange'
 import {currencyRate} from './currencyRate'
 import {propertyCatalogBanner} from './propertyCatalogBanner'
 import {propertySettings} from './propertySettings'
+import {inventorySummarySection} from './inventorySummarySection'
+import {leadFormSection} from './leadFormSection'
 
 /**
  * Object types (embeddable/reusable)
@@ -126,4 +128,6 @@ export const objects = [
   propertySettings,
   knowledgeTable,
   knowledgeSection,
+  inventorySummarySection,
+  leadFormSection,
 ]

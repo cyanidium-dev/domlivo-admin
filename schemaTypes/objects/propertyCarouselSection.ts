@@ -1,5 +1,6 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
 import {PAGE_BUILDER_GROUPS} from '../constants/pageBuilderGroups'
+import {listingFilterFields} from './listingFilterFields'
 
 export const propertyCarouselSection = defineType({
   name: 'propertyCarouselSection',
@@ -26,13 +27,21 @@ export const propertyCarouselSection = defineType({
       description: 'Optional button or link below the header.',
     }),
     defineField({
+      name: 'seeAllLabel',
+      title: '"See all" button label (optional)',
+      type: 'localizedString',
+      group: 'content',
+      description:
+        'Shown under a filtered feed, linking to the catalogue with the same filter. Write {count} for the live number, e.g. "Zobacz wszystkie {count} ofert". Empty: "See all listings (N)" in the page language.',
+    }),
+    defineField({
       name: 'mode',
       title: 'Content mode',
       type: 'string',
       group: 'data',
       options: {
         list: [
-          {title: 'Auto (featured/popular)', value: 'auto'},
+          {title: 'Auto (catalogue filter below, or featured/popular)', value: 'auto'},
           {title: 'Selected properties', value: 'selected'},
         ],
         layout: 'radio',
@@ -59,6 +68,9 @@ export const propertyCarouselSection = defineType({
           {title: 'Newest', value: 'newest'},
           {title: 'Price: Low to High', value: 'priceAsc'},
           {title: 'Price: High to Low', value: 'priceDesc'},
+          {title: 'Price per m²: Low to High (filtered feeds)', value: 'pricePerSqmAsc'},
+          {title: 'Area: Small to Large', value: 'areaAsc'},
+          {title: 'Area: Large to Small', value: 'areaDesc'},
           {title: 'Popular', value: 'popular'},
         ],
       },
@@ -73,61 +85,7 @@ export const propertyCarouselSection = defineType({
       description:
         'Narrow what auto mode pulls from the catalog. Leave empty and the carousel follows the page: a district landing shows that district, a city landing shows that city.',
       options: {collapsible: true, collapsed: true},
-      fields: [
-        defineField({name: 'city', title: 'City', type: 'reference', to: [{type: 'city'}]}),
-        defineField({
-          name: 'district',
-          title: 'District',
-          type: 'reference',
-          to: [{type: 'district'}],
-          description:
-            "Wins over City. Without it, a district page's carousel shows the whole city — other districts' properties included.",
-        }),
-        defineField({
-          name: 'propertyType',
-          title: 'Property type',
-          type: 'reference',
-          to: [{type: 'propertyType'}],
-        }),
-        defineField({
-          name: 'deal',
-          title: 'Deal',
-          type: 'string',
-          options: {
-            list: [
-              {title: 'Sale', value: 'sale'},
-              {title: 'Long-term rent', value: 'rent'},
-              {title: 'Short-term rent', value: 'short-term'},
-            ],
-            layout: 'radio',
-            direction: 'horizontal',
-          },
-        }),
-        defineField({
-          name: 'stage',
-          title: 'Construction stage',
-          type: 'string',
-          description:
-            'Makes this carousel a new-builds block. "Still being built" covers off-plan and under construction together, which is how buyers ask for it.',
-          options: {
-            list: [
-              {title: 'Still being built', value: 'unfinished'},
-              {title: 'Off-plan', value: 'off-plan'},
-              {title: 'Under construction', value: 'under-construction'},
-              {title: 'Completed', value: 'completed'},
-            ],
-            layout: 'radio',
-          },
-        }),
-        defineField({
-          name: 'investment',
-          title: 'Only listings marked as an investment',
-          type: 'boolean',
-          initialValue: false,
-          description:
-            'Uses the Investment flag on the property — an editorial judgement, not a fact about the building. Combine with a stage to get "new builds worth investing in".',
-        }),
-      ],
+      fields: listingFilterFields(),
     }),
     defineField({
       name: 'autoMode',
@@ -153,6 +111,9 @@ export const propertyCarouselSection = defineType({
               {title: 'Newest', value: 'newest'},
               {title: 'Price: Low to High', value: 'priceAsc'},
               {title: 'Price: High to Low', value: 'priceDesc'},
+              {title: 'Price per m²: Low to High (filtered feeds)', value: 'pricePerSqmAsc'},
+              {title: 'Area: Small to Large', value: 'areaAsc'},
+              {title: 'Area: Large to Small', value: 'areaDesc'},
               {title: 'Popular', value: 'popular'},
             ],
           },

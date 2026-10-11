@@ -140,6 +140,7 @@ export const lead = defineType({
     }),
     siteString('placement', 'Placement', 'review', 'Where on the page the form or link was.'),
     siteString('formLabel', 'Form label', 'review', 'Extra label the form sent (e.g. which blog post, realtor/agency).'),
+    siteString('landingSlug', 'Landing', 'review', 'Slug of the landing page whose form sent this lead (placement landing).'),
 
     // --- Contact: form leads only; clicks carry no personal data ---------------
     siteString('name', 'Name', 'contact'),

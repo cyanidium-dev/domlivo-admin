@@ -159,6 +159,9 @@ export const landingPage = defineType({
         defineArrayMember({type: 'trackerSection'}),
         defineArrayMember({type: 'developersRatingSection'}),
         defineArrayMember({type: 'developerCardSection'}),
+        // Lead landings (2026-10-11): live inventory band and the lead form.
+        defineArrayMember({type: 'inventorySummarySection'}),
+        defineArrayMember({type: 'leadFormSection'}),
       ],
     }),
 
