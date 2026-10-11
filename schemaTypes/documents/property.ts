@@ -581,7 +581,7 @@ export const property = defineType({
       type: 'number',
       group: 'details',
       description:
-        'Walking distance to the sea or beach in metres, as the listing states it. Feeds the "near the sea" pages (300 m or less). Leave empty when the listing does not say; do not estimate from the map.',
+        'Distance to the sea in metres. Feeds the "near the sea" pages (300 m or less). The figure the listing states wins (scripts/enrichSeaData.ts reads it from the text); otherwise scripts/computeSeaDistance20261011.ts fills it from the pin and the OpenStreetMap shoreline (straight line, rounded to 10 m for exact pins and 50 m for approximate ones). Correct it here when you know better: scripts never overwrite a value.',
       validation: (Rule) => Rule.min(0).max(20000).integer(),
     }),
 
