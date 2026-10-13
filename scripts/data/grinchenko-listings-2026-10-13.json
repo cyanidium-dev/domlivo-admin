@@ -1,0 +1,321 @@
+{
+ "note": "Listings imported from grinchenko-realestate.com (DatoCMS project BSTrust369) on 2026-05-04 and 2026-08-30; identified 2026-10-13 by DATO propertyCode and slug match against his live Dato feed.",
+ "targetAgent": "bcc19aa6-459a-4cd5-a9ed-5a16a8c39bbb",
+ "listings": [
+  {
+   "id": "2fcTC6RE9VYvTVnVmT9L3U",
+   "fromAgent": "agent-1",
+   "slug": "prodazha-kvartiry-11-u-morya-or-70-m-do-plyazha",
+   "source": "importFromDato.ts 2026-05-04 (DATO-TLRGJUVU)",
+   "stillOnGrinchenkoSite": true,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "tAsBDJwz7xVWniA1Klvgdw",
+   "fromAgent": "agent-2",
+   "slug": "prodazha-premialnoj-kvartiry-11-v-centre-durresa",
+   "source": "importFromDato.ts 2026-05-04 (DATO-IS0C50EW)",
+   "stillOnGrinchenkoSite": true,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "Bvr0zm8arkql17QDTGKeaR",
+   "fromAgent": "agent-3",
+   "slug": "prodazha-vidovoy-kvartiry-2-1-shendzhin",
+   "source": "importFromDato.ts 2026-05-04 (DATO-EUTOAD84)",
+   "stillOnGrinchenkoSite": true,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "tAsBDJwz7xVWniA1KlvlZm",
+   "fromAgent": "agent-4",
+   "slug": "prodayotsya-kvartira-2-1-2-s-terrasoy-99-m2-i-vidom-na-more-shendzhin",
+   "source": "importFromDato.ts 2026-05-04 (DATO-EX_3UILV)",
+   "stillOnGrinchenkoSite": true,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "Bvr0zm8arkql17QDTGKspz",
+   "fromAgent": "agent-5",
+   "slug": "prodazha-studii-s-panoramnymi-oknami-or-400-m-do-morya-or",
+   "source": "importFromDato.ts 2026-05-04 (DATO-N2TVGMD3)",
+   "stillOnGrinchenkoSite": true,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "tAsBDJwz7xVWniA1Klvo4E",
+   "fromAgent": "agent-1",
+   "slug": "prodazha-21-u-morya-s-novym-remontom-r-n-plyazh-durres",
+   "source": "importFromDato.ts 2026-05-04 (DATO-PRZLDDI5)",
+   "stillOnGrinchenkoSite": false,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "tAsBDJwz7xVWniA1Klvot6",
+   "fromAgent": "agent-2",
+   "slug": "prodazha-bolshoy-kvartiry-3-1-2-sanuzla",
+   "source": "importFromDato.ts 2026-05-04 (DATO-KU5HGQK5)",
+   "stillOnGrinchenkoSite": false,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "2fcTC6RE9VYvTVnVmT9wAm",
+   "fromAgent": "agent-3",
+   "slug": "prodazha-studii-42m2",
+   "source": "importFromDato.ts 2026-05-04 (DATO-QFLBYYC9)",
+   "stillOnGrinchenkoSite": false,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "2fcTC6RE9VYvTVnVmT9yx2",
+   "fromAgent": "agent-4",
+   "slug": "prodaetsya-prostornaya-stilnaya-studii",
+   "source": "importFromDato.ts 2026-05-04 (DATO-FVIAYA6B)",
+   "stillOnGrinchenkoSite": true,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "2fcTC6RE9VYvTVnVmTA0O4",
+   "fromAgent": "agent-5",
+   "slug": "novyy-6-etazhnyy-dom-v-goleme-ryadom-s-morem",
+   "source": "importFromDato.ts 2026-05-04 (DATO-PYDRTZNP)",
+   "stillOnGrinchenkoSite": true,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "2fcTC6RE9VYvTVnVmTA7oi",
+   "fromAgent": "agent-1",
+   "slug": "prodazha-kvartiry-2-1-200m-ot-morya",
+   "source": "importFromDato.ts 2026-05-04 (DATO-EOZ-R7BJ)",
+   "stillOnGrinchenkoSite": false,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "Bvr0zm8arkql17QDTGLgSR",
+   "fromAgent": "agent-2",
+   "slug": "prodazha-kvartiry-u-morya-68m2",
+   "source": "importFromDato.ts 2026-05-04 (DATO-J1EGESNX)",
+   "stillOnGrinchenkoSite": false,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "tAsBDJwz7xVWniA1Klvw10",
+   "fromAgent": "agent-3",
+   "slug": "prodazha-kvartiry-u-morya-61m2",
+   "source": "importFromDato.ts 2026-05-04 (DATO-LLWL78EA)",
+   "stillOnGrinchenkoSite": false,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "tAsBDJwz7xVWniA1Klvwum",
+   "fromAgent": "agent-4",
+   "slug": "prodazha-kvartiry-1-1-s-vidom-na-more",
+   "source": "importFromDato.ts 2026-05-04 (DATO-SPE0ZM9H)",
+   "stillOnGrinchenkoSite": false,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "tAsBDJwz7xVWniA1KlvzHG",
+   "fromAgent": "agent-5",
+   "slug": "byudzhetnaya-kvartira-1-1-v-horoshey-lokacii",
+   "source": "importFromDato.ts 2026-05-04 (DATO-QICUEFI4)",
+   "stillOnGrinchenkoSite": true,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "2fcTC6RE9VYvTVnVmTATt6",
+   "fromAgent": "agent-1",
+   "slug": "prodazha-uyutnoy-kvartiry-1-1-u-morya",
+   "source": "importFromDato.ts 2026-05-04 (DATO-NTJNW-1Y)",
+   "stillOnGrinchenkoSite": false,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "2fcTC6RE9VYvTVnVmTAWuq",
+   "fromAgent": "agent-2",
+   "slug": "prodazha-uyutnoy-kvartiry-1-1-50m-ot-morya",
+   "source": "importFromDato.ts 2026-05-04 (DATO-BKOFUGRQ)",
+   "stillOnGrinchenkoSite": true,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "tAsBDJwz7xVWniA1Klw2d2",
+   "fromAgent": "agent-3",
+   "slug": "prodazha-vidovoy-kvartiry-studii",
+   "source": "importFromDato.ts 2026-05-04 (DATO-FGGWBZLZ)",
+   "stillOnGrinchenkoSite": false,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "2fcTC6RE9VYvTVnVmTAoQe",
+   "fromAgent": "agent-1",
+   "slug": "prodaetsya-vidovaya-kvartira-1-1-v-rayone-plepa",
+   "source": "importFromDato.ts 2026-05-04 (DATO-WMYWSAAF)",
+   "stillOnGrinchenkoSite": false,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "tAsBDJwz7xVWniA1Klw8Se",
+   "fromAgent": "agent-2",
+   "slug": "prodaetsya-bolshaya-kvartira-1-1-v-rayone-plepa",
+   "source": "importFromDato.ts 2026-05-04 (DATO-GWQDSTMT)",
+   "stillOnGrinchenkoSite": true,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "2fcTC6RE9VYvTVnVmTAtQK",
+   "fromAgent": "agent-3",
+   "slug": "prodaetsya-bolshoy-semeynyy-dom-v-durrese",
+   "source": "importFromDato.ts 2026-05-04 (DATO-AMM7A6DI)",
+   "stillOnGrinchenkoSite": true,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "2fcTC6RE9VYvTVnVmTBCai",
+   "fromAgent": "agent-5",
+   "slug": "prodaetsya-kvartira-s-bolshoy-terrasoy-s-vidom-na-more",
+   "source": "importFromDato.ts 2026-05-04 (DATO-AXLPZXB_)",
+   "stillOnGrinchenkoSite": false,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "Bvr0zm8arkql17QDTGOMQl",
+   "fromAgent": "agent-1",
+   "slug": "prodaetsya-otel-u-morya-deystvuyushchiy-biznes-zemlya",
+   "source": "importFromDato.ts 2026-05-04 (DATO-QWQRFUWY)",
+   "stillOnGrinchenkoSite": true,
+   "isPublished": true,
+   "lifecycleStatus": "active"
+  },
+  {
+   "id": "2fcTC6RE9VYvTVnVmTBRMC",
+   "fromAgent": "agent-3",
+   "slug": "dlya-arendy-studiya-zensa-v-dome-pallati",
+   "source": "importFromDato.ts 2026-05-04 (DATO-AATHIR55)",
+   "stillOnGrinchenkoSite": false,
+   "isPublished": false,
+   "lifecycleStatus": "archived"
+  },
+  {
+   "id": "2fcTC6RE9VYvTVnVmTCEH6",
+   "fromAgent": "agent-4",
+   "slug": "dlya-arendy-komfortnaya-studiya-magdalena",
+   "source": "importFromDato.ts 2026-05-04 (DATO-DKBOPGD1)",
+   "stillOnGrinchenkoSite": false,
+   "isPublished": false,
+   "lifecycleStatus": "archived"
+  },
+  {
+   "id": "tAsBDJwz7xVWniA1KlwL7A",
+   "fromAgent": "agent-5",
+   "slug": "dlya-arendy-kvartira-1-1-o-r",
+   "source": "importFromDato.ts 2026-05-04 (DATO-TUJHJ0HA)",
+   "stillOnGrinchenkoSite": false,
+   "isPublished": false,
+   "lifecycleStatus": "archived"
+  },
+  {
+   "id": "Bvr0zm8arkql17QDTGOlYV",
+   "fromAgent": "agent-1",
+   "slug": "dlya-arendy-kvartira-1-1-s-vidom-na-more",
+   "source": "importFromDato.ts 2026-05-04 (DATO-O_RPIOYN)",
+   "stillOnGrinchenkoSite": false,
+   "isPublished": false,
+   "lifecycleStatus": "archived"
+  },
+  {
+   "id": "drafts.Bvr0zm8arkql17QDTGOlYV",
+   "fromAgent": "agent-1",
+   "slug": "apartment-2-1-55-m-for-rent-in-durres",
+   "source": "importFromDato.ts 2026-05-04 (DATO-O_RPIOYN)",
+   "stillOnGrinchenkoSite": false,
+   "isPublished": false,
+   "lifecycleStatus": "archived"
+  },
+  {
+   "id": "Fbta1oBE0kPqbOrzwcNVtC",
+   "fromAgent": null,
+   "slug": "prodazha-kvartiry-11-s-sobstvennoj-terassoj",
+   "source": "migrateDatoProperties.ts 2026-08-30 (no agent)",
+   "stillOnGrinchenkoSite": true,
+   "isPublished": true,
+   "lifecycleStatus": null
+  },
+  {
+   "id": "Fbta1oBE0kPqbOrzwcNVxe",
+   "fromAgent": null,
+   "slug": "prodazha-vidovoj-kvartiry-11-v-shkembi-kavaya",
+   "source": "migrateDatoProperties.ts 2026-08-30 (no agent)",
+   "stillOnGrinchenkoSite": true,
+   "isPublished": true,
+   "lifecycleStatus": null
+  },
+  {
+   "id": "Fbta1oBE0kPqbOrzwcNW26",
+   "fromAgent": null,
+   "slug": "prodazha-vidovoj-kvartiry-21-s-terassoj",
+   "source": "migrateDatoProperties.ts 2026-08-30 (no agent)",
+   "stillOnGrinchenkoSite": true,
+   "isPublished": true,
+   "lifecycleStatus": null
+  },
+  {
+   "id": "Fbta1oBE0kPqbOrzwcNW6Y",
+   "fromAgent": null,
+   "slug": "prodazha-prostornoj-kvartiry-212-100m-ot-morya",
+   "source": "migrateDatoProperties.ts 2026-08-30 (no agent)",
+   "stillOnGrinchenkoSite": true,
+   "isPublished": true,
+   "lifecycleStatus": null
+  },
+  {
+   "id": "Fbta1oBE0kPqbOrzwcNWB0",
+   "fromAgent": null,
+   "slug": "prodazha-kvartiry-11-u-morya-or-67m2",
+   "source": "migrateDatoProperties.ts 2026-08-30 (no agent)",
+   "stillOnGrinchenkoSite": true,
+   "isPublished": true,
+   "lifecycleStatus": null
+  },
+  {
+   "id": "Fbta1oBE0kPqbOrzwcNWFS",
+   "fromAgent": null,
+   "slug": "prodazha-mali-i-robit-new-residence-11-or-42m2",
+   "source": "migrateDatoProperties.ts 2026-08-30 (no agent)",
+   "stillOnGrinchenkoSite": true,
+   "isPublished": true,
+   "lifecycleStatus": null
+  },
+  {
+   "id": "Fbta1oBE0kPqbOrzwcNWJu",
+   "fromAgent": null,
+   "slug": "prodazha-mali-i-robit-new-residence-11-or-46-m",
+   "source": "migrateDatoProperties.ts 2026-08-30 (no agent)",
+   "stillOnGrinchenkoSite": true,
+   "isPublished": true,
+   "lifecycleStatus": null
+  }
+ ]
+}
