@@ -2,6 +2,8 @@ import React from 'react'
 import {defineType, defineField, defineArrayMember} from 'sanity'
 import {CoordinatesLatInput} from '../../components/sanity/coordinates/CoordinatesLatInput'
 import {CoordinatesLngInput} from '../../components/sanity/coordinates/CoordinatesLngInput'
+import {GoogleMapsLinkInput} from '../../components/sanity/coordinates/GoogleMapsLinkInput'
+import {followsHumanPin} from '../../components/sanity/coordinates/followsHumanPin'
 import {SeoFillInfoInput} from '../../components/sanity/SeoFillInfoInput'
 import {GalleryWithCopyAltInput} from '../../components/sanity/GalleryWithCopyAltInput'
 import {validatePropertyPromotionCaps} from '../utils/propertyPromotionCapValidation'
@@ -418,6 +420,88 @@ export const property = defineType({
         layout: 'radio',
       },
       initialValue: 'exact',
+      components: {input: followsHumanPin(() => 'exact')},
+    }),
+
+    defineField({
+      name: 'googleMapsUrl',
+      title: 'Google Maps link from the realtor',
+      type: 'string',
+      group: 'location',
+      description:
+        'Paste the realtor’s Google Maps link (or "41.3123, 19.4512"). When it carries coordinates they become the pin, ' +
+        'marked as the realtor’s own: the automatic placement never moves it.',
+      components: {input: GoogleMapsLinkInput},
+    }),
+
+    defineField({
+      name: 'locationSource',
+      title: 'Where the pin comes from',
+      type: 'string',
+      group: 'location',
+      description:
+        'Set by whoever placed the pin. Realtor and manual pins are the truth and are never moved by the geo tools; ' +
+        'everything else is the tools’ best evidence and is replaced when better evidence appears.',
+      options: {
+        list: [
+          {title: 'Realtor — Google Maps link or pin from the agency', value: 'realtor'},
+          {title: 'Manual — placed by hand in the Studio', value: 'manual'},
+          {title: 'Named complex found on the map', value: 'complex'},
+          {title: 'Same building as another listing (photos match)', value: 'photoMatch'},
+          {title: 'Street or landmark named in the text', value: 'text'},
+          {title: 'Photo clues (vision)', value: 'vision'},
+          {title: 'District only — no real location yet', value: 'district'},
+        ],
+      },
+      components: {input: followsHumanPin((origin) => (origin === 'gmaps' ? 'realtor' : 'manual'))},
+    }),
+
+    defineField({
+      name: 'locationLevel',
+      title: 'Pin level',
+      type: 'string',
+      group: 'location',
+      description: 'How fine the pin is: the building, the street, a ~250 m area, or only the district.',
+      options: {
+        list: [
+          {title: 'Building', value: 'exact'},
+          {title: 'Street', value: 'street'},
+          {title: 'Area (~250 m)', value: 'area'},
+          {title: 'District only', value: 'district'},
+        ],
+        layout: 'radio',
+        direction: 'horizontal',
+      },
+      components: {input: followsHumanPin(() => 'exact')},
+    }),
+
+    defineField({
+      name: 'locationConfidence',
+      title: 'Confidence of an automatic pin',
+      type: 'string',
+      group: 'location',
+      options: {list: ['high', 'medium', 'low'], layout: 'radio', direction: 'horizontal'},
+      components: {input: followsHumanPin(() => 'high')},
+    }),
+
+    defineField({
+      name: 'locationEvidence',
+      title: 'Why the pin is here',
+      type: 'text',
+      rows: 3,
+      group: 'location',
+      readOnly: true,
+      description: 'Written by the geo tools: the photo match, named place or street that placed this pin.',
+    }),
+
+    defineField({
+      name: 'locationGroup',
+      title: 'Same-building group',
+      type: 'string',
+      group: 'location',
+      readOnly: true,
+      description:
+        'Listings whose photos show the same building share this id. Placing one of them by hand lets the geo tools place the rest.',
     }),
 
 

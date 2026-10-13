@@ -1,7 +1,7 @@
 import React from 'react'
 import {TextInput} from '@sanity/ui'
 import {FormField, PatchEvent, set, unset, useFormValue} from 'sanity'
-import {PropertyCoordinates, setPropertyCoordinates, subscribePropertyCoordinates} from './coordsBus'
+import {busDocId, PropertyCoordinates, setPropertyCoordinates, subscribePropertyCoordinates} from './coordsBus'
 
 export const CoordinatesLngInput = React.forwardRef(function CoordinatesLngInput(
   props: any,
@@ -12,13 +12,14 @@ export const CoordinatesLngInput = React.forwardRef(function CoordinatesLngInput
 
   const latFromDocRaw = useFormValue(['coordinatesLat'])
   const latFromDoc = typeof latFromDocRaw === 'number' ? latFromDocRaw : null
+  const docId = busDocId(useFormValue(['_id']))
 
   const [coords, setCoords] = React.useState<PropertyCoordinates>(() => ({
     lat: latFromDoc,
     lng,
   }))
 
-  React.useEffect(() => subscribePropertyCoordinates(setCoords), [])
+  React.useEffect(() => subscribePropertyCoordinates(docId, setCoords), [docId])
 
   const inputId = React.useId()
 
@@ -39,13 +40,13 @@ export const CoordinatesLngInput = React.forwardRef(function CoordinatesLngInput
     const raw = event.currentTarget.value
     if (raw === '') {
       onChange(PatchEvent.from(unset()))
-      setPropertyCoordinates({lat: coords.lat ?? null, lng: null})
+      setPropertyCoordinates(docId, {lat: coords.lat ?? null, lng: null})
       return
     }
     const next = Number(raw)
     if (!Number.isFinite(next)) return
     onChange(PatchEvent.from(set(next)))
-    setPropertyCoordinates({lat: coords.lat ?? null, lng: next})
+    setPropertyCoordinates(docId, {lat: coords.lat ?? null, lng: next})
   }
 
   return (

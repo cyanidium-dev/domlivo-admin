@@ -4,7 +4,7 @@ import 'maplibre-gl/dist/maplibre-gl.css'
 import {TextInput} from '@sanity/ui'
 import {FormField, PatchEvent, set, unset, useFormValue} from 'sanity'
 import type {PropertyCoordinates} from './coordsBus'
-import {setPropertyCoordinates, subscribePropertyCoordinates} from './coordsBus'
+import {busDocId, setPropertyCoordinates, subscribePropertyCoordinates} from './coordsBus'
 
 const DEFAULT_CENTER: [number, number] = [19.8187, 41.3275] // fallback (approx. Tirana)
 
@@ -19,12 +19,12 @@ const CITY_CENTERS: Record<string, {lat: number; lng: number}> = {
   himare: {lat: 40.1064, lng: 19.8093},
 }
 
-function usePropertyCoordinatesState(initial: PropertyCoordinates): PropertyCoordinates {
+function usePropertyCoordinatesState(docId: string, initial: PropertyCoordinates): PropertyCoordinates {
   const [coords, setCoords] = React.useState<PropertyCoordinates>(() => initial)
 
   React.useEffect(() => {
-    return subscribePropertyCoordinates(setCoords)
-  }, [])
+    return subscribePropertyCoordinates(docId, setCoords)
+  }, [docId])
 
   return coords
 }
@@ -70,7 +70,8 @@ export const CoordinatesLatInput = React.forwardRef(function CoordinatesLatInput
   const citySlug = typeof cityRef === 'string' && cityRef.startsWith('city-') ? cityRef.slice('city-'.length) : null
   const cityCenter = citySlug ? CITY_CENTERS[citySlug] ?? null : null
 
-  const coords = usePropertyCoordinatesState({lat, lng: lngFromDoc})
+  const docId = busDocId(useFormValue(['_id']))
+  const coords = usePropertyCoordinatesState(docId, {lat, lng: lngFromDoc})
 
   const effectiveLat = coords.lat
   const effectiveLng = coords.lng
@@ -88,10 +89,10 @@ export const CoordinatesLatInput = React.forwardRef(function CoordinatesLatInput
       if (!Number.isFinite(nextLat) || !Number.isFinite(nextLng)) return
 
       // Update map/UI immediately.
-      setPropertyCoordinates({lat: nextLat, lng: nextLng})
+      setPropertyCoordinates(docId, {lat: nextLat, lng: nextLng})
       markerRef.current?.setLngLat([nextLng, nextLat])
     },
-    [],
+    [docId],
   )
 
   // Initialize map once.
@@ -219,13 +220,13 @@ export const CoordinatesLatInput = React.forwardRef(function CoordinatesLatInput
     const raw = event.currentTarget.value
     if (raw === '') {
       onChange(PatchEvent.from(unset()))
-      setPropertyCoordinates({lat: null, lng: effectiveLng ?? null})
+      setPropertyCoordinates(docId, {lat: null, lng: effectiveLng ?? null})
       return
     }
     const next = Number(raw)
     if (!Number.isFinite(next)) return
     onChange(PatchEvent.from(set(next)))
-    setPropertyCoordinates({lat: next, lng: effectiveLng ?? null})
+    setPropertyCoordinates(docId, {lat: next, lng: effectiveLng ?? null})
   }
 
   return (
