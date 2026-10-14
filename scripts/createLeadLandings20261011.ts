@@ -9,7 +9,11 @@
  * the copy's own numbers are from domlivo-workspace/landings/facts-2026-10-11.md.
  *
  *   npx tsx scripts/createLeadLandings20261011.ts --dry
- *   npx tsx scripts/createLeadLandings20261011.ts --execute [--only pl]
+ *   npx tsx scripts/createLeadLandings20261011.ts --execute [--only pl] [--file de-immobilien-albanien-bis-50000-euro]
+ *
+ * 2026-10-14: wave 3 (de/en under-€50k budget pages, sq Durrës houses). A copy file may
+ * name the feed the live band counts (`band`) and its metrics (`bandMetrics`), and may
+ * leave out `roi` (a house is not a rental yield story).
  */
 import fs from 'node:fs'
 import path from 'node:path'
@@ -22,6 +26,7 @@ if (!isExecute && !args.includes('--dry')) {
   process.exit(1)
 }
 const only = args.includes('--only') ? args[args.indexOf('--only') + 1] : ''
+const onlyFile = args.includes('--file') ? args[args.indexOf('--file') + 1] : ''
 
 const COPY_DIR = path.resolve(process.cwd(), '../domlivo-workspace/landings')
 const WHATSAPP = 'https://wa.me/message/KPXIGD5DJISGO1'
@@ -34,6 +39,7 @@ type FeedFilter = {
   cities?: string[]
   types?: string[]
   nearSea?: boolean
+  minPrice?: number
   maxPrice?: number
   stage?: string
   sort: string
@@ -48,6 +54,14 @@ const FEEDS: Record<string, FeedFilter> = {
   cheapest: {cities: ['durres'], types: RESIDENTIAL, sort: 'priceAsc'},
   belowMedian: {cities: ['durres'], types: RESIDENTIAL, sort: 'pricePerSqmAsc'},
   studios: {cities: ['durres'], types: ['studio'], sort: 'priceAsc'},
+  under50: {types: RESIDENTIAL, maxPrice: 50000, sort: 'priceAsc'},
+  under100: {types: RESIDENTIAL, maxPrice: 100000, sort: 'priceAsc'},
+  // Price bands that do not overlap, so two feeds on one page never repeat the same cards.
+  from50to70: {types: RESIDENTIAL, minPrice: 50001, maxPrice: 70000, sort: 'priceAsc'},
+  from70to100Sea: {types: RESIDENTIAL, minPrice: 70001, maxPrice: 100000, nearSea: true, sort: 'priceAsc'},
+  durresHouses: {cities: ['durres'], types: ['house', 'villa'], sort: 'priceAsc'},
+  durresHousesSea: {cities: ['durres'], types: ['house', 'villa'], nearSea: true, sort: 'newest'},
+  durresVillas: {cities: ['durres'], types: ['villa'], sort: 'newest'},
 }
 
 /** The Durrës-only Albanian page compares Durrës districts; the rest compare cities. */
@@ -76,13 +90,16 @@ const COST_VALUES = [
 type Copy = {
   slug: string
   locale: string
+  updatedAt?: string
+  band?: string
+  bandMetrics?: string[]
   seo: {metaTitle: string; metaDescription: string; ogTitle: string; ogDescription: string}
   hero: {title: string; subtitle: string; primaryCta: string; secondaryCta: string}
   summaryTitle: string
   feeds: Array<{key: string; title: string; subtitle: string; seeAllLabel: string}>
   priceTable: {title: string; subtitle: string}
   purchaseCost: {title: string; subtitle: string; disclaimer: string; items: Array<{label: string; note: string}>}
-  roi: {title: string; subtitle: string; disclaimer: string}
+  roi?: {title: string; subtitle: string; disclaimer: string}
   leadForm: {title: string; subtitle: string; submitLabel: string; budgetOptions: string[]}
   faq: {title: string; items: Array<{q: string; a: string}>}
   intro: {title: string; body: string[]}
@@ -114,12 +131,15 @@ async function main() {
     const copy = JSON.parse(fs.readFileSync(path.join(COPY_DIR, file), 'utf8')) as Copy
     const L = copy.locale
     if (only && only !== L) continue
+    if (onlyFile && file !== `${onlyFile}.json`) continue
+    if (copy.band && !FEEDS[copy.band]) throw new Error(`${file}: unknown band feed ${copy.band}`)
     const loc = (s: string) => ({[L]: s})
     const filters = (f: FeedFilter) => ({
       deal: 'sale',
       ...(f.cities ? {cities: f.cities.map((c, i) => ref(cityId(c), `c${i}`))} : {}),
       ...(f.types ? {propertyTypes: f.types.map((t, i) => ref(typeId(t), `t${i}`))} : {}),
       ...(f.nearSea ? {nearSea: true} : {}),
+      ...(f.minPrice ? {minPrice: f.minPrice} : {}),
       ...(f.maxPrice ? {maxPrice: f.maxPrice} : {}),
       ...(f.stage ? {stage: f.stage} : {}),
     })
@@ -165,10 +185,13 @@ async function main() {
         _type: 'inventorySummarySection',
         enabled: true,
         title: loc(copy.summaryTitle),
-        metrics: ['count', 'fromPrice', 'medianPricePerSqm', 'nearSeaShare', 'newBuildShare'],
+        metrics: copy.bandMetrics ?? ['count', 'fromPrice', 'medianPricePerSqm', 'nearSeaShare', 'newBuildShare'],
         // Every listing for sale (land and commercial included), so the live
-        // numbers match the copy's "700+ from €15,000" (facts file).
-        filters: filters(durresOnly ? {cities: ['durres'], sort: 'newest'} : {sort: 'newest'}),
+        // numbers match the copy's "700+ from €15,000" (facts file) — unless the
+        // page is about one slice (houses, a budget) and counts that instead.
+        filters: filters(
+          copy.band ? FEEDS[copy.band] : durresOnly ? {cities: ['durres'], sort: 'newest'} : {sort: 'newest'},
+        ),
       },
       feed(0),
       {
@@ -223,7 +246,7 @@ async function main() {
         })),
         disclaimer: {[L]: copy.purchaseCost.disclaimer, en: 'Indicative amounts, not legal advice; the notary confirms the exact costs.'},
       },
-      {
+      copy.roi && {
         _key: 'roi',
         _type: 'roiCalcSection',
         enabled: true,
@@ -271,7 +294,7 @@ async function main() {
         cta: {href: '#lead-form', label: loc(copy.cta.button)},
         secondaryCta: {href: WHATSAPP, label: loc('WhatsApp')},
       },
-    ]
+    ].filter(Boolean) as Array<Record<string, unknown>>
 
     const doc = {
       _id: `landing-unique-${L}-${copy.slug}`,
@@ -281,7 +304,7 @@ async function main() {
       slug: {_type: 'slug', current: copy.slug},
       title: loc(copy.hero.title),
       locales: [L],
-      contentUpdatedAt: '2026-10-11',
+      contentUpdatedAt: copy.updatedAt ?? '2026-10-11',
       topicTags: ['theme:lead-landing'],
       seo: {
         metaTitle: loc(copy.seo.metaTitle),
