@@ -120,12 +120,27 @@ const DECISIONS_2026_10_14: Record<string, Decision> = {
   arapaj: {pick: 0, role: 'zone', alt: 'Ruins of the early Christian basilica of St Michael in Arapaj, with apartment blocks behind, Durrës'},
   kavaje: {pick: 0, role: 'zone', alt: 'Democracy Square in Kavajë with the fountain, the clock tower and the Kubelie Mosque'},
   shkallnur: {pick: 0, role: 'zone', alt: 'Houses on the hillside at Shkallnur, near Durrës, Albania'},
+
+  // --- batch 2, Durrës hinterland ---
+  spitalle: {pick: 0, role: 'zone', alt: 'Houses and gardens of Spitallë, looking across the plain north of Durrës'},
+  sukth: {pick: 0, role: 'zone', alt: 'The main road through Sukth i Ri, Durrës, Albania'},
+  shijak: {pick: 0, role: 'zone', alt: 'The central square of Shijak with the mosque behind, Albania'},
+  xhafzotaj: {pick: 0, role: 'zone', alt: 'Xhafzotaj seen across the fields, with the hills behind, Albania'},
+  maminas: {pick: 0, role: 'zone', alt: 'The road junction into Maminas, Shijak, Albania'},
+  koxhas: {
+    pick: 0,
+    role: 'stand-in',
+    alt: 'Fields beside the Durrës–Tirana motorway near Xhafzotaj, Albania',
+    shows: 'the plain at Xhafzotaj, the administrative unit Koxhas belongs to — not Koxhas itself',
+  },
 }
 
 const REJECTED_2026_10_14: Record<string, string> = {
   // Metric-only price lines (scripts/data/zones.json): not pages, never imaged.
   'golem-1st-line': 'metric-only price line within Golem, not a page — must not carry imagery',
   'lungomare-2nd-line': 'metric-only price line within Lungomare, not a page — must not carry imagery',
+  fllake: 'nothing on Commons shows Fllakë or its surroundings; left without an image',
+  manez: 'the only photo of Manëz shows election-time party flags, and the other geotagged file is a tent advert; left without an image',
 }
 
 /**

@@ -34,5 +34,13 @@ satellite images or people as the subject.
 | arapaj | own photo | Arapaj Basilica 2016-07-12 02.jpg | CC BY-SA 4.0 | Pasztilla aka Attila Terbócs |
 | kavaje | own photo | Kavajë, Albania – Main Square 2017 02.jpg | CC BY-SA 4.0 | Pasztilla aka Attila Terbócs |
 | shkallnur | own photo | Albania residential houses near Durres.JPG | CC0 | Jan Pešula |
+| spitalle | own photo | Spitalle l.15 - panoramio.jpg | CC BY 3.0 | xhoni_bg_dr |
+| sukth | own photo | Sukth i Ri Main Road - Mapillary (3131407893840738) (cropped).jpg | CC BY-SA 4.0 | atpl_pilot @ Mapillary |
+| shijak | own photo | Shijak central square (OSCAL19 trip).jpg | CC0 | albinfo |
+| xhafzotaj | own photo | Xhafzotaj, město.jpg | CC BY-SA 4.0 | Aktron (asks to be notified of use outside Wikimedia) |
+| maminas | own photo | Maminas, odbočka.jpg | CC BY-SA 4.0 | Aktron |
+| koxhas | stand-in | Xhafzotaj, louka u dálnice.jpg — fields by the motorway at Xhafzotaj, the unit Koxhas belongs to | CC BY-SA 4.0 | Aktron |
+| fllake | none | nothing on Commons shows Fllakë or its surroundings | — | — |
+| manez | none | only photo shows election-time party flags; other geotagged file is a tent advert | — | — |
 | golem-1st-line | not imaged | — | — | metric-only price line (`scripts/data/zones.json`), not a page |
 | lungomare-2nd-line | not imaged | — | — | metric-only price line, not a page |

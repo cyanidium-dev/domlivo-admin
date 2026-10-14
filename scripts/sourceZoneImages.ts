@@ -226,6 +226,15 @@ const REVIEWED_FILES: Record<string, string[]> = {
   arapaj: ['Arapaj Basilica 2016-07-12 02.jpg'],
   kavaje: ['Kavajë, Albania – Main Square 2017 02.jpg'],
   shkallnur: ['Albania residential houses near Durres.JPG'],
+  // batch 2 — Durrës hinterland
+  spitalle: ['Spitalle l.15 - panoramio.jpg'],
+  sukth: ['Sukth i Ri Main Road - Mapillary (3131407893840738) (cropped).jpg'],
+  shijak: ['Shijak central square (OSCAL19 trip).jpg'],
+  xhafzotaj: ['Xhafzotaj, město.jpg'],
+  maminas: ['Maminas, odbočka.jpg'],
+  // Stand-in: nothing on Commons shows Koxhas; this is the plain by the
+  // motorway at Xhafzotaj, the administrative unit Koxhas belongs to.
+  koxhas: ['Xhafzotaj, louka u dálnice.jpg'],
 }
 
 function conflicts(title: string, parent: string): boolean {
@@ -363,7 +372,7 @@ async function main() {
     const attribution = files.some((f) => f.requiresAttribution)
     console.log(
       `  ${files.length ? '✓' : '—'}  ${String(z.slug).padEnd(20)} [${String(z.priority).padEnd(9)}] ` +
-        `${level}-level, ${files.length} file(s)${attribution ? ', needs attribution' : ''}` +
+        `${reviewed ? 'reviewed' : `${level}-level`}, ${files.length} file(s)${attribution ? ', needs attribution' : ''}` +
         `${files[0] ? `  → ${files[0].subject.slice(0, 44)}` : ''}`,
     )
 
