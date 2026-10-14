@@ -1,0 +1,38 @@
+# Zone images, round 2026-10-14
+
+Districts that had **no hero image at all** (32 on 14.10, published `district`
+docs with `!defined(heroImage)`). Sourced from Wikimedia Commons, every file
+opened and checked against its Commons description, categories and coordinates
+before it was accepted. Credits are published at `/image-credits`.
+
+How to repeat:
+
+1. Look for candidates (Commons search + geosearch around the district), open
+   them, and add the chosen file titles to `REVIEWED_FILES` in
+   `scripts/sourceZoneImages.ts`.
+2. `npm run source:zone-images -- --only a,b,c` downloads exactly those files to
+   `../domlivo-workspace/tmp/image-replacements/` and merges the manifest.
+3. Add the decision (role `zone` or `stand-in`, alt text) to
+   `DECISIONS_2026_10_14` in `scripts/applyZoneImages.ts`.
+4. `npm run apply:zone-images -- --dry`, then `--execute`. This round skips any
+   district that has acquired a hero image since the review.
+
+Rules applied: free licences only (CC0, PD, CC BY / BY-SA **3.0 or 4.0** — the
+schema and credits page cannot label 2.0/2.5, so those were passed over); a photo
+is the district's own only if it shows that place; a stand-in's alt text
+describes the photograph and its credit is stamped STAND-IN; no maps, paintings,
+satellite images or people as the subject.
+
+## Decisions
+
+| District | Result | Commons file | Licence | Author |
+|---|---|---|---|---|
+| qerret | own photo | Qerret Plazh.jpg | CC BY 4.0 | Albinfo |
+| gjiri-i-lalzit | own photo | GJIRI I LALZIT - panoramio.jpg | CC BY-SA 3.0 | landi61 |
+| spille | own photo | Spille Beach2.JPG | CC BY-SA 4.0 | Arianit |
+| currila | own photo | Currila Beach 2.jpg | CC BY-SA 4.0 | Joseph2302 |
+| arapaj | own photo | Arapaj Basilica 2016-07-12 02.jpg | CC BY-SA 4.0 | Pasztilla aka Attila Terbócs |
+| kavaje | own photo | Kavajë, Albania – Main Square 2017 02.jpg | CC BY-SA 4.0 | Pasztilla aka Attila Terbócs |
+| shkallnur | own photo | Albania residential houses near Durres.JPG | CC0 | Jan Pešula |
+| golem-1st-line | not imaged | — | — | metric-only price line (`scripts/data/zones.json`), not a page |
+| lungomare-2nd-line | not imaged | — | — | metric-only price line, not a page |

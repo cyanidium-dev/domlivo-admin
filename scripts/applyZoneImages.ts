@@ -2,9 +2,10 @@
  * Upload the reviewed candidates from `tmp/image-replacements/` and attach them
  * to their zones, creating an `imageCredit` document for each.
  *
- * The decision list below is a human review of what sourcing found — see
- * docs/engineering/IMAGE-REPLACEMENT-MAP-2026-08-16.md §3. Automated relevance
- * is not trustworthy at this scale: the rejected set included a Shakespeare
+ * The decision lists below are human reviews of what sourcing found — the
+ * 2026-08-16 round is in docs/engineering/IMAGE-REPLACEMENT-MAP-2026-08-16.md §3
+ * (workspace repo), the 2026-10-14 round in docs/ZONE-IMAGES-2026-10-14.md.
+ * Automated relevance is not trustworthy at this scale: the rejected set included a Shakespeare
  * painting that matched the word "Tale", a CIA map, a US Navy warship and Lake
  * Ohrid standing in for a Tirana neighbourhood of a similar name.
  *
@@ -19,6 +20,10 @@
  * Run:
  * - npm run apply:zone-images -- --dry
  * - npm run apply:zone-images -- --execute
+ * - npm run apply:zone-images -- --dry --round 2026-08-16   (an older review)
+ *
+ * The latest round is the default. Rounds marked `onlyEmpty` skip any zone that
+ * has acquired a hero image since the review.
  */
 import fs from 'node:fs'
 import path from 'node:path'
@@ -64,7 +69,7 @@ type Decision = {
 }
 
 /** Reviewed 2026-08-16. Zones absent from this map are deliberately not applied. */
-const DECISIONS: Record<string, Decision> = {
+const DECISIONS_2026_08_16: Record<string, Decision> = {
   // --- zone-level: a real photograph of the place ---
   durres: {pick: 0, role: 'zone', alt: 'The Roman amphitheatre in Durrës, Albania'},
   sarande: {pick: 0, role: 'zone', alt: 'Sarandë on the Ionian coast, Albania'},
@@ -92,7 +97,7 @@ const DECISIONS: Record<string, Decision> = {
  * Rejected, with the reason, so a re-run does not quietly reconsider them and
  * so the next person knows these were looked at.
  */
-const REJECTED: Record<string, string> = {
+const REJECTED_2026_08_16: Record<string, string> = {
   tale: 'candidate was an 18th-century Shakespeare painting that matched the word "Tale"',
   'liqeni-i-thate': 'candidate was Lake Ohrid — a different Mali i Thatë, 130 km away',
   'porto-romano': 'candidate was a US Navy warship',
@@ -100,6 +105,49 @@ const REJECTED: Record<string, string> = {
   'astir-unaza-e-re': 'candidate was a museum façade; the zone already carries a Tirana stand-in',
   rrashbull: 'candidate is already the current image',
 }
+
+/**
+ * Reviewed 2026-10-14: districts that had no hero image at all. The files come
+ * from REVIEWED_FILES in sourceZoneImages.ts, so every pick is index 0; each
+ * one was opened and checked against its Commons description and coordinates.
+ */
+const DECISIONS_2026_10_14: Record<string, Decision> = {
+  // --- batch 1, Durrës coast: all photographs of the place itself ---
+  qerret: {pick: 0, role: 'zone', alt: 'The beach at Qerret with apartment buildings on the first line, Albania'},
+  'gjiri-i-lalzit': {pick: 0, role: 'zone', alt: 'Straw umbrellas on the beach of Lalzi Bay (Gjiri i Lalzit), Durrës, Albania'},
+  spille: {pick: 0, role: 'zone', alt: 'Spille beach with the coastal hills behind, Albania'},
+  currila: {pick: 0, role: 'zone', alt: 'Currila beach below the wooded hill, Durrës, Albania'},
+  arapaj: {pick: 0, role: 'zone', alt: 'Ruins of the early Christian basilica of St Michael in Arapaj, with apartment blocks behind, Durrës'},
+  kavaje: {pick: 0, role: 'zone', alt: 'Democracy Square in Kavajë with the fountain, the clock tower and the Kubelie Mosque'},
+  shkallnur: {pick: 0, role: 'zone', alt: 'Houses on the hillside at Shkallnur, near Durrës, Albania'},
+}
+
+const REJECTED_2026_10_14: Record<string, string> = {
+  // Metric-only price lines (scripts/data/zones.json): not pages, never imaged.
+  'golem-1st-line': 'metric-only price line within Golem, not a page — must not carry imagery',
+  'lungomare-2nd-line': 'metric-only price line within Lungomare, not a page — must not carry imagery',
+}
+
+/**
+ * Each review is a round. Only one round is applied per run, so re-running an
+ * old review cannot overwrite images that have since been replaced, and a new
+ * review cannot fail on manifest entries that belong to an old one.
+ */
+const ROUNDS: Record<string, {decisions: Record<string, Decision>; rejected: Record<string, string>; onlyEmpty: boolean}> = {
+  '2026-08-16': {decisions: DECISIONS_2026_08_16, rejected: REJECTED_2026_08_16, onlyEmpty: false},
+  // This round fills districts that had no image; it must never replace one.
+  '2026-10-14': {decisions: DECISIONS_2026_10_14, rejected: REJECTED_2026_10_14, onlyEmpty: true},
+}
+const roundArg =
+  args.find((a) => a.startsWith('--round='))?.split('=')[1] ??
+  (args.includes('--round') ? args[args.indexOf('--round') + 1] : '2026-10-14')
+const ROUND = ROUNDS[roundArg]
+if (!ROUND) {
+  console.error(`Unknown round "${roundArg}". Known: ${Object.keys(ROUNDS).join(', ')}`)
+  process.exit(1)
+}
+const DECISIONS = ROUND.decisions
+const REJECTED = ROUND.rejected
 
 async function main() {
   const manifestPath = path.join(IN_DIR, 'manifest.json')
@@ -112,7 +160,10 @@ async function main() {
 
   const slugs = Object.keys(DECISIONS)
   const zones: any[] = await client.fetch(
-    `*[_type in ["district", "city"] && slug.current in $slugs]{_id, _type, "slug": slug.current}`,
+    `*[_type in ["district", "city"] && slug.current in $slugs && !(_id in path("drafts.**"))]{
+      _id, _type, "slug": slug.current, "hasHero": defined(heroImage.asset),
+      "galleryCount": count(gallery)
+    }`,
     {slugs},
   )
   const docBySlug = new Map(zones.map((z) => [z.slug, z]))
@@ -136,6 +187,15 @@ async function main() {
     const doc = docBySlug.get(slug)
     if (!entry) { problems.push(`${slug}: not in the manifest`); continue }
     if (!doc) { problems.push(`${slug}: no zone document`); continue }
+    if (ROUND.onlyEmpty && doc.hasHero) {
+      // Not a problem to stop on: someone gave it an image since the review.
+      console.log(`skip     ${slug.padEnd(20)} already has a hero image — this round only fills empty ones`)
+      continue
+    }
+    if (ROUND.onlyEmpty && (doc.galleryCount ?? 0) > 0) {
+      problems.push(`${slug}: has no hero but has a gallery, which this script would overwrite`)
+      continue
+    }
     const meta = entry.files?.[decision.pick]
     if (!meta) { problems.push(`${slug}: manifest has no file at index ${decision.pick}`); continue }
     if (!meta.licence || !meta.sourceUrl) { problems.push(`${slug}: candidate has no licence or source`); continue }
