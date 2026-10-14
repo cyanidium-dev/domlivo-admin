@@ -235,6 +235,15 @@ const REVIEWED_FILES: Record<string, string[]> = {
   // Stand-in: nothing on Commons shows Koxhas; this is the plain by the
   // motorway at Xhafzotaj, the administrative unit Koxhas belongs to.
   koxhas: ['Xhafzotaj, louka u dálnice.jpg'],
+  // batch 3 — Vlorë, Himarë and Sarandë coast
+  qeparo: ['Qeparo beach.jpg'],
+  vuno: ['Vuno, Himarë, Albania 2015 01.jpg'],
+  palasa: ['Palasa Beach from Llogara Pass.jpg'],
+  'skele-vlore': ['Vlora Port & Skela.jpg'],
+  'zona-e-portit': ['Hafen von sarande - 2.jpg'],
+  'rruga-butrinti': ['Sarandë, mořské pobřeží.jpg'],
+  'gjiri-i-hartes': ['15.7.2023 Gjiri i Hartes.jpg'],
+  akernia: ['Laguna e Nartës - Vlorë (5).jpg'],
 }
 
 function conflicts(title: string, parent: string): boolean {

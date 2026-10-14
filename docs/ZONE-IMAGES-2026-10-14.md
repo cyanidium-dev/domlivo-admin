@@ -40,6 +40,14 @@ satellite images or people as the subject.
 | xhafzotaj | own photo | Xhafzotaj, město.jpg | CC BY-SA 4.0 | Aktron (asks to be notified of use outside Wikimedia) |
 | maminas | own photo | Maminas, odbočka.jpg | CC BY-SA 4.0 | Aktron |
 | koxhas | stand-in | Xhafzotaj, louka u dálnice.jpg — fields by the motorway at Xhafzotaj, the unit Koxhas belongs to | CC BY-SA 4.0 | Aktron |
+| qeparo | own photo | Qeparo beach.jpg | CC BY-SA 4.0 | Leeturtle |
+| vuno | own photo | Vuno, Himarë, Albania 2015 01.jpg (1800 px) | CC BY-SA 4.0 | Pasztilla aka Attila Terbócs |
+| palasa | own photo | Palasa Beach from Llogara Pass.jpg | CC BY-SA 4.0 | Liridon |
+| skele-vlore | own photo | Vlora Port & Skela.jpg | CC BY 4.0 | Albinfo |
+| zona-e-portit | own photo | Hafen von sarande - 2.jpg | CC0 | Z thomas |
+| rruga-butrinti | own photo | Sarandë, mořské pobřeží.jpg (geotagged 300 m from Rruga Butrinti) | CC BY 4.0 | Aktron |
+| gjiri-i-hartes | own photo | 15.7.2023 Gjiri i Hartes.jpg (1280 px) | CC BY-SA 4.0 | EB1508 |
+| akernia | own photo | Laguna e Nartës - Vlorë (5).jpg ("Village Akërni near Vlorë") | CC BY 4.0 | Arbenllapashtica |
 | fllake | none | nothing on Commons shows Fllakë or its surroundings | — | — |
 | manez | none | only photo shows election-time party flags; other geotagged file is a tent advert | — | — |
 | golem-1st-line | not imaged | — | — | metric-only price line (`scripts/data/zones.json`), not a page |

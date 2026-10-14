@@ -133,6 +133,16 @@ const DECISIONS_2026_10_14: Record<string, Decision> = {
     alt: 'Fields beside the Durrës–Tirana motorway near Xhafzotaj, Albania',
     shows: 'the plain at Xhafzotaj, the administrative unit Koxhas belongs to — not Koxhas itself',
   },
+
+  // --- batch 3, Vlorë / Himarë / Sarandë coast: all of the place itself ---
+  qeparo: {pick: 0, role: 'zone', alt: 'The seafront walk and beach at Qeparo on the Ionian coast, Albania'},
+  vuno: {pick: 0, role: 'zone', alt: 'Stone houses on the terraced hillside of Vuno, Himarë, Albania'},
+  palasa: {pick: 0, role: 'zone', alt: 'Palasa beach and the new resort seen from the Llogara Pass, Albania'},
+  'skele-vlore': {pick: 0, role: 'zone', alt: 'The Skelë quarter of Vlorë seen across the port, Albania'},
+  'zona-e-portit': {pick: 0, role: 'zone', alt: 'Boats in the harbour of Sarandë with the town rising behind, Albania'},
+  'rruga-butrinti': {pick: 0, role: 'zone', alt: 'The coast along Rruga Butrinti, looking back towards central Sarandë'},
+  'gjiri-i-hartes': {pick: 0, role: 'zone', alt: 'The bay of Gjiri i Hartës between Sarandë and Ksamil, Albania'},
+  akernia: {pick: 0, role: 'zone', alt: 'Akërni village seen across the Narta lagoon, Vlorë, Albania'},
 }
 
 const REJECTED_2026_10_14: Record<string, string> = {
