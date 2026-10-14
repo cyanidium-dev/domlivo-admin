@@ -48,6 +48,13 @@ satellite images or people as the subject.
 | rruga-butrinti | own photo | Sarandë, mořské pobřeží.jpg (geotagged 300 m from Rruga Butrinti) | CC BY 4.0 | Aktron |
 | gjiri-i-hartes | own photo | 15.7.2023 Gjiri i Hartes.jpg (1280 px) | CC BY-SA 4.0 | EB1508 |
 | akernia | own photo | Laguna e Nartës - Vlorë (5).jpg ("Village Akërni near Vlorë") | CC BY 4.0 | Arbenllapashtica |
+| kinostudio | own photo | Unaza e madhe Kinostudio.jpg (ring road at the Kinostudio intersection) | CC BY-SA 4.0 | Albinfo |
+| kodra-e-diellit | own photo | Selitë Mosque Tirana 02.jpg (square; the only clean photo of Selitë — the Kodra e Diellit complex photos carry a burned-in date stamp) | CC BY-SA 4.0 | Tom Ackroyd |
+| liqeni-i-thate | stand-in | Tirana from South.jpg — Grand Park lake and southern Tirana; the neighbourhood is not identified | CC BY-SA 3.0 | Albinfo |
+| rinas | own photo | Rinas village aerial view.jpg | CC0 | Albinfo |
+| rruga-e-elbasanit | own photo | Tirana Lake (October 2016).jpg (Grand Park lake; the zone is "Rruga e Elbasanit / Grand Park") | CC BY-SA 4.0 | Kj1595 |
+| sauk | own photo | Sauk nga Lapidari 2015.jpg | CC BY 4.0 | Albinfo |
+| yzberisht | own photo | Yzberish Tirana 2022 aerial view 02.jpg | CC BY-SA 4.0 | Albinfo |
 | fllake | none | nothing on Commons shows Fllakë or its surroundings | — | — |
 | manez | none | only photo shows election-time party flags; other geotagged file is a tent advert | — | — |
 | golem-1st-line | not imaged | — | — | metric-only price line (`scripts/data/zones.json`), not a page |

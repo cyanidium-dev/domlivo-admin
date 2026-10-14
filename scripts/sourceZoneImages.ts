@@ -244,6 +244,16 @@ const REVIEWED_FILES: Record<string, string[]> = {
   'rruga-butrinti': ['Sarandë, mořské pobřeží.jpg'],
   'gjiri-i-hartes': ['15.7.2023 Gjiri i Hartes.jpg'],
   akernia: ['Laguna e Nartës - Vlorë (5).jpg'],
+  // batch 4 — Tirana
+  kinostudio: ['Unaza e madhe Kinostudio.jpg'],
+  'kodra-e-diellit': ['Selitë Mosque Tirana 02.jpg'],
+  // Stand-in: the Grand Park lake and southern Tirana; the neighbourhood is
+  // not identified in any Commons file.
+  'liqeni-i-thate': ['Tirana from South.jpg'],
+  rinas: ['Rinas village aerial view.jpg'],
+  'rruga-e-elbasanit': ['Tirana Lake (October 2016).jpg'],
+  sauk: ['Sauk nga Lapidari 2015.jpg'],
+  yzberisht: ['Yzberish Tirana 2022 aerial view 02.jpg'],
 }
 
 function conflicts(title: string, parent: string): boolean {

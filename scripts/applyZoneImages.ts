@@ -143,6 +143,20 @@ const DECISIONS_2026_10_14: Record<string, Decision> = {
   'rruga-butrinti': {pick: 0, role: 'zone', alt: 'The coast along Rruga Butrinti, looking back towards central Sarandë'},
   'gjiri-i-hartes': {pick: 0, role: 'zone', alt: 'The bay of Gjiri i Hartës between Sarandë and Ksamil, Albania'},
   akernia: {pick: 0, role: 'zone', alt: 'Akërni village seen across the Narta lagoon, Vlorë, Albania'},
+
+  // --- batch 4, Tirana ---
+  kinostudio: {pick: 0, role: 'zone', alt: 'The Unaza e Madhe ring road at the Kinostudio intersection, Tirana'},
+  'kodra-e-diellit': {pick: 0, role: 'zone', alt: 'Selitë Mosque in the Selitë hills, Tirana'},
+  'liqeni-i-thate': {
+    pick: 0,
+    role: 'stand-in',
+    alt: 'Tirana seen from the south over the Artificial Lake and the Grand Park',
+    shows: 'southern Tirana and the Grand Park lake next to Liqeni i Thatë — the neighbourhood itself is not identified',
+  },
+  rinas: {pick: 0, role: 'zone', alt: 'Rinas and Fushë-Prezë from the air, just north of Tirana airport'},
+  'rruga-e-elbasanit': {pick: 0, role: 'zone', alt: "The Artificial Lake in Tirana's Grand Park"},
+  sauk: {pick: 0, role: 'zone', alt: 'Sauk on the southern edge of Tirana, with the outer ring road'},
+  yzberisht: {pick: 0, role: 'zone', alt: 'New residential areas of Yzberisht on the western edge of Tirana, from the air'},
 }
 
 const REJECTED_2026_10_14: Record<string, string> = {
