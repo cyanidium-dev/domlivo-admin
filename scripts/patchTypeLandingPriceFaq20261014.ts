@@ -7,7 +7,8 @@
  *
  * Only guides with at least MIN_LISTINGS listings: with none the tokens drop
  * out and the sentence would read empty; those keep their old answer.
- * The first FAQ item is replaced only while it still holds the old text.
+ * The first FAQ item is replaced only while it still holds the old text (or
+ * the first version of this answer, which repeated the unit: "€1,500/m² per m²").
  *
  *   npx tsx scripts/patchTypeLandingPriceFaq20261014.ts [--execute]
  */
@@ -27,16 +28,16 @@ const client = createClient({
 const MIN_LISTINGS = 3
 
 const ANSWER: Record<string, string> = {
-  en: 'Asking prices on Domlivo today: {count} listings of this type in the city, from {fromPrice}, with a median of {medianPricePerSqm} per m². These are asking prices, not sale prices; the figures above show the market by district.',
-  uk: "Ціни пропозиції на Domlivo сьогодні: об'єктів цього типу в місті — {count}, від {fromPrice}, медіана — {medianPricePerSqm} за м². Це ціни з оголошень, а не угод; ринок за районами — у цифрах вище.",
-  ru: 'Цены предложения на Domlivo сегодня: объектов этого типа в городе — {count}, от {fromPrice}, медиана — {medianPricePerSqm} за м². Это цены из объявлений, а не сделок; рынок по районам — в цифрах выше.',
-  pl: 'Ceny ofertowe w Domlivo dziś: ofert tego typu w mieście — {count}, od {fromPrice}, mediana — {medianPricePerSqm} za m². To ceny z ogłoszeń, nie z transakcji; rynek według dzielnic pokazują liczby powyżej.',
-  it: 'Prezzi richiesti su Domlivo oggi: annunci di questo tipo in città — {count}, da {fromPrice}, mediana {medianPricePerSqm} al m². Sono prezzi degli annunci, non di compravendita; il mercato per zona è nelle cifre qui sopra.',
-  de: 'Angebotspreise auf Domlivo heute: Inserate dieses Typs in der Stadt — {count}, ab {fromPrice}, Median {medianPricePerSqm} pro m². Das sind Angebots-, keine Verkaufspreise; den Markt nach Stadtteilen zeigen die Zahlen oben.',
-  sq: 'Çmimet e kërkuara në Domlivo sot: njoftime të këtij lloji në qytet — {count}, nga {fromPrice}, mediana {medianPricePerSqm} për m². Janë çmime njoftimesh, jo shitjesh; tregun sipas lagjeve e tregojnë shifrat më lart.',
+  en: 'Asking prices on Domlivo today: {count} listings of this type in the city, from {fromPrice}, with a median of {medianPricePerSqm}. These are asking prices, not sale prices; the figures above show the market by district.',
+  uk: "Ціни пропозиції на Domlivo сьогодні: об'єктів цього типу в місті — {count}, від {fromPrice}, медіана — {medianPricePerSqm}. Це ціни з оголошень, а не угод; ринок за районами — у цифрах вище.",
+  ru: 'Цены предложения на Domlivo сегодня: объектов этого типа в городе — {count}, от {fromPrice}, медиана — {medianPricePerSqm}. Это цены из объявлений, а не сделок; рынок по районам — в цифрах выше.',
+  pl: 'Ceny ofertowe w Domlivo dziś: ofert tego typu w mieście — {count}, od {fromPrice}, mediana — {medianPricePerSqm}. To ceny z ogłoszeń, nie z transakcji; rynek według dzielnic pokazują liczby powyżej.',
+  it: 'Prezzi richiesti su Domlivo oggi: annunci di questo tipo in città — {count}, da {fromPrice}, mediana {medianPricePerSqm}. Sono prezzi degli annunci, non di compravendita; il mercato per zona è nelle cifre qui sopra.',
+  de: 'Angebotspreise auf Domlivo heute: Inserate dieses Typs in der Stadt — {count}, ab {fromPrice}, Median {medianPricePerSqm}. Das sind Angebots-, keine Verkaufspreise; den Markt nach Stadtteilen zeigen die Zahlen oben.',
+  sq: 'Çmimet e kërkuara në Domlivo sot: njoftime të këtij lloji në qytet — {count}, nga {fromPrice}, mediana {medianPricePerSqm}. Janë çmime njoftimesh, jo shitjesh; tregun sipas lagjeve e tregojnë shifrat më lart.',
 }
 /** The old answer pointed at the figures "above"; replace only that one. */
-const OLD = /stats band|блок статистики|Kennzahlenleiste|blocco statistiche|blok statystyk|blloku i statistikave/
+const OLD = /per m²\. These are asking|stats band|блок статистики|Kennzahlenleiste|blocco statistiche|blok statystyk|blloku i statistikave/
 
 async function main() {
   const docs = await client.fetch<
