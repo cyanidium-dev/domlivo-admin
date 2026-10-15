@@ -20,7 +20,7 @@
  * post is never touched.
  *
  * Run:
- *   npx tsx scripts/createArticlesFromDir.ts --dir scripts/data/articles-2026-10-01 --slug my-slug  *     --categories blogCategory-market,blogCategory-investment  *     --cover image-9289a580fbaa144be88b2a4f4b12772f78086db4-1920x1440-jpg  *     --cover-alt "The Albanian flag on Bulevardi Dëshmorët e Kombit in central Tirana, cranes behind"  *     [--skip-links] [--execute]
+ *   npx tsx scripts/createArticlesFromDir.ts --dir scripts/data/articles-2026-10-01 --slug my-slug  *     --categories blogCategory-market,blogCategory-investment  *     --cover image-9289a580fbaa144be88b2a4f4b12772f78086db4-1920x1440-jpg  *     --cover-alt "The Albanian flag on Bulevardi Dëshmorët e Kombit in central Tirana, cranes behind"  *     [--companion other-slug] [--skip-links] [--execute]
  */
 import fs from 'node:fs'
 import path from 'node:path'
@@ -64,6 +64,9 @@ if (!DIR || !SLUG || !COVER_REF) {
   console.error('usage: --dir <dir> --slug <slug> --cover <asset ref> [--cover-alt text] [--categories a,b] [--skip-links] [--execute]')
   process.exit(1)
 }
+
+/** `--companion a,b`: slugs in the same --dir that are published right after this one. */
+const COMPANIONS = (arg('--companion') ?? '').split(',').map((s) => s.trim()).filter(Boolean)
 
 const ARTICLES: Article[] = [{slug: SLUG, categories: CATEGORIES, cover: {ref: COVER_REF, alt: COVER_ALT}}]
 
@@ -248,6 +251,15 @@ async function main(): Promise<void> {
   if ((problems.length === 0 && (execute || !process.argv.includes('--skip-links'))) || process.argv.includes('--check-links')) {
     // Gently: one request a second, and every locale's copy of each target.
     for (const href of internal) {
+      // A companion article goes out in the same run of the batch and links back
+      // to this one, so one of the two always 404s first. Its files must be here.
+      const companion = COMPANIONS.find((s) => href === `/blog/${s}`)
+      if (companion) {
+        const missing = LOCALES.filter((l) => !fs.existsSync(path.resolve(process.cwd(), DIR, `${companion}.${l}.md`)))
+        if (missing.length) problems.push(`companion ${companion} has no ${missing.join(', ')} file in ${DIR}`)
+        else console.log(`  ${href}: companion article in ${DIR}, publish it next`)
+        continue
+      }
       for (const l of LOCALES) {
         const res = await fetch(`${SITE}/${l}${href}`, {redirect: 'manual', signal: AbortSignal.timeout(60_000)})
         if (res.status !== 200) problems.push(`internal link /${l}${href} answers ${res.status}`)
