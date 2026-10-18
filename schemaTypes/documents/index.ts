@@ -15,6 +15,7 @@ import {siteSettings} from './siteSettings'
 import {landingPage} from './landingPage'
 import {registrationRequest} from './registrationRequest'
 import {lead} from './lead'
+import {searchSubscription} from './searchSubscription'
 import {botAccessRequest} from './botAccessRequest'
 import {tracker} from './tracker'
 import {developer} from './developer'
@@ -46,6 +47,7 @@ export const documents = [
   siteSettings,
   registrationRequest,
   lead,
+  searchSubscription,
   botAccessRequest,
   tracker,
   developer,

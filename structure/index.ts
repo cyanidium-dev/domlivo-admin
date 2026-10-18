@@ -156,6 +156,34 @@ export const structure: StructureResolver = (S, context) => {
             ]),
         ),
 
+      // Visitors who get new listings for a saved search from the Telegram bot.
+      S.listItem()
+        .title('Search alerts')
+        .id('searchAlerts')
+        .child(
+          S.list()
+            .title('Search alerts')
+            .items([
+              S.listItem()
+                .title('Active')
+                .id('searchAlertsActive')
+                .child(
+                  S.documentTypeList('searchSubscription')
+                    .title('Active search alerts')
+                    .filter('_type == "searchSubscription" && active == true')
+                    .defaultOrdering([{field: 'createdAt', direction: 'desc'}]),
+                ),
+              S.listItem()
+                .title('All')
+                .id('searchAlertsAll')
+                .child(
+                  S.documentTypeList('searchSubscription')
+                    .title('All search alerts')
+                    .defaultOrdering([{field: 'createdAt', direction: 'desc'}]),
+                ),
+            ]),
+        ),
+
       S.listItem()
         .title('Registration Requests')
         .id('registrationRequests')
