@@ -1,8 +1,9 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
 
 /**
- * Leads from the website: form submissions and clicks on WhatsApp / phone /
- * email links, with where the visitor came from and what they looked at.
+ * Leads from the website: form submissions, clicks on WhatsApp / phone /
+ * email links and Starts of the public Telegram bot, with where the visitor
+ * came from and what they looked at.
  *
  * Created only by the frontend (`src/lib/leads/createLead.ts`, server-side,
  * with SANITY_API_TOKEN). Everything the website wrote is read-only here; the
@@ -22,6 +23,7 @@ export const LEAD_TYPES = [
   {title: 'Guide download', value: 'guide_download'},
   {title: 'Clicked phone', value: 'click_phone'},
   {title: 'Clicked email', value: 'click_email'},
+  {title: 'Telegram bot start', value: 'telegram_start'},
 ] as const
 
 export const LEAD_STATUSES = [
@@ -56,6 +58,7 @@ const TYPE_ICON: Record<string, string> = {
   guide_download: '📘',
   click_phone: '📞',
   click_email: '✉️',
+  telegram_start: '🤖',
 }
 
 const WEBSITE = 'Written by the website. Read-only.'
@@ -147,6 +150,11 @@ export const lead = defineType({
     siteString('phone', 'Phone', 'contact'),
     siteString('email', 'Email', 'contact'),
     defineField({name: 'message', title: 'Message', type: 'text', rows: 5, group: 'contact', readOnly: true}),
+    // Telegram bot starts only: the account that pressed Start. The phone and
+    // the messages stay in the team's Telegram chat, never here.
+    siteString('telegramUserId', 'Telegram user id', 'contact', 'Telegram bot leads. Search the team chat for #tg<id> to see the conversation.'),
+    siteString('telegramUsername', 'Telegram username', 'contact', 'Without @. Write directly at t.me/<username>.'),
+    siteString('telegramLanguage', 'Telegram app language', 'contact'),
     defineField({
       name: 'interest',
       title: 'Looking for',
@@ -305,6 +313,7 @@ export const lead = defineType({
       status: 'status',
       name: 'name',
       phone: 'phone',
+      telegramUsername: 'telegramUsername',
       propertyTitle: 'propertyTitle',
       propertySlug: 'propertySlug',
       source: 'source',
@@ -312,8 +321,8 @@ export const lead = defineType({
       createdAt: 'createdAt',
       internal: 'internal',
     },
-    prepare({type, status, name, phone, propertyTitle, propertySlug, source, medium, createdAt, internal}) {
-      const who = name || phone || label(LEAD_TYPES, type)
+    prepare({type, status, name, phone, telegramUsername, propertyTitle, propertySlug, source, medium, createdAt, internal}) {
+      const who = name || phone || (telegramUsername ? `@${telegramUsername}` : '') || label(LEAD_TYPES, type)
       const what = propertyTitle || propertySlug
       const when = createdAt ? new Date(createdAt).toLocaleString('ru-RU', {timeZone: 'Europe/Tirane'}) : ''
       return {
