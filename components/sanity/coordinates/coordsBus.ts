@@ -49,7 +49,11 @@ export function setPropertyCoordinates(docId: string, next: Partial<PropertyCoor
 }
 
 export function subscribePropertyCoordinates(docId: string, listener: (coords: PropertyCoordinatesEvent) => void): () => void {
-  if (typeof window === 'undefined' || !docId) return () => {}
+  if (typeof window === 'undefined' || !docId) {
+    return () => {
+      /* nothing was subscribed */
+    }
+  }
 
   const onEvent = (event: Event) => {
     const e = event as CustomEvent<PropertyCoordinatesEvent>

@@ -9,7 +9,7 @@ import {
   Stack,
   Text,
 } from '@sanity/ui'
-import {FormField, PatchEvent, set, useFormValue} from 'sanity'
+import {FormField, PatchEvent, set, useFormValue, type FormNodePresence} from 'sanity'
 
 type CurrencyRateItem = {_key?: string; code?: string; name?: string; symbol?: string}
 
@@ -41,14 +41,13 @@ export const DisplayCurrenciesInput = React.forwardRef(
     onChange?: (event: PatchEvent) => void
     readOnly?: boolean
     type?: {title?: string; description?: string}
-    markers?: unknown
-    presence?: unknown
+    presence?: FormNodePresence[]
   }) {
-    const {value = [], onChange, readOnly, type, markers, presence} = props
+    const {value = [], onChange, readOnly, type, presence} = props
     const [addOpen, setAddOpen] = React.useState(false)
 
     const ratesRaw = useFormValue(['currencyRates']) as CurrencyRateItem[] | undefined
-    const rates = Array.isArray(ratesRaw) ? ratesRaw : []
+    const rates = React.useMemo(() => (Array.isArray(ratesRaw) ? ratesRaw : []), [ratesRaw])
     const selected = React.useMemo(() => normalizeCurrencyArray(value), [value])
 
     const availableRates = React.useMemo(
@@ -127,7 +126,6 @@ export const DisplayCurrenciesInput = React.forwardRef(
 
     return (
       <FormField
-        __unstable_markers={markers}
         __unstable_presence={presence}
         title={type?.title}
         description={type?.description}
@@ -238,7 +236,6 @@ export const DisplayCurrenciesInput = React.forwardRef(
                   open={addOpen}
                   placement="bottom-start"
                   portal
-                  onClose={() => setAddOpen(false)}
                 >
                   <Button
                     mode="ghost"

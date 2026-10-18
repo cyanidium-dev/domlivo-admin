@@ -1,4 +1,5 @@
-import {defineType, defineField, defineArrayMember} from 'sanity'
+import type {ComponentType} from 'react'
+import {defineType, defineField, defineArrayMember, type ArrayOfPrimitivesInputProps} from 'sanity'
 import {isReservedForGeoEntity, reservedSlugMessage} from '../constants/reservedRouteSlugs'
 import {GalleryWithCopyAltInput} from '../../components/sanity/GalleryWithCopyAltInput'
 
@@ -190,7 +191,7 @@ export const district = defineType({
           .warning('Add at least one image before publishing this district')
           .max(20)
           .error('Maximum 20 images allowed'),
-      components: {input: GalleryWithCopyAltInput},
+      components: {input: GalleryWithCopyAltInput as unknown as ComponentType<ArrayOfPrimitivesInputProps>},
     }),
 
     // FAQ

@@ -96,7 +96,14 @@ export const marketingContentSection = defineType({
         ],
         layout: 'radio',
       },
-      validation: (Rule) => Rule.required(),
+      // Hidden on the grouped variant, so it must not be required there: a
+      // required-but-hidden field blocks publishing with no visible error.
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const parent = context.parent as {variant?: string} | undefined
+          if (parent?.variant === 'grouped') return true
+          return value ? true : 'Choose a highlights style.'
+        }),
       description:
         'Bullet list: regular bullet points. Cards: structured value + label rows (similar to investment-style stat highlights), with optional short descriptions.',
     }),
@@ -345,7 +352,13 @@ export const marketingContentSection = defineType({
       },
       description:
         'No media: text only. Default media: uses predefined visuals. Custom media: add images in the Images field (Text + media layout).',
-      validation: (Rule) => Rule.required(),
+      // Same as highlightsDisplay: not required while hidden on the grouped variant.
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const parent = context.parent as {variant?: string} | undefined
+          if (parent?.variant === 'grouped') return true
+          return value ? true : 'Choose a media mode.'
+        }),
     }),
     defineField({
       name: 'promoMediaType',

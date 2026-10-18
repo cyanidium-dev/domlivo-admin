@@ -1,4 +1,4 @@
-import {defineType, defineField, defineArrayMember} from 'sanity'
+import {defineType, defineField, defineArrayMember, type PreviewValue} from 'sanity'
 import {PAGE_BUILDER_GROUPS} from '../constants/pageBuilderGroups'
 
 export const linkedGallerySection = defineType({
@@ -45,7 +45,8 @@ export const linkedGallerySection = defineType({
           ],
           preview: {
             select: {title: 'title.en', media: 'image'},
-            prepare({title, media}: {title?: string; media?: unknown}) {
+            prepare(value) {
+              const {title, media} = value as {title?: string; media?: PreviewValue['media']}
               return {title: title || 'Slide', media}
             },
           },

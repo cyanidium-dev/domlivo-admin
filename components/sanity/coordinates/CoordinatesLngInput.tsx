@@ -7,7 +7,7 @@ export const CoordinatesLngInput = React.forwardRef(function CoordinatesLngInput
   props: any,
   ref: React.ForwardedRef<HTMLInputElement>,
 ) {
-  const {type, value, readOnly, placeholder, markers, presence, onFocus, onBlur, onChange} = props
+  const {type, value, readOnly, placeholder, presence, onFocus, onBlur, onChange} = props
   const lng = typeof value === 'number' ? value : null
 
   const latFromDocRaw = useFormValue(['coordinatesLat'])
@@ -51,7 +51,6 @@ export const CoordinatesLngInput = React.forwardRef(function CoordinatesLngInput
 
   return (
     <FormField
-      __unstable_markers={markers}
       __unstable_presence={presence}
       title={type?.title}
       description={type?.description}

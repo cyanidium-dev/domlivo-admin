@@ -58,6 +58,7 @@ const REQUIRED_LOCALES = ['en', 'ru', 'uk', 'sq', 'it'] as const
 type Locale = (typeof REQUIRED_LOCALES)[number]
 
 type DecisionCode =
+  | 'COPY'
   | 'COPY_FROM_SOURCE'
   | 'GENERATE_MISSING_CONTENT'
   | 'SKIP_TARGET_FILLED'

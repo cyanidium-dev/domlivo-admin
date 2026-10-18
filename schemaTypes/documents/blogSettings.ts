@@ -28,7 +28,6 @@ export const blogSettings = defineType({
       title: 'Hero description',
       type: 'localizedText',
       group: 'hero',
-      rows: 3,
       description: 'Intro text shown below the hero title on the blog index page.',
     }),
     defineField({

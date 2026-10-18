@@ -45,7 +45,7 @@ type InlineTranslationInput = {
 
 const args = process.argv.slice(2)
 const execute = args.includes('--execute')
-const filePath = args.find((a) => !a.startsWith('--'))
+const filePath = args.find((a) => !a.startsWith('--')) ?? ''
 if (!filePath) throw new Error('usage: npm run translate:inline -- <path-to-json> [--execute]')
 
 const client = createClient({

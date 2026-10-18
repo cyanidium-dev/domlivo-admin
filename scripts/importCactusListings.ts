@@ -120,8 +120,7 @@ const IMPLAUSIBLE_UNDER = 15000
 const ALBANIA = {latMin: 39.6, latMax: 42.7, lngMin: 19.2, lngMax: 21.1}
 const UA = 'DomLivoImportBot/1.0 (+https://domlivo.com)'
 
-const LOCALES = ['en', 'uk', 'ru', 'sq', 'it', 'pl', 'de'] as const
-type Locale = (typeof LOCALES)[number]
+type Locale = 'en' | 'uk' | 'ru' | 'sq' | 'it' | 'pl' | 'de'
 type Localized = Record<Locale, string>
 
 /**

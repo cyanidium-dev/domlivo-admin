@@ -5,7 +5,7 @@
 
 import React from 'react'
 import {Box, Button, Stack, Text} from '@sanity/ui'
-import {FormField, PatchEvent, set, useFormValue} from 'sanity'
+import {FormField, PatchEvent, set, type FormNodePresence} from 'sanity'
 import {useToast} from '@sanity/ui'
 
 type GalleryItem = {_key?: string; alt?: string; label?: string; asset?: {_ref?: string}}
@@ -26,8 +26,7 @@ type GalleryWithCopyAltInputProps = {
   renderDefault: (props: unknown) => React.ReactNode
   readOnly?: boolean
   type?: {title?: string; description?: string}
-  markers?: unknown
-  presence?: unknown
+  presence?: FormNodePresence[]
 }
 
 export const GalleryWithCopyAltInput = React.forwardRef(
@@ -35,10 +34,10 @@ export const GalleryWithCopyAltInput = React.forwardRef(
     props: GalleryWithCopyAltInputProps,
     ref: React.ForwardedRef<HTMLDivElement>,
   ) {
-    const {value = [], onChange, renderDefault, readOnly, type, markers, presence} = props
+    const {value = [], onChange, renderDefault, readOnly, type, presence} = props
     const toast = useToast()
 
-    const gallery = Array.isArray(value) ? value : []
+    const gallery = React.useMemo(() => (Array.isArray(value) ? value : []), [value])
 
     const handleCopy = React.useCallback(() => {
       if (!onChange || readOnly) return
@@ -47,8 +46,8 @@ export const GalleryWithCopyAltInput = React.forwardRef(
         const toUpdate: {index: number; label: string}[] = []
         for (let i = 0; i < gallery.length; i++) {
           const item = gallery[i] as GalleryItem | undefined
-          if (hasAlt(item) && needsLabel(item)) {
-            toUpdate.push({index: i, label: (item!.alt ?? '').trim()})
+          if (item && hasAlt(item) && needsLabel(item)) {
+            toUpdate.push({index: i, label: (item.alt ?? '').trim()})
           }
         }
 
@@ -82,13 +81,12 @@ export const GalleryWithCopyAltInput = React.forwardRef(
           description: err instanceof Error ? err.message : 'Unknown error',
         })
       }
-    }, [onChange, readOnly, gallery])
+    }, [onChange, readOnly, gallery, toast])
 
     const inputId = React.useId()
 
     return (
       <FormField
-        __unstable_markers={markers}
         __unstable_presence={presence}
         title={type?.title}
         description={type?.description}

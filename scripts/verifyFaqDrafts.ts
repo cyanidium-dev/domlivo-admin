@@ -23,7 +23,6 @@ const client = createClient({
 
 type Doc = Record<string, unknown> & {_id: string; pageSections?: Array<Record<string, unknown>>}
 const strip = (d: Doc) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const {_id, _rev, _updatedAt, _createdAt, pageSections, ...rest} = d
   return {...rest, pageSections: (pageSections || []).filter((s) => s._type !== 'faqSection')}
 }

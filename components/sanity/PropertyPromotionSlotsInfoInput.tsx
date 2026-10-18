@@ -58,12 +58,13 @@ export function PropertyPromotionSlotsInfoInput(props: PromotionTypeInputProps) 
         if (cancelled || reqId !== requestIdRef.current) return
         setMessage(res.message)
       } finally {
-        if (cancelled || reqId !== requestIdRef.current) return
-        if (busyTimerRef.current) {
-          window.clearTimeout(busyTimerRef.current)
-          busyTimerRef.current = null
+        if (!cancelled && reqId === requestIdRef.current) {
+          if (busyTimerRef.current) {
+            window.clearTimeout(busyTimerRef.current)
+            busyTimerRef.current = null
+          }
+          setBusy(false)
         }
-        setBusy(false)
       }
     }
 

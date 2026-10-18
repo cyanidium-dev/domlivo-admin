@@ -106,9 +106,9 @@ export function BannerImageBigInput(props: BannerImageBigInputProps) {
           </Card>
 
           {showRatioWarning && (
-            <Text size={1} tone="caution">
-              {'\u26A0'} Image may crop poorly. Recommended wide format (~4:1).
-            </Text>
+            <Card tone="caution" padding={2} radius={2}>
+              <Text size={1}>{'\u26A0'} Image may crop poorly. Recommended wide format (~4:1).</Text>
+            </Card>
           )}
         </Stack>
       </Card>

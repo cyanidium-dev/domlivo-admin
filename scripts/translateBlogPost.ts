@@ -168,7 +168,7 @@ const client = createClient({
 const PT_FIELD = 'content'
 
 async function main(): Promise<void> {
-  const draftId = await resolveBlogPostDraftId(client, slug)
+  const draftId = await resolveBlogPostDraftId(client, slug ?? '')
   let id = draftId
   let doc = draftId ? ((await client.getDocument(draftId)) as Record<string, unknown> | null) : null
   // Every blog post published through the review workflow (see

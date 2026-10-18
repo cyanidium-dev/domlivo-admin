@@ -1,4 +1,5 @@
-import type {SanityClient, ValidationContext} from 'sanity'
+import type {SanityClient} from '@sanity/client'
+import type {ValidationContext} from 'sanity'
 
 const DEFAULT_CAP = 6
 
@@ -358,7 +359,7 @@ export async function validatePropertyPromotionCaps(
   }
   if (typeof context.getClient !== 'function') return true
 
-  const client = context.getClient({apiVersion: '2024-01-01'})
+  const client = context.getClient({apiVersion: '2024-01-01'}) as unknown as SanityClient
   const result = await checkPromotionCapForDocument(client, doc)
   return result.ok ? true : result.message
 }

@@ -129,22 +129,6 @@ function faqItemLi(q: Li, a: Li) {
   return {question: q, answer: a}
 }
 
-function buildParagraphs(words: string[], targetWordCount: number): string[] {
-  const paras: string[] = []
-  let current: string[] = []
-  let count = 0
-  for (let i = 0; i < words.length && count < targetWordCount; i++) {
-    current.push(words[i])
-    count++
-    if (current.length >= 40 && count < targetWordCount) {
-      paras.push(current.join(' ') + '.')
-      current = []
-    }
-  }
-  if (current.length) paras.push(current.join(' ') + '.')
-  return paras
-}
-
 const PARAGRAPH_TEMPLATES_EN = [
   'This stunning property is located in the heart of Albania and offers exceptional value for investors and families alike. The building features modern amenities and has been recently renovated to the highest standards. Albania continues to attract international buyers due to its favorable climate and growing economy.',
   'Situated in a prime location with excellent transport links, this home provides easy access to shops, restaurants, and cultural attractions. The area has seen significant development in recent years. Property prices remain competitive compared to other Mediterranean destinations including Greece and Montenegro.',

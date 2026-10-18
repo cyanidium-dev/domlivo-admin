@@ -108,7 +108,7 @@ describe('markdownToPortableText', () => {
       '| [Blloku](/en/albania/tirana/districts/blloku) | **+4.4%** |',
     ].join('\n')
     const [t] = markdownToPortableText(md)
-    expect(t.rows[1].cells).toEqual(['Blloku', '+4.4%'])
+    expect((t as {rows: {cells: string[]}[]}).rows[1].cells).toEqual(['Blloku', '+4.4%'])
   })
 
   it('keeps blocks in source order', () => {

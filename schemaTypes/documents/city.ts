@@ -1,5 +1,5 @@
-import React from 'react'
-import {defineType, defineField, defineArrayMember} from 'sanity'
+import React, {type ComponentType} from 'react'
+import {defineType, defineField, defineArrayMember, type ArrayOfPrimitivesInputProps, type ObjectInputProps} from 'sanity'
 import {
   findUniqueLandingOwningSlug,
   isReservedForGeoEntity,
@@ -286,7 +286,7 @@ export const city = defineType({
           .warning('Add at least one image before publishing this city')
           .max(20)
           .error('Maximum 20 images allowed'),
-      components: {input: GalleryWithCopyAltInput},
+      components: {input: GalleryWithCopyAltInput as unknown as ComponentType<ArrayOfPrimitivesInputProps>},
     }),
 
     // FAQ
@@ -321,8 +321,11 @@ export const city = defineType({
       type: 'localizedSeo',
       group: 'seo',
       components: {
-        input: (props: Record<string, unknown>) =>
-          React.createElement(SeoFillInfoInput, {...props, sourceType: 'city'}),
+        input: (props: ObjectInputProps) =>
+          React.createElement(SeoFillInfoInput, {
+            ...(props as unknown as React.ComponentProps<typeof SeoFillInfoInput>),
+            sourceType: 'city',
+          }),
       },
     }),
   ],

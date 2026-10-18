@@ -1,5 +1,5 @@
 import {describe, it, expect} from 'vitest'
-import {discoverLocalized, filledLocale} from '../discoverLocalized'
+import {discoverLocalized} from '../discoverLocalized'
 import {buildTranslateItems, chunkTranslateItems, decideTranslationSets} from '../applyTranslations'
 import {applySetOps, decideParseSets, missingForPublish, type ParseResponse} from '../applyParse'
 import {pickFreeSlug, slugify} from '../slug'

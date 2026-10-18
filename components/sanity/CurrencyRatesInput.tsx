@@ -1,6 +1,6 @@
 import React from 'react'
 import {Box, Card, Stack, Text} from '@sanity/ui'
-import {FormField, useFormValue} from 'sanity'
+import {FormField, useFormValue, type FormNodePresence} from 'sanity'
 
 type CurrencyRateItem = {_key?: string; code?: string; rate?: number; name?: string; symbol?: string}
 
@@ -30,12 +30,11 @@ export const CurrencyRatesInput = React.forwardRef(function CurrencyRatesInput(
     renderDefault: (props: unknown) => React.ReactNode
     readOnly?: boolean
     type?: {title?: string; description?: string}
-    markers?: unknown
-    presence?: unknown
+    presence?: FormNodePresence[]
   },
   ref: React.ForwardedRef<HTMLDivElement>,
 ) {
-  const {value = [], renderDefault, type, markers, presence} = props
+  const {value = [], renderDefault, type, presence} = props
   const [expanded, setExpanded] = React.useState(false)
 
   const lastSynced = useFormValue(['currencyLastSyncedAt']) as string | undefined
@@ -47,7 +46,6 @@ export const CurrencyRatesInput = React.forwardRef(function CurrencyRatesInput(
 
   return (
     <FormField
-      __unstable_markers={markers}
       __unstable_presence={presence}
       title={type?.title}
       description={type?.description}

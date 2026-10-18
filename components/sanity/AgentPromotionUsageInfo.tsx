@@ -55,7 +55,7 @@ export function AgentPromotionUsageInfo(props: AgentPromotionUsageInputProps) {
 
     async function run() {
       try {
-        const res = await getAgentPromotionUsageInfoForAgentId(client, agentRef)
+        const res = await getAgentPromotionUsageInfoForAgentId(client, agentRef ?? '')
         if (cancelled || reqId !== requestIdRef.current) return
 
         if (!res.ok) {
@@ -69,12 +69,13 @@ export function AgentPromotionUsageInfo(props: AgentPromotionUsageInputProps) {
         setPremium({used: res.premium.used, cap: res.premium.cap, capSourceLabel: res.premium.capSourceLabel})
         setTop({used: res.top.used, cap: res.top.cap, capSourceLabel: res.top.capSourceLabel})
       } finally {
-        if (cancelled || reqId !== requestIdRef.current) return
-        if (busyTimerRef.current) {
-          window.clearTimeout(busyTimerRef.current)
-          busyTimerRef.current = null
+        if (!cancelled && reqId === requestIdRef.current) {
+          if (busyTimerRef.current) {
+            window.clearTimeout(busyTimerRef.current)
+            busyTimerRef.current = null
+          }
+          setBusy(false)
         }
-        setBusy(false)
       }
     }
 

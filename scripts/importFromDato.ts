@@ -160,7 +160,7 @@ function extractDistrict(text: string): string | null {
     /rajon[ai]?\s+i?\s+([A-ZA-ZË][\p{L}\- ]{2,40}?)[,.;\n]/u,
     /rajoni\s+([A-ZA-ZË][\p{L}\- ]{2,40}?)[,.;\n]/u,
     /\bin\s+the\s+([A-Z][\p{L}\- ]{2,40}?)\s+district\b/u,
-    /\b([A-Z][\p{L}\-]{2,30})\s+district\b/u,
+    /\b([A-Z][\p{L}-]{2,30})\s+district\b/u,
     /район[е,]\s*([А-ЯA-ZЁЇІЄҐ][\p{L}\-' ]{2,30})/u,
   ]
   for (const re of patterns) {
@@ -284,7 +284,7 @@ function buildSeo(args: {
   }
 
   const locs: (keyof Locales)[] = ['en', 'ru', 'sq', 'uk', 'it']
-  const acc = <K extends string>(fn: (l: keyof Locales) => string) =>
+  const acc = (fn: (l: keyof Locales) => string) =>
     Object.fromEntries(locs.map((l) => [l, fn(l)])) as Locales
 
   return {
@@ -431,13 +431,6 @@ function pickNumber(record: any, candidates: string[]): number | null {
   if (v == null || v === '') return null
   const n = typeof v === 'number' ? v : Number(String(v).replace(/[^\d.,-]/g, '').replace(',', '.'))
   return Number.isFinite(n) ? n : null
-}
-
-function pickBool(record: any, candidates: string[]): boolean | null {
-  const v = pickField(record, candidates)
-  if (v == null) return null
-  if (typeof v === 'boolean') return v
-  return /^(1|true|yes|да|on)$/i.test(String(v))
 }
 
 // Extract image asset urls from Dato record. Dato gallery fields contain

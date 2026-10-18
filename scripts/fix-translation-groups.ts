@@ -32,7 +32,6 @@ const client = createClient({
 
 const LANGUAGE_FIELD = 'language'
 const METADATA_TYPE = 'translation.metadata'
-const TRANSLATIONS_FIELD = 'translations'
 
 function createTranslationRef(lang: string, publishedId: string, schemaType: string) {
   return {

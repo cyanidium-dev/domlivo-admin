@@ -268,7 +268,6 @@ async function main(): Promise<void> {
   const report: Array<[string, string | number]> = []
   // Where each unknown id is defined, so a stub can point back at its row.
   const derived = new Map<string, DerivedDefinition>()
-  let missingFacts = 0
   let totalTables = 0
   let totalRows = 0
 
@@ -326,7 +325,6 @@ async function main(): Promise<void> {
                     period: front.data_period,
                   })
                 }
-                missingFacts += 1
                 return false
               }
               factRefs.add(id)

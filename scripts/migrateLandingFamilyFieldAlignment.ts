@@ -75,7 +75,7 @@ async function main() {
   let touchedSections = 0
 
   for (const doc of docs) {
-    const sections = Array.isArray(doc.pageSections) ? doc.pageSections : []
+    const sections = Array.isArray(doc.pageSections) ? (doc.pageSections as Record<string, unknown>[]) : []
     let changed = false
     const next = sections.map((s: Record<string, unknown>) => {
       const before = JSON.stringify(s)

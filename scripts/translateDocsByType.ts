@@ -89,7 +89,6 @@ async function studioTranslate(
   const merged: Array<{key: string; locales: TranslatedLocales}> = []
   for (const [i, batch] of batches.entries()) {
     let attempt = 0
-    // eslint-disable-next-line no-constant-condition
     while (true) {
       attempt += 1
       const res = await fetch(`${AI_API_URL}/api/studio-translate`, {

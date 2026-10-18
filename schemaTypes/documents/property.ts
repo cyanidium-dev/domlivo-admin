@@ -1,5 +1,5 @@
-import React from 'react'
-import {defineType, defineField, defineArrayMember} from 'sanity'
+import React, {type ComponentType} from 'react'
+import {defineType, defineField, defineArrayMember, type ArrayOfPrimitivesInputProps, type ObjectInputProps} from 'sanity'
 import {CoordinatesLatInput} from '../../components/sanity/coordinates/CoordinatesLatInput'
 import {CoordinatesLngInput} from '../../components/sanity/coordinates/CoordinatesLngInput'
 import {GoogleMapsLinkInput} from '../../components/sanity/coordinates/GoogleMapsLinkInput'
@@ -740,7 +740,7 @@ export const property = defineType({
           .error('Add at least one image')
           .max(30)
           .error('Maximum 30 images allowed'),
-      components: {input: GalleryWithCopyAltInput},
+      components: {input: GalleryWithCopyAltInput as unknown as ComponentType<ArrayOfPrimitivesInputProps>},
     }),
 
     // SEO
@@ -750,8 +750,11 @@ export const property = defineType({
       type: 'localizedSeo',
       group: 'seo',
       components: {
-        input: (props: Record<string, unknown>) =>
-          React.createElement(SeoFillInfoInput, {...props, sourceType: 'property'}),
+        input: (props: ObjectInputProps) =>
+          React.createElement(SeoFillInfoInput, {
+            ...(props as unknown as React.ComponentProps<typeof SeoFillInfoInput>),
+            sourceType: 'property',
+          }),
       },
     }),
 

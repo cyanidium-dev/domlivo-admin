@@ -20,6 +20,8 @@ describe('lead schema', () => {
       'agent_contact',
       'registration',
       'click_whatsapp',
+      'click_telegram',
+      'guide_download',
       'click_phone',
       'click_email',
     ])

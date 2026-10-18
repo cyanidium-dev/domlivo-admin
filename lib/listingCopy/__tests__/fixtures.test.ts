@@ -35,6 +35,7 @@ describe('production fixtures', () => {
 
   it('leaves no invisible padding anywhere', () => {
     for (const {name, text, locale} of ALL) {
+      // eslint-disable-next-line no-misleading-character-class
       expect(normalizeDescription(text, locale).text, name).not.toMatch(/[​‌‍⁠⠀﻿]/)
     }
   })

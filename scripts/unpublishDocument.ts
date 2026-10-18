@@ -67,7 +67,7 @@ async function main(): Promise<void> {
   delete draftDoc._rev
 
   await client.createOrReplace(draftDoc as {_id: string; _type: string})
-  await client.delete(id)
+  await client.delete(id as string)
   console.log(`unpublished — content now lives only at ${draftId}`)
 }
 

@@ -157,7 +157,7 @@ export const registrationRequest = defineType({
           if (value === undefined || value === null) return 'Required'
           const v = typeof value === 'string' ? value.trim() : ''
           if (!v) return 'Required'
-          return ALLOWED_STATUS.has(v) ? true : 'Invalid status'
+          return ALLOWED_STATUS.has(v as (typeof STATUS_VALUES)[number]['value']) ? true : 'Invalid status'
         }),
     }),
 
