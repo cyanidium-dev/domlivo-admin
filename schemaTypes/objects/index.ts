@@ -10,6 +10,8 @@ import {localizedSeo} from './localizedSeo'
 import {localizedFooterLink} from './localizedFooterLink'
 import {localizedBlockContent} from './localizedBlockContent'
 import {blogTable} from './blogTable'
+import {knowledgeTable} from './knowledgeTable'
+import {knowledgeSection} from './knowledgeSection'
 import {blogCallout} from './blogCallout'
 import {blogFaqBlock} from './blogFaqBlock'
 import {zoneStatsEmbed} from './zoneStatsEmbed'
@@ -122,4 +124,6 @@ export const objects = [
   currencyRate,
   propertyCatalogBanner,
   propertySettings,
+  knowledgeTable,
+  knowledgeSection,
 ]

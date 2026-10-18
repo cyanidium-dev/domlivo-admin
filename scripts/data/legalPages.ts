@@ -42,6 +42,13 @@ export type LegalDoc = {
 
 const UPDATED = '2026-09-10'
 
+/**
+ * The privacy policy has moved on since: assistant conversations are now kept
+ * and have a retention period. The terms have not changed, so they keep the
+ * older date rather than claiming a revision that never happened.
+ */
+const PRIVACY_UPDATED = '2026-09-20'
+
 export const PRIVACY: LegalDoc = {
   slug: 'privacy',
   title: {en: 'Privacy Policy', ru: 'Политика конфиденциальности'},
@@ -49,10 +56,10 @@ export const PRIVACY: LegalDoc = {
     en: 'What Domlivo does with personal data: what the forms collect, where submissions go, which analytics run only after consent, and how to exercise your rights.',
     ru: 'Что Domlivo делает с персональными данными: что собирают формы, куда уходят заявки, какая аналитика включается только после согласия и как реализовать свои права.',
   },
-  updated: UPDATED,
+  updated: PRIVACY_UPDATED,
   body: {
     en: [
-      {paragraphs: [`Last updated: 10 September 2026.`]},
+      {paragraphs: [`Last updated: 20 September 2026.`]},
       {
         heading: 'Who we are',
         paragraphs: [
@@ -82,6 +89,14 @@ export const PRIVACY: LegalDoc = {
         paragraphs: [
           'A submitted form is delivered to our team as a Telegram message. It is not written to a database on this site, so the data lives in that chat and nowhere else here.',
           'TODO(legal): state a definite retention period for those messages and delete on that schedule.',
+        ],
+      },
+      {
+        heading: 'Assistant conversations',
+        paragraphs: [
+          'What you ask the assistant and what it answers are stored on our side, together with the language you wrote in, the country your request arrived from, the listings the assistant showed you and the sources it cited. A conversation is deleted automatically 90 days after its last message.',
+          'It is stored under a random identifier that stands for one conversation in one browser tab, not for you, and your IP address is not part of it. We read these conversations to see what people are looking for and what the catalog is missing.',
+          'Because whatever you type is kept, do not give the assistant passport, payment or other sensitive details — use the contact form for anything that needs a reply from a person.',
         ],
       },
       {
@@ -154,7 +169,7 @@ export const PRIVACY: LegalDoc = {
       },
     ],
     ru: [
-      {paragraphs: ['Последнее обновление: 10 сентября 2026 года.']},
+      {paragraphs: ['Последнее обновление: 20 сентября 2026 года.']},
       {
         heading: 'Кто мы',
         paragraphs: [
@@ -184,6 +199,14 @@ export const PRIVACY: LegalDoc = {
         paragraphs: [
           'Отправленная форма приходит нашей команде сообщением в Telegram. В базу данных сайта она не записывается, поэтому данные живут в этом чате и больше нигде здесь.',
           'TODO(legal): указать конкретный срок хранения этих сообщений и удалять по нему.',
+        ],
+      },
+      {
+        heading: 'Диалоги с ассистентом',
+        paragraphs: [
+          'То, что вы спрашиваете у ассистента, и то, что он отвечает, сохраняется у нас — вместе с языком, на котором вы писали, страной, из которой пришёл запрос, объектами, которые ассистент показал, и источниками, на которые он сослался. Диалог автоматически удаляется через 90 дней после последнего сообщения в нём.',
+          'Он хранится под случайным идентификатором, который обозначает один разговор в одной вкладке браузера, а не вас; IP-адрес в него не входит. Мы читаем эти диалоги, чтобы понимать, что люди ищут и чего не хватает в каталоге.',
+          'Поскольку сохраняется всё, что вы напишете, не сообщайте ассистенту паспортные, платёжные и прочие чувствительные данные — если нужен ответ человека, используйте форму обращения.',
         ],
       },
       {

@@ -19,6 +19,10 @@ import {tracker} from './tracker'
 import {developer} from './developer'
 import {zoneMetrics} from './zoneMetrics'
 import {imageCredit} from './imageCredit'
+import {knowledgeArticle} from './knowledgeArticle'
+import {knowledgeFact} from './knowledgeFact'
+import {knowledgeSource} from './knowledgeSource'
+import {aiDialogue} from './aiDialogue'
 
 /**
  * Document types (standalone content)
@@ -46,4 +50,8 @@ export const documents = [
   developer,
   zoneMetrics,
   imageCredit,
+  knowledgeSource,
+  knowledgeFact,
+  knowledgeArticle,
+  aiDialogue,
 ]

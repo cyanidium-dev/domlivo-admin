@@ -54,7 +54,7 @@ export const TERMS_META: Record<TranslatedLocale, string> = {
 
 export const PRIVACY_BODY: Record<TranslatedLocale, LegalBlock[]> = {
   uk: [
-    {paragraphs: ['Останнє оновлення: 10 вересня 2026 року.']},
+    {paragraphs: ['Останнє оновлення: 20 вересня 2026 року.']},
     {
       heading: 'Хто ми',
       paragraphs: [
@@ -84,6 +84,14 @@ export const PRIVACY_BODY: Record<TranslatedLocale, LegalBlock[]> = {
       paragraphs: [
         'Надіслана форма приходить нашій команді повідомленням у Telegram. До бази даних сайту вона не записується, тож дані живуть у цьому чаті й більше ніде тут.',
         'TODO(legal): state a definite retention period for those messages and delete on that schedule.',
+      ],
+    },
+    {
+      heading: 'Діалоги з асистентом',
+      paragraphs: [
+        'Те, що ви запитуєте в асистента, і те, що він відповідає, зберігається в нас — разом із мовою, якою ви писали, країною, з якої надійшов запит, об’єктами, які асистент показав, і джерелами, на які він послався. Діалог автоматично видаляється через 90 днів після останнього повідомлення в ньому.',
+        'Він зберігається під випадковим ідентифікатором, який позначає одну розмову в одній вкладці браузера, а не вас; IP-адреса до нього не входить. Ми читаємо ці діалоги, щоб бачити, що люди шукають і чого бракує в каталозі.',
+        'Оскільки зберігається все, що ви напишете, не повідомляйте асистенту паспортні, платіжні та інші чутливі дані — якщо потрібна відповідь людини, скористайтеся формою звернення.',
       ],
     },
     {
@@ -153,7 +161,7 @@ export const PRIVACY_BODY: Record<TranslatedLocale, LegalBlock[]> = {
   ],
 
   sq: [
-    {paragraphs: ['Përditësuar për herë të fundit: 10 shtator 2026.']},
+    {paragraphs: ['Përditësuar për herë të fundit: 20 shtator 2026.']},
     {
       heading: 'Kush jemi',
       paragraphs: [
@@ -183,6 +191,14 @@ export const PRIVACY_BODY: Record<TranslatedLocale, LegalBlock[]> = {
       paragraphs: [
         'Një formular i dërguar i vjen ekipit tonë si mesazh në Telegram. Ai nuk shkruhet në asnjë bazë të dhënash të kësaj faqeje, prandaj të dhënat rrojnë në atë bisedë dhe askund tjetër këtu.',
         'TODO(legal): state a definite retention period for those messages and delete on that schedule.',
+      ],
+    },
+    {
+      heading: 'Bisedat me asistentin',
+      paragraphs: [
+        'Çfarë e pyesni asistentin dhe çfarë ju përgjigjet ruhen te ne, bashkë me gjuhën në të cilën shkruat, shtetin nga erdhi kërkesa, shpalljet që asistenti ju tregoi dhe burimet që citoi. Një bisedë fshihet automatikisht 90 ditë pas mesazhit të saj të fundit.',
+        'Ruhet nën një identifikues të rastësishëm që përfaqëson një bisedë në një skedë shfletuesi, jo ju, dhe adresa juaj IP nuk bën pjesë në të. I lexojmë këto biseda për të parë çfarë kërkojnë njerëzit dhe çfarë i mungon katalogut.',
+        'Meqë ruhet gjithçka që shkruani, mos i jepni asistentit të dhëna pasaporte, pagese apo të tjera të ndjeshme — për çdo gjë që kërkon përgjigje nga një person, përdorni formularin e kontaktit.',
       ],
     },
     {
@@ -254,7 +270,7 @@ export const PRIVACY_BODY: Record<TranslatedLocale, LegalBlock[]> = {
   ],
 
   it: [
-    {paragraphs: ['Ultimo aggiornamento: 10 settembre 2026.']},
+    {paragraphs: ['Ultimo aggiornamento: 20 settembre 2026.']},
     {
       heading: 'Chi siamo',
       paragraphs: [
@@ -284,6 +300,14 @@ export const PRIVACY_BODY: Record<TranslatedLocale, LegalBlock[]> = {
       paragraphs: [
         'Un modulo inviato arriva al nostro team come messaggio Telegram. Non viene scritto in alcun database di questo sito, quindi i dati vivono in quella conversazione e in nessun altro punto qui.',
         'TODO(legal): state a definite retention period for those messages and delete on that schedule.',
+      ],
+    },
+    {
+      heading: 'Conversazioni con l’assistente',
+      paragraphs: [
+        'Quello che chiedete all’assistente e quello che vi risponde vengono conservati da noi, insieme alla lingua in cui avete scritto, al paese da cui è arrivata la richiesta, agli annunci che l’assistente vi ha mostrato e alle fonti che ha citato. Una conversazione viene cancellata automaticamente 90 giorni dopo il suo ultimo messaggio.',
+        'È conservata sotto un identificativo casuale che rappresenta una conversazione in una scheda del browser, non voi, e il vostro indirizzo IP non ne fa parte. Leggiamo queste conversazioni per capire che cosa cercano le persone e che cosa manca al catalogo.',
+        'Poiché viene conservato tutto ciò che scrivete, non fornite all’assistente dati del passaporto, di pagamento o altri dati sensibili: per qualunque cosa richieda la risposta di una persona usate il modulo di contatto.',
       ],
     },
     {
@@ -355,7 +379,7 @@ export const PRIVACY_BODY: Record<TranslatedLocale, LegalBlock[]> = {
   ],
 
   pl: [
-    {paragraphs: ['Ostatnia aktualizacja: 10 września 2026 r.']},
+    {paragraphs: ['Ostatnia aktualizacja: 20 września 2026 r.']},
     {
       heading: 'Kim jesteśmy',
       paragraphs: [
@@ -385,6 +409,14 @@ export const PRIVACY_BODY: Record<TranslatedLocale, LegalBlock[]> = {
       paragraphs: [
         'Wysłany formularz trafia do naszego zespołu jako wiadomość na Telegramie. Nie jest zapisywany w żadnej bazie danych tego serwisu, więc dane żyją w tej rozmowie i nigdzie indziej tutaj.',
         'TODO(legal): state a definite retention period for those messages and delete on that schedule.',
+      ],
+    },
+    {
+      heading: 'Rozmowy z asystentem',
+      paragraphs: [
+        'To, o co pytacie asystenta, i to, co odpowiada, jest u nas przechowywane — razem z językiem, w którym pisaliście, krajem, z którego przyszło zapytanie, ogłoszeniami, które asystent pokazał, i źródłami, które przywołał. Rozmowa jest automatycznie usuwana 90 dni po ostatniej wiadomości w niej.',
+        'Przechowujemy ją pod losowym identyfikatorem, który oznacza jedną rozmowę w jednej karcie przeglądarki, a nie was; adres IP nie wchodzi w jej skład. Czytamy te rozmowy, żeby wiedzieć, czego ludzie szukają i czego brakuje w katalogu.',
+        'Ponieważ zachowywane jest wszystko, co napiszecie, nie podawajcie asystentowi danych paszportowych, płatniczych ani innych wrażliwych — jeśli potrzebna jest odpowiedź człowieka, skorzystajcie z formularza kontaktowego.',
       ],
     },
     {

@@ -1,0 +1,2042 @@
+[
+  {
+    "id": "property-getal-1036",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment with sea view, first line, Plazh Iliria, Durrës"
+  },
+  {
+    "id": "property-getal-10410",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "4+1 penthouse with large veranda, Tregu i Vogël, Durrës"
+  },
+  {
+    "id": "property-getal-10134",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "3+1 apartment with balcony near \"Bajram Curri\" school, Plazh, Durrës"
+  },
+  {
+    "id": "property-getal-10358",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "2+1 penthouse, 350 m² with large veranda and sea view, Plazh, Durrës"
+  },
+  {
+    "id": "property-getal-10551",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "3+1+2 apartment with 2 balconies, Lagjja 18, Durrës"
+  },
+  {
+    "id": "property-getal-10597",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "5,800 m² land plot near the reservoir, Spitallë, Durrës"
+  },
+  {
+    "id": "property-getal-10505",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 Apartment with 40 m² Veranda, 150 m from the Sea — Plazh Hekurudha, Durrës"
+  },
+  {
+    "id": "property-getal-10898",
+    "kind": "getal",
+    "error": "Unexpected non-whitespace character after JSON at position 2123 (line 3 column 1)"
+  },
+  {
+    "id": "property-getal-10899",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment with balcony in a new residence, Liburna, Golem, Durrës"
+  },
+  {
+    "id": "property-getal-11076",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "2+1 apartment with balcony near the marina, Qerret, Durrës"
+  },
+  {
+    "id": "property-getal-11143",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "4+1+3 apartment, 246 m², 7th floor with 360° city views, Durrës center"
+  },
+  {
+    "id": "property-getal-11204",
+    "kind": "getal",
+    "error": "Unexpected non-whitespace character after JSON at position 1912 (line 3 column 1)"
+  },
+  {
+    "id": "property-getal-11321",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "2+1+2 apartment with private yard, Liburna residence, Golem, Durrës"
+  },
+  {
+    "id": "property-getal-11548",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "3+1 apartment with two balconies and sea view, Rrota e Kuqe, Plazh, Durrës"
+  },
+  {
+    "id": "property-getal-11589",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "2-storey house with attic and yard, Ish Kënteta, Durrës"
+  },
+  {
+    "id": "property-getal-11682",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment, 9th floor with balcony, Plazh Iliria, Durrës"
+  },
+  {
+    "id": "property-getal-11684",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment, 9th floor with balcony, Plazh Iliria, Durrës"
+  },
+  {
+    "id": "property-getal-11908",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "2+1 apartment with two balconies, Golem, Durrës"
+  },
+  {
+    "id": "property-getal-12075",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment with balcony 150 m from the sea, Golem, Durrës"
+  },
+  {
+    "id": "property-getal-12056",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "2+1 apartment, 91 m², 80 m from the sea — Shkëmbi i Kavajës, Durrës"
+  },
+  {
+    "id": "property-getal-12085",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment with balcony in a residence, Golem, Durrës"
+  },
+  {
+    "id": "property-getal-12123",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "5-storey villa with garage and attic, 941 m², Arapaj, Durrës"
+  },
+  {
+    "id": "property-getal-12278",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "2-storey business building with warehouse and offices, Porto Romano, Durrës"
+  },
+  {
+    "id": "property-getal-12288",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment 350 m from the sea, new residence with pool, Mali i Robit, Durrës"
+  },
+  {
+    "id": "property-getal-12473",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "Studio 350 m from the sea, new residence in Mali i Robit, Durrës"
+  },
+  {
+    "id": "property-getal-12500",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment in a new residence 350 m from the sea, Mali i Robit, Durrës"
+  },
+  {
+    "id": "property-getal-12526",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment 350 m from the sea, Mali i Robit, Durrës"
+  },
+  {
+    "id": "property-getal-12552",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment 350 m from the sea, Mali i Robit, Durrës"
+  },
+  {
+    "id": "property-getal-12553",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment 350 m from the sea, Mali i Robit, Durrës"
+  },
+  {
+    "id": "property-getal-12654",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment, 68 m², in a new residence a few minutes from the beach, Qerret"
+  },
+  {
+    "id": "property-getal-12680",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment, 68 m², in a new residence near the beach, Qerret"
+  },
+  {
+    "id": "property-getal-12754",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "80 m² commercial space on the ground floor near Vala Park, Durrës"
+  },
+  {
+    "id": "property-getal-12816",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "2+1 apartment with balcony on the 5th floor, Plazh, Durrës"
+  },
+  {
+    "id": "property-getal-12801",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "2+1 apartment with balcony on the 10th floor, Plazh Iliria, Durrës"
+  },
+  {
+    "id": "property-getal-12865",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "Top-shop commercial space, 72 m², glass façade, city centre, Durrës"
+  },
+  {
+    "id": "property-getal-12868",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1,000 m² land plot 170 m from the sea, Qerret, Durrës"
+  },
+  {
+    "id": "property-getal-12953",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "5,000 m² roadside land plot in Rinas, Tirana"
+  },
+  {
+    "id": "property-getal-12979",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "10,000 m² roadside land plot, Sektor Rinia near the University, Durrës"
+  },
+  {
+    "id": "property-getal-13136",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "2+1 apartment with balcony on the 7th floor, Plazh, Durrës"
+  },
+  {
+    "id": "property-getal-13068",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "2+1 apartment in a new 2025 building with elevator, Golem – Durrës"
+  },
+  {
+    "id": "property-getal-13215",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "Private house 142.4 m² with 365.70 m² plot at the entrance to Tirana, Laprakë"
+  },
+  {
+    "id": "property-getal-13146",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "Furnished 1+1 apartment 30 m from the sea, Plazh, Durrës"
+  },
+  {
+    "id": "property-getal-13178",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "Business space 329 m² with 4+1+2 home above, Spitallë, Durrës"
+  },
+  {
+    "id": "property-getal-13224",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "3+2+2 apartment, 130 m², divisible into two units — Plazh, Durrës"
+  },
+  {
+    "id": "property-getal-13404",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "9,000 m² land plot with clean title, Sektori Rinia, Durrës"
+  },
+  {
+    "id": "property-getal-13227",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "2+1 apartment with balcony near \"Ivina\" kindergarten, Durrës"
+  },
+  {
+    "id": "property-getal-13253",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "3-storey house 320 m² with garage on the main road, 3 Çezmat, Durrës"
+  },
+  {
+    "id": "property-getal-13428",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "3-storey villa with garage and enclosed yard, Ish-Kënetë, Durrës"
+  },
+  {
+    "id": "property-getal-13491",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "2+1 apartment with 2 bathrooms and balcony, Plazh Iliria, Durrës"
+  },
+  {
+    "id": "property-getal-13493",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment with balcony, 6th floor with lift, Plazh Iliria, Durrës"
+  },
+  {
+    "id": "property-getal-13525",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "House with 490 m² plot in Spitallë, Durrës"
+  },
+  {
+    "id": "property-getal-13531",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "Land Plot in Shkallnur near Plepa, Durrës"
+  },
+  {
+    "id": "property-getal-13625",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "3+1 apartment, 144 m² with sea view and 2 balconies, Vollga, Durrës"
+  },
+  {
+    "id": "property-getal-13757",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment with balcony and elevator, Mali i Robit, Durrës"
+  },
+  {
+    "id": "property-getal-14094",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "Studio of 40 m² on the 3rd floor, Golem, Durrës"
+  },
+  {
+    "id": "property-getal-13762",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment with 35 m² veranda, Koloseu, Shkëmbi i Kavajës, Durrës"
+  },
+  {
+    "id": "property-getal-14146",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment, 64.4 m², second floor — Plazh, Durrës"
+  },
+  {
+    "id": "property-getal-14317",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment with balcony, 7th floor, Vollga near the 27-storey, Durrës"
+  },
+  {
+    "id": "property-getal-14354",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 single-storey house with private yard, Vollga, Durrës"
+  },
+  {
+    "id": "property-getal-14361",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "2+1 apartment, 9th floor with balcony, Plazh, Durrës"
+  },
+  {
+    "id": "property-getal-14365",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment in a residential complex with parking, Plazh, Durrës"
+  },
+  {
+    "id": "property-getal-14437",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment on the 4th floor in a new building, Mali i Robit, Durrës"
+  },
+  {
+    "id": "property-getal-14444",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment at tile stage, 3rd floor — Mali i Robit, Durrës"
+  },
+  {
+    "id": "property-getal-14576",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "Furnished 2+1 apartment, 100 m², Lagjja 1 – Vollga, Durrës"
+  },
+  {
+    "id": "property-getal-14600",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "62 m² commercial space on the ground floor, UKD area, Durrës"
+  },
+  {
+    "id": "property-getal-14609",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "3-storey villa with 350 m² plot, 200 m from the beach, Xhafzotaj, Durrës"
+  },
+  {
+    "id": "property-getal-14615",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "2+1 apartment with two balconies near Markata, Durrës"
+  },
+  {
+    "id": "property-getal-14663",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "2+1 apartment with 200 m² veranda near the Police Directorate, Durrës"
+  },
+  {
+    "id": "property-getal-14740",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment with balcony near \"Bajram Curri\" school, Plazh, Durrës"
+  },
+  {
+    "id": "property-getal-14785",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment with balcony, 7th floor with lift, Plazh Hekurudha, Durrës"
+  },
+  {
+    "id": "property-getal-14911",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment 30 m from the sea with sea view, Plazh, Durrës"
+  },
+  {
+    "id": "property-getal-15069",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "3+1 apartment with 2 balconies and elevator, Shkozet, Durrës"
+  },
+  {
+    "id": "property-getal-15217",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "Ground-floor commercial space, 42.9 m², open plan, Kumin, Durrës"
+  },
+  {
+    "id": "property-getal-15328",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "Wooden villa 140 m² with jacuzzi and garden, Shkallnur, Durrës"
+  },
+  {
+    "id": "property-getal-15439",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "Two-storey house with 4 bedrooms, 228 m² plot, Ish-Kënetë, Durrës"
+  },
+  {
+    "id": "property-getal-15547",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "2+1 apartment under construction, 3rd floor with lift, Rrota e Kuqe, Durrës"
+  },
+  {
+    "id": "property-getal-15577",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment, 68 m², second floor in Plepa, Durrës"
+  },
+  {
+    "id": "property-getal-15613",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "2+1 apartment, 80 m², 2nd floor near Eftali Koçi, Durrës"
+  },
+  {
+    "id": "property-getal-15641",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "Closed garage 29 m² with roller shutter, Lagjja 4, Durrës"
+  },
+  {
+    "id": "property-getal-15803",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "2+1 apartment in the Liburna complex, Golem, Durrës — handover in May"
+  },
+  {
+    "id": "property-getal-15833",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment with balcony in a complex with pool, Golem, Durrës"
+  },
+  {
+    "id": "property-getal-15926",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "Single-storey 3+1 house with 306 m² yard at 4 Rrugët, Shijak, Durrës"
+  },
+  {
+    "id": "property-getal-15842",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "388 m² Commercial Space with Naturally Lit Semi-Basement, Plazh, Durrës"
+  },
+  {
+    "id": "property-getal-15981",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 apartment with balcony and lift, Shkëmbi i Kavajës, Durrës"
+  },
+  {
+    "id": "property-getal-16024",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "Two-storey house 236 m² with 6 rooms and 4 balconies, Shkozet, Durrës"
+  },
+  {
+    "id": "property-getal-16062",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "1+1 Apartment with Balcony, 3rd Floor, Shkëmbi i Kavajës, Durrës"
+  },
+  {
+    "id": "property-getal-16072",
+    "kind": "getal",
+    "targets": [
+      "en",
+      "uk",
+      "ru",
+      "sq",
+      "it",
+      "pl"
+    ],
+    "fields": 18,
+    "title": "3+1 single-storey house with large yard, Fllakë, Durrës"
+  },
+  {
+    "id": "property-getal-16115",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhVjUuoTjY96ZmAGCt1\"}"
+  },
+  {
+    "id": "property-getal-16215",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXayziHe3eryZ1AESp\"}"
+  },
+  {
+    "id": "property-getal-16223",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXhFXUuSigP2jrqq5m\"}"
+  },
+  {
+    "id": "property-getal-16285",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXhSgx5tgcbgRwFNqv\"}"
+  },
+  {
+    "id": "property-getal-16302",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXj5Qf3Np63R6aPkVK\"}"
+  },
+  {
+    "id": "property-getal-16305",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXjD6uaXPLEcM3aCte\"}"
+  },
+  {
+    "id": "property-getal-16331",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXkmcLv9jNAUKRuG4p\"}"
+  },
+  {
+    "id": "property-getal-16335",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXmBfNE8JMUsWaRfjF\"}"
+  },
+  {
+    "id": "property-getal-16341",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXnkvMSo2EgJs9PuTN\"}"
+  },
+  {
+    "id": "property-getal-16140",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXHivTVob4S7GsmJtn\"}"
+  },
+  {
+    "id": "property-getal-16394",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXoAyLonttwzwcQkGo\"}"
+  },
+  {
+    "id": "property-getal-16509",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXq4aExQt3GkFVAH3M\"}"
+  },
+  {
+    "id": "property-getal-16515",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXq8JCGfE1EEDJAdcn\"}"
+  },
+  {
+    "id": "property-getal-16397",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXpmxdX7tQ8nkQyKPC\"}"
+  },
+  {
+    "id": "property-getal-16530",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXrhJiwzUqjJ2dXTPY\"}"
+  },
+  {
+    "id": "property-getal-16559",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXrhJk2jZ8WEDpfu8i\"}"
+  },
+  {
+    "id": "property-getal-16571",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXrnmAmWPqcMhA7dwC\"}"
+  },
+  {
+    "id": "property-getal-16589",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXtjLqPeJLJBycfMAz\"}"
+  },
+  {
+    "id": "property-getal-16716",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXtkL54XndwBEMV6Mm\"}"
+  },
+  {
+    "id": "property-getal-16709",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXtjLmjqDiunFmrUDF\"}"
+  },
+  {
+    "id": "property-getal-16076",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhUqW35Wt4nzZ8jUFMn\"}"
+  },
+  {
+    "id": "property-getal-16738",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXvN4u3ivbcWpkmLAp\"}"
+  },
+  {
+    "id": "property-getal-1676",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXvhQiWLU8YxzRYWXL\"}"
+  },
+  {
+    "id": "property-getal-16761",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXviQMg2NpQBJRfA7C\"}"
+  },
+  {
+    "id": "property-getal-16856",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXx4GKTG2hU7EniJz4\"}"
+  },
+  {
+    "id": "property-getal-16851",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXwn9PNokysMTEaZuJ\"}"
+  },
+  {
+    "id": "property-getal-16859",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXxKtSYXMzkfUevu38\"}"
+  },
+  {
+    "id": "property-getal-17068",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXxgDavQ4Pq8CU1U5f\"}"
+  },
+  {
+    "id": "property-getal-17101",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXyfFn4TPaUFQRYzxL\"}"
+  },
+  {
+    "id": "property-getal-17110",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXypBLeDukKSBvfXyf\"}"
+  },
+  {
+    "id": "property-getal-17128",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhXz5Je96nCDnHbn3qB\"}"
+  },
+  {
+    "id": "property-getal-17174",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhY1Mx8hsd6oJ7pCVvB\"}"
+  },
+  {
+    "id": "property-getal-17156",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhY127B6zzwWAof6BpQ\"}"
+  },
+  {
+    "id": "property-getal-17178",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhY1nkJtzpW5KYgY46r\"}"
+  },
+  {
+    "id": "property-getal-17269",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhY28aoZ2gu242jxZnu\"}"
+  },
+  {
+    "id": "property-getal-17310",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhY35dvGEsgWU2qd9BF\"}"
+  },
+  {
+    "id": "property-getal-17302",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhY32f7kdXZhrrKoFs7\"}"
+  },
+  {
+    "id": "property-getal-17320",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhY3vV43XPZFkRCFffW\"}"
+  },
+  {
+    "id": "property-getal-17352",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhY4KJEDBo2QNYbL9DT\"}"
+  },
+  {
+    "id": "property-getal-17395",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhY53TX5rL4SDr2CmTk\"}"
+  },
+  {
+    "id": "property-getal-17402",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhY53hendczh6J3PMUE\"}"
+  },
+  {
+    "id": "property-getal-17453",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhY6GNatoCMLdbRPeK7\"}"
+  },
+  {
+    "id": "property-getal-17409",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhY63UmwNUpRNSLukgQ\"}"
+  },
+  {
+    "id": "property-getal-17469",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhY6ehGhGaSQ1QsPKqi\"}"
+  },
+  {
+    "id": "property-getal-17514",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhY6znAFgpkxR1ZyPSA\"}"
+  },
+  {
+    "id": "property-getal-17518",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhY7wq8V5Wv6nNEZoTm\"}"
+  },
+  {
+    "id": "property-getal-17522",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhY83HLinj7TWuLtWM2\"}"
+  },
+  {
+    "id": "property-getal-17551",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhY8bH4ZTDaU6mWezX3\"}"
+  },
+  {
+    "id": "property-getal-17589",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhY8mwWApNFWa82zYni\"}"
+  },
+  {
+    "id": "property-getal-17596",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhY9b3tx28KD8upA5z2\"}"
+  },
+  {
+    "id": "property-getal-17638",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYAPRPfP6Pq7yHk77J\"}"
+  },
+  {
+    "id": "property-getal-17643",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYAWcYZnfVTuZCfqoE\"}"
+  },
+  {
+    "id": "property-getal-17695",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYArxDc37jSA953gCc\"}"
+  },
+  {
+    "id": "property-getal-17734",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYBNho2KGfKWXZHFyi\"}"
+  },
+  {
+    "id": "property-getal-17740",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYCJ2HAe791UVwAy5X\"}"
+  },
+  {
+    "id": "property-getal-17780",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYCZtRhawkW9jzhJmN\"}"
+  },
+  {
+    "id": "property-getal-17803",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYD1BVH1jZ2oZAHExU\"}"
+  },
+  {
+    "id": "property-getal-17838",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYEWDqsfUybJ8WZbGn\"}"
+  },
+  {
+    "id": "property-getal-17819",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYEGq3tdj4jDqfnxHv\"}"
+  },
+  {
+    "id": "property-getal-17814",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYDQ14kRXcQktgiPwz\"}"
+  },
+  {
+    "id": "property-getal-17877",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYEzz5Reu55bggH56q\"}"
+  },
+  {
+    "id": "property-getal-17882",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYG7DQC8Dj9X1zdDPv\"}"
+  },
+  {
+    "id": "property-getal-17922",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYGYkuM9qXzo9MsWYD\"}"
+  },
+  {
+    "id": "property-getal-17891",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYGQ5DiH5TrCwZGDEP\"}"
+  },
+  {
+    "id": "property-getal-17928",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYGxZKPDKAxFvx7P7C\"}"
+  },
+  {
+    "id": "property-getal-18014",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYHhxcqFCfPXmbcq3R\"}"
+  },
+  {
+    "id": "property-getal-18017",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYJ9zduLSEjB9FAS2o\"}"
+  },
+  {
+    "id": "property-getal-18020",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYJSMtWi1B4twuv8KM\"}"
+  },
+  {
+    "id": "property-getal-18037",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYKcoT53Ed4X4nqBWi\"}"
+  },
+  {
+    "id": "property-getal-18064",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYKgH2CBGeXhydzxZD\"}"
+  },
+  {
+    "id": "property-getal-18123",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYLBHMPTJMYcZfouzs\"}"
+  },
+  {
+    "id": "property-getal-18129",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYLZ7PLxh9Hq1pWE2h\"}"
+  },
+  {
+    "id": "property-getal-18155",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYMmXwmpniUySySaVV\"}"
+  },
+  {
+    "id": "property-getal-18138",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYMbrwoFgHEE7CZfiD\"}"
+  },
+  {
+    "id": "property-getal-18163",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYN9bpzrEw8piV7aHu\"}"
+  },
+  {
+    "id": "property-getal-18145",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYMtE2tNXLAVN5qbQX\"}"
+  },
+  {
+    "id": "property-getal-18168",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYPSjoDLyQpWg2mJCP\"}"
+  },
+  {
+    "id": "property-getal-18187",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYPkqm6emmFgwHEtfa\"}"
+  },
+  {
+    "id": "property-getal-18170",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYPWxBSd1McA9JXMic\"}"
+  },
+  {
+    "id": "property-getal-18293",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYR4y2Y5dh9xLxjnRE\"}"
+  },
+  {
+    "id": "property-getal-18240",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYRTnYRmrvJoGzuU7M\"}"
+  },
+  {
+    "id": "property-getal-18336",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYRW1uzXdHaX5NEjDT\"}"
+  },
+  {
+    "id": "property-getal-18338",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYRm8y4A6vTghwW3BN\"}"
+  },
+  {
+    "id": "property-getal-18351",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYT6kntg5hkPZTtiSw\"}"
+  },
+  {
+    "id": "property-getal-18431",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYTS6juHokpuZetgws\"}"
+  },
+  {
+    "id": "property-getal-18495",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYTpAsmKyx59oeU3VM\"}"
+  },
+  {
+    "id": "property-getal-18477",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYTs9LJYt18PDmZVyb\"}"
+  },
+  {
+    "id": "property-getal-18500",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYUmiN2dDisKXtq6Wa\"}"
+  },
+  {
+    "id": "property-getal-18512",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYVMCHGDBNKz9kWzQL\"}"
+  },
+  {
+    "id": "property-getal-18550",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYVrhfL3XSo37yS8KS\"}"
+  },
+  {
+    "id": "property-getal-18524",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYVYrAoKbLFpvnUixL\"}"
+  },
+  {
+    "id": "property-getal-18556",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYWRvvmgLmZ5NJ2bjL\"}"
+  },
+  {
+    "id": "property-getal-18570",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYX39J83UVfzB5z685\"}"
+  },
+  {
+    "id": "property-getal-18588",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYXRhs9FC5wyg59aka\"}"
+  },
+  {
+    "id": "property-getal-1861",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYXYQWTcYUw8J4jD5d\"}"
+  },
+  {
+    "id": "property-getal-18667",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYY5tvy5M91wBt79py\"}"
+  },
+  {
+    "id": "property-getal-18690",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYZ99KT2gZt5XCRhRd\"}"
+  },
+  {
+    "id": "property-getal-18697",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYZ8u7pFgfQkHbntht\"}"
+  },
+  {
+    "id": "property-getal-18710",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYZYCp3n9pGuPca3Bp\"}"
+  },
+  {
+    "id": "property-getal-18728",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYZoapZumXf42vkwsp\"}"
+  },
+  {
+    "id": "property-getal-18769",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYao7VCANk3st9BNqz\"}"
+  },
+  {
+    "id": "property-getal-18797",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYak8ty1nmEnioXTQ4\"}"
+  },
+  {
+    "id": "property-getal-18812",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYbUHm3UqM9P6cjqt7\"}"
+  },
+  {
+    "id": "property-getal-18815",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYbXWq9aXpcKDGohok\"}"
+  },
+  {
+    "id": "property-getal-18817",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYcUZskAq69m1BZWvz\"}"
+  },
+  {
+    "id": "property-getal-18824",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYcfENSwdudFBKpWLH\"}"
+  },
+  {
+    "id": "property-getal-18864",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYd4nb7fXggdfW7Sef\"}"
+  },
+  {
+    "id": "property-getal-18899",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYdU6X6Wv4AxaPdY1s\"}"
+  },
+  {
+    "id": "property-getal-18949",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYeGTu64ysgRUTkNFQ\"}"
+  },
+  {
+    "id": "property-getal-18921",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYe647bvbB9uCrhsoM\"}"
+  },
+  {
+    "id": "property-getal-19002",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYf1NPxhM4i7uMcZFc\"}"
+  },
+  {
+    "id": "property-getal-19005",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYfJUazaQzfqwMUFgG\"}"
+  },
+  {
+    "id": "property-getal-19015",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYfthJZj15Lad8mAYc\"}"
+  },
+  {
+    "id": "property-getal-19034",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYg7bQ6a3LfsZ6RKQN\"}"
+  },
+  {
+    "id": "property-getal-19038",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYggaKZ85usgebSfec\"}"
+  },
+  {
+    "id": "property-getal-19082",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYhJ2x8TDf8QXkdngs\"}"
+  },
+  {
+    "id": "property-getal-19127",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYhkZpRNUBDb7XskHD\"}"
+  },
+  {
+    "id": "property-getal-19099",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYhVCEzGXeQqj3PCNd\"}"
+  },
+  {
+    "id": "property-getal-19142",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYihcma9tnLyekeM6R\"}"
+  },
+  {
+    "id": "property-getal-2365",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYjR2aLpWQ4Lk9TcDV\"}"
+  },
+  {
+    "id": "property-getal-2007",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYixFG1HzZnNPiaa55\"}"
+  },
+  {
+    "id": "property-getal-2240",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYjPYXLJaq9WMYQh2m\"}"
+  },
+  {
+    "id": "property-getal-2367",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYkprssBEcjJX7Zk61\"}"
+  },
+  {
+    "id": "property-getal-2371",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYmERU6jXWXuuK5EJ2\"}"
+  },
+  {
+    "id": "property-getal-2431",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYmSKmdLnrSHZiriCJ\"}"
+  },
+  {
+    "id": "property-getal-2369",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYm5jvUGhKZZsF1gTn\"}"
+  },
+  {
+    "id": "property-getal-2459",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYnbH5W9cJAmdbBScU\"}"
+  },
+  {
+    "id": "property-getal-2473",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYo6Hr7Uqde5nn6N5Z\"}"
+  },
+  {
+    "id": "property-getal-2470",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYnrQHwjK8PbDfaSL1\"}"
+  },
+  {
+    "id": "property-getal-2478",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYo3ZFUsVaVArmcY2A\"}"
+  },
+  {
+    "id": "property-getal-2485",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYpXMnWcZRN1UjLjwF\"}"
+  },
+  {
+    "id": "property-getal-2492",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYprhdLScVnSpdJ9HG\"}"
+  },
+  {
+    "id": "property-getal-2486",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYpgnX5nm4WkevUYFN\"}"
+  },
+  {
+    "id": "property-getal-2493",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYq1ssmtXMxABdHZCx\"}"
+  },
+  {
+    "id": "property-getal-2598",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYr9qNinuX38a5WYRg\"}"
+  },
+  {
+    "id": "property-getal-3069",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYrTgwUa9Ywab8inX3\"}"
+  },
+  {
+    "id": "property-getal-5547",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYrfqnb5FYjAX973ic\"}"
+  },
+  {
+    "id": "property-getal-5713",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYrnHuMUHEGkzGffs3\"}"
+  },
+  {
+    "id": "property-getal-6289",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYt9PoYtyGsyxfudwb\"}"
+  },
+  {
+    "id": "property-getal-6347",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYtfu5FXbjwdEmZpkc\"}"
+  },
+  {
+    "id": "property-getal-6319",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYtHKwNHgXGHki65uM\"}"
+  },
+  {
+    "id": "property-getal-5802",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYsmpTMjp6APVDToE7\"}"
+  },
+  {
+    "id": "property-getal-6348",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYv8D9ScmakdKswABR\"}"
+  },
+  {
+    "id": "property-getal-6350",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYvCRWWbcEtBXUhwEa\"}"
+  },
+  {
+    "id": "property-getal-6349",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYvAw1XzCZT2ZN6R11\"}"
+  },
+  {
+    "id": "property-getal-6669",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYvWHCsuruNXBzFRMF\"}"
+  },
+  {
+    "id": "property-getal-6930",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYwpeucAR5MSU5jSJH\"}"
+  },
+  {
+    "id": "property-getal-6971",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYwpAJ3ycsjTTT7TiN\"}"
+  },
+  {
+    "id": "property-getal-6963",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYwnvMgFNRYsbdThg8\"}"
+  },
+  {
+    "id": "property-getal-7481",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYx81VGcrpQAyV4Qdk\"}"
+  },
+  {
+    "id": "property-getal-7687",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYyVMxaFwEWixXCEPt\"}"
+  },
+  {
+    "id": "property-getal-7677",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYyXbWRaVK8PDWmkHa\"}"
+  },
+  {
+    "id": "property-getal-770",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYywQGkQ5uVjcVVR7q\"}"
+  },
+  {
+    "id": "property-getal-7825",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhYzsxXpv3bw6aRz1zP\"}"
+  },
+  {
+    "id": "property-getal-8013",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhZ1CoLRhQJJxNr4h7t\"}"
+  },
+  {
+    "id": "property-getal-8001",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhZ17MAhz2rDgMWWZCk\"}"
+  },
+  {
+    "id": "property-getal-8160",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhZ1rVeGikyjQfVzo9s\"}"
+  },
+  {
+    "id": "property-getal-8499",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhZ2Rii4yHRqFuSaDks\"}"
+  },
+  {
+    "id": "property-getal-8500",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhZ2jpo3a2Nqqh9MyR1\"}"
+  },
+  {
+    "id": "property-getal-8820",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhZ39dTzC7rXy9MmBjt\"}"
+  },
+  {
+    "id": "property-getal-8985",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhZ3p4g8zDrf3joC3oZ\"}"
+  },
+  {
+    "id": "property-getal-9008",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhZ3zEbuZ28n1Y53cGB\"}"
+  },
+  {
+    "id": "property-getal-9190",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhZ4mNC6yRq1zVHuZAd\"}"
+  },
+  {
+    "id": "property-getal-9169",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhZ4kNNUWipEuZtTAiY\"}"
+  },
+  {
+    "id": "property-getal-9234",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhZ65FLAdfbNXELbyU7\"}"
+  },
+  {
+    "id": "property-getal-9212",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhZ5n8nB5eE7ikBuxjh\"}"
+  },
+  {
+    "id": "property-getal-9828",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhZ6KP68Bmow2f8z5yA\"}"
+  },
+  {
+    "id": "property-getal-9995",
+    "kind": "getal",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeuhZ6iCLK2ew2sxZjrpS\"}"
+  }
+]
