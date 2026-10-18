@@ -5,13 +5,13 @@
  * `active`), but its own page keeps answering with a "Sold" label and a
  * "find a similar one" form (frontend: publishedPropertyDetailFilter).
  *
- * Usage (user token, no .env needed):
- *   npx sanity exec scripts/markPropertiesSold.ts --with-user-token -- <slug> [<slug> ...]
- * Add `--dry` before the slugs to only print what would change.
+ * Usage (SANITY_API_TOKEN from .env, like the other scripts here):
+ *   npx tsx scripts/markPropertiesSold.ts [--dry] <slug> [<slug> ...]
+ * `--dry` only prints what would change.
  */
-import {getCliClient} from 'sanity/cli'
+import {getSanityClientForScripts} from './lib/sanityEnvClient'
 
-const client = getCliClient({apiVersion: '2024-01-01'})
+const client = getSanityClientForScripts()
 
 async function main() {
   const args = process.argv.slice(2)
@@ -35,7 +35,9 @@ async function main() {
   for (const s of slugs) if (!found.has(s)) console.warn(`not found: ${s}`)
 
   for (const d of docs) {
-    console.log(`${dry ? '[dry] ' : ''}${d.slug}: ${d.lifecycleStatus ?? 'active'}/${d.isPublished ? 'published' : 'unpublished'} -> sold/published  (${d.title ?? ''})`)
+    console.log(
+      `${dry ? '[dry] ' : ''}${d.slug}: ${d.lifecycleStatus ?? 'active'}/${d.isPublished ? 'published' : 'unpublished'} -> sold/published  (${d.title ?? ''})`,
+    )
     if (dry) continue
     await client.patch(d._id).set({lifecycleStatus: 'sold', isPublished: true}).commit()
   }
