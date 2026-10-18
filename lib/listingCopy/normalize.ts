@@ -15,6 +15,7 @@
 import {scrubContacts} from './scrubContacts'
 
 /** Zero-width and blank glyphs used as Telegram/Instagram layout padding. */
+// eslint-disable-next-line no-misleading-character-class
 const INVISIBLE = /[​‌‍⁠⠀﻿]/g
 
 const BULLET = /^\s*[•·‣▪]\s+/

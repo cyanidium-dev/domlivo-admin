@@ -66,7 +66,7 @@ async function main() {
   let touchedDocs = 0
 
   for (const doc of docs) {
-    const sections = Array.isArray(doc.pageSections) ? doc.pageSections : []
+    const sections = Array.isArray(doc.pageSections) ? (doc.pageSections as Record<string, unknown>[]) : []
     let changed = false
     const nextSections = sections.map((s: Record<string, unknown>, idx: number) => {
       const {next, removed} = stripStaleFromSection(s)
@@ -118,7 +118,7 @@ async function main() {
 function summarize(v: unknown): string {
   if (v === null) return 'null'
   const t = typeof v
-  if (t === 'string') return v.length > 80 ? `${(v as string).slice(0, 77)}…` : (v as string)
+  if (typeof v === 'string') return v.length > 80 ? `${v.slice(0, 77)}…` : v
   if (t === 'number' || t === 'boolean') return String(v)
   if (Array.isArray(v)) return `array(${v.length})`
   if (t === 'object') return 'object'

@@ -59,8 +59,6 @@ function looksOld(doc: BlogDoc): boolean {
   // Old: document-level i18n — has language field and plain title/slug/excerpt
   const hasLanguage = isPlainString(doc.language) && doc.language.length > 0
   const titleIsPlain = isPlainString(doc.title)
-  const slugIsPlain = doc.slug && 'current' in doc.slug && typeof (doc.slug as {current?: string}).current === 'string'
-  const excerptIsPlain = isPlainString(doc.excerpt)
   if (hasLanguage && titleIsPlain) return true
   if (hasLanguage) return true
   // Also treat as old if no localized shape on title (e.g. title is string)

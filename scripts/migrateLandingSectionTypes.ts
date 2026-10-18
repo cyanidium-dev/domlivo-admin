@@ -98,7 +98,7 @@ function migrateLocationCarouselLegacyFields(section: any) {
   }
 }
 
-function cleanUndefined(obj: any) {
+function cleanUndefined(obj: any): any {
   if (Array.isArray(obj)) return obj.map(cleanUndefined)
   if (!obj || typeof obj !== 'object') return obj
   const out: any = {}

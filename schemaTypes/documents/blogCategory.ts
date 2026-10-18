@@ -47,7 +47,6 @@ export const blogCategory = defineType({
       type: 'localizedText',
       group: 'basic',
       description: 'Short category text shown on category pages and used for meta.',
-      rows: 3,
     }),
     defineField({
       name: 'order',

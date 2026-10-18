@@ -1,4 +1,5 @@
-import {defineType, defineField, defineArrayMember} from 'sanity'
+import type {ComponentType} from 'react'
+import {defineType, defineField, defineArrayMember, type ArrayOfObjectsInputProps, type ArrayOfPrimitivesInputProps} from 'sanity'
 import {CurrencyRatesInput} from '../../components/sanity/CurrencyRatesInput'
 import {DisplayCurrenciesInput} from '../../components/sanity/DisplayCurrenciesInput'
 import {optionalHttpUrl} from '../objects/footerApp'
@@ -151,11 +152,7 @@ export const siteSettings = defineType({
       readOnly: true,
       description: 'Rates synced by cron. Do not edit manually. EUR = base (1).',
       components: {
-        input: CurrencyRatesInput,
-      },
-      options: {
-        collapsible: true,
-        collapsed: true,
+        input: CurrencyRatesInput as unknown as ComponentType<ArrayOfObjectsInputProps>,
       },
     }),
     defineField({
@@ -175,7 +172,7 @@ export const siteSettings = defineType({
       description:
         'Currencies the frontend can show. Select from the synced rates above. At least one required.',
       components: {
-        input: DisplayCurrenciesInput,
+        input: DisplayCurrenciesInput as unknown as ComponentType<ArrayOfPrimitivesInputProps>,
       },
       validation: (Rule) =>
         Rule.custom((value, context) => {

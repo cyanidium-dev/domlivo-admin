@@ -1,4 +1,4 @@
-import {defineType, defineField} from 'sanity'
+import {defineType, defineField, type PreviewValue} from 'sanity'
 import {AgentPromotionUsageInfo} from '../../components/sanity/AgentPromotionUsageInfo'
 
 function agentSlugOwnerIds(document?: {_id?: string}): string[] {
@@ -248,7 +248,8 @@ export const agent = defineType({
       slug: 'slug.current',
       media: 'photo',
     },
-    prepare({title, email, slug, media}: {title?: string; email?: string; slug?: string; media?: unknown}) {
+    prepare(value) {
+      const {title, email, slug, media} = value as {title?: string; email?: string; slug?: string; media?: PreviewValue['media']}
       const parts = [slug, email].filter(Boolean)
       return {
         title: title || 'Unnamed agent',

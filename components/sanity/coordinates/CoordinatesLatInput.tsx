@@ -53,7 +53,6 @@ export const CoordinatesLatInput = React.forwardRef(function CoordinatesLatInput
     value,
     readOnly,
     placeholder,
-    markers,
     presence,
     onFocus,
     onBlur,
@@ -165,7 +164,7 @@ export const CoordinatesLatInput = React.forwardRef(function CoordinatesLatInput
     if (!cityCenter) return
 
     mapRef.current.jumpTo({center: [cityCenter.lng, cityCenter.lat]})
-  }, [effectiveLat, effectiveLng, cityCenter?.lat, cityCenter?.lng])
+  }, [effectiveLat, effectiveLng, cityCenter])
 
   // Update marker position and creation when coordinates become available.
   React.useEffect(() => {
@@ -200,8 +199,9 @@ export const CoordinatesLatInput = React.forwardRef(function CoordinatesLatInput
 
   // Persist coordinates from the shared bus into THIS field only.
   // This avoids "sibling field patching" issues when updating both lat/lng.
+  const hasOnChange = 'onChange' in props
   React.useEffect(() => {
-    if (!('onChange' in props)) return
+    if (!hasOnChange) return
     const busLat = coords.lat
     if (busLat === lat) return
 
@@ -211,7 +211,7 @@ export const CoordinatesLatInput = React.forwardRef(function CoordinatesLatInput
     }
 
     onChange(PatchEvent.from(set(busLat)))
-  }, [coords.lat, lat, onChange])
+  }, [coords.lat, lat, onChange, hasOnChange])
 
   const missing = effectiveLat == null || effectiveLng == null
   const zeroZero = effectiveLat === 0 && effectiveLng === 0
@@ -283,7 +283,6 @@ export const CoordinatesLatInput = React.forwardRef(function CoordinatesLatInput
       </div>
 
       <FormField
-        __unstable_markers={markers}
         __unstable_presence={presence}
         title={type?.title}
         description={type?.description}

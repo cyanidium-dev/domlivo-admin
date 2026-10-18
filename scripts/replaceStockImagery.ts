@@ -360,7 +360,7 @@ async function main() {
   )
   if (brokenSections.length) {
     console.error('Section keys no longer present:')
-    for (const t of brokenSections) console.error(`  ${t.label} (${t.docId} / ${t.sectionKey})`)
+    for (const t of brokenSections) console.error(`  ${t.label} (${t.docId} / ${'sectionKey' in t ? t.sectionKey : '-'})`)
     process.exit(1)
   }
 

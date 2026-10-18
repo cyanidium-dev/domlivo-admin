@@ -55,8 +55,6 @@ async function run() {
   const inconsistencies: string[] = []
 
   for (const doc of docs) {
-    const slugPart = doc.slug ? ` (${doc.slug})` : ''
-
     const offers = doc.propertyOffers ?? []
 
     for (const item of offers) {

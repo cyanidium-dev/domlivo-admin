@@ -1,4 +1,4 @@
-import {defineType, defineField} from 'sanity'
+import {defineType, defineField, type PreviewValue} from 'sanity'
 
 /**
  * Author byline shown in the SEO editorial layout.
@@ -35,7 +35,8 @@ export const seoAuthor = defineType({
   ],
   preview: {
     select: {name: 'name.en', role: 'role.en', media: 'avatar'},
-    prepare({name, role, media}: {name?: string; role?: string; media?: unknown}) {
+    prepare(value) {
+      const {name, role, media} = value as {name?: string; role?: string; media?: PreviewValue['media']}
       return {title: name || 'Author', subtitle: role || '', media}
     },
   },

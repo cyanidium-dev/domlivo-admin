@@ -11,7 +11,7 @@ export const localizedCtaLink = defineType({
       title: 'Link destination',
       type: 'string',
       validation: (Rule) =>
-        Rule.required().custom((value: string) => {
+        Rule.required().custom((value?: string) => {
           if (!value || typeof value !== 'string') return true
           const v = value.trim()
           if (!v) return 'Link destination is required.'

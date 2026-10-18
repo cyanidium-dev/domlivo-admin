@@ -125,7 +125,7 @@ async function run() {
         const {type, misses} = summarizeSectionMissing(s)
         return {index: idx, _type: type, _key: s?._key, missing: misses}
       })
-      .filter((x) => x.missing.length > 0)
+      .filter((x: {missing: string[]}) => x.missing.length > 0)
 
     const docFindings: string[] = []
     if (isEmptyLocalized(d?.title)) docFindings.push('doc.title missing')

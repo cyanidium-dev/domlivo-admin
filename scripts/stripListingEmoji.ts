@@ -70,6 +70,7 @@ const FIELDS = ['shortDescription', 'description'] as const
  * quotes are ordinary copy, not decoration.
  */
 const EMOJI =
+  // eslint-disable-next-line no-misleading-character-class
   /[\u{1F000}-\u{1FAFF}\u{2190}-\u{21FF}\u{2300}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{20E3}]/gu
 
 /** Removes the emoji and the gap they leave, without touching line structure. */

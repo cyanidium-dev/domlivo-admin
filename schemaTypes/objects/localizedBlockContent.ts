@@ -1,4 +1,5 @@
-import {defineType, defineField, defineArrayMember} from 'sanity'
+import type {ComponentType} from 'react'
+import {defineType, defineField, defineArrayMember, type ObjectInputProps} from 'sanity'
 import {LocalizedPasteTranslationsInput} from '../../components/sanity/LocalizedPasteTranslationsInput'
 
 /**
@@ -114,7 +115,7 @@ export const localizedBlockContent = defineType({
   type: 'object',
 
   components: {
-    input: LocalizedPasteTranslationsInput,
+    input: LocalizedPasteTranslationsInput as unknown as ComponentType<ObjectInputProps>,
   },
 
   fields: [

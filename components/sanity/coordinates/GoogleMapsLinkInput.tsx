@@ -146,7 +146,7 @@ export function GoogleMapsLinkInput(props: StringInputProps) {
       {status.kind === 'ok' ? (
         <Card padding={2} radius={2} tone="positive">
           <Text size={1}>
-            Pin placed from the link: {status.lat.toFixed(6)}, {status.lng.toFixed(6)} ({status.via}). Marked as the realtor's location; automatic placement will not move it.
+            Pin placed from the link: {status.lat.toFixed(6)}, {status.lng.toFixed(6)} ({status.via}). Marked as the realtor&apos;s location; automatic placement will not move it.
           </Text>
         </Card>
       ) : null}

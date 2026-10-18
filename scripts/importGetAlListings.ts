@@ -333,6 +333,7 @@ function sameEverywhere(value: string): Localized {
 /** The agency's "◆" bullet, emoji and stray punctuation off the title. */
 function cleanTitle(title: string): string {
   return title
+    // eslint-disable-next-line no-misleading-character-class
     .replace(/[\p{Extended_Pictographic}◆◇■□●○★☆▪▫️]/gu, '')
     .replace(/^[^\p{L}\p{N}]+/u, '')
     .replace(/\s*\|\s*/g, ' | ')

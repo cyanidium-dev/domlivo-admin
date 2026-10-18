@@ -78,7 +78,6 @@ export const blogPost = defineType({
       title: 'Excerpt',
       type: 'localizedText',
       group: 'content',
-      rows: 3,
       description: 'Short summary per language (used for cards and search snippets).',
     }),
 
@@ -138,8 +137,7 @@ export const blogPost = defineType({
       title: 'Categories',
       type: 'array',
       group: 'categorization',
-      of: [{type: 'reference', to: [{type: 'blogCategory'}]}],
-      options: {filter: 'active != false'},
+      of: [{type: 'reference', to: [{type: 'blogCategory'}], options: {filter: 'active != false'}}],
       validation: (Rule: any) =>
         Rule.required().min(1).max(3).error('Choose 1 to 3 categories.'),
       description: 'Categories for this article. Used for filtering on the blog listing.',
@@ -220,8 +218,7 @@ export const blogPost = defineType({
       title: 'Related properties',
       type: 'array',
       group: 'related',
-      of: [{type: 'reference', to: [{type: 'property'}]}],
-      options: {filter: 'isPublished == true'},
+      of: [{type: 'reference', to: [{type: 'property'}], options: {filter: 'isPublished == true'}}],
       validation: (Rule: any) => Rule.max(3).error('Choose up to 3 properties.'),
       description: 'Properties shown as recommendations under the article (max 3).',
     }),

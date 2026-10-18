@@ -38,9 +38,7 @@ export function withPropertyPromotionPublishGuard(
     const toast = useToast()
     const client = useClient({apiVersion: '2024-01-01'})
     const {publish, patch} = useDocumentOperation(props.id, props.type)
-    const {validation = []} = useValidationStatus(props.id, props.type)
-
-    if (!original) return null
+    const {validation = []} = useValidationStatus(props.id, props.type, false)
 
     const onHandle = useCallback(async () => {
       if (hasNonPromotionBlockingError(validation)) {
@@ -56,7 +54,7 @@ export function withPropertyPromotionPublishGuard(
 
       const workingDoc = (props.draft ?? props.published ?? null) as PropertyDoc | null
       if (!workingDoc) {
-        original.onHandle?.()
+        original?.onHandle?.()
         return
       }
 
@@ -82,7 +80,7 @@ export function withPropertyPromotionPublishGuard(
             description: 'Sale promotions are unlimited and are not affected by caps.',
           })
         }
-      } catch (error) {
+      } catch {
         toast.push({
           status: 'error',
           title: 'Promotion guard check failed',
@@ -103,6 +101,12 @@ export function withPropertyPromotionPublishGuard(
       patch,
       publish,
     ])
+
+    if (!original) return null
+
+    if (!original) return null
+
+    if (!original) return null
 
     return {
       ...original,

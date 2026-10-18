@@ -59,7 +59,7 @@ async function main() {
 
   for (const d of docs) {
     const before = d.articlesSection
-    const beforeType = before?._type
+    const beforeType = typeof before?._type === 'string' ? before._type : undefined
     const after = migrateBlock(before)
     if (!after || after._type === beforeType) continue
 

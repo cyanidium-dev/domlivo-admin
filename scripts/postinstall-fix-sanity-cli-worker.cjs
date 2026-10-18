@@ -66,7 +66,7 @@ function ensureNestedCliCoreLinked() {
     process.stdout.write(
       `[postinstall] Linked nested @sanity/cli-core -> hoisted @sanity/cli-core via junction.\n`,
     )
-  } catch (e) {
+  } catch {
     // Fallback: if we cannot link, we continue with the copy workaround below.
     process.stdout.write(`[postinstall] Warning: failed to create junction for @sanity/cli-core.\n`)
   }

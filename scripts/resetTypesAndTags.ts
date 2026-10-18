@@ -97,11 +97,9 @@ async function run() {
   const ptIds = collectWithDrafts(propertyTypes.map((d) => d._id))
   const ltIds = collectWithDrafts(locationTags.map((d) => d._id))
 
-  let deletedPt = 0
-  let deletedLt = 0
   if (!isDry) {
-    deletedPt = await deleteDocs(ptIds)
-    deletedLt = await deleteDocs(ltIds)
+    await deleteDocs(ptIds)
+    await deleteDocs(ltIds)
   }
 
   console.log('\n--- Summary ---')

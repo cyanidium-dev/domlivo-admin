@@ -50,7 +50,7 @@ function getSlugSource(title: unknown): string | null {
 
 async function main() {
   const docs = await client.fetch<
-    {_id: string; title?: unknown; slug?: {current?: string}}
+    Array<{_id: string; title?: unknown; slug?: {current?: string}}>
   >(`*[_type == "amenity"]{ _id, title, slug }`)
 
   const tx = client.transaction()

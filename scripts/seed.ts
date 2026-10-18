@@ -39,7 +39,6 @@ const client = createClient({
   token: ENV.token!,
 })
 
-const LANGS = ['sq', 'en', 'ru', 'uk'] as const
 type L = {sq: string; en: string; ru: string; uk: string}
 
 function L(sq: string, en: string, ru: string, uk: string): L {

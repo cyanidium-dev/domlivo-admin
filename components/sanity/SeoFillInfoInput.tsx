@@ -6,7 +6,7 @@
 
 import React from 'react'
 import {Box, Button, Stack, Text} from '@sanity/ui'
-import {FormField, PatchEvent, set, useClient, useFormValue} from 'sanity'
+import {FormField, PatchEvent, set, useClient, useFormValue, type FormNodePresence} from 'sanity'
 import {useToast} from '@sanity/ui'
 import type {SanityClient} from '@sanity/client'
 import {
@@ -48,8 +48,7 @@ type SeoFillInfoInputProps = {
   renderDefault: (props: unknown) => React.ReactNode
   readOnly?: boolean
   type?: {title?: string; description?: string}
-  markers?: unknown
-  presence?: unknown
+  presence?: FormNodePresence[]
   sourceType?: 'property' | 'city'
 }
 
@@ -57,7 +56,7 @@ export const SeoFillInfoInput = React.forwardRef(function SeoFillInfoInput(
   props: SeoFillInfoInputProps,
   ref: React.ForwardedRef<HTMLDivElement>,
 ) {
-  const {value = {}, onChange, renderDefault, readOnly, type, markers, presence, sourceType} = props
+  const {value = {}, onChange, renderDefault, readOnly, type, presence, sourceType} = props
   const toast = useToast()
   const client = useClient({apiVersion: '2024-01-01'})
   const [busy, setBusy] = React.useState(false)
@@ -92,7 +91,6 @@ export const SeoFillInfoInput = React.forwardRef(function SeoFillInfoInput(
       const galleryArr = Array.isArray(gallery) ? gallery : []
 
       for (const locale of LOCALE_IDS) {
-        const loc = locale as LocaleId
         const t = getStr(title?.[locale])
         const d = getStr(shortDesc?.[locale])
 
@@ -263,7 +261,6 @@ export const SeoFillInfoInput = React.forwardRef(function SeoFillInfoInput(
 
   return (
     <FormField
-      __unstable_markers={markers}
       __unstable_presence={presence}
       title={type?.title}
       description={type?.description}

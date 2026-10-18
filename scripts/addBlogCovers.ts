@@ -79,7 +79,6 @@ async function resolve(c: Cover) {
     `&titles=${encodeURIComponent('File:' + c.commonsFile)}`
   const res = await fetch(url, {headers: {'User-Agent': UA}})
   if (!res.ok) throw new Error(`Commons metadata ${res.status} for ${c.commonsFile}`)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const page: any = Object.values(((await res.json()) as any)?.query?.pages ?? {})[0]
   const info = page?.imageinfo?.[0]
   if (!info) throw new Error(`No file on Commons: ${c.commonsFile}`)

@@ -34,14 +34,14 @@ describe('forceMayProceed', () => {
     expect(forceMayProceed([], ['--force'])).toBe(true)
   })
   it('refuses drops without --accept-drops and lists them', () => {
-    const log = vi.spyOn(console, 'log').mockImplementation(() => {})
+    const log = vi.spyOn(console, 'log').mockImplementation(() => undefined)
     const drops = droppedSections('landing-x', live, built)
     expect(forceMayProceed(drops, ['--force'])).toBe(false)
     expect(log.mock.calls.flat().join('\n')).toContain('landing-x: would drop relatedPagesAutoSection[related-a], faqSection[faq-blloku]')
     log.mockRestore()
   })
   it('proceeds with --accept-drops', () => {
-    const log = vi.spyOn(console, 'log').mockImplementation(() => {})
+    const log = vi.spyOn(console, 'log').mockImplementation(() => undefined)
     expect(forceMayProceed(droppedSections('l', live, built), ['--force', '--accept-drops'])).toBe(true)
     log.mockRestore()
   })
