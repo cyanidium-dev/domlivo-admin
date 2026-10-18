@@ -21,6 +21,14 @@
  *
  * Run:
  *   npx tsx scripts/createArticlesFromDir.ts --dir scripts/data/articles-2026-10-01 --slug my-slug  *     --categories blogCategory-market,blogCategory-investment  *     --cover image-9289a580fbaa144be88b2a4f4b12772f78086db4-1920x1440-jpg  *     --cover-alt "The Albanian flag on Bulevardi Dëshmorët e Kombit in central Tirana, cranes behind"  *     [--companion other-slug] [--skip-links] [--execute]
+ *     [--author blogAuthor-fedir-alpatov] [--reviewer blogAuthor-viktor-grinchenko] [--draft]
+ *
+ * --author / --reviewer (2026-10-19): a founder byline instead of the
+ * editorial team, and the founder who checked a legal or tax text. --draft
+ * writes `drafts.blogPost-<slug>`: invisible on the site until it is published
+ * in Studio (or with `npm run publish:document`).
+ * Body markers on their own line: `{{zoneStatsEmbed:<city|district slug>}}`
+ * (live price band from zoneMetrics) and `{{guideDownloadEmbed}}` (PDF guide card).
  */
 import fs from 'node:fs'
 import path from 'node:path'
@@ -31,7 +39,7 @@ import {markdownToPortableText, plainTextFromInline} from '../lib/articleLoader/
 loadDotenv({path: path.resolve(process.cwd(), '.env')})
 
 const execute = process.argv.includes('--execute')
-const AUTHOR_ID = 'blogAuthor-domlivo-editorial'
+const asDraft = process.argv.includes('--draft')
 const SITE = 'https://www.domlivo.com'
 const LOCALES = ['en', 'uk', 'ru', 'sq', 'it', 'pl', 'de'] as const
 type Locale = (typeof LOCALES)[number]
@@ -64,6 +72,9 @@ if (!DIR || !SLUG || !COVER_REF) {
   console.error('usage: --dir <dir> --slug <slug> --cover <asset ref> [--cover-alt text] [--categories a,b] [--skip-links] [--execute]')
   process.exit(1)
 }
+
+const AUTHOR_ID = arg('--author') ?? 'blogAuthor-domlivo-editorial'
+const REVIEWER_ID = arg('--reviewer')
 
 /** `--companion a,b`: slugs in the same --dir that are published right after this one. */
 const COMPANIONS = (arg('--companion') ?? '').split(',').map((s) => s.trim()).filter(Boolean)
@@ -147,6 +158,19 @@ function numbersIn(text: string): number[] {
 async function main(): Promise<void> {
   const problems: string[] = []
   const built: Array<{id: string; doc: Record<string, unknown>}> = []
+  // `{{zoneStatsEmbed:<slug>}}` markers name a published city or district by slug.
+  const zoneSlugs = new Set<string>()
+  for (const l of LOCALES) {
+    const file = path.resolve(process.cwd(), DIR, `${SLUG}.${l}.md`)
+    if (!fs.existsSync(file)) continue
+    for (const m of fs.readFileSync(file, 'utf8').matchAll(/\{\{zoneStatsEmbed:([a-z0-9-]+)\}\}/g)) zoneSlugs.add(m[1])
+  }
+  const zoneRows = await client.fetch<Array<{_id: string; slug: string}>>(
+    `*[_type in ["city","district"] && slug.current in $s && !(_id in path("drafts.**"))]{_id, "slug": slug.current}`,
+    {s: [...zoneSlugs]},
+  )
+  const zoneIdBySlug = new Map(zoneRows.map((z) => [z.slug, z._id]))
+  for (const z of zoneSlugs) if (!zoneIdBySlug.has(z)) problems.push(`{{zoneStatsEmbed:${z}}}: no published city or district with that slug`)
   const internal = new Set<string>()
 
   for (const a of ARTICLES) {
@@ -182,6 +206,8 @@ async function main(): Promise<void> {
       if (p.faq.length !== en.faq.length) problems.push(`${a.slug}.${l}: ${p.faq.length} FAQ items, en has ${en.faq.length}`)
       if (links(p.body).sort().join(' ') !== enLinks) problems.push(`${a.slug}.${l}: body links differ from en`)
       if ((p.body.match(/^\|/gm) ?? []).length !== enTables) problems.push(`${a.slug}.${l}: table rows differ from en`)
+      const embeds = (b: string) => (b.match(/^\{\{\w+(?::[a-z0-9-]+)?\}\}$/gm) ?? []).join(' ')
+      if (embeds(p.body) !== embeds(en.body)) problems.push(`${a.slug}.${l}: embed markers differ from en`)
       if (p.body.split('\n').some((line) => line.trimStart().startsWith('|') && /\]\(/.test(line))) {
         problems.push(`${a.slug}.${l}: a link inside a table cell would be dropped`)
       }
@@ -201,9 +227,11 @@ async function main(): Promise<void> {
     const content: Record<string, unknown> = {_type: 'localizedBlockContent'}
     for (const l of LOCALES) {
       // The article renderer reads h2 blocks, which the converter makes from ####.
-      content[l] = markdownToPortableText(byLocale[l].body.replace(/^## /gm, '#### '))
+      content[l] = markdownToPortableText(byLocale[l].body.replace(/^## /gm, '#### '), {
+        resolveZoneEmbed: (slug) => zoneIdBySlug.get(slug) ?? `missing-${slug}`,
+      })
     }
-    const id = `blogPost-${a.slug}`
+    const id = `${asDraft ? 'drafts.' : ''}blogPost-${a.slug}`
     built.push({
       id,
       doc: {
@@ -221,6 +249,7 @@ async function main(): Promise<void> {
         coverImage: {_type: 'image', asset: {_type: 'reference', _ref: a.cover.ref}, alt: a.cover.alt},
         categories: a.categories.map((ref) => ({_type: 'reference', _key: `cat-${a.slug}-${ref}`, _ref: ref})),
         author: {_type: 'reference', _ref: AUTHOR_ID},
+        ...(REVIEWER_ID ? {reviewedBy: {_type: 'reference', _ref: REVIEWER_ID}} : {}),
         faq: en.faq.map((_, i) => ({
           _type: 'localizedFaqItem',
           _key: `faq-${a.slug}-${i}`,
@@ -267,7 +296,7 @@ async function main(): Promise<void> {
       }
     }
   }
-  const refs = [...new Set(ARTICLES.flatMap((a) => [a.cover.ref, ...a.categories])), AUTHOR_ID]
+  const refs = [...new Set(ARTICLES.flatMap((a) => [a.cover.ref, ...a.categories])), AUTHOR_ID, ...(REVIEWER_ID ? [REVIEWER_ID] : [])]
   const found = await client.fetch<string[]>(`*[_id in $ids]._id`, {ids: refs})
   for (const r of refs) if (!found.includes(r)) problems.push(`referenced document ${r} does not exist`)
 
@@ -277,9 +306,15 @@ async function main(): Promise<void> {
   }
 
   const existing = await client.fetch<string[]>(`*[_id in $ids]._id`, {
-    ids: built.flatMap((b) => [b.id, `drafts.${b.id}`]),
+    ids: built.flatMap((b) => {
+      const base = b.id.replace(/^drafts\./, '')
+      return [base, `drafts.${base}`]
+    }),
   })
-  const toWrite = built.filter((b) => !existing.includes(b.id) && !existing.includes(`drafts.${b.id}`))
+  const toWrite = built.filter((b) => {
+    const base = b.id.replace(/^drafts\./, '')
+    return !existing.includes(base) && !existing.includes(`drafts.${base}`)
+  })
   for (const b of built) console.log(`${toWrite.includes(b) ? 'create' : 'skip  '} ${b.id}`)
   if (!execute) {
     console.log(`\nDry run: ${toWrite.length} to create. Re-run with --execute.`)

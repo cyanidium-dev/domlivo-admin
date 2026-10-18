@@ -95,6 +95,7 @@ const imageBlockDefinition = () =>
  * reference and nothing else, so the figures come from `zoneMetrics` and
  * `tracker` at render time. An article can never quietly contradict the zone
  * page it links to, which is what the hand-typed comparison tables did.
+ * `guideDownloadEmbed` drops the PDF guide's lead card into the body.
  */
 const richContentArrayOf = [
   articleBodyBlockMember(),
@@ -107,6 +108,7 @@ const richContentArrayOf = [
   defineArrayMember({type: 'blogPropertyEmbedBlock'}),
   defineArrayMember({type: 'zoneStatsEmbed'}),
   defineArrayMember({type: 'trackerEmbed'}),
+  defineArrayMember({type: 'guideDownloadEmbed'}),
 ]
 
 export const localizedBlockContent = defineType({

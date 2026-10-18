@@ -15,6 +15,7 @@ import {knowledgeSection} from './knowledgeSection'
 import {blogCallout} from './blogCallout'
 import {blogFaqBlock} from './blogFaqBlock'
 import {zoneStatsEmbed} from './zoneStatsEmbed'
+import {guideDownloadEmbed} from './guideDownloadEmbed'
 import {trackerEmbed} from './trackerEmbed'
 import {blogCtaBlock} from './blogCtaBlock'
 import {blogRelatedPostsBlock} from './blogRelatedPostsBlock'
@@ -72,6 +73,7 @@ export const objects = [
   blogFaqBlock,
   zoneStatsEmbed,
   trackerEmbed,
+  guideDownloadEmbed,
   blogCtaBlock,
   blogRelatedPostsBlock,
   blogPropertyEmbedBlock,

@@ -153,6 +153,16 @@ export const blogPost = defineType({
       description: 'Primary author shown in the byline.',
     }),
     defineField({
+      name: 'reviewedBy',
+      title: 'Checked by',
+      type: 'reference',
+      group: 'categorization',
+      to: [{type: 'blogAuthor'}],
+      options: {filter: 'active != false'},
+      description:
+        'Optional. The person who checked the facts of a legal or tax article; shown under the byline ("Checked by …") and emitted as the Article contributor.',
+    }),
+    defineField({
       name: 'featured',
       title: 'Featured',
       type: 'boolean',

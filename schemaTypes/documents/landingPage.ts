@@ -265,6 +265,26 @@ export const landingPage = defineType({
     }),
 
     defineField({
+      name: 'author',
+      title: 'Author',
+      type: 'reference',
+      group: 'basic',
+      to: [{type: 'blogAuthor'}],
+      options: {filter: 'active != false'},
+      description:
+        'Optional. A founder who wrote the page; guides then name that Person in their Article structured data instead of the company.',
+    }),
+    defineField({
+      name: 'reviewedBy',
+      title: 'Checked by',
+      type: 'reference',
+      group: 'basic',
+      to: [{type: 'blogAuthor'}],
+      options: {filter: 'active != false'},
+      description: 'Optional. The person who checked the facts (legal pages).',
+    }),
+
+    defineField({
       name: 'topicTags',
       title: 'Topic tags',
       description:
