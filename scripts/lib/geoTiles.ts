@@ -54,7 +54,7 @@ export function tilesRead(): number {
   return tileCache.size
 }
 
-async function tileBytes(x: number, y: number, z: number): Promise<Uint8Array | null> {
+export async function tileBytes(x: number, y: number, z: number): Promise<Uint8Array | null> {
   const template = await tileTemplate()
   const dir = diskDir(template, z)
   const file = path.join(dir, `${x}-${y}.pbf`)
