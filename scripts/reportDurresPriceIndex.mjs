@@ -1,17 +1,25 @@
 /**
  * Durrës asking-price index: the figures behind the monthly index article.
  *
- * Same public filter and the same arithmetic as the site's live table
- * (your-house-albania: fetchCityListingPriceIndex): published, active sale
- * listings; flats = apartment + studio + penthouse; median total price over
+ * Same public filter and the same arithmetic as the site's Domlivo Price
+ * Index (your-house-albania: src/lib/priceIndex, docs/price-index.md):
+ * published, active sale listings; flats = apartment + studio (penthouses were
+ * in until 2026-10-19, the site never counted them); median total price over
  * listings priced as a total; €/m² = total / area (area >= 15 m²) or the stated
  * rate for per-m² listings; a district is reported from 3 flats.
  *
  * Read-only. Prints JSON; pass a path to also write it.
  *   node scripts/reportDurresPriceIndex.mjs [out.json]
+ *
+ * No edition without new figures: when the result equals the newest earlier
+ * `durres-*.json` in scripts/data/price-index/ apart from `asOf`, nothing is
+ * written and the script exits with code 3. The October 2026 edition repeated
+ * September's figures word for word; an index that publishes the same numbers
+ * twice under two dates tells a reader the market stood still when it did not.
  */
 import 'dotenv/config'
 import fs from 'node:fs'
+import path from 'node:path'
 import {createClient} from '@sanity/client'
 
 const client = createClient({
@@ -22,7 +30,7 @@ const client = createClient({
   token: process.env.SANITY_API_TOKEN,
 })
 
-const FLAT_TYPES = ['apartment', 'studio', 'penthouse']
+const FLAT_TYPES = ['apartment', 'studio']
 const MIN_FLATS = 3
 
 const rows = await client.fetch(`*[_type=="property" && !(_id in path("drafts.**")) && city->slug.current=="durres"]{
@@ -98,4 +106,25 @@ const out = {
 }
 
 console.log(JSON.stringify(out, null, 1))
-if (process.argv[2]) fs.writeFileSync(process.argv[2], JSON.stringify(out, null, 1))
+
+/** Everything but the date: two editions with equal figures are one edition. */
+const figuresOf = (json) => JSON.stringify({...json, asOf: undefined})
+
+const target = process.argv[2]
+if (target) {
+  const dir = path.dirname(path.resolve(target))
+  const previous = fs.existsSync(dir)
+    ? fs
+        .readdirSync(dir)
+        .filter((f) => /^durres-\d{4}-\d{2}\.json$/.test(f) && path.resolve(dir, f) !== path.resolve(target))
+        .sort()
+        .at(-1)
+    : undefined
+  if (previous && figuresOf(JSON.parse(fs.readFileSync(path.join(dir, previous), 'utf8'))) === figuresOf(out)) {
+    console.error(
+      `\nFigures unchanged since ${previous}: no new edition this month (docs rule: your-house-albania docs/price-index.md). Nothing written.`,
+    )
+    process.exit(3)
+  }
+  fs.writeFileSync(target, JSON.stringify(out, null, 1))
+}
