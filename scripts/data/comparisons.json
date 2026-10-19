@@ -3696,6 +3696,1049 @@
         "tirana-vs-durres"
       ],
       "kbSource": "02-cities/durres.md §2–3, §6"
+    },
+    {
+      "slug": "tirana-vs-vlore",
+      "kind": "zones",
+      "left": {
+        "slug": "tirana",
+        "type": "city",
+        "title": {
+          "en": "Tirana",
+          "it": "Tirana",
+          "uk": "Тирана",
+          "ru": "Тирана",
+          "sq": "Tirana",
+          "pl": "Tirana"
+        }
+      },
+      "right": {
+        "slug": "vlore",
+        "type": "city",
+        "title": {
+          "en": "Vlorë",
+          "it": "Valona",
+          "uk": "Влера",
+          "ru": "Влёра",
+          "sq": "Vlorë",
+          "pl": "Wlora"
+        }
+      },
+      "angle": {
+        "en": "The capital that rents twelve months a year against the sea city that earns most per night: Tirana for tenants, Vlorë for tourists.",
+        "it": "La capitale che si affitta dodici mesi l’anno contro la città di mare che rende di più a notte: Tirana per gli inquilini, Valona per i turisti.",
+        "uk": "Столиця, що здається дванадцять місяців на рік, проти морського міста, яке заробляє найбільше за ніч: Тирана для орендарів, Влера для туристів.",
+        "ru": "Столица, которая сдаётся двенадцать месяцев в году, против морского города, который зарабатывает больше всех за ночь: Тирана для арендаторов, Влёра для туристов.",
+        "sq": "Kryeqyteti që jepet me qira dymbëdhjetë muaj në vit kundër qytetit të detit që fiton më shumë për natë: Tirana për qiramarrësit, Vlora për turistët.",
+        "pl": "Stolica, która wynajmuje się dwanaście miesięcy w roku, kontra nadmorskie miasto, które zarabia najwięcej za noc: Tirana dla najemców, Wlora dla turystów."
+      },
+      "scenarios": [
+        {
+          "audience": {
+            "en": "Long-term rental investor",
+            "it": "Investitore in affitto a lungo termine",
+            "uk": "Інвестор у довгострокову оренду",
+            "ru": "Инвестор в долгосрочную аренду",
+            "sq": "Investitor në qira afatgjatë",
+            "pl": "Inwestor w najem długoterminowy"
+          },
+          "verdict": {
+            "en": "Tirana. Students, offices and a year-round tenant market; there is no season to wait for.",
+            "it": "Tirana. Studenti, uffici e inquilini tutto l’anno: nessuna stagione da aspettare.",
+            "uk": "Тирана. Студенти, офіси і ринок орендарів цілий рік; сезону чекати не треба.",
+            "ru": "Тирана. Студенты, офисы и рынок арендаторов круглый год; сезона ждать не надо.",
+            "sq": "Tirana. Studentë, zyra dhe treg qiramarrësish gjithë vitin; nuk pritet sezon.",
+            "pl": "Tirana. Studenci, biura i rynek najemców przez cały rok; nie trzeba czekać na sezon."
+          }
+        },
+        {
+          "audience": {
+            "en": "Short-let investor",
+            "it": "Investitore in affitti brevi",
+            "uk": "Інвестор у подобову оренду",
+            "ru": "Инвестор в посуточную аренду",
+            "sq": "Investitor në qira afatshkurtër",
+            "pl": "Inwestor w najem krótkoterminowy"
+          },
+          "verdict": {
+            "en": "Vlorë. It posted the highest average host income in Albania, with a real city underneath the season.",
+            "it": "Valona. Ha il reddito medio per host più alto d’Albania, e sotto la stagione c’è una città vera.",
+            "uk": "Влера. Тут найвищий в Албанії середній дохід хоста — і під сезоном є справжнє місто.",
+            "ru": "Влёра. Здесь самый высокий в Албании средний доход хоста — и под сезоном есть настоящий город.",
+            "sq": "Vlora. Ka të ardhurat mesatare më të larta të pritësit në Shqipëri, dhe një qytet të vërtetë nën sezon.",
+            "pl": "Wlora. Ma najwyższy średni dochód gospodarza w Albanii, a pod sezonem prawdziwe miasto."
+          }
+        },
+        {
+          "audience": {
+            "en": "Buyer from Italy",
+            "it": "Acquirente dall’Italia",
+            "uk": "Покупець з Італії",
+            "ru": "Покупатель из Италии",
+            "sq": "Blerës nga Italia",
+            "pl": "Kupujący z Włoch"
+          },
+          "verdict": {
+            "en": "Vlorë. Italians are its largest group of foreign buyers, and the ferry from Brindisi makes it the natural crossing.",
+            "it": "Valona. Gli italiani sono il primo gruppo di acquirenti stranieri, e il traghetto da Brindisi la rende l’approdo naturale.",
+            "uk": "Влера. Італійці — найбільша група іноземних покупців там, а пором із Бріндізі робить її природною точкою переправи.",
+            "ru": "Влёра. Итальянцы — крупнейшая группа иностранных покупателей там, а паром из Бриндизи делает её естественной точкой переправы.",
+            "sq": "Vlora. Italianët janë grupi më i madh i blerësve të huaj atje, dhe trageti nga Brindisi e bën kalimin natyral.",
+            "pl": "Wlora. Włosi to tam największa grupa zagranicznych kupujących, a prom z Brindisi czyni ją naturalnym miejscem przeprawy."
+          }
+        },
+        {
+          "audience": {
+            "en": "Buying somewhere to live",
+            "it": "Acquisto per viverci",
+            "uk": "Купівля для життя",
+            "ru": "Покупка для жизни",
+            "sq": "Blerje për të jetuar",
+            "pl": "Zakup do zamieszkania"
+          },
+          "verdict": {
+            "en": "Tirana for work and services; Vlorë if you want the sea in a city that still lives in winter.",
+            "it": "Tirana per lavoro e servizi; Valona se vuoi il mare in una città che d’inverno resta viva.",
+            "uk": "Тирана — для роботи й сервісів; Влера — якщо хочете море в місті, яке живе й узимку.",
+            "ru": "Тирана — для работы и сервисов; Влёра — если хотите море в городе, который живёт и зимой.",
+            "sq": "Tirana për punë dhe shërbime; Vlora nëse doni detin në një qytet që jeton edhe në dimër.",
+            "pl": "Tirana dla pracy i usług; Wlora, jeśli chcesz morza w mieście, które żyje także zimą."
+          }
+        }
+      ],
+      "criteria": [
+        {
+          "label": {
+            "en": "Rental year",
+            "it": "Anno locativo",
+            "uk": "Орендний рік",
+            "ru": "Арендный год",
+            "sq": "Viti i qirasë",
+            "pl": "Rok najmu"
+          },
+          "left": {
+            "en": "Twelve months. Tirana is the only market in the country with no off-season",
+            "it": "Dodici mesi. Tirana è l’unico mercato del Paese senza bassa stagione",
+            "uk": "Дванадцять місяців. Тирана — єдиний ринок країни без міжсезоння",
+            "ru": "Двенадцать месяцев. Тирана — единственный рынок страны без межсезонья",
+            "sq": "Dymbëdhjetë muaj. Tirana është i vetmi treg në vend pa sezon të vdekur",
+            "pl": "Dwanaście miesięcy. Tirana to jedyny rynek w kraju bez martwego sezonu"
+          },
+          "right": {
+            "en": "A summer season on the seafront, with about 70% occupancy in August, and a normal residential market behind it",
+            "it": "Una stagione estiva sul lungomare, con circa il 70% di occupazione ad agosto, e dietro un mercato residenziale normale",
+            "uk": "Літній сезон на набережній, близько 70% завантаження в серпні, а за ним — звичайний житловий ринок",
+            "ru": "Летний сезон на набережной, около 70% загрузки в августе, а за ним — обычный жилой рынок",
+            "sq": "Një sezon veror në bregdet, me rreth 70% zënie në gusht, dhe pas tij një treg i zakonshëm banimi",
+            "pl": "Sezon letni na nabrzeżu, z obłożeniem około 70% w sierpniu, a za nim zwykły rynek mieszkaniowy"
+          }
+        },
+        {
+          "label": {
+            "en": "Price signal",
+            "it": "Segnale di prezzo",
+            "uk": "Ціновий сигнал",
+            "ru": "Ценовой сигнал",
+            "sq": "Sinjali i çmimit",
+            "pl": "Sygnał cenowy"
+          },
+          "left": {
+            "en": "The Bank of Albania index was flat half on half in H2 2025 after +56% a year earlier",
+            "it": "L’indice della Banca d’Albania è stato piatto nel 2° semestre 2025 dopo +56% l’anno prima",
+            "uk": "Індекс Банку Албанії був нульовий пів на пів у 2-му півріччі 2025 після +56% роком раніше",
+            "ru": "Индекс Банка Албании был нулевым полугодие к полугодию во 2П2025 после +56% годом ранее",
+            "sq": "Indeksi i Bankës së Shqipërisë ishte i sheshtë në gjysmën e dytë të 2025 pas +56% një vit më parë",
+            "pl": "Indeks Banku Albanii w 2. półroczu 2025 stał w miejscu półrocze do półrocza, po +56% rok wcześniej"
+          },
+          "right": {
+            "en": "Up 25% year on year, at the top of Europe alongside Tirana, and a two-speed market: the seafront for foreigners, the town for local buyers",
+            "it": "+25% su base annua, ai vertici d’Europa con Tirana, e un mercato a due velocità: lungomare per gli stranieri, città per i locali",
+            "uk": "+25% за рік, у лідерах Європи разом із Тираною, і ринок двох швидкостей: набережна для іноземців, місто для місцевих покупців",
+            "ru": "+25% за год, в лидерах Европы вместе с Тираной, и рынок двух скоростей: набережная для иностранцев, город для местных покупателей",
+            "sq": "+25% në vit, në krye të Evropës bashkë me Tiranën, dhe një treg me dy shpejtësi: bregdeti për të huajt, qyteti për blerësit vendas",
+            "pl": "+25% rok do roku, w czołówce Europy obok Tirany, i rynek dwóch prędkości: nabrzeże dla cudzoziemców, miasto dla lokalnych kupujących"
+          }
+        },
+        {
+          "label": {
+            "en": "Who buys",
+            "it": "Chi compra",
+            "uk": "Хто купує",
+            "ru": "Кто покупает",
+            "sq": "Kush blen",
+            "pl": "Kto kupuje"
+          },
+          "left": {
+            "en": "Mostly residents: the capital has the jobs and the universities",
+            "it": "Soprattutto residenti: nella capitale ci sono lavoro e università",
+            "uk": "Здебільшого місцеві мешканці: у столиці робота й університети",
+            "ru": "В основном местные жители: в столице работа и университеты",
+            "sq": "Kryesisht banorë vendas: kryeqyteti ka punët dhe universitetet",
+            "pl": "Głównie mieszkańcy: w stolicy są praca i uczelnie"
+          },
+          "right": {
+            "en": "Italians first, Poles second; agency samples put foreign demand at most of the coastal market",
+            "it": "Prima gli italiani, poi i polacchi; secondo le agenzie la domanda estera è la maggior parte del mercato costiero",
+            "uk": "Перші — італійці, другі — поляки; за агентськими вибірками іноземці формують більшість попиту на узбережжі",
+            "ru": "Первые — итальянцы, вторые — поляки; по агентским выборкам иностранцы формируют большую часть спроса на побережье",
+            "sq": "Italianët të parët, polakët të dytët; sipas mostrave të agjencive të huajt përbëjnë shumicën e kërkesës në bregdet",
+            "pl": "Najpierw Włosi, potem Polacy; według próbek agencji cudzoziemcy stanowią większość popytu na wybrzeżu"
+          }
+        },
+        {
+          "label": {
+            "en": "The open question",
+            "it": "La domanda aperta",
+            "uk": "Відкрите питання",
+            "ru": "Открытый вопрос",
+            "sq": "Pyetja e hapur",
+            "pl": "Otwarte pytanie"
+          },
+          "left": {
+            "en": "Affordability: prices stopped rising in 2025 after the boom, and buyers now negotiate",
+            "it": "L’accessibilità: dopo il boom i prezzi si sono fermati nel 2025 e oggi si tratta",
+            "uk": "Доступність: після буму ціни у 2025 перестали рости, і тепер покупці торгуються",
+            "ru": "Доступность: после бума цены в 2025 перестали расти, и теперь покупатели торгуются",
+            "sq": "Përballueshmëria: pas bumit çmimet ndaluan së rrituri në 2025, dhe tani blerësit negociojnë",
+            "pl": "Dostępność: po boomie ceny w 2025 przestały rosnąć i kupujący teraz negocjują"
+          },
+          "right": {
+            "en": "The airport: a concession with no flights as of summer 2026, a shareholder dispute and a prosecutor’s case, while the price already assumes it opens",
+            "it": "L’aeroporto: una concessione senza voli all’estate 2026, una lite tra soci e un’indagine della procura, mentre il prezzo dà già per scontata l’apertura",
+            "uk": "Аеропорт: концесія без рейсів станом на літо 2026, конфлікт акціонерів і справа прокуратури, а ціна вже виходить із того, що він відкриється",
+            "ru": "Аэропорт: концессия без рейсов на лето 2026, конфликт акционеров и дело прокуратуры, а цена уже исходит из того, что он откроется",
+            "sq": "Aeroporti: një koncesion pa fluturime deri në verën 2026, konflikt aksionerësh dhe çështje e prokurorisë, ndërkohë që çmimi e merr tashmë si të mirëqenë hapjen",
+            "pl": "Lotnisko: koncesja bez lotów latem 2026 roku, spór udziałowców i sprawa prokuratorska, a cena już zakłada, że zostanie otwarte"
+          }
+        }
+      ],
+      "related": [
+        "tirana-vs-durres",
+        "durres-vs-vlore",
+        "vlora-vs-saranda",
+        "tirana-vs-saranda"
+      ],
+      "kbSource": "02-cities/tirana.md; 02-cities/vlora-riviera.md §1–5"
+    },
+    {
+      "slug": "tirana-vs-saranda",
+      "kind": "zones",
+      "left": {
+        "slug": "tirana",
+        "type": "city",
+        "title": {
+          "en": "Tirana",
+          "it": "Tirana",
+          "uk": "Тирана",
+          "ru": "Тирана",
+          "sq": "Tirana",
+          "pl": "Tirana"
+        }
+      },
+      "right": {
+        "slug": "sarande",
+        "type": "city",
+        "title": {
+          "en": "Sarandë",
+          "it": "Saranda",
+          "uk": "Саранда",
+          "ru": "Саранда",
+          "sq": "Sarandë",
+          "pl": "Saranda"
+        }
+      },
+      "angle": {
+        "en": "A capital that pays rent every month against the town with Albania’s strongest holiday lets, which pays most of it in August.",
+        "it": "Una capitale che paga l’affitto ogni mese contro la città con gli affitti brevi più forti d’Albania, che incassa quasi tutto ad agosto.",
+        "uk": "Столиця, що приносить оренду щомісяця, проти міста з найсильнішою в Албанії подобовою орендою, яке заробляє більшість у серпні.",
+        "ru": "Столица, которая приносит аренду каждый месяц, против города с самой сильной в Албании посуточной арендой, который зарабатывает большую часть в августе.",
+        "sq": "Një kryeqytet që paguan qira çdo muaj kundër qytetit me qiratë e pushimeve më të forta në Shqipëri, që e fiton pjesën më të madhe në gusht.",
+        "pl": "Stolica, która co miesiąc przynosi czynsz, kontra miasto z najmocniejszym najmem wakacyjnym w Albanii, które zarabia większość w sierpniu."
+      },
+      "scenarios": [
+        {
+          "audience": {
+            "en": "Long-term rental investor",
+            "it": "Investitore in affitto a lungo termine",
+            "uk": "Інвестор у довгострокову оренду",
+            "ru": "Инвестор в долгосрочную аренду",
+            "sq": "Investitor në qira afatgjatë",
+            "pl": "Inwestor w najem długoterminowy"
+          },
+          "verdict": {
+            "en": "Tirana. A one-bedroom flat in Sarandë lets for only €380–450 a month on an annual contract.",
+            "it": "Tirana. A Saranda un bilocale con contratto annuale rende solo 380–450 € al mese.",
+            "uk": "Тирана. Квартира з однією спальнею в Саранді за річним договором здається лише за 380–450 € на місяць.",
+            "ru": "Тирана. Квартира с одной спальней в Саранде по годовому договору сдаётся всего за 380–450 € в месяц.",
+            "sq": "Tirana. Në Sarandë një apartament me një dhomë gjumi jepet me kontratë vjetore vetëm për 380–450 € në muaj.",
+            "pl": "Tirana. Mieszkanie z jedną sypialnią w Sarandzie na umowę roczną wynajmuje się tylko za 380–450 € miesięcznie."
+          }
+        },
+        {
+          "audience": {
+            "en": "Short-let investor",
+            "it": "Investitore in affitti brevi",
+            "uk": "Інвестор у подобову оренду",
+            "ru": "Инвестор в посуточную аренду",
+            "sq": "Investitor në qira afatshkurtër",
+            "pl": "Inwestor w najem krótkoterminowy"
+          },
+          "verdict": {
+            "en": "Sarandë, if you can carry a quiet winter and a crowded market: supply grew 62% in 2025.",
+            "it": "Saranda, se reggi un inverno tranquillo e un mercato affollato: l’offerta è cresciuta del 62% nel 2025.",
+            "uk": "Саранда, якщо ви готові до тихої зими й переповненого ринку: пропозиція у 2025 зросла на 62%.",
+            "ru": "Саранда, если вы готовы к тихой зиме и переполненному рынку: предложение в 2025 выросло на 62%.",
+            "sq": "Saranda, nëse e përballoni një dimër të qetë dhe një treg të mbushur: oferta u rrit 62% në 2025.",
+            "pl": "Saranda, jeśli udźwigniesz cichą zimę i zatłoczony rynek: podaż wzrosła w 2025 o 62%."
+          }
+        },
+        {
+          "audience": {
+            "en": "Buying somewhere to live",
+            "it": "Acquisto per viverci",
+            "uk": "Купівля для життя",
+            "ru": "Покупка для жизни",
+            "sq": "Blerje për të jetuar",
+            "pl": "Zakup do zamieszkania"
+          },
+          "verdict": {
+            "en": "Tirana for work and hospitals; Sarandë for the Ionian, in the only southern town that stays open in winter.",
+            "it": "Tirana per lavoro e ospedali; Saranda per lo Ionio, nell’unica città del sud che d’inverno resta aperta.",
+            "uk": "Тирана — для роботи й лікарень; Саранда — для Іонічного моря, в єдиному південному місті, що не закривається взимку.",
+            "ru": "Тирана — для работы и больниц; Саранда — для Ионического моря, в единственном южном городе, который не закрывается зимой.",
+            "sq": "Tirana për punë dhe spitale; Saranda për Jonin, në të vetmin qytet të jugut që mbetet i hapur në dimër.",
+            "pl": "Tirana dla pracy i szpitali; Saranda dla Morza Jońskiego, w jedynym mieście na południu, które zimą się nie zamyka."
+          }
+        }
+      ],
+      "criteria": [
+        {
+          "label": {
+            "en": "Rental year",
+            "it": "Anno locativo",
+            "uk": "Орендний рік",
+            "ru": "Арендный год",
+            "sq": "Viti i qirasë",
+            "pl": "Rok najmu"
+          },
+          "left": {
+            "en": "Twelve months, with students and office workers as tenants",
+            "it": "Dodici mesi, con studenti e impiegati come inquilini",
+            "uk": "Дванадцять місяців, орендарі — студенти й офісні працівники",
+            "ru": "Двенадцать месяцев, арендаторы — студенты и офисные работники",
+            "sq": "Dymbëdhjetë muaj, me studentë dhe punonjës zyre si qiramarrës",
+            "pl": "Dwanaście miesięcy, najemcy to studenci i pracownicy biurowi"
+          },
+          "right": {
+            "en": "About 90% occupancy in August and about 35% in December for a flat let all season",
+            "it": "Circa il 90% di occupazione ad agosto e circa il 35% a dicembre per un appartamento affittato tutta la stagione",
+            "uk": "Близько 90% завантаження в серпні й близько 35% у грудні для квартири, що здається весь сезон",
+            "ru": "Около 90% загрузки в августе и около 35% в декабре для квартиры, которая сдаётся весь сезон",
+            "sq": "Rreth 90% zënie në gusht dhe rreth 35% në dhjetor për një apartament që jepet gjithë sezonin",
+            "pl": "Około 90% obłożenia w sierpniu i około 35% w grudniu dla mieszkania wynajmowanego przez cały sezon"
+          }
+        },
+        {
+          "label": {
+            "en": "Who pays the rent",
+            "it": "Chi paga l’affitto",
+            "uk": "Хто платить оренду",
+            "ru": "Кто платит аренду",
+            "sq": "Kush paguan qiranë",
+            "pl": "Kto płaci czynsz"
+          },
+          "left": {
+            "en": "Residents of the capital",
+            "it": "Residenti della capitale",
+            "uk": "Мешканці столиці",
+            "ru": "Жители столицы",
+            "sq": "Banorët e kryeqytetit",
+            "pl": "Mieszkańcy stolicy"
+          },
+          "right": {
+            "en": "Almost entirely foreign guests, led by France and Germany, staying about six nights",
+            "it": "Quasi solo ospiti stranieri, in testa Francia e Germania, per circa sei notti",
+            "uk": "Майже лише іноземні гості, передусім із Франції та Німеччини, які зупиняються приблизно на шість ночей",
+            "ru": "Почти только иностранные гости, прежде всего из Франции и Германии, которые останавливаются примерно на шесть ночей",
+            "sq": "Pothuajse vetëm mysafirë të huaj, në krye nga Franca dhe Gjermania, për rreth gjashtë netë",
+            "pl": "Prawie wyłącznie zagraniczni goście, na czele z Francuzami i Niemcami, na około sześć nocy"
+          }
+        },
+        {
+          "label": {
+            "en": "Standing risk",
+            "it": "Rischio principale",
+            "uk": "Постійний ризик",
+            "ru": "Постоянный риск",
+            "sq": "Rreziku i vazhdueshëm",
+            "pl": "Stałe ryzyko"
+          },
+          "left": {
+            "en": "Prices went flat in H2 2025, so the gains of the boom years are behind",
+            "it": "Prezzi fermi nel 2° semestre 2025: i guadagni degli anni del boom sono alle spalle",
+            "uk": "Ціни завмерли у 2-му півріччі 2025, тож зростання років буму позаду",
+            "ru": "Цены замерли во 2-м полугодии 2025, так что рост лет бума позади",
+            "sq": "Çmimet u ndalën në gjysmën e dytë të 2025, ndaj fitimet e viteve të bumit kanë mbetur pas",
+            "pl": "Ceny stanęły w 2. półroczu 2025, więc zyski z lat boomu są już za nami"
+          },
+          "right": {
+            "en": "Holiday-let supply grew 62% in 2025 and revenue per listing fell 12% in the year to July 2026",
+            "it": "L’offerta di affitti brevi è cresciuta del 62% nel 2025 e il ricavo per annuncio è sceso del 12% nell’anno a luglio 2026",
+            "uk": "Пропозиція подобової оренди у 2025 зросла на 62%, а дохід на оголошення за рік до липня 2026 упав на 12%",
+            "ru": "Предложение посуточной аренды в 2025 выросло на 62%, а доход на объявление за год до июля 2026 упал на 12%",
+            "sq": "Oferta e qirave të pushimeve u rrit 62% në 2025 dhe të ardhurat për shpallje ranë 12% në vitin deri në korrik 2026",
+            "pl": "Podaż najmu wakacyjnego wzrosła w 2025 o 62%, a przychód na ogłoszenie spadł o 12% w roku do lipca 2026"
+          }
+        },
+        {
+          "label": {
+            "en": "Winter",
+            "it": "Inverno",
+            "uk": "Зима",
+            "ru": "Зима",
+            "sq": "Dimri",
+            "pl": "Zima"
+          },
+          "left": {
+            "en": "The country’s capital, busiest in winter",
+            "it": "La capitale del Paese, al massimo d’inverno",
+            "uk": "Столиця країни, найжвавіша взимку",
+            "ru": "Столица страны, самая оживлённая зимой",
+            "sq": "Kryeqyteti i vendit, më i gjallë në dimër",
+            "pl": "Stolica kraju, najbardziej ruchliwa zimą"
+          },
+          "right": {
+            "en": "About 35,000–40,000 people in winter, and most holiday flats stand empty",
+            "it": "Circa 35.000–40.000 abitanti d’inverno, e gran parte degli appartamenti vacanze resta vuota",
+            "uk": "Близько 35 000–40 000 людей узимку, і більшість квартир для відпочинку стоять порожні",
+            "ru": "Около 35 000–40 000 человек зимой, и большинство квартир для отдыха стоят пустыми",
+            "sq": "Rreth 35.000–40.000 banorë në dimër, dhe shumica e apartamenteve të pushimeve mbeten bosh",
+            "pl": "Około 35 000–40 000 osób zimą, a większość mieszkań wakacyjnych stoi pusta"
+          }
+        }
+      ],
+      "related": [
+        "tirana-vs-vlore",
+        "vlora-vs-saranda",
+        "saranda-vs-ksamil",
+        "durres-vs-saranda"
+      ],
+      "kbSource": "02-cities/tirana.md; 02-cities/saranda-ksamil.md; 12-ai-database/07-city-saranda.md"
+    },
+    {
+      "slug": "durres-vs-saranda",
+      "kind": "zones",
+      "left": {
+        "slug": "durres",
+        "type": "city",
+        "title": {
+          "en": "Durrës",
+          "it": "Durazzo",
+          "uk": "Дуррес",
+          "ru": "Дуррес",
+          "sq": "Durrës",
+          "pl": "Durrës"
+        }
+      },
+      "right": {
+        "slug": "sarande",
+        "type": "city",
+        "title": {
+          "en": "Sarandë",
+          "it": "Saranda",
+          "uk": "Саранда",
+          "ru": "Саранда",
+          "sq": "Sarandë",
+          "pl": "Saranda"
+        }
+      },
+      "angle": {
+        "en": "The cheapest large beach market against the dearest holiday town: in Durrës you buy space, in Sarandë you buy the season.",
+        "it": "Il mercato balneare grande più economico contro la città di vacanza più cara: a Durazzo compri spazio, a Saranda compri la stagione.",
+        "uk": "Найдешевший великий пляжний ринок проти найдорожчого курортного міста: у Дурресі ви купуєте простір, у Саранді — сезон.",
+        "ru": "Самый дешёвый крупный пляжный рынок против самого дорогого курортного города: в Дурресе вы покупаете пространство, в Саранде — сезон.",
+        "sq": "Tregu i madh i plazhit më i lirë kundër qytetit të pushimeve më të shtrenjtë: në Durrës blini hapësirë, në Sarandë blini sezonin.",
+        "pl": "Najtańszy duży rynek plażowy kontra najdroższe miasto wakacyjne: w Durrës kupujesz przestrzeń, w Sarandzie kupujesz sezon."
+      },
+      "scenarios": [
+        {
+          "audience": {
+            "en": "Buyer on a budget",
+            "it": "Acquirente con budget limitato",
+            "uk": "Покупець з обмеженим бюджетом",
+            "ru": "Покупатель с ограниченным бюджетом",
+            "sq": "Blerës me buxhet të kufizuar",
+            "pl": "Kupujący z ograniczonym budżetem"
+          },
+          "verdict": {
+            "en": "Durrës. It has most of the coastal listings in the country, at the lowest prices per square metre of the large markets.",
+            "it": "Durazzo. Ha la maggior parte degli annunci costieri del Paese, ai prezzi al metro più bassi tra i grandi mercati.",
+            "uk": "Дуррес. Тут більшість прибережних оголошень країни, за найнижчими цінами за квадратний метр серед великих ринків.",
+            "ru": "Дуррес. Здесь большая часть прибрежных объявлений страны, по самым низким ценам за квадратный метр среди крупных рынков.",
+            "sq": "Durrësi. Ka shumicën e shpalljeve bregdetare të vendit, me çmimet më të ulëta për metër katror ndër tregjet e mëdha.",
+            "pl": "Durrës. Ma większość ogłoszeń z wybrzeża w kraju, po najniższych cenach za metr kwadratowy wśród dużych rynków."
+          }
+        },
+        {
+          "audience": {
+            "en": "Short-let investor",
+            "it": "Investitore in affitti brevi",
+            "uk": "Інвестор у подобову оренду",
+            "ru": "Инвестор в посуточную аренду",
+            "sq": "Investitor në qira afatshkurtër",
+            "pl": "Inwestor w najem krótkoterminowy"
+          },
+          "verdict": {
+            "en": "Sarandë for the strongest holiday-let income per flat; Durrës if the purchase price decides, with lower nightly rates and a lower entry.",
+            "it": "Saranda per il reddito da affitto breve più alto per appartamento; Durazzo se decide il prezzo d’acquisto, con tariffe e ingresso più bassi.",
+            "uk": "Саранда — заради найвищого доходу від подобової оренди на квартиру; Дуррес — якщо вирішує ціна покупки: нижчі ставки за ніч і нижчий вхід.",
+            "ru": "Саранда — ради самого высокого дохода от посуточной аренды на квартиру; Дуррес — если решает цена покупки: ниже ставки за ночь и ниже вход.",
+            "sq": "Saranda për të ardhurat më të forta nga qiraja e pushimeve për apartament; Durrësi nëse vendos çmimi i blerjes, me tarifa më të ulëta për natë dhe hyrje më të ulët.",
+            "pl": "Saranda dla najwyższego dochodu z najmu wakacyjnego na mieszkanie; Durrës, jeśli decyduje cena zakupu: niższe stawki za noc i niższy próg wejścia."
+          }
+        },
+        {
+          "audience": {
+            "en": "Buyer who works in Tirana",
+            "it": "Chi lavora a Tirana",
+            "uk": "Покупець, який працює в Тирані",
+            "ru": "Покупатель, который работает в Тиране",
+            "sq": "Blerës që punon në Tiranë",
+            "pl": "Kupujący, który pracuje w Tiranie"
+          },
+          "verdict": {
+            "en": "Durrës. The SH2 takes 30–60 minutes to the capital; Sarandë is at the far end of the country.",
+            "it": "Durazzo. Con la SH2 la capitale è a 30–60 minuti; Saranda è all’altro capo del Paese.",
+            "uk": "Дуррес. Трасою SH2 до столиці 30–60 хвилин; Саранда — на протилежному кінці країни.",
+            "ru": "Дуррес. По трассе SH2 до столицы 30–60 минут; Саранда — на другом конце страны.",
+            "sq": "Durrësi. Rruga SH2 të çon në kryeqytet për 30–60 minuta; Saranda është në skajin tjetër të vendit.",
+            "pl": "Durrës. Trasą SH2 do stolicy jest 30–60 minut; Saranda leży na drugim końcu kraju."
+          }
+        }
+      ],
+      "criteria": [
+        {
+          "label": {
+            "en": "Entry price",
+            "it": "Prezzo d’ingresso",
+            "uk": "Вхідна ціна",
+            "ru": "Входная цена",
+            "sq": "Çmimi i hyrjes",
+            "pl": "Cena wejścia"
+          },
+          "left": {
+            "en": "The lowest per m² of the large coastal markets, with the most listings to choose from",
+            "it": "Il più basso al m² tra i grandi mercati costieri, con il maggior numero di annunci",
+            "uk": "Найнижча ціна за м² серед великих прибережних ринків і найбільший вибір оголошень",
+            "ru": "Самая низкая цена за м² среди крупных прибрежных рынков и самый большой выбор объявлений",
+            "sq": "Çmimi më i ulët për m² mes tregjeve të mëdha bregdetare, me më shumë njoftime për të zgjedhur",
+            "pl": "Najniższa cena za m² wśród dużych rynków nadmorskich i największy wybór ofert"
+          },
+          "right": {
+            "en": "Close to Durrës in the centre, about twice as much on the promenade’s first line",
+            "it": "Vicino a Durazzo in centro, circa il doppio in prima linea sul lungomare",
+            "uk": "У центрі близько до Дурреса, у першій лінії набережної приблизно вдвічі дорожче",
+            "ru": "В центре близко к Дурресу, на первой линии набережной примерно вдвое дороже",
+            "sq": "Në qendër afër Durrësit, rreth dyfishi në vijën e parë të shëtitores",
+            "pl": "W centrum blisko Durrës, na pierwszej linii promenady mniej więcej dwa razy drożej"
+          }
+        },
+        {
+          "label": {
+            "en": "Short-let economics",
+            "it": "Economia degli affitti brevi",
+            "uk": "Економіка подобової оренди",
+            "ru": "Экономика посуточной аренды",
+            "sq": "Ekonomia e qirasë afatshkurtër",
+            "pl": "Ekonomia najmu krótkoterminowego"
+          },
+          "left": {
+            "en": "Lower nightly rates, bought at an entry price one and a half to two times lower",
+            "it": "Tariffe a notte più basse, con un ingresso da una volta e mezza a due volte più basso",
+            "uk": "Нижчі ставки за ніч, але й вхідна ціна в півтора-два рази нижча",
+            "ru": "Ниже ставки за ночь, но и входная цена в полтора-два раза ниже",
+            "sq": "Tarifa më të ulëta për natë, me një çmim hyrjeje një herë e gjysmë deri në dy herë më të ulët",
+            "pl": "Niższe stawki za noc przy cenie wejścia od półtora do dwóch razy niższej"
+          },
+          "right": {
+            "en": "The highest revenue per full-time listing in Albania, on a market whose supply grew 62% in 2025",
+            "it": "Il ricavo più alto d’Albania per annuncio a tempo pieno, in un mercato con offerta cresciuta del 62% nel 2025",
+            "uk": "Найвищий в Албанії дохід на оголошення, активне цілий рік, на ринку, де пропозиція у 2025 зросла на 62%",
+            "ru": "Самый высокий в Албании доход на объявление, активное круглый год, на рынке, где предложение в 2025 выросло на 62%",
+            "sq": "Të ardhurat më të larta në Shqipëri për shpallje me kohë të plotë, në një treg ku oferta u rrit 62% në 2025",
+            "pl": "Najwyższy w Albanii przychód na ogłoszenie aktywne przez cały rok, na rynku, gdzie podaż wzrosła w 2025 o 62%"
+          }
+        },
+        {
+          "label": {
+            "en": "Who buys",
+            "it": "Chi compra",
+            "uk": "Хто купує",
+            "ru": "Кто покупает",
+            "sq": "Kush blen",
+            "pl": "Kto kupuje"
+          },
+          "left": {
+            "en": "Around half of coastal buyers are foreign: Kosovo, Czechia, North Macedonia, Poland",
+            "it": "Circa metà degli acquirenti costieri è straniera: Kosovo, Repubblica Ceca, Macedonia del Nord, Polonia",
+            "uk": "Близько половини покупців на узбережжі — іноземці: Косово, Чехія, Північна Македонія, Польща",
+            "ru": "Около половины покупателей на побережье — иностранцы: Косово, Чехия, Северная Македония, Польша",
+            "sq": "Rreth gjysma e blerësve në bregdet janë të huaj: Kosova, Çekia, Maqedonia e Veriut, Polonia",
+            "pl": "Około połowy kupujących na wybrzeżu to cudzoziemcy: Kosowo, Czechy, Macedonia Północna, Polska"
+          },
+          "right": {
+            "en": "Central Europeans: Poland, Czechia, Hungary",
+            "it": "Centroeuropei: Polonia, Repubblica Ceca, Ungheria",
+            "uk": "Центральна Європа: Польща, Чехія, Угорщина",
+            "ru": "Центральная Европа: Польша, Чехия, Венгрия",
+            "sq": "Evropa Qendrore: Polonia, Çekia, Hungaria",
+            "pl": "Europa Środkowa: Polska, Czechy, Węgry"
+          }
+        },
+        {
+          "label": {
+            "en": "The open question",
+            "it": "La domanda aperta",
+            "uk": "Відкрите питання",
+            "ru": "Открытый вопрос",
+            "sq": "Pyetja e hapur",
+            "pl": "Otwarte pytanie"
+          },
+          "left": {
+            "en": "Sewage on Golem’s beach, sandy soils and old stock after the 2019 earthquake",
+            "it": "Gli scarichi sulla spiaggia di Golem, i terreni sabbiosi e il vecchio patrimonio dopo il terremoto del 2019",
+            "uk": "Стоки на пляжі Голема, піщані ґрунти і старий фонд після землетрусу 2019 року",
+            "ru": "Стоки на пляже Голема, песчаные грунты и старый фонд после землетрясения 2019 года",
+            "sq": "Ujërat e zeza në plazhin e Golemit, toka ranore dhe fondi i vjetër pas tërmetit të 2019",
+            "pl": "Ścieki na plaży w Golem, piaszczyste grunty i stary zasób po trzęsieniu ziemi w 2019 roku"
+          },
+          "right": {
+            "en": "Foreign enquiries fell in 2024 and 2025 while prices kept rising",
+            "it": "Le richieste dall’estero sono calate nel 2024 e nel 2025 mentre i prezzi salivano",
+            "uk": "Іноземні запити падали у 2024 і 2025, поки ціни зростали",
+            "ru": "Иностранные запросы падали в 2024 и 2025, пока цены росли",
+            "sq": "Kërkesat e huaja ranë në 2024 dhe 2025 ndërsa çmimet u rritën",
+            "pl": "Zapytania z zagranicy spadały w 2024 i 2025, a ceny dalej rosły"
+          }
+        }
+      ],
+      "related": [
+        "durres-vs-vlore",
+        "tirana-vs-saranda",
+        "durres-vs-ksamil",
+        "saranda-vs-ksamil"
+      ],
+      "kbSource": "02-cities/durres.md §1–7; 02-cities/saranda-ksamil.md; 12-ai-database/07-city-saranda.md"
+    },
+    {
+      "slug": "durres-vs-ksamil",
+      "kind": "zones",
+      "left": {
+        "slug": "durres",
+        "type": "city",
+        "title": {
+          "en": "Durrës",
+          "it": "Durazzo",
+          "uk": "Дуррес",
+          "ru": "Дуррес",
+          "sq": "Durrës",
+          "pl": "Durrës"
+        }
+      },
+      "right": {
+        "slug": "ksamil",
+        "type": "district",
+        "title": {
+          "en": "Ksamil",
+          "it": "Ksamil",
+          "uk": "Ксаміль",
+          "ru": "Ксамиль",
+          "sq": "Ksamil",
+          "pl": "Ksamil"
+        }
+      },
+      "angle": {
+        "en": "A city with a beach against a beach village: Durrës costs less per square metre and works all year, Ksamil sells the water and closes in winter.",
+        "it": "Una città con la spiaggia contro un villaggio di spiaggia: Durazzo costa meno al metro e vive tutto l’anno, Ksamil vende il mare e d’inverno chiude.",
+        "uk": "Місто з пляжем проти пляжного селища: Дуррес дешевший за квадратний метр і працює цілий рік, Ксаміль продає море і взимку закривається.",
+        "ru": "Город с пляжем против пляжного посёлка: Дуррес дешевле за квадратный метр и работает круглый год, Ксамиль продаёт море и зимой закрывается.",
+        "sq": "Një qytet me plazh kundër një fshati plazhi: Durrësi kushton më pak për metër katror dhe punon gjithë vitin, Ksamili shet detin dhe mbyllet në dimër.",
+        "pl": "Miasto z plażą kontra plażowa wioska: Durrës kosztuje mniej za metr kwadratowy i działa cały rok, Ksamil sprzedaje morze i zimą się zamyka."
+      },
+      "scenarios": [
+        {
+          "audience": {
+            "en": "Family buying a holiday home",
+            "it": "Famiglia che compra una casa vacanze",
+            "uk": "Сімʼя, що купує дім для відпочинку",
+            "ru": "Семья, покупающая дом для отдыха",
+            "sq": "Familje që blen shtëpi pushimi",
+            "pl": "Rodzina kupująca dom wakacyjny"
+          },
+          "verdict": {
+            "en": "Ksamil, if the beach and the islands are the point. You are paying for the water.",
+            "it": "Ksamil, se il punto sono la spiaggia e le isole. Si paga il mare.",
+            "uk": "Ксаміль, якщо йдеться саме про пляж і острови. Ви платите за море.",
+            "ru": "Ксамиль, если речь именно о пляже и островах. Вы платите за море.",
+            "sq": "Ksamili, nëse qëllimi janë plazhi dhe ishujt. Po paguani për detin.",
+            "pl": "Ksamil, jeśli chodzi właśnie o plażę i wyspy. Płacisz za morze."
+          }
+        },
+        {
+          "audience": {
+            "en": "Investor who wants income outside August",
+            "it": "Investitore che vuole reddito oltre agosto",
+            "uk": "Інвестор, якому потрібен дохід поза серпнем",
+            "ru": "Инвестор, которому нужен доход вне августа",
+            "sq": "Investitor që do të ardhura jashtë gushtit",
+            "pl": "Inwestor, który chce dochodu poza sierpniem"
+          },
+          "verdict": {
+            "en": "Durrës. A city of residents and commuters keeps renting when the beach empties; Ksamil is a seven-month market.",
+            "it": "Durazzo. Una città di residenti e pendolari continua ad affittare quando la spiaggia si svuota; Ksamil è un mercato di sette mesi.",
+            "uk": "Дуррес. Місто мешканців і тих, хто їздить на роботу, здається й далі, коли пляж порожніє; Ксаміль — ринок на сім місяців.",
+            "ru": "Дуррес. Город жителей и тех, кто ездит на работу, продолжает сдаваться, когда пляж пустеет; Ксамиль — рынок на семь месяцев.",
+            "sq": "Durrësi. Një qytet banorësh dhe udhëtuesish vazhdon të japë me qira kur plazhi zbrazet; Ksamili është treg shtatë muajsh.",
+            "pl": "Durrës. Miasto mieszkańców i dojeżdżających wynajmuje się dalej, gdy plaża pustoszeje; Ksamil to rynek na siedem miesięcy."
+          }
+        },
+        {
+          "audience": {
+            "en": "Buyer on a budget",
+            "it": "Acquirente con budget limitato",
+            "uk": "Покупець з обмеженим бюджетом",
+            "ru": "Покупатель с ограниченным бюджетом",
+            "sq": "Blerës me buxhet të kufizuar",
+            "pl": "Kupujący z ograniczonym budżetem"
+          },
+          "verdict": {
+            "en": "Durrës, with far more flats to choose from at lower prices per square metre.",
+            "it": "Durazzo, con molti più appartamenti tra cui scegliere a prezzi al metro più bassi.",
+            "uk": "Дуррес: квартир на вибір набагато більше, а ціни за квадратний метр нижчі.",
+            "ru": "Дуррес: квартир на выбор намного больше, а цены за квадратный метр ниже.",
+            "sq": "Durrësi, me shumë më tepër apartamente për të zgjedhur me çmime më të ulëta për metër katror.",
+            "pl": "Durrës: znacznie więcej mieszkań do wyboru po niższych cenach za metr kwadratowy."
+          }
+        }
+      ],
+      "criteria": [
+        {
+          "label": {
+            "en": "Price per m²",
+            "it": "Prezzo al m²",
+            "uk": "Ціна за м²",
+            "ru": "Цена за м²",
+            "sq": "Çmimi për m²",
+            "pl": "Cena za m²"
+          },
+          "left": {
+            "en": "Lower: Plazh and Golem sit at the bottom of the coastal range",
+            "it": "Più basso: Plazh e Golem sono in fondo alla fascia costiera",
+            "uk": "Нижча: Плаж і Голем — внизу прибережного діапазону",
+            "ru": "Ниже: Плаж и Голем — внизу прибрежного диапазона",
+            "sq": "Më i ulët: Plazhi dhe Golemi janë në fund të shkallës bregdetare",
+            "pl": "Niższa: Plazh i Golem są na dole przybrzeżnej skali"
+          },
+          "right": {
+            "en": "Higher, rising with closeness to the beach; resort projects ask several times the Durrës level",
+            "it": "Più alto e sale vicino alla spiaggia; i resort chiedono più volte il livello di Durazzo",
+            "uk": "Вища й зростає ближче до пляжу; курортні проєкти просять у кілька разів більше, ніж у Дурресі",
+            "ru": "Выше и растёт ближе к пляжу; курортные проекты просят в несколько раз больше, чем в Дурресе",
+            "sq": "Më i lartë dhe rritet afër plazhit; projektet resort kërkojnë disa herë nivelin e Durrësit",
+            "pl": "Wyższa i rośnie bliżej plaży; projekty resortowe żądają kilkakrotnie więcej niż w Durrës"
+          }
+        },
+        {
+          "label": {
+            "en": "Season",
+            "it": "Stagione",
+            "uk": "Сезон",
+            "ru": "Сезон",
+            "sq": "Sezoni",
+            "pl": "Sezon"
+          },
+          "left": {
+            "en": "Four to five months on the beach strip, with a normal city market behind it",
+            "it": "Da quattro a cinque mesi sulla fascia balneare, con dietro un normale mercato cittadino",
+            "uk": "Чотири-пʼять місяців на пляжній смузі, а за нею — звичайний міський ринок",
+            "ru": "Четыре-пять месяцев на пляжной полосе, а за ней — обычный городской рынок",
+            "sq": "Katër deri në pesë muaj në brezin e plazhit, me një treg normal qyteti pas tij",
+            "pl": "Cztery–pięć miesięcy na pasie plażowym, a za nim zwykły rynek miejski"
+          },
+          "right": {
+            "en": "About seven months; the village largely closes from November to March",
+            "it": "Circa sette mesi; il villaggio chiude in gran parte da novembre a marzo",
+            "uk": "Близько семи місяців; з листопада по березень селище здебільшого закрите",
+            "ru": "Около семи месяцев; с ноября по март посёлок в основном закрыт",
+            "sq": "Rreth shtatë muaj; fshati mbyllet në pjesën më të madhe nga nëntori në mars",
+            "pl": "Około siedmiu miesięcy; od listopada do marca wioska jest w większości zamknięta"
+          }
+        },
+        {
+          "label": {
+            "en": "Holiday-let supply",
+            "it": "Offerta di affitti brevi",
+            "uk": "Пропозиція подобової оренди",
+            "ru": "Предложение посуточной аренды",
+            "sq": "Oferta e qirave të pushimeve",
+            "pl": "Podaż najmu wakacyjnego"
+          },
+          "left": {
+            "en": "The largest stock on the coast, so the competition is old news",
+            "it": "Lo stock più grande della costa: la concorrenza c’è da tempo",
+            "uk": "Найбільший фонд на узбережжі, тож конкуренція тут давно не новина",
+            "ru": "Самый большой фонд на побережье, так что конкуренция здесь давно не новость",
+            "sq": "Stoku më i madh në bregdet, ndaj konkurrenca nuk është gjë e re",
+            "pl": "Największy zasób na wybrzeżu, więc konkurencja to nic nowego"
+          },
+          "right": {
+            "en": "Listings grew 85.8% in a year to April 2026, according to AirROI",
+            "it": "Annunci cresciuti dell’85,8% nell’anno ad aprile 2026, secondo AirROI",
+            "uk": "Кількість оголошень за рік до квітня 2026 зросла на 85,8%, за даними AirROI",
+            "ru": "Число объявлений за год до апреля 2026 выросло на 85,8%, по данным AirROI",
+            "sq": "Shpalljet u rritën 85,8% në vitin deri në prill 2026, sipas AirROI",
+            "pl": "Liczba ogłoszeń wzrosła o 85,8% w roku do kwietnia 2026, według AirROI"
+          }
+        },
+        {
+          "label": {
+            "en": "What to check",
+            "it": "Cosa verificare",
+            "uk": "Що перевірити",
+            "ru": "Что проверить",
+            "sq": "Çfarë të kontrolloni",
+            "pl": "Co sprawdzić"
+          },
+          "left": {
+            "en": "Sewage on Golem’s beach, sandy soils and old stock after the 2019 earthquake",
+            "it": "Gli scarichi sulla spiaggia di Golem, i terreni sabbiosi e il vecchio patrimonio dopo il terremoto del 2019",
+            "uk": "Стоки на пляжі Голема, піщані ґрунти і старий фонд після землетрусу 2019 року",
+            "ru": "Стоки на пляже Голема, песчаные грунты и старый фонд после землетрясения 2019 года",
+            "sq": "Ujërat e zeza në plazhin e Golemit, toka ranore dhe fondi i vjetër pas tërmetit të 2019",
+            "pl": "Ścieki na plaży w Golem, piaszczyste grunty i stary zasób po trzęsieniu ziemi w 2019 roku"
+          },
+          "right": {
+            "en": "Permits: the authorities have run demolition campaigns against illegal buildings, and water is short in peak season",
+            "it": "I permessi: le autorità hanno condotto campagne di demolizione di edifici abusivi, e in alta stagione l’acqua scarseggia",
+            "uk": "Дозволи: влада проводила кампанії зі зносу незаконних будівель, а в розпал сезону бракує води",
+            "ru": "Разрешения: власти проводили кампании по сносу незаконных зданий, а в разгар сезона не хватает воды",
+            "sq": "Lejet: autoritetet kanë zhvilluar fushata shembjeje kundër ndërtimeve pa leje, dhe në pikun e sezonit uji mungon",
+            "pl": "Pozwolenia: władze prowadziły akcje wyburzania nielegalnych budynków, a w szczycie sezonu brakuje wody"
+          }
+        }
+      ],
+      "related": [
+        "durres-vs-saranda",
+        "saranda-vs-ksamil",
+        "vlore-vs-ksamil",
+        "golem-vs-plazh"
+      ],
+      "kbSource": "02-cities/durres.md §1–7; 02-cities/saranda-ksamil.md (Ksamil)"
+    },
+    {
+      "slug": "vlore-vs-ksamil",
+      "kind": "zones",
+      "left": {
+        "slug": "vlore",
+        "type": "city",
+        "title": {
+          "en": "Vlorë",
+          "it": "Valona",
+          "uk": "Влера",
+          "ru": "Влёра",
+          "sq": "Vlorë",
+          "pl": "Wlora"
+        }
+      },
+      "right": {
+        "slug": "ksamil",
+        "type": "district",
+        "title": {
+          "en": "Ksamil",
+          "it": "Ksamil",
+          "uk": "Ксаміль",
+          "ru": "Ксамиль",
+          "sq": "Ksamil",
+          "pl": "Ksamil"
+        }
+      },
+      "angle": {
+        "en": "Two southern sea markets at similar prices on the front line: Vlorë is a city that works in winter, Ksamil a village that empties.",
+        "it": "Due mercati di mare del sud con prezzi simili in prima linea: Valona è una città che d’inverno lavora, Ksamil un villaggio che si svuota.",
+        "uk": "Два південні морські ринки зі схожими цінами на першій лінії: Влера — місто, що працює взимку, Ксаміль — селище, яке порожніє.",
+        "ru": "Два южных морских рынка с похожими ценами на первой линии: Влёра — город, который работает зимой, Ксамиль — посёлок, который пустеет.",
+        "sq": "Dy tregje deti të jugut me çmime të ngjashme në vijën e parë: Vlora është një qytet që punon në dimër, Ksamili një fshat që zbrazet.",
+        "pl": "Dwa południowe rynki nad morzem z podobnymi cenami w pierwszej linii: Wlora to miasto, które działa zimą, Ksamil to wioska, która pustoszeje."
+      },
+      "scenarios": [
+        {
+          "audience": {
+            "en": "Short-let investor",
+            "it": "Investitore in affitti brevi",
+            "uk": "Інвестор у подобову оренду",
+            "ru": "Инвестор в посуточную аренду",
+            "sq": "Investitor në qira afatshkurtër",
+            "pl": "Inwestor w najem krótkoterminowy"
+          },
+          "verdict": {
+            "en": "Vlorë. The highest average host income in Albania, and a season that does not stop at the end of October.",
+            "it": "Valona. Il reddito medio per host più alto d’Albania, e una stagione che non finisce a fine ottobre.",
+            "uk": "Влера. Найвищий в Албанії середній дохід хоста й сезон, який не закінчується наприкінці жовтня.",
+            "ru": "Влёра. Самый высокий в Албании средний доход хоста и сезон, который не заканчивается в конце октября.",
+            "sq": "Vlora. Të ardhurat mesatare më të larta të pritësit në Shqipëri, dhe një sezon që nuk ndalet në fund të tetorit.",
+            "pl": "Wlora. Najwyższy średni dochód gospodarza w Albanii i sezon, który nie kończy się pod koniec października."
+          }
+        },
+        {
+          "audience": {
+            "en": "Family buying a holiday home",
+            "it": "Famiglia che compra una casa vacanze",
+            "uk": "Сімʼя, що купує дім для відпочинку",
+            "ru": "Семья, покупающая дом для отдыха",
+            "sq": "Familje që blen shtëpi pushimi",
+            "pl": "Rodzina kupująca dom wakacyjny"
+          },
+          "verdict": {
+            "en": "Ksamil, for the beaches and the islands, if the flat is for your own summers.",
+            "it": "Ksamil, per le spiagge e le isole, se l’appartamento serve per le tue estati.",
+            "uk": "Ксаміль — заради пляжів і островів, якщо квартира для вашого власного літа.",
+            "ru": "Ксамиль — ради пляжей и островов, если квартира для вашего собственного лета.",
+            "sq": "Ksamili, për plazhet dhe ishujt, nëse apartamenti është për verërat tuaja.",
+            "pl": "Ksamil, dla plaż i wysp, jeśli mieszkanie ma być na twoje własne wakacje."
+          }
+        },
+        {
+          "audience": {
+            "en": "Buyer from Italy",
+            "it": "Acquirente dall’Italia",
+            "uk": "Покупець з Італії",
+            "ru": "Покупатель из Италии",
+            "sq": "Blerës nga Italia",
+            "pl": "Kupujący z Włoch"
+          },
+          "verdict": {
+            "en": "Vlorë. Italians are its largest group of foreign buyers, and the ferry from Brindisi lands there.",
+            "it": "Valona. Gli italiani sono il primo gruppo di acquirenti stranieri, e il traghetto da Brindisi arriva lì.",
+            "uk": "Влера. Італійці — найбільша група іноземних покупців там, а пором із Бріндізі приходить саме туди.",
+            "ru": "Влёра. Итальянцы — крупнейшая группа иностранных покупателей там, а паром из Бриндизи приходит именно туда.",
+            "sq": "Vlora. Italianët janë grupi më i madh i blerësve të huaj atje, dhe trageti nga Brindisi mbërrin pikërisht aty.",
+            "pl": "Wlora. Włosi to tam największa grupa zagranicznych kupujących, a prom z Brindisi przypływa właśnie tam."
+          }
+        }
+      ],
+      "criteria": [
+        {
+          "label": {
+            "en": "Price per m²",
+            "it": "Prezzo al m²",
+            "uk": "Ціна за м²",
+            "ru": "Цена за м²",
+            "sq": "Çmimi për m²",
+            "pl": "Cena za m²"
+          },
+          "left": {
+            "en": "The promenade is the dearest strip; the city centre a few streets back is among the cheapest on the coast",
+            "it": "Il lungomare è la fascia più cara; il centro a poche vie di distanza è tra i più economici della costa",
+            "uk": "Набережна — найдорожча смуга; центр за кілька вулиць — серед найдешевших на узбережжі",
+            "ru": "Набережная — самая дорогая полоса; центр в нескольких улицах от неё — среди самых дешёвых на побережье",
+            "sq": "Shëtitorja është brezi më i shtrenjtë; qendra disa rrugë më tej është ndër më të lirat në bregdet",
+            "pl": "Promenada to najdroższy pas; centrum kilka ulic dalej należy do najtańszych na wybrzeżu"
+          },
+          "right": {
+            "en": "Close to Vlorë’s second line, rising toward the beach",
+            "it": "Vicino alla seconda linea di Valona, e sale verso la spiaggia",
+            "uk": "Близько до другої лінії Влери й зростає ближче до пляжу",
+            "ru": "Близко ко второй линии Влёры и растёт ближе к пляжу",
+            "sq": "Afër vijës së dytë të Vlorës, dhe rritet drejt plazhit",
+            "pl": "Blisko drugiej linii Wlory i rośnie w stronę plaży"
+          }
+        },
+        {
+          "label": {
+            "en": "City underneath",
+            "it": "La città sotto",
+            "uk": "Місто під курортом",
+            "ru": "Город под курортом",
+            "sq": "Qyteti poshtë",
+            "pl": "Miasto pod kurortem"
+          },
+          "left": {
+            "en": "About 84,000 people, a port and a university: it lives in winter",
+            "it": "Circa 84.000 abitanti, un porto e un’università: d’inverno vive",
+            "uk": "Близько 84 000 людей, порт і університет: місто живе взимку",
+            "ru": "Около 84 000 человек, порт и университет: город живёт зимой",
+            "sq": "Rreth 84.000 banorë, një port dhe një universitet: jeton në dimër",
+            "pl": "Około 84 000 mieszkańców, port i uczelnia: żyje zimą"
+          },
+          "right": {
+            "en": "A village that largely closes from November to March",
+            "it": "Un villaggio che chiude in gran parte da novembre a marzo",
+            "uk": "Селище, яке з листопада по березень здебільшого закрите",
+            "ru": "Посёлок, который с ноября по март в основном закрыт",
+            "sq": "Një fshat që mbyllet në pjesën më të madhe nga nëntori në mars",
+            "pl": "Wioska, która od listopada do marca jest w większości zamknięta"
+          }
+        },
+        {
+          "label": {
+            "en": "Short-let economics",
+            "it": "Economia degli affitti brevi",
+            "uk": "Економіка подобової оренди",
+            "ru": "Экономика посуточной аренды",
+            "sq": "Ekonomia e qirasë afatshkurtër",
+            "pl": "Ekonomia najmu krótkoterminowego"
+          },
+          "left": {
+            "en": "The strongest host income recorded in Albania, with about 70% occupancy in August",
+            "it": "Il reddito per host più alto registrato in Albania, con circa il 70% di occupazione ad agosto",
+            "uk": "Найвищий зафіксований в Албанії дохід хоста, близько 70% завантаження в серпні",
+            "ru": "Самый высокий зафиксированный в Албании доход хоста, около 70% загрузки в августе",
+            "sq": "Të ardhurat më të larta të regjistruara në Shqipëri, me rreth 70% zënie në gusht",
+            "pl": "Najwyższy odnotowany w Albanii dochód gospodarza, z obłożeniem około 70% w sierpniu"
+          },
+          "right": {
+            "en": "Average occupancy 38.3% over the year, with supply up 85.8% in a year, according to AirROI",
+            "it": "Occupazione media del 38,3% sull’anno, con un’offerta cresciuta dell’85,8% in un anno, secondo AirROI",
+            "uk": "Середнє завантаження за рік 38,3%, пропозиція за рік зросла на 85,8%, за даними AirROI",
+            "ru": "Средняя загрузка за год 38,3%, предложение за год выросло на 85,8%, по данным AirROI",
+            "sq": "Zënia mesatare 38,3% gjatë vitit, me ofertë të rritur 85,8% në një vit, sipas AirROI",
+            "pl": "Średnie obłożenie w ciągu roku 38,3%, a podaż wzrosła w rok o 85,8%, według AirROI"
+          }
+        },
+        {
+          "label": {
+            "en": "The open question",
+            "it": "La domanda aperta",
+            "uk": "Відкрите питання",
+            "ru": "Открытый вопрос",
+            "sq": "Pyetja e hapur",
+            "pl": "Otwarte pytanie"
+          },
+          "left": {
+            "en": "The airport: no flights as of summer 2026, while the price already assumes it opens",
+            "it": "L’aeroporto: nessun volo all’estate 2026, mentre il prezzo dà già per scontata l’apertura",
+            "uk": "Аеропорт: рейсів немає станом на літо 2026, а ціна вже виходить із того, що він відкриється",
+            "ru": "Аэропорт: рейсов нет на лето 2026, а цена уже исходит из того, что он откроется",
+            "sq": "Aeroporti: pa fluturime deri në verën 2026, ndërkohë që çmimi e merr tashmë si të mirëqenë hapjen",
+            "pl": "Lotnisko: brak lotów latem 2026 roku, a cena już zakłada, że zostanie otwarte"
+          },
+          "right": {
+            "en": "Oversupply and permits: a fast-growing stock and repeated demolition campaigns against illegal buildings",
+            "it": "Eccesso di offerta e permessi: uno stock in rapida crescita e ripetute campagne di demolizione di edifici abusivi",
+            "uk": "Надлишок пропозиції й дозволи: фонд швидко росте, а кампанії зі зносу незаконних будівель повторюються",
+            "ru": "Избыток предложения и разрешения: фонд быстро растёт, а кампании по сносу незаконных зданий повторяются",
+            "sq": "Ofertë e tepërt dhe leje: një stok që rritet shpejt dhe fushata të përsëritura shembjeje kundër ndërtimeve pa leje",
+            "pl": "Nadpodaż i pozwolenia: szybko rosnący zasób i powtarzające się akcje wyburzania nielegalnych budynków"
+          }
+        }
+      ],
+      "related": [
+        "vlora-vs-saranda",
+        "saranda-vs-ksamil",
+        "durres-vs-ksamil",
+        "tirana-vs-vlore"
+      ],
+      "kbSource": "02-cities/vlora-riviera.md §1–5; 02-cities/saranda-ksamil.md (Ksamil)"
     }
   ]
 }

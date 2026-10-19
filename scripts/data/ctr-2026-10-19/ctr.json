@@ -1,0 +1,271 @@
+{
+  "$comment": "CTR rewrite 2026-10-19: the worst click-through pages of GSC (17.07–16.10.2026). Title = question or keyword + year + something concrete; the answer sits in the first paragraph. Figures are the ones the page itself states.",
+  "edits": [
+    {
+      "id": "blogPost-legal-guide-buyers",
+      "locale": "en",
+      "url": "/en/blog/legal-guide-buyers",
+      "gsc": "4/606",
+      "title": "Can Foreigners Buy Property in Albania? Taxes in 2026",
+      "description": "Yes, on the same terms as Albanians; only farmland is closed. Owners then pay 0.05% a year on the building, 15% on rent and gains, or 5% on a 2026 revaluation.",
+      "textReplace": [
+        {
+          "find": "Three taxes and one deadline. ",
+          "replace": "Yes: a foreigner buys a flat, a house or a shop in Albania on the same terms as an Albanian citizen, and only agricultural land is closed to direct purchase. The owner then faces three taxes and one deadline. "
+        },
+        {
+          "find": "The application goes to ASHK by 31.12.2026 and the payment follows by 31.03.2027.",
+          "replace": "The 5% has to be paid by 31.12.2026: under the instruction the revaluation date is the payment date, and ASHK closes files still unfinished by 31.03.2027."
+        }
+      ]
+    },
+    {
+      "id": "blogPost-legal-guide-buyers",
+      "locale": "pl",
+      "url": "/pl/blog/legal-guide-buyers",
+      "gsc": "2/88",
+      "title": "Podatki od nieruchomości w Albanii 2026: ile płaci Polak?",
+      "description": "Polak kupuje w Albanii na tych samych zasadach co Albańczyk. Potem płaci 0,05% rocznie od budynku, 15% od najmu i zysku ze sprzedaży lub 5% przy przeszacowaniu.",
+      "textReplace": [
+        {
+          "find": "Trzy podatki i jeden termin. ",
+          "replace": "Polak, jak każdy cudzoziemiec, kupuje mieszkanie lub dom w Albanii na tych samych zasadach co Albańczyk; zamknięta jest tylko ziemia rolna. Właściciel ma potem trzy podatki i jeden termin. "
+        },
+        {
+          "find": "Wniosek składa się do ASHK do 31.12.2026, a płatność następuje do 31.03.2027.",
+          "replace": "Podatek 5% trzeba zapłacić do 31.12.2026: według instrukcji datą przeszacowania jest dzień zapłaty, a ASHK zamyka niedokończone sprawy do 31.03.2027."
+        }
+      ]
+    },
+    {
+      "id": "blogPost-market-outlook-2025",
+      "locale": "en",
+      "url": "/en/blog/market-outlook-2026",
+      "gsc": "2/312",
+      "title": "Should You Buy Property in Albania in 2026? Prices vs Sales",
+      "description": "Prices rose 28% in H2 2025 while sales fell 35%. The coast kept climbing and Tirana went flat: where buying in 2026 still makes sense, and where it does not."
+    },
+    {
+      "id": "blogPost-how-to-choose-tirana-durres-vlore",
+      "locale": "en",
+      "url": "/en/blog/how-to-choose-tirana-durres-vlore",
+      "gsc": "1/160",
+      "title": "Tirana, Durrës or Vlorë? Prices and Rent Compared (2026)",
+      "description": "Tirana near €1,900/m² with tenants all year, Durrës about €1,450/m² and a 22-minute train from 2027, Vlorë the best Airbnb income at about €1,163 a month."
+    },
+    {
+      "id": "blogPost-buying-apartment-durres-complete-guide",
+      "locale": "it",
+      "url": "/it/blog/buying-apartment-durres-complete-guide",
+      "gsc": "2/91",
+      "title": "Comprare casa a Durazzo nel 2026: prezzi zona per zona",
+      "description": "Durazzo costa circa 1.450 €/m², meno di Valona e Saranda. Prezzi per Plazh, Golem e il centro, i documenti da controllare e i rischi della Marina."
+    },
+    {
+      "id": "blogPost-retiring-to-albania-property-costs",
+      "locale": "ru",
+      "url": "/ru/blog/retiring-to-albania-property-costs",
+      "gsc": "1/81",
+      "title": "Пенсия в Албании в 2026: сколько стоит жизнь у моря?",
+      "description": "Квартира у моря на двоих обходится примерно в €93–112 в месяц, налог на жильё — десятки евро в год. ВНЖ собственника по закону 79/2021 и города, живые зимой."
+    },
+    {
+      "id": "landing-pl-czy-polak-moze-kupic-mieszkanie-w-albanii",
+      "locale": "pl",
+      "url": "/pl/guides/czy-polak-moze-kupic-mieszkanie-w-albanii",
+      "gsc": "1/217",
+      "title": "Czy Polak może kupić mieszkanie w Albanii? Tak, zasady 2026",
+      "description": "Tak: obywatel Polski kupuje mieszkanie i dom w Albanii na tych samych prawach co Albańczyk. Wyjątek to ziemia rolna. Spółka czy osoba, konto, podatki i pobyt."
+    },
+    {
+      "id": "landing-pl-czy-warto-kupic-mieszkanie-w-albanii",
+      "locale": "pl",
+      "url": "/pl/guides/czy-warto-kupic-mieszkanie-w-albanii",
+      "gsc": "1/139",
+      "title": "Ceny mieszkań w Albanii 2026: ile kosztuje m² i czy warto?",
+      "description": "Ceny mieszkań w Albanii 2026: Tirana ok. 2 000 €/m², wybrzeże od 1 200 do 3 500 €/m². Realny zwrot z najmu to 4–6% brutto: kiedy zakup ma sens, a kiedy nie."
+    },
+    {
+      "id": "landing-comparison-tirana-vs-durres",
+      "locale": "it",
+      "url": "/it/guides/tirana-vs-durres",
+      "gsc": "2/133",
+      "title": "Meglio Tirana o Durazzo? Prezzi e affitti a confronto 2026",
+      "description": "Tirana per l'affitto tutto l'anno, Durazzo per il mare a circa metà del prezzo del centro: prezzi al m², stagione e rendimento a confronto, caso per caso.",
+      "heroSubtitle": "Tirana se affitti a lungo termine, Durazzo se compri per il mare o per gli affitti brevi. Trentacinque chilometri di distanza e due investimenti opposti: uno si affitta dodici mesi l’anno, l’altro quattro."
+    },
+    {
+      "id": "landing-comparison-lungomare-vs-plazh",
+      "locale": "it",
+      "url": "/it/guides/lungomare-vs-plazh",
+      "gsc": "0/79",
+      "title": "Meglio Lungomare a Valona o Plazh a Durazzo? Prezzi 2026",
+      "description": "Circa il doppio di differenza al m²: Plazh costa la metà per una stagione simile, il Lungomare vende una passeggiata e una città. Prezzi e affitti brevi."
+    },
+    {
+      "id": "landing-comparison-albania-vs-greece",
+      "locale": "ru",
+      "url": "/ru/guides/albania-vs-greece",
+      "gsc": "1/92",
+      "title": "Албания или Греция: где дешевле купить у моря в 2026?",
+      "description": "Материковая Греция не дороже Албании: Салоники сопоставимы с Тираной. Курортный Корфу в 2–4 раза дороже, а до него час паромом от Саранды. Цены за м² и выбор."
+    },
+    {
+      "id": "landing-comparison-durres-vs-vlore",
+      "locale": "ru",
+      "url": "/ru/guides/durres-vs-vlore",
+      "gsc": "1/81",
+      "title": "Дуррес или Влёра: где купить квартиру у моря в 2026?",
+      "description": "Дуррес дешевле и будет в 22 минутах от Тираны поездом, Влёра больше зарабатывает за ночь посуточной аренды. Цены за м², сезон и кому какой город подходит."
+    },
+    {
+      "id": "landing-comparison-albania-vs-croatia",
+      "locale": "uk",
+      "url": "/uk/guides/albania-vs-croatia",
+      "gsc": "1/81",
+      "title": "Албанія чи Хорватія: де дешевше купити біля моря у 2026?",
+      "description": "Спліт просить 3 861–5 477 € за м² проти приблизно 1 900–2 000 € у Тирані. Що ви отримуєте за різницю: членство в ЄС, ліквідність і довший сезон оренди."
+    },
+    {
+      "id": "landing-comparison-albania-vs-montenegro",
+      "locale": "uk",
+      "url": "/uk/guides/albania-vs-montenegro",
+      "gsc": "0/77",
+      "title": "Албанія чи Чорногорія у 2026: де дешевше купити біля моря?",
+      "description": "Будва просить 2 500–4 200 € за м² проти 1 900–2 000 € у Тирані, Ульцинь — 1 800–2 800 €. Де різниця в ціні реальна і що обрати біля кордону двох країн."
+    },
+    {
+      "id": "catalogSeoPage-propertiesRoot",
+      "locale": "de",
+      "url": "/de/sale",
+      "gsc": "1/360",
+      "title": "Immobilien in Albanien am Meer kaufen: Preise 2026",
+      "description": "Wohnungen und Häuser am Meer in Albanien kaufen: Angebote in Durrës, Vlora, Saranda und Shëngjin mit Preis pro m², Fotos und direktem Kontakt zum Anbieter."
+    },
+    {
+      "id": "catalogSeoPage-city-city-sarande",
+      "locale": "pl",
+      "url": "/pl/albania/sarande",
+      "gsc": "1/326",
+      "title": "Saranda: mieszkania i domy na sprzedaż — ceny 2026",
+      "description": "Nieruchomości w Sarandzie i Ksamilu na sprzedaż: mieszkania z widokiem na morze, domy i oferty od dewelopera. Ceny za m² według dzielnic i kontakt bezpośredni."
+    },
+    {
+      "id": "catalogSeoPage-city-city-durres",
+      "locale": "en",
+      "url": "/en/albania/durres",
+      "gsc": "0/82",
+      "title": "Durrës Apartments for Sale: Prices per m² by Area 2026",
+      "description": "Flats and houses for sale in Durrës, Albania: Plazh, Golem, Shkëmbi and the centre, with asking prices per m² for each area and direct contact with the seller."
+    },
+    {
+      "id": "landing-cities",
+      "locale": "en",
+      "url": "/en/cities",
+      "gsc": "1/130",
+      "title": "Where to Buy Property in Albania? Prices by City 2026",
+      "description": "Tirana, Durrës, Vlorë, Sarandë, Himarë, Shëngjin and Shkodër side by side: asking prices per m², who each city suits, and the listings for sale in each one."
+    },
+    {
+      "id": "landing-cities",
+      "locale": "de",
+      "url": "/de/cities",
+      "gsc": "title 76 chars",
+      "title": "Wo in Albanien Immobilien kaufen? Preise nach Stadt 2026"
+    },
+    {
+      "id": "landing-home",
+      "locale": "sq",
+      "url": "/sq",
+      "gsc": "title 73 chars",
+      "title": "Pasuri në shitje në Shqipëri: apartamente, vila, shtëpi"
+    },
+    {
+      "id": "landing-district-astir-unaza-e-re",
+      "locale": "en",
+      "url": "/en/albania/tirana/districts/astir-unaza-e-re",
+      "gsc": "2/122",
+      "alsoIds": [
+        "district-astir-unaza-e-re"
+      ],
+      "title": "Astir, Tirana: flat prices 2026 and the oversupply risk",
+      "description": "Astir and Unaza e Re are Tirana's biggest new-build front and its clearest oversupply risk: new flats from €1,400/m², resale €900–1,200/m². What that means."
+    },
+    {
+      "id": "landing-district-bulevardi-i-ri",
+      "locale": "en",
+      "url": "/en/albania/tirana/districts/bulevardi-i-ri",
+      "gsc": "2/92",
+      "alsoIds": [
+        "district-bulevardi-i-ri"
+      ],
+      "title": "New Boulevard, Tirana: is it worth buying in 2026?",
+      "description": "Tirana's fastest-rising area with the longest horizon: €2,700/m² on the first line, €1,900/m² behind it, +36% in a year. Who should buy and who should wait."
+    },
+    {
+      "id": "blogPost-legal-guide-buyers",
+      "locale": "uk",
+      "url": "/uk/blog/legal-guide-buyers",
+      "gsc": "fact fix: 5% revaluation is paid by 31.12.2026 (alprofitconsult.al, Udhëzimi 5/2026)",
+      "bodyOnly": true,
+      "textReplace": [
+        {
+          "find": "Заявка подається до ASHK до 31.12.2026, а сплата здійснюється до 31.03.2027.",
+          "replace": "Податок 5% треба сплатити до 31.12.2026: за інструкцією датою переоцінки є день оплати, а незавершені справи ASHK закриває до 31.03.2027."
+        }
+      ]
+    },
+    {
+      "id": "blogPost-legal-guide-buyers",
+      "locale": "ru",
+      "url": "/ru/blog/legal-guide-buyers",
+      "gsc": "fact fix: 5% revaluation is paid by 31.12.2026 (alprofitconsult.al, Udhëzimi 5/2026)",
+      "bodyOnly": true,
+      "textReplace": [
+        {
+          "find": "Заявка подаётся в ASHK до 31.12.2026, а оплата производится до 31.03.2027.",
+          "replace": "Налог 5% нужно оплатить до 31.12.2026: по инструкции датой переоценки считается день оплаты, а незавершённые дела ASHK закрывает до 31.03.2027."
+        }
+      ]
+    },
+    {
+      "id": "blogPost-legal-guide-buyers",
+      "locale": "sq",
+      "url": "/sq/blog/legal-guide-buyers",
+      "gsc": "fact fix: 5% revaluation is paid by 31.12.2026 (alprofitconsult.al, Udhëzimi 5/2026)",
+      "bodyOnly": true,
+      "textReplace": [
+        {
+          "find": "Aplikimi bëhet pranë ASHK-së deri më 31.12.2026 dhe pagesa duhet të kryhet deri më 31.03.2027.",
+          "replace": "Tatimi 5% duhet paguar deri më 31.12.2026: sipas udhëzimit, data e rivlerësimit është data e pagesës, ndërsa ASHK i mbyll praktikat e papërfunduara deri më 31.03.2027."
+        }
+      ]
+    },
+    {
+      "id": "blogPost-legal-guide-buyers",
+      "locale": "it",
+      "url": "/it/blog/legal-guide-buyers",
+      "gsc": "fact fix: 5% revaluation is paid by 31.12.2026 (alprofitconsult.al, Udhëzimi 5/2026)",
+      "bodyOnly": true,
+      "textReplace": [
+        {
+          "find": "La domanda va presentata all'ASHK entro il 31.12.2026 e il pagamento segue entro il 31.03.2027.",
+          "replace": "L'imposta del 5% va pagata entro il 31.12.2026: secondo l'istruzione la data della rivalutazione è quella del pagamento, e l'ASHK chiude le pratiche non concluse entro il 31.03.2027."
+        }
+      ]
+    },
+    {
+      "id": "blogPost-legal-guide-buyers",
+      "locale": "de",
+      "url": "/de/blog/legal-guide-buyers",
+      "gsc": "fact fix: 5% revaluation is paid by 31.12.2026 (alprofitconsult.al, Udhëzimi 5/2026)",
+      "bodyOnly": true,
+      "textReplace": [
+        {
+          "find": "Der Antrag geht bis zum 31.12.2026 an das Katasteramt (ASHK), die Zahlung folgt bis zum 31.03.2027.",
+          "replace": "Die 5 % müssen bis zum 31.12.2026 bezahlt sein: Laut Anweisung gilt der Zahlungstag als Tag der Neubewertung, und das Katasteramt (ASHK) schließt offene Verfahren bis zum 31.03.2027."
+        }
+      ]
+    }
+  ]
+}

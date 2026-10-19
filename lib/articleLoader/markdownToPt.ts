@@ -110,6 +110,8 @@ function tableBlock(lines: string[]): Record<string, unknown> {
 }
 
 const ZONE_EMBED_MARKER = /^\{\{zoneStatsEmbed:([a-z0-9-]+)\}\}$/
+/** `{{guideDownloadEmbed}}` on its own line: the PDF guide's lead card. */
+const GUIDE_EMBED_MARKER = /^\{\{guideDownloadEmbed\}\}$/
 
 export type MarkdownToPtOptions = {
   /** Resolves a `{{zoneStatsEmbed:<slug>}}` marker's slug to a Sanity document id. */
@@ -157,6 +159,12 @@ export function markdownToPortableText(
       continue
     }
 
+    if (GUIDE_EMBED_MARKER.test(line.trim())) {
+      out.push({_type: 'guideDownloadEmbed', _key: nextKey(), guide: 'durres-buying-guide'})
+      i += 1
+      continue
+    }
+
     if (line.trimStart().startsWith('|')) {
       const start = i
       const table: string[] = []
@@ -199,7 +207,7 @@ export function markdownToPortableText(
 
     if (/^\s*(>|!\[|```)/.test(line)) {
       throw new Error(
-        `line ${i + 1}: unsupported construct — this loader takes paragraphs, #### headings, tables, lists, {{zoneStatsEmbed:slug}}, [links](href), *italic* and **bold** only`,
+        `line ${i + 1}: unsupported construct — this loader takes paragraphs, #### headings, tables, lists, {{zoneStatsEmbed:slug}}, {{guideDownloadEmbed}}, [links](href), *italic* and **bold** only`,
       )
     }
 
@@ -209,6 +217,7 @@ export function markdownToPortableText(
     while (i < lines.length && lines[i].trim() && !lines[i].trimStart().startsWith('|')) {
       if (/^#{1,6}\s/.test(lines[i]) && i > start) break
       if (ZONE_EMBED_MARKER.test(lines[i].trim()) && i > start) break
+      if (GUIDE_EMBED_MARKER.test(lines[i].trim()) && i > start) break
       if (/^\s*(?:[-*+]\s+|\d+\.\s+)/.test(lines[i]) && i > start) break
       para.push(lines[i].trim())
       i += 1
