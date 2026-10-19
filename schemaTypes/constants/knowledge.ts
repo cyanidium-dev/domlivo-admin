@@ -105,6 +105,18 @@ export const KNOWLEDGE_CATEGORIES = [
   'banking',
 ].map((value) => ({title: value.replace(/_/g, ' '), value}))
 
+/**
+ * Sections of /knowledge for the question pages, in the order a buyer meets
+ * them. The research data sheets have no group and are listed by category.
+ */
+export const KNOWLEDGE_TOPIC_GROUPS = [
+  {title: 'Buying as a foreigner', value: 'buying'},
+  {title: 'Money: taxes and fees', value: 'money'},
+  {title: 'Owning and renting out', value: 'ownership'},
+  {title: 'Process and risks', value: 'process'},
+  {title: 'Where to buy', value: 'geography'},
+] as const
+
 /** Seasons a figure can describe. Coastal cities need month-level rows. */
 export const KNOWLEDGE_SEASONS = [
   'annual',
