@@ -23,6 +23,10 @@
  *
  * Publishes with createIfNotExists: an existing post is never touched.
  *
+ * Refuses to create an edition whose figures JSON equals the previous
+ * edition's apart from `asOf` (2026-10-19): October 2026 repeated September's
+ * numbers under a new date. No new figures, no new edition.
+ *
  * Next month: add the JSON, the seven files and one entry to ARTICLES.
  *
  * Run:
@@ -170,8 +174,25 @@ function numbersIn(text: string): number[] {
   return [...withoutUrls.matchAll(/\d{1,3}(?:[.,   ]\d{3})+(?!\d)|\d+/g)].map((m) => Number(m[0].replace(/\D/g, '')))
 }
 
+/** The figures of an index JSON without its date: equal strings mean the same edition. */
+function figuresWithoutDate(figuresFile: string): string {
+  const json = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), figuresFile), 'utf8'))
+  delete json.asOf
+  return JSON.stringify(json)
+}
+
+/** The edition before `a` of the same series (`durres-asking-price-index-*`), by slug order. */
+function previousEdition(a: Article): Article | undefined {
+  const series = a.slug.replace(/-\d{4}-\d{2}$/, '')
+  return ARTICLES.filter((b) => b.slug.startsWith(`${series}-`) && b.slug < a.slug)
+    .sort((x, y) => x.slug.localeCompare(y.slug))
+    .at(-1)
+}
+
 async function main(): Promise<void> {
   const problems: string[] = []
+  /** Article id → the previous edition it would repeat. */
+  const unchangedSince = new Map<string, string>()
   const built: Array<{id: string; doc: Record<string, unknown>}> = []
   const internal = new Set<string>()
 
@@ -194,6 +215,10 @@ async function main(): Promise<void> {
     const en = byLocale.en
     if (en.sources.length === 0 || en.sources.some((s) => !s.url.startsWith('https://'))) {
       problems.push(`${a.slug}: English sources missing or without URL`)
+    }
+    const prev = previousEdition(a)
+    if (prev && figuresWithoutDate(prev.figures) === figuresWithoutDate(a.figures)) {
+      unchangedSince.set(`blogPost-${a.slug}`, prev.slug)
     }
     const allowed = allowedNumbers(a.figures)
     const enLinks = links(en.body).sort().join(' ')
@@ -294,6 +319,14 @@ async function main(): Promise<void> {
   })
   const toWrite = built.filter((b) => !existing.includes(b.id) && !existing.includes(`drafts.${b.id}`))
   for (const b of built) console.log(`${toWrite.includes(b) ? 'create' : 'skip  '} ${b.id}`)
+  // Checked only for posts this run would create: an edition already published
+  // is history, and the guard must not block the next month because of it.
+  const repeats = toWrite.filter((b) => unchangedSince.has(b.id))
+  if (repeats.length) {
+    const lines = repeats.map((b) => `${b.id}: figures equal ${unchangedSince.get(b.id)} apart from asOf`)
+    console.error(`\nNo edition without new figures:\n${lines.join('\n')}`)
+    process.exit(1)
+  }
   if (!execute) {
     console.log(`\nDry run: ${toWrite.length} to create. Re-run with --execute.`)
     return
