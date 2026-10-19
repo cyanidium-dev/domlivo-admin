@@ -38,6 +38,12 @@
  * Run:
  *   npx tsx scripts/seedInventoryCopy20261019.ts
  *   npx tsx scripts/seedInventoryCopy20261019.ts --execute
+ *   npx tsx scripts/seedInventoryCopy20261019.ts --execute --facets-only
+ *
+ * The city copy uses tokens the frontend renders only from your-house-albania
+ * PR #74 on: write it after that deploy, or the live city pages print
+ * "{{listings:vlore}}". `--facets-only` is safe before it (facet documents
+ * are new and nothing reads them yet).
  * then:
  *   npx tsx scripts/translateLocaleGaps.ts --execute --types catalogSeoPage
  */
@@ -49,6 +55,7 @@ import {createClient} from '@sanity/client'
 loadDotenv({path: path.resolve(process.cwd(), '.env')})
 
 const execute = process.argv.includes('--execute')
+const facetsOnly = process.argv.includes('--facets-only')
 const token = process.env.SANITY_API_TOKEN?.trim()
 if (!token) {
   console.error('SANITY_API_TOKEN required in .env')
@@ -159,10 +166,10 @@ function words(text: string): number {
 
 async function main() {
   const backupDir = path.resolve(process.cwd(), 'scripts/data/inventory-copy-2026-10-19')
-  const cityIds = Object.keys(CITY_COPY)
+  const cityIds = facetsOnly ? [] : Object.keys(CITY_COPY)
   const existing = await client.fetch<Array<{_id: string; _rev: string; intro?: unknown; bottomText?: unknown}>>(
     `*[_id in $ids]{_id, _rev, intro, bottomText}`,
-    {ids: cityIds},
+    {ids: cityIds.length ? cityIds : ['-']},
   )
   const tx = client.transaction()
   for (const id of cityIds) {
