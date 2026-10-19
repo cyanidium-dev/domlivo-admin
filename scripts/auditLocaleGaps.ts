@@ -49,6 +49,7 @@ const TYPES = [
   'blogCategory',
   'blogAuthor',
   'zoneMetrics',
+  'knowledgeArticle',
 ]
 
 export type Gap = {

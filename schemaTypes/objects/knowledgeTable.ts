@@ -57,6 +57,14 @@ export const knowledgeTable = defineType({
               validation: (Rule) => Rule.required().min(1),
             }),
             defineField({
+              name: 'localizedCells',
+              title: 'Cells (translated)',
+              type: 'array',
+              of: [defineArrayMember({type: 'localizedString'})],
+              description:
+                'Optional: the same cells per language, for rows with words in them. The site prefers these and falls back to Cells.',
+            }),
+            defineField({
               name: 'facts',
               title: 'Facts behind this row',
               type: 'array',

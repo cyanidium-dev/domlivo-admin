@@ -1,17 +1,24 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
-import {KNOWLEDGE_CATEGORIES, KNOWLEDGE_CONFIDENCE, DOCUMENT_ID_PATTERN} from '../constants/knowledge'
+import {
+  KNOWLEDGE_CATEGORIES,
+  KNOWLEDGE_CONFIDENCE,
+  KNOWLEDGE_TOPIC_GROUPS,
+  DOCUMENT_ID_PATTERN,
+} from '../constants/knowledge'
 
 /**
  * A page of the public knowledge base: one topic, answered with tables that
- * carry their sources. Not a blog post — no lead image, no author byline, no
- * marketing copy. What it does have is a `questionSet` (the visitor questions
- * it is written to answer, which also feed the FAQ schema and the assistant's
- * routing), explicit `gaps`, and a `nextReviewAt` date so a tariff page cannot
- * quietly go stale.
+ * carry their sources. Not a blog post — no lead image, no marketing copy.
+ * What it does have is a `questionSet` (the visitor questions it is written
+ * to answer, which also feed the assistant's routing), explicit `gaps`, and a
+ * `nextReviewAt` date so a tariff page cannot quietly go stale.
  *
- * Editors do not usually create these by hand: they are imported from the
- * research repo (`npm run knowledge:import`) and then translated and
- * corrected in Studio.
+ * Two kinds live here. The research data sheets are imported from the
+ * research repo (`npm run knowledge:import`). The question pages (2026-10,
+ * `topicGroup` set) are seeded from scripts/data/knowledge-base-2026-10-19:
+ * they name the founder who compiled the data as `author`, carry an FAQ and a
+ * source list, and leave `reviewedBy` empty until the reviewer has actually
+ * checked the page — the site prints "checked by" only when it is set.
  */
 export const knowledgeArticle = defineType({
   name: 'knowledgeArticle',
@@ -82,6 +89,36 @@ export const knowledgeArticle = defineType({
       group: 'identity',
     }),
     defineField({
+      name: 'topicGroup',
+      title: 'Topic group',
+      type: 'string',
+      group: 'identity',
+      description: 'Where the page sits on /knowledge. Empty for the research data sheets, which group by category.',
+      options: {list: [...KNOWLEDGE_TOPIC_GROUPS]},
+    }),
+    defineField({
+      name: 'author',
+      title: 'Data compiled by',
+      type: 'reference',
+      to: [{type: 'blogAuthor'}],
+      group: 'quality',
+      description: 'The person who gathered the figures and sources. Shown as the byline and as Article author.',
+    }),
+    defineField({
+      name: 'reviewedBy',
+      title: 'Checked by',
+      type: 'reference',
+      to: [{type: 'blogAuthor'}],
+      group: 'quality',
+      description: 'Set only after the reviewer has read the page and its sources. Empty means not yet reviewed.',
+    }),
+    defineField({
+      name: 'reviewedAt',
+      title: 'Checked on',
+      type: 'date',
+      group: 'quality',
+    }),
+    defineField({
       name: 'city',
       title: 'City',
       type: 'reference',
@@ -113,6 +150,23 @@ export const knowledgeArticle = defineType({
       of: [defineArrayMember({type: 'knowledgeSection'})],
       group: 'content',
       validation: (Rule) => Rule.required().min(1),
+    }),
+    defineField({
+      name: 'faq',
+      title: 'FAQ',
+      type: 'array',
+      of: [defineArrayMember({type: 'localizedFaqItem'})],
+      group: 'content',
+      description: 'Question and answer pairs shown at the end of the page; three or more also become FAQPage markup.',
+      validation: (Rule) => Rule.max(8),
+    }),
+    defineField({
+      name: 'sources',
+      title: 'Sources',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'knowledgeSource'}]}],
+      group: 'content',
+      description: 'Every publication the page relies on, including laws cited in the text. Rendered as the Sources list.',
     }),
     defineField({
       name: 'facts',

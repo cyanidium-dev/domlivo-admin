@@ -65,8 +65,12 @@ const TYPES = [
   'developer',
   'blogCategory',
   'blogAuthor',
+  'knowledgeArticle',
 ]
-const SKIP_FIELD = /(^|\.)(slug|href|url|email|phone|siteName|brandName|copyrightText)(\.|$|\[)/i
+// `questionSet` on knowledge pages stays English: it feeds the assistant's
+// routing, the FAQ carries the translated questions, and every translated
+// locale of it is another attribute path in a dataset capped at 2,000.
+const SKIP_FIELD = /(^|\.)(slug|href|url|email|phone|siteName|brandName|copyrightText|questionSet)(\.|$|\[)/i
 const SENTENCE_MIN = 25
 const BATCH_CHARS = 6000
 
@@ -107,7 +111,7 @@ function tasksFor(doc: Record<string, unknown>, gaps: Gap[]): Task[] {
   return out
 }
 
-const SYSTEM = `Task: translate website copy fields. The user message is a JSON object: each key is a field id, each value has "source" (text), "from" (source language code) and "to" (array of target language codes). Reply with a JSON object keyed by the same field ids; each value is an object keyed by target language code with the translated string. Titles stay titles (short, no trailing period); descriptions stay descriptions.`
+const SYSTEM = `Task: translate website copy fields. The user message is a JSON object: each key is a field id, each value has "source" (text), "from" (source language code) and "to" (array of target language codes). Reply with a JSON object keyed by the same field ids; each value is an object keyed by target language code with the translated string. Titles stay titles (short, no trailing period); descriptions stay descriptions. Keep price-index tokens such as {{median:durres}} or {{p80:durres/plazh}} exactly as written. A source made of paragraphs separated by blank lines, with "- " bullet lines, keeps the same paragraphs, blank lines and "- " bullets.`
 
 async function main() {
   const types = typesArg ?? TYPES

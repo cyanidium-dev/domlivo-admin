@@ -36,6 +36,13 @@ export const knowledgeSection = defineType({
       description: 'Prose around the tables: what the numbers mean, caveats, how to read them.',
     }),
     defineField({
+      name: 'bodyText',
+      title: 'Body (plain text)',
+      type: 'localizedText',
+      description:
+        'Used by the question pages instead of Body: paragraphs separated by a blank line, a line starting with "- " is a bullet. Plain text in seven languages costs the dataset a handful of attribute paths; rich text costs about eleven per language, and the dataset is capped at 2,000.',
+    }),
+    defineField({
       name: 'tables',
       title: 'Tables',
       type: 'array',
