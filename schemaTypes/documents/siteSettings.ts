@@ -77,6 +77,63 @@ export const siteSettings = defineType({
         'Photo for the manager block on the general Contacts page. Email and social links come from “Contact Email” above and “Social Links” in the Social group.',
     }),
 
+    // Trust block of the Contacts and About pages (2026-10-19). Every field is
+    // optional and the site shows nothing for an empty one — fill in only what
+    // is real. Phone and address above are shown there too.
+    defineField({
+      name: 'officePhoto',
+      title: 'Office or team photo',
+      type: 'image',
+      group: 'contact',
+      options: {hotspot: true},
+      fields: [{name: 'alt', type: 'string', title: 'Alternative text', description: 'What the photo shows, for screen readers'}],
+      description: 'Shown on the Contacts and About pages. Leave empty to show no photo.',
+    }),
+    defineField({
+      name: 'replyTime',
+      title: 'Reply time',
+      type: 'localizedString',
+      group: 'contact',
+      description:
+        'One line under the phone on Contacts and About, written as it should appear, e.g. “We reply within 15 minutes, 9:00–19:00”. Leave empty to show nothing.',
+    }),
+    defineField({
+      name: 'testimonials',
+      title: 'Testimonials',
+      type: 'array',
+      group: 'contact',
+      description: 'Up to three real client reviews for the Contacts and About pages. Leave empty to show none.',
+      validation: (Rule) => Rule.max(3),
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'testimonial',
+          fields: [
+            defineField({
+              name: 'quote',
+              title: 'Review',
+              type: 'localizedText',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'author',
+              title: 'Client name',
+              type: 'string',
+              description: 'As the client agreed to be named, e.g. “Anna K.”',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'context',
+              title: 'Context (optional)',
+              type: 'localizedString',
+              description: 'e.g. “Bought a flat in Durrës, 2026”',
+            }),
+          ],
+          preview: {select: {title: 'author', subtitle: 'quote.en'}},
+        }),
+      ],
+    }),
+
     // SOCIAL
     defineField({
       name: 'socialLinks',
