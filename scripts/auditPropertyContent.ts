@@ -58,6 +58,10 @@ type Property = {
   bedrooms?: number
   rooms?: number
   city?: string
+  agency?: string
+  district?: string
+  firstPhoto?: string
+  duplicateOf?: string
 }
 
 type Finding = {
@@ -279,6 +283,75 @@ function audit(rows: Property[]): Finding[] {
   return out
 }
 
+/**
+ * PC-09/PC-10: the same text, or the same flat, twice (AI-text audit of
+ * 2026-10-20, reports/domlivo-ai-text-audit-2026-10-20.md). Run after every
+ * partner batch: a complex sold unit by unit arrives with one description for
+ * all its flats, and Google folds near-identical pages together.
+ *
+ * Text is compared per agency on the English description by 6-word shingles
+ * (Jaccard). PC-10 fires when the first photo is the same asset and the area
+ * is the same, or every fact matches (price, area, bedrooms, district) and the
+ * text is 90 % the same: probably one flat listed twice. A shared photo of the
+ * building alone, or two identical units with their own photos, is not enough.
+ * A PC-10 copy is hidden with `duplicateOf` (see hideDuplicateListings20261020.ts).
+ */
+const NEAR_DUPLICATE_JACCARD = 0.8
+
+function shingles(s: string): Set<string> {
+  const words = s.toLowerCase().match(/[\p{L}\p{N}'’]+/gu) ?? []
+  const out = new Set<string>()
+  for (let i = 0; i + 6 <= words.length; i++) out.add(words.slice(i, i + 6).join(' '))
+  return out
+}
+
+function crossListingFindings(rows: Property[]): Finding[] {
+  const out: Finding[] = []
+  const live = rows.filter(
+    (r) => !r._id.startsWith('drafts.') && r.isPublished && !r.duplicateOf && text(r.description, 'en').length >= 200,
+  )
+  const byAgency = new Map<string, Array<{p: Property; g: Set<string>}>>()
+  for (const p of live) {
+    const key = p.agency || '?'
+    if (!byAgency.has(key)) byAgency.set(key, [])
+    byAgency.get(key)!.push({p, g: shingles(text(p.description, 'en'))})
+  }
+  for (const list of byAgency.values()) {
+    for (let i = 0; i < list.length; i++) {
+      for (let j = i + 1; j < list.length; j++) {
+        const a = list[i]
+        const b = list[j]
+        let inter = 0
+        for (const x of a.g) if (b.g.has(x)) inter++
+        const jac = inter / (a.g.size + b.g.size - inter || 1)
+        const sameFacts =
+          a.p.price === b.p.price && a.p.area === b.p.area && a.p.bedrooms === b.p.bedrooms && a.p.district === b.p.district
+        const samePhoto = Boolean(a.p.firstPhoto && a.p.firstPhoto === b.p.firstPhoto)
+        const sa = a.p.slug || a.p._id
+        const sb = b.p.slug || b.p._id
+        if (jac >= 0.5 && ((samePhoto && a.p.area === b.p.area) || (sameFacts && jac >= 0.9))) {
+          out.push({
+            rule: 'PC-10',
+            severity: 'critical',
+            slug: sa,
+            locale: 'all',
+            message: `probably the same flat as ${sb} (text ${Math.round(jac * 100)}%${sameFacts ? ', same price/area/bedrooms/district' : ''}${samePhoto ? ', same first photo' : ''})`,
+          })
+        } else if (jac >= NEAR_DUPLICATE_JACCARD) {
+          out.push({
+            rule: 'PC-09',
+            severity: 'warning',
+            slug: sa,
+            locale: 'en',
+            message: `description ${Math.round(jac * 100)}% the same as ${sb}: ask the partner what differs (floor, view, layout)`,
+          })
+        }
+      }
+    }
+  }
+  return out
+}
+
 const RULE_NAMES: Record<string, string> = {
   'PC-01': 'Locales contradict each other on the typology',
   'PC-02': 'Title disagrees with the structured fields',
@@ -288,6 +361,8 @@ const RULE_NAMES: Record<string, string> = {
   'PC-06': 'Generated blurb instead of a description',
   'PC-07': 'City named twice',
   'PC-08': 'Locale missing',
+  'PC-09': 'Description nearly identical to another listing of the same agency',
+  'PC-10': 'Probably the same flat listed twice',
 }
 
 async function main() {
@@ -295,10 +370,12 @@ async function main() {
     `*[_type == "property"]{
       _id, "slug": slug.current, propertyCode, isPublished,
       title, shortDescription, description,
-      price, area, bedrooms, rooms, "city": city->slug.current
+      price, area, bedrooms, rooms, "city": city->slug.current,
+      "agency": coalesce(agent->agency->name, agent->name), "district": district->slug.current,
+      "firstPhoto": gallery[0].asset._ref, "duplicateOf": duplicateOf._ref
     } | order(_id asc)`,
   )
-  const findings = audit(rows)
+  const findings = [...audit(rows), ...crossListingFindings(rows)]
   const published = new Set(rows.filter((r) => r.isPublished).map((r) => r.slug || r._id))
 
   const byRule = new Map<string, Finding[]>()
