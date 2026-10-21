@@ -23,7 +23,7 @@ Secondo noi, non prima che sia risolta la questione delle fondazioni. A maggio 2
 No. Onorari notarili e imposte si calcolano sul valore più alto tra il prezzo del contratto e il prezzo di riferimento statale, e Durazzo usa ancora un'unica tariffa per tutta la città, del 2016. Una bozza di luglio 2025 che avrebbe portato la zona del porto a 200.000 lek/m² non è mai stata approvata. Vedi [i prezzi di riferimento a Durazzo spiegati](/blog/durres-reference-prices-2026).
 
 **Quali costi paga l'acquirente oltre al prezzo?**
-Metti in conto circa il 3–4% del prezzo. Il notaio chiede circa lo 0,35% sulle compravendite fino a 6 milioni di lek, l'imposta di trasferimento del 2% nella pratica viene spesso scaricata sull'acquirente, la registrazione al catasto costa qualche migliaio di lek e, se non parli albanese, serve un traduttore giurato.
+Metti in conto circa l'1,5-3% del prezzo se ti affidi a un'agenzia e a un avvocato. Il notaio chiede circa lo 0,35% sulle compravendite fino a 6 milioni di lek, la registrazione al catasto costa qualche migliaio di lek e, se non parli albanese, serve un traduttore giurato. Chi compra un appartamento non paga imposte di trasferimento: le imposte sulla vendita sono a carico del venditore.
 
 **Il treno Tirana–Durazzo farà salire i prezzi delle case?**
 Probabilmente, ma in una fascia ristretta. Dopo ripetuti rinvii, i treni elettrici dovrebbero collegare Tirana e Durazzo in 22 minuti dall'inizio del 2027. L'eventuale aumento dovrebbe concentrarsi a distanza pedonale dalle stazioni, e una parte delle aspettative è già nei prezzi di oggi. Leggi [cosa farà e cosa non farà il treno](/blog/tirana-durres-train-property-prices).

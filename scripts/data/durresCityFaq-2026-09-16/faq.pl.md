@@ -23,7 +23,7 @@ Naszym zdaniem nie, dopóki nie wyjaśni się kwestia fundamentów. Inspekcja bu
 Nie. Opłaty notarialne i podatki liczy się od wyższej z dwóch kwot: ceny z umowy lub państwowej ceny referencyjnej, a Durrës nadal stosuje jedną stawkę dla całego miasta z 2016 roku. Projekt z lipca 2025 roku, który podniósłby stawkę dla strefy portowej do 200 000 leków/m², nigdy nie został zatwierdzony. Zobacz [wyjaśnienie cen referencyjnych w Durrës](/blog/durres-reference-prices-2026).
 
 **Jakie koszty ponosi kupujący oprócz ceny mieszkania?**
-Przygotuj budżet na około 3–4% ceny. Notariusz pobiera około 0,35% przy transakcjach do 6 mln leków, 2% podatku od przeniesienia własności w praktyce często przerzuca się na kupującego, wpis do katastru kosztuje kilka tysięcy leków, a jeśli nie mówisz po albańsku, potrzebny jest tłumacz przysięgły.
+Przygotuj budżet na około 1,5-3% ceny, jeśli korzystasz z pośrednika i prawnika. Notariusz pobiera około 0,35% przy transakcjach do 6 mln leków, wpis do katastru kosztuje kilka tysięcy leków, a jeśli nie mówisz po albańsku, potrzebny jest tłumacz przysięgły. Kupujący mieszkanie nie płaci podatku od przeniesienia własności, podatki od sprzedaży płaci sprzedający.
 
 **Czy pociąg Tirana–Durrës podniesie ceny nieruchomości?**
 Prawdopodobnie, ale w wąskim pasie. Po wielokrotnych opóźnieniach pociągi elektryczne mają kursować na trasie Tirana–Durrës w 22 minuty od początku 2027 roku. Ewentualny wzrost powinien skupić się w odległości spaceru od stacji, a część oczekiwań jest już uwzględniona w dzisiejszych cenach. Przeczytaj, [co pociąg zmieni, a czego nie](/blog/tirana-durres-train-property-prices).

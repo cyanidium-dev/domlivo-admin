@@ -126,7 +126,7 @@ const FACET_COPY: Record<string, Copy> = {
     bottom: [
       'A 2+1 is the family layout in Albania: two bedrooms plus a living room with the kitchen. The median 2+1 in Durrës asks €{{price:durres/2-1}}, and the {{count:durres/2-1}} that state their area ask a median of €{{median:durres/2-1}}/m², against €{{median:durres}}/m² for every flat in the city.',
       'Choose the zone by how you will use the flat. To live in all year, the centre and Plazh are part of the city; the centre lets all year to local families and Tirana commuters and holds its price out of season, at €1,900–2,800/m² on the Currila–Vollga seafront and €1,200–1,700 in Plazh. Golem’s second line at €1,100–1,500 and Mali i Robit at €950–1,200 cost less and earn their money in summer.',
-      'Check the building before the flat: its construction year, the occupancy permit (leje përdorimi) of a finished building, and whether the floors built match the permit. Budget roughly 3–4% of the price on top for the notary, the transfer tax and registration with the cadastre.',
+      'Check the building before the flat: its construction year, the occupancy permit (leje përdorimi) of a finished building, and whether the floors built match the permit. Budget roughly 1.5-3% of the price on top for the notary, registration with the cadastre and, if you use them, an agent and a lawyer.',
     ],
   },
   'near-the-sea': {
@@ -153,7 +153,7 @@ const FACET_COPY: Record<string, Copy> = {
     bottom: [
       'In Durrës €100,000 still buys a flat by the sea, and the zone decides how much flat. On the centre’s seafront at €1,900–2,800/m² it is a studio or a small 1+1; in Plazh at €1,200–1,700 a 1+1 of 60–80 m²; in Golem or Mali i Robit, at €950–1,500, 70–100 m². Entry prices in Vlorë and Sarandë are one and a half to two times higher.',
       'The median flat on this page asks €{{price:durres/under-100k}}, and the {{count:durres/under-100k}} that state their area ask a median of €{{median:durres/under-100k}}/m², against €{{median:durres}}/m² for every flat in the city. A price well below its zone’s band usually has a reason, most often the building’s age or its papers.',
-      'On the beach strip a low price often means an older building: most flats there are over 30 years old, and the 2019 earthquake hit the strip hardest. Get the construction year and the ownership extract from the cadastre (ASHK), and budget roughly 3–4% on top of the price for the notary, the transfer tax and registration.',
+      'On the beach strip a low price often means an older building: most flats there are over 30 years old, and the 2019 earthquake hit the strip hardest. Get the construction year and the ownership extract from the cadastre (ASHK), and budget roughly 1.5-3% on top of the price for the notary, registration and, if you use them, an agent and a lawyer.',
     ],
   },
 }
