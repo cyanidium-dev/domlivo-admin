@@ -77,8 +77,8 @@ const ROI_LABELS: Record<string, [string, string, string]> = {
   sq: ['Qira ditore, e menaxhuar vetë', 'Qira ditore me administrator (25%)', 'Qira afatgjatë'],
 }
 
-/** Buyer costs as the calculator sums them (facts file); the 2% transfer tax is left out:
- *  by law the seller pays it, and the copy explains when a contract shifts it. */
+/** Buyer costs as the calculator sums them (facts file). There is no transfer-tax line: the buyer
+ *  of a flat pays none (the seller pays 15% on the gain; fix of 21.10.2026). */
 const COST_VALUES = [
   {kind: 'percent', value: 0.35, en: 'Notary (≈0.35%)'},
   {kind: 'fixed', value: 38, en: 'ASHK registration'},
