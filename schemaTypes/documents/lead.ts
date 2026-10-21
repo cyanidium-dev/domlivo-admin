@@ -117,6 +117,69 @@ export const lead = defineType({
       rows: 5,
       description: 'Internal notes. Never shown on the website.',
     }),
+    // --- Set from the Telegram lead chats (status buttons, frontend
+    // src/lib/telegram/bot/leadStatus.ts). The funnel and the owner's 1 %
+    // are counted from these: reports/domlivo-leads-funnel.md.
+    defineField({
+      name: 'dealPrice',
+      title: 'Deal price (EUR)',
+      type: 'number',
+      group: 'review',
+      description: 'Sale price of a won lead. Asked in the Telegram chat after "Сделка ✅"; the owner gets 1 % of it.',
+      validation: (Rule) => Rule.min(0),
+    }),
+    defineField({name: 'dealCurrency', title: 'Deal currency', type: 'string', group: 'review', readOnly: true, hidden: ({document}) => !document?.dealPrice}),
+    defineField({name: 'dealPriceAt', title: 'Deal price entered at', type: 'datetime', group: 'review', readOnly: true, hidden: ({document}) => !document?.dealPrice}),
+    defineField({name: 'dealPriceBy', title: 'Deal price entered by', type: 'string', group: 'review', readOnly: true, hidden: ({document}) => !document?.dealPrice}),
+    defineField({name: 'statusUpdatedAt', title: 'Status changed at', type: 'datetime', group: 'review', readOnly: true}),
+    defineField({name: 'statusUpdatedBy', title: 'Status changed by', type: 'string', group: 'review', readOnly: true, description: 'Who pressed the button in Telegram.'}),
+    defineField({
+      name: 'statusHistory',
+      title: 'Status history',
+      type: 'array',
+      group: 'review',
+      readOnly: true,
+      description: 'Every press of a status button in Telegram, oldest first.',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'leadStatusChange',
+          fields: [
+            defineField({name: 'status', title: 'Status', type: 'string', options: {list: [...LEAD_STATUSES]}}),
+            defineField({name: 'from', title: 'From', type: 'string'}),
+            defineField({name: 'at', title: 'At', type: 'datetime'}),
+            defineField({name: 'by', title: 'By', type: 'string'}),
+            defineField({name: 'chatId', title: 'Telegram chat', type: 'string'}),
+          ],
+          preview: {
+            select: {status: 'status', at: 'at', by: 'by'},
+            prepare: ({status, at, by}) => ({
+              title: label(LEAD_STATUSES, status),
+              subtitle: [by, at ? new Date(at).toLocaleString('ru-RU', {timeZone: 'Europe/Tirane'}) : ''].filter(Boolean).join(' · '),
+            }),
+          },
+        }),
+      ],
+    }),
+    defineField({
+      name: 'telegramPosts',
+      title: 'Telegram messages',
+      type: 'array',
+      group: 'review',
+      readOnly: true,
+      description: 'Where the bot posted this lead with its status buttons.',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'telegramPost',
+          fields: [
+            defineField({name: 'chatId', title: 'Chat', type: 'string'}),
+            defineField({name: 'messageId', title: 'Message', type: 'number'}),
+          ],
+          preview: {select: {title: 'chatId', subtitle: 'messageId'}},
+        }),
+      ],
+    }),
     defineField({
       name: 'type',
       title: 'Type',
