@@ -293,7 +293,7 @@ export const ARTICLES_BUYING: ArticleSpec[] = [
     tags: ['foreign-buyers', 'ukraine', 'legal'],
     title: 'Can a Ukrainian citizen buy property in Albania?',
     summary:
-      'Yes. A Ukrainian citizen can buy an apartment or a house in Albania on the same terms as any foreigner; agricultural land is closed to all foreign private buyers. Under a Council of Ministers decision of 21 May 2025, Ukrainians who entered Albania on or after 18 March 2022 may stay up to four years without a residence permit.',
+      'Yes. A Ukrainian citizen can buy an apartment or a house in Albania on the same terms as any foreigner; agricultural land is closed to all foreign private buyers. Under a Council of Ministers decision of 10 April 2026, Ukrainian citizens may enter without a visa and stay without a residence permit until 30 March 2027.',
     dataPeriod: '2026',
     confidence: 'MEDIUM',
     sections: [
@@ -306,14 +306,14 @@ export const ARTICLES_BUYING: ArticleSpec[] = [
       {
         key: 'STAY',
         heading: 'Stay: the special rule for Ukrainians',
-        body: 'Since 2022 Albania has let Ukrainian citizens stay without a residence permit under Decision No. 169 of 2022. The May 2025 amendment extended that period from three to four years for people who entered on or after 18 March 2022. Outside that regime the general rules apply: 90 days in any 180 for visa-free stays, and a one-year renewable permit for a property owner.',
+        body: 'Since 2022 Albania has let Ukrainian citizens stay without a residence permit, first under Decision No. 169 of 2022. A Council of Ministers decision of 10 April 2026 replaced it: Ukrainians may enter without a visa and stay without a permit until 30 March 2027, including those already in Albania. Outside that regime the general rules apply: 90 days in any 180 for visa-free stays, and a one-year renewable permit for a property owner.',
         tables: [
           {
             id: 'UA_STAY',
             title: 'Stay rules for Ukrainian citizens',
             columns: ['Situation', 'Rule', 'Basis'],
             rows: [
-              {cells: ['Entered on or after 18.03.2022', 'Up to 4 years without a residence permit', 'VKM 169/2022 as amended 21.05.2025'], facts: ['DATA-LEGAL-0022']},
+              {cells: ['All Ukrainian citizens, including those already in Albania', 'No visa or residence permit needed until 30.03.2027', 'Council of Ministers decision of 10.04.2026 (repeals VKM 169/2022)'], facts: ['DATA-LEGAL-0023']},
               {cells: ['Property owner who wants a permit', 'Up to 1 year, renewable', 'Law 79/2021 Art. 84'], facts: ['DATA-LEGAL-0014']},
               {cells: ['General visa-free stay', '90 days in any 180', 'Law 79/2021 Art. 29'], facts: ['DATA-LEGAL-0013']},
             ],
@@ -342,7 +342,7 @@ export const ARTICLES_BUYING: ArticleSpec[] = [
       {q: 'Is there a Ukraine–Albania tax treaty?', a: 'We did not find one in force; Albanian rent and sale gains are taxed in Albania at 15% either way. Ukrainian tax on worldwide income should be checked with an adviser.'},
       {q: 'Can I pay for the flat in cash?', a: 'No. The notary may not handle more than 150,000 ALL in cash, so the price goes by bank transfer.'},
     ],
-    sources: ['KB-UA-2026-001', 'KB-ALB-2026-001', 'KB-ALB-2026-010', 'LEGAL-ALB-2026-001'],
+    sources: ['KB-RES-2026-003', 'KB-ALB-2026-001', 'KB-ALB-2026-010', 'LEGAL-ALB-2026-001'],
     gaps: [
       {id: 'GAP-UA-2027-EXTENSION', text: 'A newer decision letting Ukrainians stay until 30 March 2027 is reported by a Ukrainian travel portal but not confirmed in the Official Gazette.', priority: 'HIGH'},
       {id: 'GAP-UA-DTA', text: 'Whether a Ukraine–Albania double taxation treaty exists was not confirmed in an official list.', priority: 'MEDIUM'},
@@ -351,7 +351,7 @@ export const ARTICLES_BUYING: ArticleSpec[] = [
     ],
     related: ['KB-BUY-FOREIGNERS', 'KB-MOVING-MONEY', 'KB-RESIDENCE-PURCHASE', 'KB-DOCUMENTS'],
     seoTitle: 'Can a Ukrainian buy property in Albania? Rules 2026',
-    seoDescription: 'Ukrainians can buy apartments in Albania like any foreigner. The four-year stay rule of 2025, residence permits and how to pay, with sources.',
+    seoDescription: 'Ukrainians can buy apartments in Albania like any foreigner. Stay without a visa or permit until 30.03.2027, residence permits and how to pay, with sources.',
     reviewMonths: 6,
   },
   {
@@ -601,7 +601,7 @@ export const ARTICLES_BUYING: ArticleSpec[] = [
               {cells: ['Visa-free stay', 'Visa-exempt nationals', '90 days in 180', 'Law 79/2021 Art. 29'], facts: ['DATA-LEGAL-0013']},
               {cells: ['Owner permit', 'Owner or co-owner of ½', 'Up to 1 year, renewable', 'Law 79/2021 Art. 84'], facts: ['DATA-LEGAL-0014']},
               {cells: ['Pensioner permit', 'Retired in home country, pension ≥ 1,200,000 ALL/yr', 'Up to 1 year, renewable', 'Law 79/2021 Art. 85'], facts: ['DATA-LEGAL-0015']},
-              {cells: ['Ukrainians (entered from 18.03.2022)', 'Ukrainian citizens', 'Up to 4 years without a permit', 'VKM 169/2022 as amended'], facts: ['DATA-LEGAL-0022']},
+              {cells: ['Ukrainians', 'Ukrainian citizens', 'No visa or permit needed until 30.03.2027', 'Council of Ministers decision of 10.04.2026'], facts: ['DATA-LEGAL-0023']},
             ],
           },
         ],
@@ -618,7 +618,7 @@ export const ARTICLES_BUYING: ArticleSpec[] = [
       {q: 'Does it lead to citizenship?', a: 'Not by itself. Permanent residence and citizenship have their own conditions and waiting periods.'},
       {q: 'Can my spouse get a permit too?', a: 'A co-owner of half the property qualifies in their own right; family reunification is also provided for pensioners.'},
     ],
-    sources: ['KB-ALB-2026-001', 'KB-ALB-2026-002', 'KB-UA-2026-001'],
+    sources: ['KB-ALB-2026-001', 'KB-ALB-2026-002', 'KB-RES-2026-003'],
     gaps: [
       {id: 'GAP-VKM858-2025', text: 'VKM 858/2021 is quoted as consolidated in 2024; a revision after Law 43/2025 (which moved the pensioner criteria into the decision) was not found.', priority: 'MEDIUM'},
       {id: 'GAP-PERMANENT-RESIDENCE', text: 'Waiting period for permanent residence (Law 79/2021 Art. 87) not checked.', priority: 'LOW'},
