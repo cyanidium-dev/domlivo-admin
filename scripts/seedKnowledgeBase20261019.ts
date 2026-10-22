@@ -35,12 +35,13 @@ import path from 'node:path'
 import {config as loadDotenv} from 'dotenv'
 import {createClient} from '@sanity/client'
 import {SOURCE_TYPE_RANK, DATA_ID_PATTERN, SOURCE_ID_PATTERN, DOCUMENT_ID_PATTERN} from '../schemaTypes/constants/knowledge'
-import {SOURCES} from './data/knowledge-base-2026-10-19/sources'
-import {FACTS} from './data/knowledge-base-2026-10-19/facts'
+import {SOURCES as SOURCES_BASE} from './data/knowledge-base-2026-10-19/sources'
+import {FACTS as FACTS_BASE} from './data/knowledge-base-2026-10-19/facts'
 import {ARTICLES_BUYING} from './data/knowledge-base-2026-10-19/articlesBuying'
 import {ARTICLES_MONEY} from './data/knowledge-base-2026-10-19/articlesMoney'
 import {ARTICLES_OWNERSHIP} from './data/knowledge-base-2026-10-19/articlesOwnership'
 import {ARTICLES_GEOGRAPHY} from './data/knowledge-base-2026-10-19/articlesGeography'
+import {ARTICLES_Q, FACTS_Q, SOURCES_Q} from './data/knowledge-base-2026-10-19/articlesQuestions20261023'
 import type {ArticleSpec, Md} from './data/knowledge-base-2026-10-19/types'
 
 loadDotenv({path: path.resolve(process.cwd(), '.env')})
@@ -75,7 +76,10 @@ const RATE = 92.02
 const RATE_DATE = '2026-09-09'
 const DATA_DIR = path.resolve(process.cwd(), 'scripts/data/knowledge-base-2026-10-19')
 
-const ARTICLES: ArticleSpec[] = [...ARTICLES_BUYING, ...ARTICLES_MONEY, ...ARTICLES_OWNERSHIP, ...ARTICLES_GEOGRAPHY]
+// Topic-mapping batch of 2026-10-23 (articlesQuestions20261023.ts).
+const SOURCES = [...SOURCES_BASE, ...SOURCES_Q]
+const FACTS = [...FACTS_BASE, ...FACTS_Q]
+const ARTICLES: ArticleSpec[] = [...ARTICLES_BUYING, ...ARTICLES_MONEY, ...ARTICLES_OWNERSHIP, ...ARTICLES_GEOGRAPHY, ...ARTICLES_Q]
 
 const sourceDocId = (id: string) => `knowledge.source.${id}`
 const factDocId = (id: string) => `knowledge.fact.${id}`
