@@ -3,18 +3,18 @@
  * and returns strict JSON. Shared by the CMS gap filler and the listing
  * translator; the prompts differ, the plumbing does not.
  *
- * The key is read from ANTHROPIC_API_KEY. This repo's .env does not carry
- * it; the front end's .env.local does, so that file is loaded as a fallback
- * — never the other way round, and nothing is copied.
+ * The key is read from ANTHROPIC_API_KEY in this repo's own .env only. It used
+ * to fall back to the front end's .env.local, so batch translations ran on the
+ * website's key and emptied the balance the AI search lives on (2026-10-23).
+ * The owner's rule since then: the site key is for the site. Translate in a
+ * Claude Code session, or put a separate, separately funded key in this
+ * repo's .env.
  */
 import path from 'node:path'
 import {config as loadDotenv} from 'dotenv'
 import Anthropic from '@anthropic-ai/sdk'
 
 loadDotenv({path: path.resolve(process.cwd(), '.env')})
-if (!process.env.ANTHROPIC_API_KEY) {
-  loadDotenv({path: path.resolve(process.cwd(), '../your-house-albania/.env.local')})
-}
 
 export const MODEL = 'claude-opus-5'
 
@@ -44,7 +44,12 @@ Return only JSON. No prose, no code fences.`
 let client: Anthropic | null = null
 function getClient(): Anthropic {
   if (!client) {
-    if (!process.env.ANTHROPIC_API_KEY) throw new Error('ANTHROPIC_API_KEY is not set')
+    if (!process.env.ANTHROPIC_API_KEY) {
+      throw new Error(
+        'ANTHROPIC_API_KEY is not set in domlivo-admin/.env. The website key is not used for translation; ' +
+          'translate in a Claude Code session or add a separate key here.',
+      )
+    }
     client = new Anthropic()
   }
   return client
