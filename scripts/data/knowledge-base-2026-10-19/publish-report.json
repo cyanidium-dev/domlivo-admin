@@ -203,5 +203,30 @@
     "id": "KB-MONEY-IN-ALBANIA",
     "slug": "money-in-albania-currency-cards-cash-bank-account",
     "published": true
+  },
+  {
+    "id": "KB-HEALTHCARE",
+    "slug": "healthcare-and-health-insurance-in-albania-for-foreigners",
+    "published": true
+  },
+  {
+    "id": "KB-SIM-INTERNET",
+    "slug": "sim-card-and-internet-in-albania-prices",
+    "published": true
+  },
+  {
+    "id": "KB-DRIVING-LICENCE",
+    "slug": "driving-in-albania-foreign-licence-exchange",
+    "published": true
+  },
+  {
+    "id": "KB-HOLIDAY-COSTS",
+    "slug": "albania-holiday-beaches-seasons-what-a-week-costs",
+    "published": true
+  },
+  {
+    "id": "KB-PROS-CONS",
+    "slug": "living-in-albania-pros-and-cons",
+    "published": true
   }
 ]
