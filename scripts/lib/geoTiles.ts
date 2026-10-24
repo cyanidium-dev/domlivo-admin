@@ -20,7 +20,7 @@ import Pbf from 'pbf'
 export const Z = 14
 export type Ring = number[][]
 export type Polygon = Ring[]
-type TileData = {water: Array<{cls: string; poly: Polygon}>; buildings: Polygon[]}
+type TileData = {water: Array<{cls: string; poly: Polygon}>; buildings: Polygon[]; sand: Polygon[]; residential: Polygon[]}
 
 const WORKSPACE = path.resolve(process.cwd(), '../domlivo-workspace')
 const IGNORED_WATER = new Set(['swimming_pool'])
@@ -86,7 +86,7 @@ async function tile(x: number, y: number, z = Z): Promise<TileData> {
   const key = `${z}/${x}/${y}`
   const cached = tileCache.get(key)
   if (cached) return cached
-  const data: TileData = {water: [], buildings: []}
+  const data: TileData = {water: [], buildings: [], sand: [], residential: []}
   const bytes = await tileBytes(x, y, z)
   if (bytes) {
     const vt = new VectorTile(new Pbf(bytes))
@@ -100,6 +100,20 @@ async function tile(x: number, y: number, z = Z): Promise<TileData> {
         else if (g.type === 'MultiPolygon') for (const p of g.coordinates) data.water.push({cls, poly: p})
       }
     }
+    // beaches and dunes (landcover class "sand": subclass beach / sand) and housing areas
+    const polygonsOf = (layerName: string, keep: (p: Record<string, unknown>) => boolean, into: Polygon[]) => {
+      const layer = vt.layers[layerName]
+      if (!layer) return
+      for (let i = 0; i < layer.length; i++) {
+        const f = layer.feature(i)
+        if (!keep(f.properties)) continue
+        const g = f.toGeoJSON(x, y, z).geometry
+        if (g.type === 'Polygon') into.push(g.coordinates)
+        else if (g.type === 'MultiPolygon') into.push(...g.coordinates)
+      }
+    }
+    polygonsOf('landcover', (p) => p.class === 'sand', data.sand)
+    polygonsOf('landuse', (p) => p.class === 'residential', data.residential)
     const building = vt.layers.building
     if (building) {
       for (let i = 0; i < building.length; i++) {
@@ -139,6 +153,18 @@ export async function waterAt(lat: number, lng: number, z = Z): Promise<string |
     if (polygonContains(w.poly, lng, lat)) return w.cls || 'water'
   }
   return null
+}
+
+/** True when the point is on a beach or dune (OSM natural=beach / natural=sand). */
+export async function sandAt(lat: number, lng: number): Promise<boolean> {
+  const {x, y} = tileOf(lat, lng)
+  return (await tile(x, y)).sand.some((p) => polygonContains(p, lng, lat))
+}
+
+/** True when the point is inside an OSM landuse=residential area. */
+export async function residentialAt(lat: number, lng: number): Promise<boolean> {
+  const {x, y} = tileOf(lat, lng)
+  return (await tile(x, y)).residential.some((p) => polygonContains(p, lng, lat))
 }
 
 /** The building footprint under a point, tested in the tile the map would render it from. */
