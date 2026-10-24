@@ -70,6 +70,8 @@ export type FactSpec = {
   /** dataId of the version this one replaces; the seed flips it to isCurrent=false. */
   supersedes?: string
   citySlug?: string
+  /** Date the source was read for this fact; the seed date when absent. */
+  accessedAt?: string
 }
 
 /**
@@ -114,4 +116,25 @@ export type ArticleSpec = {
   seoDescription?: string
   /** Months until the next review; taxes and law 6, prices 12. */
   reviewMonths?: number
+  /** Date the page was written or last revised; the seed date when absent. */
+  lastUpdated?: string
+}
+
+/**
+ * A hand-written translation of one question page into one locale: the
+ * ArticleSpec strings in that language, matched to the English master by
+ * position (scripts/applyKnowledgeTranslations.ts checks the counts). Table
+ * rows list every cell; cells that are numbers only are ignored. Index tokens
+ * such as {{median:durres}} stay as they are.
+ */
+export type ArticleTranslation = {
+  id: string
+  locale: 'uk' | 'ru' | 'sq' | 'it' | 'pl' | 'de' | 'fr'
+  title: string
+  summary: string
+  sections: {heading: string; body?: Md; tables?: {title?: string; columns: string[]; rows: string[][]; methodology?: string}[]}[]
+  faq: {q: string; a: string}[]
+  gaps?: string[]
+  seoTitle?: string
+  seoDescription?: string
 }
