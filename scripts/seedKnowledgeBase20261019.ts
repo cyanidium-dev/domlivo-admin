@@ -42,6 +42,7 @@ import {ARTICLES_MONEY} from './data/knowledge-base-2026-10-19/articlesMoney'
 import {ARTICLES_OWNERSHIP} from './data/knowledge-base-2026-10-19/articlesOwnership'
 import {ARTICLES_GEOGRAPHY} from './data/knowledge-base-2026-10-19/articlesGeography'
 import {ARTICLES_Q, FACTS_Q, SOURCES_Q} from './data/knowledge-base-2026-10-19/articlesQuestions20261023'
+import {ARTICLES_U3, FACTS_U3, SOURCES_U3} from './data/knowledge-base-2026-10-19/articlesUsefulInfo20261024'
 import type {ArticleSpec, Md} from './data/knowledge-base-2026-10-19/types'
 
 loadDotenv({path: path.resolve(process.cwd(), '.env')})
@@ -77,9 +78,10 @@ const RATE_DATE = '2026-09-09'
 const DATA_DIR = path.resolve(process.cwd(), 'scripts/data/knowledge-base-2026-10-19')
 
 // Topic-mapping batch of 2026-10-23 (articlesQuestions20261023.ts).
-const SOURCES = [...SOURCES_BASE, ...SOURCES_Q]
-const FACTS = [...FACTS_BASE, ...FACTS_Q]
-const ARTICLES: ArticleSpec[] = [...ARTICLES_BUYING, ...ARTICLES_MONEY, ...ARTICLES_OWNERSHIP, ...ARTICLES_GEOGRAPHY, ...ARTICLES_Q]
+// Useful-information campaign, batch 3 onward (articlesUsefulInfo20261024.ts).
+const SOURCES = [...SOURCES_BASE, ...SOURCES_Q, ...SOURCES_U3]
+const FACTS = [...FACTS_BASE, ...FACTS_Q, ...FACTS_U3]
+const ARTICLES: ArticleSpec[] = [...ARTICLES_BUYING, ...ARTICLES_MONEY, ...ARTICLES_OWNERSHIP, ...ARTICLES_GEOGRAPHY, ...ARTICLES_Q, ...ARTICLES_U3]
 
 const sourceDocId = (id: string) => `knowledge.source.${id}`
 const factDocId = (id: string) => `knowledge.fact.${id}`
@@ -130,7 +132,7 @@ const hasWords = (cell: string) => /\p{L}{2,}/u.test(cell.replace(/\{\{[^}]*\}\}
 
 /* ------------------------------------------------------- merge locales --- */
 
-const LOCALES = ['en', 'uk', 'ru', 'sq', 'it', 'pl', 'de']
+const LOCALES = ['en', 'uk', 'ru', 'sq', 'it', 'pl', 'de', 'fr']
 const isLocalized = (v: unknown): v is Record<string, unknown> =>
   !!v && typeof v === 'object' && !Array.isArray(v) && 'en' in (v as object) &&
   Object.keys(v as object).every((k) => k.startsWith('_') || LOCALES.includes(k))
@@ -303,8 +305,8 @@ async function main() {
       confidence: f.confidence,
       methodology: f.methodology,
       rawQuote: f.rawQuote,
-      accessedAt: TODAY,
-      lastVerifiedAt: TODAY,
+      accessedAt: f.accessedAt ?? TODAY,
+      lastVerifiedAt: f.accessedAt ?? TODAY,
       ...(place
         ? {article: ref(articleDocId(place.article)), sectionKey: place.sectionKey, tableId: place.tableId, rowId: place.rowId}
         : {}),
@@ -384,8 +386,8 @@ async function main() {
       dataPeriod: a.dataPeriod,
       confidence: a.confidence,
       exchangeRateNote: `${RATE} ALL/EUR, Bank of Albania, ${RATE_DATE}`,
-      lastUpdated: TODAY,
-      nextReviewAt: addMonths(TODAY, a.reviewMonths ?? 6),
+      lastUpdated: a.lastUpdated ?? TODAY,
+      nextReviewAt: addMonths(a.lastUpdated ?? TODAY, a.reviewMonths ?? 6),
       gaps: (a.gaps ?? []).map((g) => ({_type: 'knowledgeGap', _key: keyOf(g.id), gapId: g.id, description: ls(g.text), priority: g.priority})),
       relatedArticles: (a.related ?? []).map((r) => ref(articleDocId(r), keyOf(r))),
       isPublished: published,

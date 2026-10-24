@@ -173,5 +173,35 @@
     "id": "KB-DIGITAL-NOMAD",
     "slug": "digital-nomad-visa-albania-remote-work-permit",
     "published": true
+  },
+  {
+    "id": "KB-RENT-BY-CITY",
+    "slug": "long-term-rent-prices-albania-by-city",
+    "published": true
+  },
+  {
+    "id": "KB-RENT-OR-BUY",
+    "slug": "rent-or-buy-apartment-albania",
+    "published": true
+  },
+  {
+    "id": "KB-COST-OF-LIVING",
+    "slug": "cost-of-living-in-albania-per-month-by-city",
+    "published": true
+  },
+  {
+    "id": "KB-RESIDENCE-PERMIT-HOWTO",
+    "slug": "how-to-get-a-residence-permit-in-albania-documents-fees",
+    "published": true
+  },
+  {
+    "id": "KB-GETTING-TO-ALBANIA",
+    "slug": "how-to-get-to-albania-ferries-from-italy-airport-buses",
+    "published": true
+  },
+  {
+    "id": "KB-MONEY-IN-ALBANIA",
+    "slug": "money-in-albania-currency-cards-cash-bank-account",
+    "published": true
   }
 ]
